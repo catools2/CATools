@@ -1,0 +1,102 @@
+## Core
+- name: CORE_DATA_SETUP_ENABLE
+  description: Whether we should perform only data setup
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_CLEANUP_MODE
+  description: Whether we should get cleanup method if test fail
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_LOCAL_STORAGE_ENABLE
+  description: Whether we should save configuration data on disk during run
+  defaultValue: true
+  required: false
+  sensitive: false
+
+- name: CORE_RELEASE_MODE
+  description: If this run is Release test execution
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_PRODUCTION_MODE
+  description: If this run is Production test execution
+  defaultValue: false
+  required: false
+  sensitive: false
+
+## TMS
+- name: TMS_URL_FORMAT_TO_TEST
+  description: String format which accept Test Id from test attribute and return link to test in TMS.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+- name: TMS_PROJECT_NAME
+  description: Project name against which we execute tests.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+- name: TMS_VERSION_NAME
+  description: Version name against which we execute tests.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+## Type Extensions
+- name: EXTENSION_DEFAULT_WAIT_IN_SECONDS
+  description: The default wait time to be used for wait methods in seconds.
+  defaultValue: 1
+  required: true
+  sensitive: false
+
+- name: EXTENSION_DEFAULT_WAIT_INTERVAL_IN_MILLIS
+  description: The default interval to be used for wait methods in milliseconds.
+  defaultValue: 10
+  required: true
+  sensitive: false
+
+- name: TMS_URL_FORMAT_TO_DEFECT
+  description: String format which accept Defect Id and point to the defect in Test Management System.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+## Security
+- name: LOGGER_MASK_SENSITIVE_DATA
+  description: Shall we mask sensitive data like password
+  defaultValue: true
+  required: true
+  sensitive: false
+
+## Logger
+- name: LOGGER_LOG_COLORED
+  description: Whether we should use colored log
+  defaultValue: true
+  required: false
+  sensitive: false
+
+## Path
+- name: PATH_STORAGE_DIRECTORY
+  description: Local path to local storage where we put permanent files
+  defaultValue: "./"
+  required: false
+  sensitive: false
+
+- name: PATH_OUTPUT_DIRECTORY
+  description: Local path to test output directory
+  defaultValue: ./test-output/
+  required: false
+  sensitive: false
+
+## Date
+- name: DATE_TIME_ZONE
+  description: Which timezone should be used as default
+  defaultValue: America/New_York
+  required: false
+  sensitive: false

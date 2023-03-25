@@ -1,0 +1,71 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>web.element</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Core Automation Toolset - Web Controls</name>
+    <description>The web controls to be used in CATs projects</description>
+
+    <parent>
+        <groupId>org.catools</groupId>
+        <artifactId>catools.parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../catools.parent/pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <!-- TestNG -->
+        <TESTNG_SUITE_RETRY_COUNT>3</TESTNG_SUITE_RETRY_COUNT>
+        <TESTNG_TEST_RETRY_COUNT>1</TESTNG_TEST_RETRY_COUNT>
+        <MAVEN_SUREFIRE_LISTENERS>org.catools.common.testng.listeners.CTestNGListener</MAVEN_SUREFIRE_LISTENERS>
+    </properties>
+    <dependencies>
+        <!-- ######################  CATools ######################### -->
+        <!-- commons -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.utils</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.extension</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.testng</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.concurrent</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.faker</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>media</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>web.driver</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>web.driver.provider</artifactId>
+            <version>${revision}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ######################  /CATS ######################### -->
+    </dependencies>
+</project>

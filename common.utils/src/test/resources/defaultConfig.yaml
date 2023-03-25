@@ -1,0 +1,250 @@
+## Core
+- name: CORE_DATA_SETUP_ENABLE
+  description: Whether we should perform only data setup
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_CLEANUP_MODE
+  description: Whether we should get cleanup method if test fail
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_LOCAL_STORAGE_ENABLE
+  description: Whether we should save configuration data on disk during run
+  defaultValue: true
+  required: false
+  sensitive: false
+
+- name: CORE_RELEASE_MODE
+  description: If this run is Release test execution
+  defaultValue: false
+  required: false
+  sensitive: false
+
+- name: CORE_PRODUCTION_MODE
+  description: If this run is Production test execution
+  defaultValue: false
+  required: false
+  sensitive: false
+
+## TMS
+- name: TMS_URL_FORMAT_TO_TEST
+  description: String format which accept Test Id from test attribute and return link to test in TMS.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+- name: TMS_PROJECT_NAME
+  description: Project name against which we execute tests.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+- name: TMS_VERSION_NAME
+  description: Version name against which we execute tests.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+## Type Extensions
+- name: EXTENSION_DEFAULT_WAIT_IN_SECONDS
+  description: The default wait time to be used for wait methods in seconds.
+  defaultValue: 1
+  required: true
+  sensitive: false
+
+- name: EXTENSION_DEFAULT_WAIT_INTERVAL_IN_MILLIS
+  description: The default interval to be used for wait methods in milliseconds.
+  defaultValue: 10
+  required: true
+  sensitive: false
+
+- name: TMS_URL_FORMAT_TO_DEFECT
+  description: String format which accept Defect Id and point to the defect in Test Management System.
+  defaultValue: null
+  required: false
+  sensitive: false
+
+## Security
+- name: LOGGER_MASK_SENSITIVE_DATA
+  description: Shall we mask sensitive data like password
+  defaultValue: true
+  required: true
+  sensitive: false
+
+## Logger
+- name: LOGGER_LOG_COLORED
+  description: Whether we should use colored log
+  defaultValue: true
+  required: false
+  sensitive: false
+
+## Path
+- name: PATH_STORAGE_DIRECTORY
+  description: Local path to local storage where we put permanent files
+  defaultValue: "./"
+  required: false
+  sensitive: false
+
+- name: PATH_OUTPUT_DIRECTORY
+  description: Local path to test output directory
+  defaultValue: ./test-output/
+  required: false
+  sensitive: false
+
+## Date
+- name: DATE_TIME_ZONE
+  description: Which timezone should be used as default
+  defaultValue: America/New_York
+  required: false
+  sensitive: false
+
+## Extent Report
+- name: EXTENT_REPORT_ENABLE
+  description: Whether we should generate extent report after running tests
+  defaultValue: true
+  required: false
+  sensitive: false
+
+- name: EXTENT_REPORT_NAME
+  description: The name which should be print in extent report html header
+  defaultValue: Extent Report
+  required: false
+  sensitive: false
+
+- name: EXTENT_REPORT_FILE_NAME
+  description: The name which should be used for extent report html file
+  defaultValue: ExtentReport
+  required: false
+  sensitive: false
+
+## TestNG
+- name: TESTNG_IGNORE_TEST_WITH_ANY_ANNOTATION
+  description: List of annotation names for which test should be ignored if any of them match the test labels (Comma Separated)
+  defaultValue: "IANY1,IANY2,IANY3"
+  required: false
+  sensitive: false
+
+- name: TESTNG_IGNORE_TEST_WITH_ALL_ANNOTATION
+  description: List of annotation names for which test should be ignored if all of them match the test labels (Comma Separated)
+  defaultValue: "IALL1,IALL2,IALL3"
+  required: false
+  sensitive: false
+
+- name: TESTNG_RUN_TEST_WITH_ALL_ANNOTATIONS
+  description: List of annotation names for which test should be run when any match the test labels (Comma Separated)
+  defaultValue: "RALL1,RALL2,RALL3"
+  required: false
+  sensitive: false
+
+- name: TESTNG_RUN_TEST_WITH_ANY_ANNOTATIONS
+  description: List of annotation names for which test should be run when all match the test labels (Comma Separated)
+  defaultValue: "RANY1,RANY2,RANY3"
+  required: false
+  sensitive: false
+
+- name: TESTNG_RUN_SEVERITY_LEVEL
+  description: Define the severity level for current run.
+  defaultValue: -1
+  required: false
+  sensitive: false
+
+- name: TESTNG_REPORTER_LOG_LEVEL
+  description: Define CLogLevel for testng output.
+  defaultValue: DEBUG
+  required: true
+  sensitive: false
+
+- name: TESTNG_THREAD_COUNT
+  description: Thread count for console test execution
+  defaultValue: 1
+  required: false
+  sensitive: false
+
+- name: TESTNG_LISTENERS
+  description: TestNG Listeners
+  defaultValue:
+  required: false
+  sensitive: false
+
+- name: TESTNG_TEST_PACKAGES
+  description: List root packages which contains test classes comma separated
+  defaultValue: org.catools.common.tests
+  required: true
+  sensitive: false
+
+- name: TESTNG_BASE_TEST_CLASS_LOADER
+  description: Class qualified name which should be used for class loader
+  defaultValue: CTest
+  required: true
+  sensitive: false
+
+- name: TESTNG_SKIP_CLASS_WITH_AWAITING_TEST
+  description: Whether we should all tests in class if it has one or more Awaiting test
+  defaultValue: true
+  required: false
+  sensitive: false
+
+- name: TESTNG_SKIP_CLASS_WITH_IGNORED_TEST
+  description: Whether we should all tests in class if it has one or more Ignored test
+  defaultValue: true
+  required: false
+  sensitive: false
+
+- name: TESTNG_SUITE_RETRY_COUNT
+  description: Number of retry after each suite execution for fail tests if there are any
+  defaultValue: 0
+  required: false
+  sensitive: false
+
+- name: TESTNG_TEST_RETRY_COUNT
+  description: Number of retry after each test execution if test fail
+  defaultValue: 0
+  required: false
+  sensitive: false
+
+
+## String Diff Patterns
+- name: DIFF_TEXT_EDIT_COST
+  description: The diff edit cost to be used
+  defaultValue: 2
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_INSERT_COLOR
+  description: The Ansi.Color to be used in CStringDiff for added text
+  defaultValue: YELLOW
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_DELETE_COLOR
+  description: The Ansi.Color to be used in CStringDiff for removed text
+  defaultValue: RED
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_EQUAL_COLOR
+  description: The Ansi.Color to be used in CStringDiff for equal texts
+  defaultValue: DEFAULT
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_INSERT_FORMAT
+  description: The string format to be used in CStringDiff for added text
+  defaultValue: "|(+)%s|"
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_DELETE_FORMAT
+  description: The string format to be used in CStringDiff for removed text
+  defaultValue: "|(-)%s|"
+  required: false
+  sensitive: false
+
+- name: DIFF_TEXT_EQUAL_FORMAT
+  description: The string format to be used in CStringDiff for equal texts
+  defaultValue: "%s"
+  required: false
+  sensitive: false
