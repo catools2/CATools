@@ -33,28 +33,16 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
   @Getter
   protected final By locator;
 
-  @Getter
-  protected final boolean useJS;
-
   public CWebElement(String name, DR driver, By locator) {
     this(name, driver, locator, CDriver.DEFAULT_TIMEOUT);
   }
 
-  public CWebElement(String name, DR driver, By locator, boolean useJS) {
-    this(name, driver, locator, useJS, CDriver.DEFAULT_TIMEOUT);
-  }
-
   public CWebElement(String name, DR driver, By locator, int waitSec) {
-    this(name, driver, locator, false, waitSec);
-  }
-
-  public CWebElement(String name, DR driver, By locator, boolean useJS, int waitSec) {
     super();
     this.name = name;
     this.driver = driver;
     this.locator = locator;
     this.waitSec = waitSec;
-    this.useJS = useJS;
     this.verify = this.driver.getVerify();
   }
 
@@ -255,6 +243,25 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
       @Override
       public String getVerifyMessagePrefix() {
         return name + " " + attribute + " Attribute value";
+      }
+    };
+  }
+
+  public final CDynamicStringExtension AriaRole() {
+    return new CDynamicStringExtension() {
+      @Override
+      public String get() {
+        return getAriaRole(0);
+      }
+
+      @Override
+      public int getDefaultWaitInSeconds() {
+        return waitSec;
+      }
+
+      @Override
+      public String getVerifyMessagePrefix() {
+        return name + " AriaRole value";
       }
     };
   }

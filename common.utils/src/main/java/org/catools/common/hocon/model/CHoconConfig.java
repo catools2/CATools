@@ -2,6 +2,7 @@ package org.catools.common.hocon.model;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigBeanFactory;
+import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigRenderOptions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,11 @@ public class CHoconConfig implements CConfig {
   }
 
   public boolean isNotDefined() {
-    return getConfig().getIsNull(valuePath);
+    try {
+      return getConfig().getIsNull(valuePath);
+    }catch (ConfigException ex) {
+      return true;
+    }
   }
 
   public String asString() {

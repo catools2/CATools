@@ -58,15 +58,12 @@ public class CImageComparisionUtil {
       @NonNull final BufferedImage img1,
       @NonNull final BufferedImage img2,
       @NonNull final CImageComparisonType comparisonType) {
-    switch (comparisonType) {
-      case GRAY_FLOAT_32:
-        return getGrayF32Diffs(img1, img2);
-      case FULL_COLOR:
-        return getDiffs(img1, img2);
-      default:
-        throw new NotImplementedException(
-            "There is no implementation in CImageSimpleComparator for type of " + comparisonType);
-    }
+    return switch (comparisonType) {
+      case GRAY_FLOAT_32 -> getGrayF32Diffs(img1, img2);
+      case FULL_COLOR -> getDiffs(img1, img2);
+      default -> throw new NotImplementedException(
+          "There is no implementation in CImageSimpleComparator for type of " + comparisonType);
+    };
   }
 
   private static CDiffPoints getGrayF32Diffs(

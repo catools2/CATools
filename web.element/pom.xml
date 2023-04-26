@@ -64,7 +64,6 @@
             <groupId>org.catools</groupId>
             <artifactId>web.driver.provider</artifactId>
             <version>${revision}</version>
-            <scope>test</scope>
         </dependency>
         <!-- ######################  /CATS ######################### -->
     </dependencies>

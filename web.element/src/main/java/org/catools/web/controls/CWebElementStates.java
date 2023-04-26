@@ -1,7 +1,9 @@
 package org.catools.web.controls;
 
 import org.apache.commons.lang3.StringUtils;
+import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.CVerify;
+import org.catools.common.utils.CStringUtil;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.config.CDriverConfigs;
 import org.catools.web.drivers.CDriver;
@@ -9,12 +11,11 @@ import org.openqa.selenium.*;
 import org.slf4j.Logger;
 
 import java.awt.image.BufferedImage;
+import java.util.Date;
 import java.util.function.Function;
 
 public interface CWebElementStates<DR extends CDriver> {
   int DEFAULT_TIMEOUT = CDriverConfigs.getTimeout();
-
-  boolean isUseJS();
 
   DR getDriver();
 
@@ -224,6 +225,16 @@ public interface CWebElementStates<DR extends CDriver> {
     return waitUntil("Get Text", waitSec, "", el -> el.getText());
   }
 
+  default Date getDate(String dateFormat) {
+    String text = getText();
+    return CStringUtil.isBlank(text) ? null : CDate.of(text, dateFormat);
+  }
+
+  default Date getDate(String dateFormat, int waitSec) {
+    String text = getText(waitSec);
+    return CStringUtil.isBlank(text) ? null : CDate.of(text, dateFormat);
+  }
+
   default String getValue() {
     return getValue(0);
   }
@@ -266,6 +277,14 @@ public interface CWebElementStates<DR extends CDriver> {
 
   default String getAttribute(final String attribute, int waitSec) {
     return waitUntil("Get Attribute", waitSec, "", el -> el.getAttribute(attribute));
+  }
+
+  default String getAriaRole() {
+    return getAriaRole(0);
+  }
+
+  default String getAriaRole(int waitSec) {
+    return waitUntil("Get AriaRole", waitSec, "", WebElement::getAriaRole);
   }
 
   default BufferedImage getScreenShot() {

@@ -9,10 +9,9 @@ import org.testng.ITestResult;
 public class CScreenshotOnFailureListener implements IInvokedMethodListener {
 
   @Override
-  public void afterInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
+  public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
     if (testResult.getStatus() == ITestResult.FAILURE
-        && testResult.getInstance() instanceof CWebTest) {
-      CWebTest testInstance = (CWebTest) testResult.getInstance();
+        && testResult.getInstance() instanceof CWebTest<?> testInstance) {
       if (testInstance.isCurrentSessionActive()) {
         testInstance.takeScreenShotIfFail(testResult);
       }

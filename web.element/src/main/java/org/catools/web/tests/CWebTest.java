@@ -5,7 +5,6 @@ import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
-import org.catools.common.testng.listeners.CTestNGListener;
 import org.catools.common.tests.CTest;
 import org.catools.common.utils.CRetry;
 import org.catools.media.utils.CImageUtil;
@@ -15,8 +14,9 @@ import org.catools.web.config.CWebConfigs;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.drivers.CDriverProvider;
 import org.catools.web.drivers.CDriverSession;
+import org.catools.web.drivers.providers.CChromeDriverProvider;
+import org.catools.web.drivers.providers.CFireFoxDriverProvider;
 import org.catools.web.listeners.CDriverListener;
-import org.catools.web.listeners.CScreenshotOnFailureListener;
 import org.catools.web.pages.CWebPage;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -27,17 +27,13 @@ import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class CWebTest<DR extends CDriver> extends CTest {
+public class CWebTest<DR extends CDriver> extends CTest {
   protected static final int DEFAULT_TIMEOUT = CDriverConfigs.getTimeout();
 
   private static final String DEFAULT_SESSION = "DEFAULT_SESSION";
-  private ThreadLocal<String> currentSession = ThreadLocal.withInitial(() -> DEFAULT_SESSION);
+  private final ThreadLocal<String> currentSession = ThreadLocal.withInitial(() -> DEFAULT_SESSION);
 
-  private CMap<String, DR> drivers = new CHashMap<>();
-
-  static {
-    CTestNGListener.addListeners(new CScreenshotOnFailureListener());
-  }
+  private final CMap<String, DR> drivers = new CHashMap<>();
 
   public CWebTest() {
     super();
@@ -56,7 +52,7 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
   public DR getDriver() {
     String session = currentSession.get();
     if (!drivers.containsKey(session)) {
-      drivers.put(session, (DR) getDefaultDriver());
+      drivers.put(session, getDefaultDriver());
     }
     return drivers.get(session);
   }
@@ -220,5 +216,32 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     return drivers.get(session).getDriverSession().setDriverProvider(provider);
   }
 
-  protected abstract DR getDefaultDriver();
+
+  public CFireFoxDriverProvider switchToFireFox() {
+    CFireFoxDriverProvider driverProvider = new CFireFoxDriverProvider();
+    switchDriverProvider(driverProvider);
+    return driverProvider;
+  }
+
+  public CChromeDriverProvider switchToChrome() {
+    CChromeDriverProvider driverProvider = new CChromeDriverProvider();
+    switchDriverProvider(driverProvider);
+    return driverProvider;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected DR getDefaultDriver() {
+    CDriverProvider driverProvider = null;
+
+    if (CWebConfigs.getCurrentBrowser().isChrome()) {
+      driverProvider = new CChromeDriverProvider();
+    } else if (CWebConfigs.getCurrentBrowser().isFirefox()) {
+      driverProvider = new CFireFoxDriverProvider();
+    }
+
+    CDriverSession driverSession = new CDriverSession(driverProvider);
+    driverSession.startSession();
+
+    return (DR) new CDriver(driverSession);
+  }
 }

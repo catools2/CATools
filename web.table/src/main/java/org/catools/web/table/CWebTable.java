@@ -35,7 +35,6 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   protected String tHeadXpath = "/thead";
   protected String headerRowXpath = "/tr";
   protected String headerCellXpath = "/th";
-
   protected String tBodyXpath = "/tbody";
   protected String rowXpath = "/tr";
   protected String cellXpath = "/td";
@@ -74,8 +73,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public CList<R> getAll(Map<String, String> searchCriteria) {
-    setSearchCriteria(searchCriteria);
-    return getAll();
+    return doWithSearchCriteria(searchCriteria, () -> getAll());
   }
 
   public CList<R> getAll(String header, String value, Predicate<R> predicate) {
@@ -83,8 +81,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public CList<R> getAll(Map<String, String> searchCriteria, Predicate<R> predicate) {
-    setSearchCriteria(searchCriteria);
-    return getAll(predicate);
+    return doWithSearchCriteria(searchCriteria, () -> getAll(predicate));
   }
 
   public R getAny(String header, String value) {
@@ -92,8 +89,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getAny(Map<String, String> searchCriteria) {
-    setSearchCriteria(searchCriteria);
-    return getRandom();
+    return doWithSearchCriteria(searchCriteria, () -> getRandom());
   }
 
   public R getFirst(String header, String value) {
@@ -101,8 +97,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirst(Map<String, String> searchCriteria) {
-    setSearchCriteria(searchCriteria);
-    return getFirst();
+    return doWithSearchCriteria(searchCriteria, () -> getFirst());
   }
 
   public R getFirst(String header, String value, Predicate<R> predicate) {
@@ -110,8 +105,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirst(Map<String, String> searchCriteria, Predicate<R> predicate) {
-    setSearchCriteria(searchCriteria);
-    return getFirst(predicate);
+    return doWithSearchCriteria(searchCriteria, () -> getFirst(predicate));
   }
 
   public R getFirstOrElse(String header, String value, R other) {
@@ -119,8 +113,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrElse(Map<String, String> searchCriteria, R other) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrElse(other);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrElse(other));
   }
 
   public R getFirstOrElse(String header, String value, Predicate<R> predicate, R other) {
@@ -128,8 +121,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrElse(Map<String, String> searchCriteria, Predicate<R> predicate, R other) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrElse(predicate, other);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrElse(predicate, other));
   }
 
   public R getFirstOrElseGet(String header, String value, Supplier<R> other) {
@@ -137,8 +129,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrElseGet(Map<String, String> searchCriteria, Supplier<R> other) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrElseGet(other);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrElseGet(other));
   }
 
   public R getFirstOrElseGet(
@@ -148,8 +139,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
 
   public R getFirstOrElseGet(
       Map<String, String> searchCriteria, Predicate<R> predicate, Supplier<R> other) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrElseGet(predicate, other);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrElseGet(predicate, other));
   }
 
   public R getFirstOrNull(String header, String value) {
@@ -157,8 +147,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrNull(Map<String, String> searchCriteria) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrNull();
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrNull());
   }
 
   public R getFirstOrNull(String header, String value, Predicate<R> predicate) {
@@ -166,8 +155,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrNull(Map<String, String> searchCriteria, Predicate<R> predicate) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrNull(predicate);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrNull(predicate));
   }
 
   public R getFirstOrAny(String header, String value, Predicate<R> predicate) {
@@ -175,8 +163,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrAny(Map<String, String> searchCriteria, Predicate<R> predicate) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrAny(predicate);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrAny(predicate));
   }
 
   public R getFirstOrThrow(String header, String value, RuntimeException e) {
@@ -184,8 +171,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   public R getFirstOrThrow(Map<String, String> searchCriteria, RuntimeException e) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrThrow(e);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrThrow(e));
   }
 
   public <X extends RuntimeException> R getFirstOrThrow(
@@ -200,8 +186,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
       Map<String, String> searchCriteria,
       Predicate<R> predicate,
       Supplier<? extends X> exceptionSupplier) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrThrow(predicate, exceptionSupplier);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrThrow(predicate, exceptionSupplier));
   }
 
   public R getFirstOrElse(String header, String value, Predicate<R> predicate, Supplier<R> other) {
@@ -210,8 +195,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
 
   public R getFirstOrElse(
       Map<String, String> searchCriteria, Predicate<R> predicate, Supplier<R> other) {
-    setSearchCriteria(searchCriteria);
-    return getFirstOrElse(predicate, other);
+    return doWithSearchCriteria(searchCriteria, () -> getFirstOrElse(predicate, other));
   }
 
   public CWebElement<DR> getHeader(String headerName) {
@@ -276,5 +260,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
       }
     }
     return String.format("(%s)[%s]", baseXpath + tBodyXpath + rowXpath + searchXpath, idx + 1);
+  }
+
+  private <O> O doWithSearchCriteria(Map<String, String> searchCriteria, Supplier<O> supplier) {
+    setSearchCriteria(searchCriteria);
+    O o = supplier.get();
+    clearSearchCriteria();
+    return o;
   }
 }

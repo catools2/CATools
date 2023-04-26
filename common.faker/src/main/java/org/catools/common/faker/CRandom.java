@@ -640,21 +640,16 @@ public class CRandom {
       java.lang.String prefix;
       int numberLength = 7;
       switch (countryCode) {
-        case "US":
-          prefix = "603";
-          break;
-        case "CA":
-          prefix = "204";
-          break;
-        case "GB":
-          prefix = "345";
-          break;
-        default:
+        case "US" -> prefix = "603";
+        case "CA" -> prefix = "204";
+        case "GB" -> prefix = "345";
+        default -> {
           java.lang.String numb =
               java.lang.String.valueOf(
                   PhoneNumberUtil.getInstance().getExampleNumber(countryCode).getNationalNumber());
           prefix = numb.substring(0, 4);
           numberLength = numb.length() - 4;
+        }
       }
       return prefix + RandomStringUtils.random(numberLength, "2345678");
     }

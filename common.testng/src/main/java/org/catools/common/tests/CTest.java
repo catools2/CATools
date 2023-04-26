@@ -100,25 +100,12 @@ public class CTest implements CVerificationQueue {
   public void afterClass() {
     log.debug("AfterClass Started for class {}", name);
     switch (testResult) {
-      case SUCCESS:
-      case SUCCESS_PERCENTAGE_FAILURE:
-        onSuccess();
-        break;
-      case SKIP:
-        onSkip();
-        break;
-      case FAILURE:
-        onFailure();
-        break;
-      case DEFERRED:
-        onDeferred();
-        break;
-      case BLOCKED:
-        onBlocked();
-        break;
-      case AWAITING:
-        onAwaiting();
-        break;
+      case SUCCESS, SUCCESS_PERCENTAGE_FAILURE -> onSuccess();
+      case SKIP -> onSkip();
+      case FAILURE -> onFailure();
+      case DEFERRED -> onDeferred();
+      case BLOCKED -> onBlocked();
+      case AWAITING -> onAwaiting();
     }
   }
 

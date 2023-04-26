@@ -6,6 +6,7 @@ import org.catools.web.config.CDriverConfigs;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.drivers.CWebAlert;
 import org.catools.web.exceptions.CPageNotOpenedException;
+import org.catools.web.factory.CWebElementFactory;
 import org.slf4j.Logger;
 
 @Slf4j
@@ -28,14 +29,10 @@ public abstract class CWebPage<DR extends CDriver> {
     this(driver, titlePattern, waitSecs, tryRefreshIfNotDisplayed, waitSecs);
   }
 
-  public CWebPage(
-      DR driver,
-      String titlePattern,
-      int waitSecs,
-      boolean tryRefreshIfNotDisplayed,
-      int waitSecsAfterRefresh) {
+  public CWebPage(DR driver, String titlePattern, int waitSecs, boolean tryRefreshIfNotDisplayed, int waitSecsAfterRefresh) {
     this.driver = driver;
     this.titlePattern = titlePattern;
+    CWebElementFactory.initElements(this);
     try {
       driver.waitCompleteReadyState();
       verifyDisplayed(waitSecs);
@@ -62,16 +59,12 @@ public abstract class CWebPage<DR extends CDriver> {
   }
 
   public <T extends CWebPage<DR>> T verifyDisplayed() {
-    verify.Bool.isTrue(
-        isDisplayed(DEFAULT_TIMEOUT),
-        String.format("Verify %s page is displayed", getClass().getSimpleName()));
+    verify.Bool.isTrue(isDisplayed(DEFAULT_TIMEOUT), String.format("Verify %s page is displayed", getClass().getSimpleName()));
     return (T) this;
   }
 
   public <T extends CWebPage<DR>> T verifyDisplayed(int waitSecs) {
-    verify.Bool.isTrue(
-        isDisplayed(waitSecs),
-        String.format("Verify %s page is displayed", getClass().getSimpleName()));
+    verify.Bool.isTrue(isDisplayed(waitSecs), String.format("Verify %s page is displayed", getClass().getSimpleName()));
     return (T) this;
   }
 
@@ -81,5 +74,9 @@ public abstract class CWebPage<DR extends CDriver> {
 
   public void refresh() {
     driver.refresh();
+  }
+
+  public DR getDriver() {
+    return driver;
   }
 }

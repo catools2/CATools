@@ -22,8 +22,6 @@ public interface CDriverWaiter {
 
   Logger getLogger();
 
-  boolean isUseJs();
-
   default <C> C waitUntil(String actionName, ExpectedCondition<C> condition) {
     return waitUntil(actionName, DEFAULT_TIMEOUT, condition);
   }

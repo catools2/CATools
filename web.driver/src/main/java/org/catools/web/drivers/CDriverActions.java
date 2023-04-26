@@ -84,24 +84,33 @@ public interface CDriverActions extends CDriverWaiter {
     return (T) this;
   }
 
+  default <T extends CDriverActions> T clickJS(By locator, int waitSec) {
+    waitUntil(
+        "Click",
+        waitSec,
+        webDriver -> {
+          WebElement el = webDriver.findElement(locator);
+          if (el == null) return el;
+          JavascriptExecutor executor = (JavascriptExecutor) webDriver;
+          executor.executeScript("arguments[0].click();", el);
+          return el;
+        });
+    return (T) this;
+  }
+
   default <T extends CDriverActions> T click(By locator, int waitSec) {
     waitUntil(
         "Click",
         waitSec,
         webDriver -> {
           WebElement el = webDriver.findElement(locator);
-          if (el != null) {
-            JavascriptExecutor executor = (JavascriptExecutor) webDriver;
-            if (!isUseJs() && el.isEnabled()) {
-              try {
-                executor.executeScript("arguments[0].scrollIntoView(true);", el);
-              } catch (Throwable t) {
-              }
-              el.click();
-            } else {
-              executor.executeScript("arguments[0].click();", el);
-            }
+          if (el == null) return el;
+          JavascriptExecutor executor = (JavascriptExecutor) webDriver;
+          try {
+            executor.executeScript("arguments[0].scrollIntoView(true);", el);
+          } catch (Throwable t) {
           }
+          el.click();
           return el;
         });
     return (T) this;
@@ -326,9 +335,7 @@ public interface CDriverActions extends CDriverWaiter {
   default <R> R executeAsyncScript(String script, Object... args) {
     return performActionOnDriver(
         "Execute Async Script",
-        webDriver -> {
-          return (R) ((JavascriptExecutor) webDriver).executeAsyncScript(script, args);
-        });
+        webDriver -> (R) ((JavascriptExecutor) webDriver).executeAsyncScript(script, args));
   }
 
   default <R> R executeAsyncScript(By locator, int waitSec, String script) {

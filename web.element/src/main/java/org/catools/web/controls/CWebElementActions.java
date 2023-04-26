@@ -3,11 +3,13 @@ package org.catools.web.controls;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CPathConfigs;
+import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
 import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
+import org.catools.common.utils.CSystemUtil;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.config.CWebConfigs;
 import org.catools.web.drivers.CDriver;
@@ -19,6 +21,7 @@ import org.openqa.selenium.support.ui.Quotes;
 
 import java.awt.*;
 import java.io.File;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public interface CWebElementActions<DR extends CDriver> extends CWebElementStates<DR> {
@@ -111,36 +114,49 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   default void setStyle(String style, String color) {
-    setAttribute("style", style, color);
-  }
-
-  default void setAttribute(String attributeName, String style, String color) {
     executeScript(
         String.format(
-            "arguments[0][\"%s\"][\"%s\"]=\"%s\";",
-            Quotes.escape(attributeName), Quotes.escape(style), Quotes.escape(color)));
+            "arguments[0][%s][%s]=%s;",
+            Quotes.escape("style"), Quotes.escape(style), Quotes.escape(color)));
+  }
+
+  default void setAttribute(String attributeName, String value) {
+    executeScript(
+        String.format(
+            "arguments[0][%s]=%s;",
+            Quotes.escape(attributeName), Quotes.escape(value)));
+  }
+
+  default void removeAttribute(String attributeName) {
+    executeScript(String.format("arguments[0].removeAttribute(%s);", Quotes.escape(attributeName)));
+  }
+
+  default void set(boolean value) {
+    if (value ^ isSelected()) {
+      if (value) select();
+      else deselect();
+    }
+  }
+
+  default void set(boolean value, int waitSec) {
+    if (value ^ isSelected(waitSec)) {
+      if (value) select(waitSec);
+      else deselect(waitSec);
+    }
   }
 
   default void select() {
-    select(isUseJS());
-  }
-
-  default void select(boolean useJS) {
-    select(useJS, getWaitSec());
+    select(getWaitSec());
   }
 
   default void select(int waitSec) {
-    select(isUseJS(), waitSec);
-  }
-
-  default void select(boolean useJS, int waitSec) {
     waitUntil(
         "Select",
         waitSec,
         false,
         webElement -> {
           if (!webElement.isSelected()) {
-            _click(useJS, webElement);
+            _click(false, webElement);
           }
           return true;
         });
@@ -151,29 +167,30 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   default void selectInvisible(int waitSec) {
-    select(true, waitSec);
+    waitUntil(
+        "Select",
+        waitSec,
+        false,
+        webElement -> {
+          if (!webElement.isSelected()) {
+            _click(true, webElement);
+          }
+          return true;
+        });
   }
 
   default void deselect() {
-    deselect(isUseJS());
-  }
-
-  default void deselect(boolean useJS) {
-    deselect(useJS, getWaitSec());
+    deselect(getWaitSec());
   }
 
   default void deselect(int waitSec) {
-    deselect(isUseJS(), waitSec);
-  }
-
-  default void deselect(boolean useJS, int waitSec) {
     waitUntil(
         "Deselect",
         waitSec,
         false,
         webElement -> {
           if (webElement.isSelected()) {
-            _click(useJS, webElement);
+            _click(false, webElement);
           }
           return true;
         });
@@ -184,53 +201,41 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   default void deselectInvisible(int waitSec) {
-    deselect(true, waitSec);
+    waitUntil(
+        "Deselect",
+        waitSec,
+        false,
+        webElement -> {
+          if (webElement.isSelected()) {
+            _click(true, webElement);
+          }
+          return true;
+        });
   }
 
   default void click() {
-    click(isUseJS(), getWaitSec());
-  }
-
-  default void click(boolean useJS) {
-    click(useJS, getWaitSec());
+    click(getWaitSec());
   }
 
   default void click(int waitSec) {
-    getDriver().click(getLocator(), waitSec);
-  }
-
-  default void click(boolean useJS, int waitSec) {
     waitUntil(
         "Click",
         waitSec,
         false,
         webElement -> {
-          _click(useJS, webElement);
+          _click(false, webElement);
           return true;
         });
   }
 
   default <R> R click(com.google.common.base.Function<DR, R> postCondition) {
-    return click(isUseJS(), postCondition);
+    return click(2, 2000, postCondition);
   }
 
-  default <R> R click(boolean useJS, com.google.common.base.Function<DR, R> postCondition) {
-    return click(useJS, 2, 2000, postCondition);
-  }
-
-  default <R> R click(
-      int retryCount, int interval, com.google.common.base.Function<DR, R> postCondition) {
-    return click(isUseJS(), retryCount, interval, postCondition);
-  }
-
-  default <R> R click(
-      boolean useJS,
-      int retryCount,
-      int interval,
-      com.google.common.base.Function<DR, R> postCondition) {
+  default <R> R click(int retryCount, int interval, com.google.common.base.Function<DR, R> postCondition) {
     return CRetry.retry(
         idx -> {
-          click(useJS);
+          click();
           return postCondition.apply(getDriver());
         },
         retryCount,
@@ -285,53 +290,24 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
 
   // Download File
   default CFile downloadFile(String filename, String renameTo) {
-    return downloadFile(isUseJS(), getWaitSec(), filename, renameTo, false);
-  }
-
-  default CFile downloadFile(boolean useJS, String filename, String renameTo) {
-    return downloadFile(useJS, getWaitSec(), filename, renameTo, false);
+    return downloadFile(getWaitSec(), filename, renameTo, false);
   }
 
   default CFile downloadFile(int downloadWait, String filename, String renameTo) {
-    return downloadFile(isUseJS(), downloadWait, filename, renameTo, false);
-  }
-
-  default CFile downloadFile(boolean useJS, int downloadWait, String filename, String renameTo) {
-    return downloadFile(useJS, downloadWait, filename, renameTo, false);
+    return downloadFile(downloadWait, filename, renameTo, false);
   }
 
   default CFile downloadFile(int clickWait, int downloadWait, String filename, String renameTo) {
-    return downloadFile(isUseJS(), clickWait, downloadWait, filename, renameTo, false);
+    return downloadFile(clickWait, downloadWait, filename, renameTo, false);
   }
 
-  default CFile downloadFile(
-      boolean useJS, int clickWait, int downloadWait, String filename, String renameTo) {
-    return downloadFile(useJS, clickWait, downloadWait, filename, renameTo, false);
-  }
-
-  default CFile downloadFile(
-      int downloadWait, String filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(isUseJS(), getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  default CFile downloadFile(
-      boolean useJS, int downloadWait, String filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(useJS, getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
+  default CFile downloadFile(int downloadWait, String filename, String renameTo, boolean expectedAlert) {
+    return downloadFile(getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
   }
 
   default CFile downloadFile(
       int clickWait, int downloadWait, String filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(isUseJS(), clickWait, downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  default CFile downloadFile(
-      boolean useJS,
-      int clickWait,
-      int downloadWait,
-      String filename,
-      String renameTo,
-      boolean expectedAlert) {
-    click(useJS, clickWait);
+    click(clickWait);
     if (expectedAlert) {
       getDriver().getAlert().accept();
     }
@@ -346,53 +322,23 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   default CFile downloadFile(Pattern filename, String renameTo) {
-    return downloadFile(isUseJS(), getWaitSec(), filename, renameTo, false);
-  }
-
-  default CFile downloadFile(boolean useJS, Pattern filename, String renameTo) {
-    return downloadFile(useJS, getWaitSec(), filename, renameTo, false);
+    return downloadFile(getWaitSec(), filename, renameTo, false);
   }
 
   default CFile downloadFile(int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(isUseJS(), downloadWait, filename, renameTo, false);
-  }
-
-  default CFile downloadFile(boolean useJS, int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(useJS, downloadWait, filename, renameTo, false);
+    return downloadFile(downloadWait, filename, renameTo, false);
   }
 
   default CFile downloadFile(int clickWait, int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(isUseJS(), clickWait, downloadWait, filename, renameTo, false);
+    return downloadFile(clickWait, downloadWait, filename, renameTo, false);
   }
 
-  default CFile downloadFile(
-      boolean useJS, int clickWait, int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(useJS, clickWait, downloadWait, filename, renameTo, false);
+  default CFile downloadFile(int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
+    return downloadFile(getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
   }
 
-  default CFile downloadFile(
-      int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(isUseJS(), getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  default CFile downloadFile(
-      boolean useJS, int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(useJS, getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  default CFile downloadFile(
-      int clickWait, int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(isUseJS(), clickWait, downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  default CFile downloadFile(
-      boolean useJS,
-      int clickWait,
-      int downloadWait,
-      Pattern filename,
-      String renameTo,
-      boolean expectedAlert) {
-    click(useJS, clickWait);
+  default CFile downloadFile(int clickWait, int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
+    click(clickWait);
     if (expectedAlert) {
       getDriver().getAlert().accept();
     }
@@ -443,26 +389,23 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
 
   // Input
 
+  default void setText(Date date, String format) {
+    setText(date, format, getWaitSec());
+  }
+
+  default void setText(Date date, String format, int waitSec) {
+    setText(CDate.of(date).toFormat(format), waitSec);
+  }
+
   default void setText(String text) {
     setText(text, getWaitSec());
   }
 
   default void setText(String text, int waitSec) {
-    waitUntil(
-        "Set Text",
-        waitSec,
-        null,
-        el -> {
-          if (isUseJS()) {
-            getDriver()
-                .executeScript(
-                    "arguments[0].value=" + Quotes.escape(StringUtils.defaultString(text)) + ";",
-                    el);
-          } else {
-            el.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE), text);
-          }
-          return true;
-        });
+    waitUntil("Set Text", waitSec, null, el -> {
+      el.sendKeys(getClearKeys(), text);
+      return true;
+    });
   }
 
   default void setTextAndEnter(String text) {
@@ -475,7 +418,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
         waitSec,
         null,
         el -> {
-          el.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE), text, Keys.ENTER);
+          el.sendKeys(getClearKeys(), text, Keys.ENTER);
           return true;
         });
   }
@@ -490,7 +433,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
         waitSec,
         null,
         el -> {
-          el.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE), text, Keys.TAB);
+          el.sendKeys(getClearKeys(), text, Keys.TAB);
           return true;
         });
   }
@@ -505,7 +448,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
         waitSec,
         null,
         el -> {
-          el.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+          el.sendKeys(getClearKeys());
           return true;
         });
   }
@@ -528,7 +471,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
         waitSec,
         null,
         el -> {
-          el.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+          el.sendKeys(getClearKeys());
+
           if (intervalInMilliSeconds < 10) {
             el.sendKeys(StringUtils.defaultString(text).split(""));
           } else {
@@ -605,4 +549,13 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   private void _clickWithJS(WebElement webElement) {
     getDriver().executeScript("arguments[0].click();", webElement);
   }
+
+
+  private static String getClearKeys() {
+    if (CSystemUtil.getPlatform().isMac())
+      return Keys.chord(Keys.COMMAND, "a", Keys.DELETE);
+
+    return Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
+  }
+
 }

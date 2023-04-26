@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CObjectUtil;
 import org.catools.web.config.CWebConfigs;
@@ -22,6 +23,7 @@ import java.util.function.Function;
  * Driver close the alert when it opens and we try to get Title or URL. So to avoid any impact on
  * flow we do not perform any session update and we do not call listeners
  */
+@Slf4j
 @Data
 @Accessors(chain = true)
 public class CDriverSession {
@@ -55,6 +57,7 @@ public class CDriverSession {
 
   public <T> T performActionOnDriver(String actionName, Function<RemoteWebDriver, T> consumer) {
     if (webDriver == null) {
+      log.warn("Cannot perform action on driver, web driver is not set.");
       return null;
     }
 

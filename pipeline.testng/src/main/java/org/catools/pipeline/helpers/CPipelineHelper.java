@@ -23,6 +23,8 @@ import static org.catools.pipeline.cache.CPipelineCacheManager.*;
 public class CPipelineHelper {
 
   public static CPipeline getPipeline() {
+    if (!CPipelineTestNGConfigs.isEnabled()) return null;
+
     if (CPipelineTestNGConfigs.alwaysCreateNewPipeline()) {
       return buildPipeline();
     }
@@ -35,6 +37,8 @@ public class CPipelineHelper {
   }
 
   public static void addExecution(CPipeline pipeline, CTestResult testResult) {
+    if (!CPipelineTestNGConfigs.isEnabled()) return;
+
     CPipelineExecution execution = new CPipelineExecution();
 
     List<CPipelineExecutionMetaData> executionMetaData = new ArrayList<>();

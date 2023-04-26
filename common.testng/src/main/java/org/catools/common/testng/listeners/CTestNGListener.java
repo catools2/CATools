@@ -27,13 +27,6 @@ public class CTestNGListener implements CITestNGListener, IMethodInterceptor, IA
   private static final CList<ISuite> suites = new CList<>();
 
   public CTestNGListener() {
-    listeners.add(new CExecutionResultListener());
-    listeners.add(new CExecutionStatisticListener());
-    listeners.add(new CIMethodInterceptor());
-    listeners.add(new FailedReporter());
-    listeners.add(new EmailableReporter2());
-    listeners.add(new SuiteHTMLReporter());
-    listeners.add(new TestHTMLReporter());
   }
 
   public static CList<ITestNGListener> getListeners() {

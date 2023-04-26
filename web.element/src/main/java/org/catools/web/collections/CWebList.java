@@ -42,12 +42,12 @@ public class CWebList<E extends CWebElement> implements CWebIterable<E> {
     this.name = name;
     this.locator = xpathLocator;
     this.controlBuilder = controlBuilder;
-    this.waitForFirstElementInSecond = waitForFirstElementInSecond;
-    this.waitForOtherElementInSecond = waitForOtherElementInSecond;
+    this.waitForFirstElementInSecond = Math.max(1, waitForFirstElementInSecond);
+    this.waitForOtherElementInSecond = Math.max(1, waitForOtherElementInSecond);
   }
 
   public void forEach(Consumer<E> function, int firstWaitSecs) {
-    forEach(function, firstWaitSecs, 1);
+    forEach(function, firstWaitSecs, this.waitForOtherElementInSecond);
   }
 
   public void forEach(Consumer<E> function, int firstWaitSecs, int waitSecs) {
