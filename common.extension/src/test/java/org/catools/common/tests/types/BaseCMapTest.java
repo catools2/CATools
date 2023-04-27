@@ -18,7 +18,7 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testClear() {
     T map = getStringLinkedMap1();
     map.clear();
-    map.verifyIsEmpty(this, "CLinkedMapTest1 ::> testClear ");
+    map.verifyIsEmpty("CLinkedMapTest1 ::> testClear ");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -39,8 +39,7 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
     verify.String.equals(map.get("Z"), "Z", "computeIfAbsent record from map worked");
     map.computeIfAbsent("Z", s -> "X");
     verify.Int.equals(map.size(), 4, "computeIfAbsent record from map change the size");
-    verify.String.equals(
-        map.get("Z"), "Z", "computeIfAbsent record from map did noy change anything");
+    verify.String.equals(map.get("Z"), "Z", "computeIfAbsent record from map did noy change anything");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -51,8 +50,7 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
     verify.Bool.isFalse(map.containsKey("Z"), "computeIfAbsent did not do anything");
     map.computeIfPresent("A", (k, v) -> "X");
     verify.Int.equals(map.size(), 3, "computeIfAbsent record from map change the size");
-    verify.String.equals(
-        map.get("A"), "X", "computeIfAbsent record from map did noy change anything");
+    verify.String.equals(map.get("A"), "X", "computeIfAbsent record from map did noy change anything");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -65,15 +63,10 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testContainsValue() {
     CVerifier verifier = new CVerifier();
     T map = getStringLinkedMap1();
-    verifier.Int.equals(
-        map.size(), map.asSet().size(), "CLinkedMapTest1 ::> testContainsValue ::> Size Matched");
-    map.values()
-        .forEach(
-            entry -> {
-              verifier.Bool.isTrue(
-                  map.containsValue(entry),
-                  "CLinkedMapTest1 ::> testContainsValue ::> Contains element");
-            });
+    verifier.Int.equals(map.size(), map.asSet().size(), "CLinkedMapTest1 ::> testContainsValue ::> Size Matched");
+    map.values().forEach(entry -> {
+      verifier.Bool.isTrue(map.containsValue(entry), "CLinkedMapTest1 ::> testContainsValue ::> Contains element");
+    });
     verifier.verify();
   }
 
@@ -81,18 +74,11 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testEntrySet() {
     CVerifier verifier = new CVerifier();
     CSet<Map.Entry<String, String>> strings = getStringLinkedMap1().asSet();
-    strings.verifyContains(
-        verifier,
-        new HashMap.SimpleEntry<>("A", "1"),
-        "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
-    strings.verifyContains(
-        verifier,
-        new HashMap.SimpleEntry<>("B", "2"),
-        "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
-    strings.verifyContains(
-        verifier,
-        new HashMap.SimpleEntry<>("C", "3"),
-        "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
+    verifier.Collection.contains(strings, new HashMap.SimpleEntry<>("A", "1"), "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
+
+    verifier.Collection.contains(strings, new HashMap.SimpleEntry<>("B", "2"), "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
+
+    verifier.Collection.contains(strings, new HashMap.SimpleEntry<>("C", "3"), "CLinkedMapTest1 ::> testEntrySet ::> Entry Set Contains Correct Values");
     verifier.verify();
   }
 
@@ -100,23 +86,19 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testForEach() {
     T map = getStringLinkedMap1();
     CHashMap<String, String> map2 = new CHashMap<>();
-    map.forEach(
-        (k, v) -> {
-          map2.put(k, v);
-        });
-    map.verifyEquals(this, map2, "CLinkedMapTest1 ::> testForEach ::> Size Matched");
+    map.forEach((k, v) -> {
+      map2.put(k, v);
+    });
+    map.verifyEquals(map2, "CLinkedMapTest1 ::> testForEach ::> Size Matched");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testGet() {
     CVerifier verifier = new CVerifier();
     T map = getStringLinkedMap1();
-    map.keySet()
-        .forEach(
-            k -> {
-              map.verifyContains(
-                  verifier, k, map.get(k), "CLinkedMapTest1 ::> testGet ::> Contains element");
-            });
+    map.keySet().forEach(k -> {
+      verifier.Map.contains(map, k, map.get(k), "CLinkedMapTest1 ::> testGet ::> Contains element");
+    });
     verifier.verify();
   }
 
@@ -124,20 +106,10 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testGetOrDefault() {
     CVerifier verifier = new CVerifier();
     T map = getStringLinkedMap1();
-    map.keySet()
-        .forEach(
-            k -> {
-              map.verifyContains(
-                  verifier,
-                  k,
-                  map.getOrDefault(k, "Z"),
-                  "CLinkedMapTest1 ::> testGetOrDefault ::> Contains element");
-            });
-    map.verifyContains(
-        verifier,
-        "A",
-        map.getOrDefault("Z", "1"),
-        "CLinkedMapTest1 ::> testGetOrDefault ::> Contains element");
+    map.keySet().forEach(k -> {
+      verifier.Map.contains(map, k, map.getOrDefault(k, "Z"), "CLinkedMapTest1 ::> testGetOrDefault ::> Contains element");
+    });
+    verifier.Map.contains(map, "A", map.getOrDefault("Z", "1"), "CLinkedMapTest1 ::> testGetOrDefault ::> Contains element");
     verifier.verify();
   }
 
@@ -234,9 +206,9 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   public void testReplaceAll() {
     T map = getStringLinkedMap1();
     map.replaceAll((s, s2) -> s.equals("A") ? "Z" : s2);
-    map.verifyContains(this, "B", "2", "B not changed");
-    map.verifyContains(this, "C", "3", "C not changed");
-    map.verifyContains(this, "A", "Z", "A changed");
+    map.verifyContains("B", "2", "B not changed");
+    map.verifyContains("C", "3", "C not changed");
+    map.verifyContains("A", "Z", "A changed");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -248,10 +220,7 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testToString() {
     CVerifier verifier = new CVerifier();
-    verifier.String.equals(
-        getStringLinkedMap1().toString().replaceAll(System.lineSeparator(), ""),
-        "{  \"A\" : \"1\",  \"B\" : \"2\",  \"C\" : \"3\"}",
-        "CMapTest ::> testToString ");
+    verifier.String.equals(getStringLinkedMap1().toString().replaceAll(System.lineSeparator(), ""), "{  \"A\" : \"1\",  \"B\" : \"2\",  \"C\" : \"3\"}", "CMapTest ::> testToString ");
     verifier.verify();
   }
 

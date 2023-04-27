@@ -1,15 +1,18 @@
 package org.catools.sql;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.types.CDynamicNumberExtension;
 import org.catools.common.extensions.types.CDynamicObjectExtension;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.extensions.types.interfaces.CDynamicCollectionExtension;
 import org.catools.common.extensions.types.interfaces.CDynamicDateExtension;
 import org.catools.common.extensions.types.interfaces.CDynamicMapExtension;
+import org.slf4j.Logger;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
+@Slf4j
 public class CSqlDataSourceExtension {
 
   public static class String {
@@ -56,6 +59,11 @@ public class CSqlDataSourceExtension {
         int interval,
         java.lang.String dbSource) {
       return new CDynamicDateExtension() {
+        @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
+
         @Override
         public java.util.Date get() {
           return CSqlDataSource.QueryDate.query(sql, paramSource, dbSource);
@@ -218,6 +226,11 @@ public class CSqlDataSourceExtension {
         java.lang.String dbSource) {
       return new CDynamicCollectionExtension<T>() {
         @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
+
+        @Override
         public Iterable<T> get() {
           return CSqlDataSource.QueryList.query(sql, paramSource, rowMapper, dbSource);
         }
@@ -242,6 +255,10 @@ public class CSqlDataSourceExtension {
         int interval,
         java.lang.String dbSource) {
       return new CDynamicCollectionExtension<T>() {
+        @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
         @Override
         public Iterable<T> get() {
           return CSqlDataSource.QueryList.query(sql, paramSource, elementType, dbSource);
@@ -274,6 +291,10 @@ public class CSqlDataSourceExtension {
         java.lang.String dbSource) {
       return new CDynamicMapExtension<>() {
         @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
+        @Override
         public java.util.Map<java.lang.String, java.lang.Object> get() {
           return CSqlDataSource.QueryMap.query(sql, paramSource, dbSource);
         }
@@ -304,6 +325,10 @@ public class CSqlDataSourceExtension {
         int interval,
         java.lang.String dbSource) {
       return new CDynamicObjectExtension<>() {
+        @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
         @Override
         public java.lang.Object get() {
           return CSqlDataSource.QueryObject.query(sql, paramSource, dbSource);
@@ -340,6 +365,10 @@ public class CSqlDataSourceExtension {
         java.lang.String dbSource) {
       return new CDynamicObjectExtension<T>() {
         @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
+        @Override
         public T get() {
           return CSqlDataSource.QueryObject.query(sql, paramSource, rowMapper, dbSource);
         }
@@ -370,6 +399,10 @@ public class CSqlDataSourceExtension {
         int interval,
         java.lang.String dbSource) {
       return new CDynamicStringExtension() {
+        @Override
+        public Logger getLogger() {
+          return CSqlDataSourceExtension.log;
+        }
         @Override
         public java.lang.String get() {
           return CSqlDataSource.QueryBlob.queryAsString(sql, paramSource, dbSource);

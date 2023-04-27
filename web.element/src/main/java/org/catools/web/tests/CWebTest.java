@@ -15,6 +15,7 @@ import org.catools.web.drivers.CDriver;
 import org.catools.web.drivers.CDriverProvider;
 import org.catools.web.drivers.CDriverSession;
 import org.catools.web.drivers.providers.CChromeDriverProvider;
+import org.catools.web.drivers.providers.CEdgeDriverProvider;
 import org.catools.web.drivers.providers.CFireFoxDriverProvider;
 import org.catools.web.listeners.CDriverListener;
 import org.catools.web.pages.CWebPage;
@@ -29,10 +30,8 @@ import java.util.function.Supplier;
 
 public class CWebTest<DR extends CDriver> extends CTest {
   protected static final int DEFAULT_TIMEOUT = CDriverConfigs.getTimeout();
-
   private static final String DEFAULT_SESSION = "DEFAULT_SESSION";
   private final ThreadLocal<String> currentSession = ThreadLocal.withInitial(() -> DEFAULT_SESSION);
-
   private final CMap<String, DR> drivers = new CHashMap<>();
 
   public CWebTest() {
@@ -79,8 +78,7 @@ public class CWebTest<DR extends CDriver> extends CTest {
     }
     String fileName = getName() + "-" + filename + "-" + CDate.now().toTimeStampForFileName();
     try {
-      CFile output =
-          CWebConfigs.getScreenShotsFolder().getChildFile(fileName.replaceAll("\\W", "_") + ".png");
+      CFile output = CWebConfigs.getScreenShotsFolder().getChildFile(fileName.replaceAll("\\W", "_") + ".png");
       BufferedImage baseValue = driver.ScreenShot.get();
       if (baseValue != null) {
         CImageUtil.writePNG(baseValue, output);
@@ -116,16 +114,12 @@ public class CWebTest<DR extends CDriver> extends CTest {
   }
 
   public void quitAll() {
-    drivers
-        .values()
-        .getAll(dr -> dr != null)
-        .forEach(
-            dr -> {
-              try {
-                dr.quit();
-              } catch (Throwable t) {
-              }
-            });
+    drivers.values().getAll(dr -> dr != null).forEach(dr -> {
+      try {
+        dr.quit();
+      } catch (Throwable t) {
+      }
+    });
   }
 
   public void quit() {
@@ -136,13 +130,10 @@ public class CWebTest<DR extends CDriver> extends CTest {
       } finally {
         if (driver != null) {
           try {
-            CRetry.retry(
-                idx -> {
-                  driver.quit();
-                  return true;
-                },
-                2,
-                1000);
+            CRetry.retry(idx -> {
+              driver.quit();
+              return true;
+            }, 2, 1000);
           } catch (Throwable t) {
           }
         }
@@ -164,8 +155,7 @@ public class CWebTest<DR extends CDriver> extends CTest {
     return open(url, !isCurrentSessionActive(), expectedPage);
   }
 
-  public <P extends CWebPage<DR>> P open(
-      String url, boolean restartSession, Supplier<P> expectedPage) {
+  public <P extends CWebPage<DR>> P open(String url, boolean restartSession, Supplier<P> expectedPage) {
     if (restartSession) {
       logger.trace("start new session");
       getDriver().startSession();
@@ -182,26 +172,22 @@ public class CWebTest<DR extends CDriver> extends CTest {
     getDriverSession().addListeners(listeners);
   }
 
-  protected final void addBeforeDriverInitListener(
-      Consumer<Capabilities> beforeInitDriverConsumer) {
-    addDriverListeners(
-        new CDriverListener() {
-          @Override
-          public void beforeInit(Capabilities capabilities) {
-            beforeInitDriverConsumer.accept(capabilities);
-          }
-        });
+  protected final void addBeforeDriverInitListener(Consumer<Capabilities> beforeInitDriverConsumer) {
+    addDriverListeners(new CDriverListener() {
+      @Override
+      public void beforeInit(Capabilities capabilities) {
+        beforeInitDriverConsumer.accept(capabilities);
+      }
+    });
   }
 
-  protected final void addAfterDriverInitListener(
-      Consumer<RemoteWebDriver> afterInitDriverConsumer) {
-    addDriverListeners(
-        new CDriverListener() {
-          @Override
-          public void afterInit(RemoteWebDriver remoteWebDriver) {
-            afterInitDriverConsumer.accept(remoteWebDriver);
-          }
-        });
+  protected final void addAfterDriverInitListener(Consumer<RemoteWebDriver> afterInitDriverConsumer) {
+    addDriverListeners(new CDriverListener() {
+      @Override
+      public void afterInit(RemoteWebDriver remoteWebDriver) {
+        afterInitDriverConsumer.accept(remoteWebDriver);
+      }
+    });
   }
 
   protected CDriverSession getDriverSession() {
@@ -217,31 +203,32 @@ public class CWebTest<DR extends CDriver> extends CTest {
   }
 
 
-  public CFireFoxDriverProvider switchToFireFox() {
-    CFireFoxDriverProvider driverProvider = new CFireFoxDriverProvider();
-    switchDriverProvider(driverProvider);
-    return driverProvider;
+  public void switchToFireFox() {
+    switchDriverProvider(new CFireFoxDriverProvider());
   }
 
-  public CChromeDriverProvider switchToChrome() {
-    CChromeDriverProvider driverProvider = new CChromeDriverProvider();
-    switchDriverProvider(driverProvider);
-    return driverProvider;
+  public void switchToChrome() {
+    switchDriverProvider(new CChromeDriverProvider());
+  }
+
+  public void switchToChromeHeadless() {
+    switchDriverProvider(new CChromeDriverProvider().setHeadless(true));
+  }
+
+  public void switchToEdge() {
+    switchDriverProvider(new CEdgeDriverProvider());
   }
 
   @SuppressWarnings("unchecked")
   protected DR getDefaultDriver() {
-    CDriverProvider driverProvider = null;
-
-    if (CWebConfigs.getCurrentBrowser().isChrome()) {
-      driverProvider = new CChromeDriverProvider();
-    } else if (CWebConfigs.getCurrentBrowser().isFirefox()) {
+    CDriverProvider driverProvider;
+    if (CWebConfigs.getCurrentBrowser().isFirefox()) {
       driverProvider = new CFireFoxDriverProvider();
+    } else if (CWebConfigs.getCurrentBrowser().isEdge()) {
+      driverProvider = new CEdgeDriverProvider();
+    } else {
+      driverProvider = new CChromeDriverProvider();
     }
-
-    CDriverSession driverSession = new CDriverSession(driverProvider);
-    driverSession.startSession();
-
-    return (DR) new CDriver(driverSession);
+    return (DR) new CDriver(new CDriverSession(driverProvider));
   }
 }

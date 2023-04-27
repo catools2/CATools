@@ -2,13 +2,14 @@ package org.catools.common.utils;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-@Log4j2
+@Slf4j
 @UtilityClass
 public class CInputStreamUtil {
   public static String read(InputStream inputStream) {
@@ -30,14 +31,14 @@ public class CInputStreamUtil {
         try {
           inputStream.close();
         } catch (IOException e) {
-          log.error(e);
+          log.error("Failed to close input stream.", e);
         }
       }
       if (br != null) {
         try {
           br.close();
         } catch (IOException e) {
-          log.error(e);
+          log.error("Failed to close buffer reader.", e);
         }
       }
     }

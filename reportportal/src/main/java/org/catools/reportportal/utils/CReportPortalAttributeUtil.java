@@ -2,12 +2,12 @@ package org.catools.reportportal.utils;
 
 import com.epam.ta.reportportal.ws.model.attribute.ItemAttributesRQ;
 import lombok.experimental.UtilityClass;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 
 @UtilityClass
-@Log4j2
+@Slf4j
 public class CReportPortalAttributeUtil {
   public static CSet<ItemAttributesRQ> getAttributes(String attributes) {
     CSet<ItemAttributesRQ> output = new CSet<>();

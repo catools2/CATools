@@ -1,18 +1,16 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.CMapVerifier;
+import org.slf4j.Logger;
 
 import java.util.Map;
 
 /**
  * Map verification class contains all verification method which is related to Map
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerification<T> {
-  public CMapVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CMapVerification extends CBaseVerification {
 
   /**
    * Verify that actual map contains the expected entry.
@@ -23,7 +21,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void contains(Map<K, V> actual, Map.Entry<K, V> expected) {
-    toVerifier(actual).verifyContains(verifier, expected);
+    toVerifier(actual).verifyContains(expected);
   }
 
   /**
@@ -31,14 +29,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void contains(
       Map<K, V> actual, Map.Entry<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyContains(verifier, expected, message, params);
+    toVerifier(actual).verifyContains(expected, message, params);
   }
 
   /**
@@ -51,7 +49,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>           type of map value
    */
   public <K, V> void contains(Map<K, V> actual, K expectedKey, V expectedValue) {
-    toVerifier(actual).verifyContains(verifier, expectedKey, expectedValue);
+    toVerifier(actual).verifyContains(expectedKey, expectedValue);
   }
 
   /**
@@ -60,7 +58,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param actual        map to compare
    * @param expectedKey   key to compare
    * @param expectedValue value to compare
-   * @param message       information about the propose of this verification
+   * @param message       information about the purpose of this verification
    * @param params        parameters in case if message is a format {@link String#format}
    * @param <K>           type of map key
    * @param <V>           type of map value
@@ -71,7 +69,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
       V expectedValue,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyContains(verifier, expectedKey, expectedValue, message, params);
+    toVerifier(actual).verifyContains(expectedKey, expectedValue, message, params);
   }
 
   /**
@@ -84,7 +82,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void containsAll(Map<K, V> actual, Map<K, V> expected) {
-    toVerifier(actual).verifyContainsAll(verifier, expected);
+    toVerifier(actual).verifyContainsAll(expected);
   }
 
   /**
@@ -93,14 +91,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void containsAll(
       Map<K, V> actual, Map<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsAll(verifier, expected, message, params);
+    toVerifier(actual).verifyContainsAll(expected, message, params);
   }
 
   /**
@@ -112,7 +110,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void containsNone(Map<K, V> actual, Map<K, V> expected) {
-    toVerifier(actual).verifyContainsNone(verifier, expected);
+    toVerifier(actual).verifyContainsNone(expected);
   }
 
   /**
@@ -120,14 +118,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void containsNone(
       Map<K, V> actual, Map<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsNone(verifier, expected, message, params);
+    toVerifier(actual).verifyContainsNone(expected, message, params);
   }
 
   /**
@@ -140,7 +138,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>           type of map value
    */
   public <K, V> void emptyOrContains(Map<K, V> actual, K expectedKey, V expectedValue) {
-    toVerifier(actual).verifyEmptyOrContains(verifier, expectedKey, expectedValue);
+    toVerifier(actual).verifyEmptyOrContains(expectedKey, expectedValue);
   }
 
   /**
@@ -149,7 +147,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param actual        value to compare
    * @param expectedKey   key to compare
    * @param expectedValue value to compare
-   * @param message       information about the propose of this verification
+   * @param message       information about the purpose of this verification
    * @param params        parameters in case if message is a format {@link String#format}
    * @param <K>           type of map key
    * @param <V>           type of map value
@@ -160,7 +158,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
       V expectedValue,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEmptyOrContains(verifier, expectedKey, expectedValue, message, params);
+    toVerifier(actual).verifyEmptyOrContains(expectedKey, expectedValue, message, params);
   }
 
   /**
@@ -172,7 +170,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void emptyOrContains(Map<K, V> actual, Map.Entry<K, V> expected) {
-    toVerifier(actual).verifyEmptyOrContains(verifier, expected);
+    toVerifier(actual).verifyEmptyOrContains(expected);
   }
 
   /**
@@ -180,14 +178,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void emptyOrContains(
       Map<K, V> actual, Map.Entry<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEmptyOrContains(verifier, expected, message, params);
+    toVerifier(actual).verifyEmptyOrContains(expected, message, params);
   }
 
   /**
@@ -200,7 +198,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>           type of map value
    */
   public <K, V> void emptyOrNotContains(Map<K, V> actual, K expectedKey, V expectedValue) {
-    toVerifier(actual).verifyEmptyOrNotContains(verifier, expectedKey, expectedValue);
+    toVerifier(actual).verifyEmptyOrNotContains(expectedKey, expectedValue);
   }
 
   /**
@@ -209,7 +207,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param actual        value to compare
    * @param expectedKey   key to compare
    * @param expectedValue value to compare
-   * @param message       information about the propose of this verification
+   * @param message       information about the purpose of this verification
    * @param params        parameters in case if message is a format {@link String#format}
    * @param <K>           type of map key
    * @param <V>           type of map value
@@ -221,7 +219,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
       final String message,
       final Object... params) {
     toVerifier(actual)
-        .verifyEmptyOrNotContains(verifier, expectedKey, expectedValue, message, params);
+        .verifyEmptyOrNotContains(expectedKey, expectedValue, message, params);
   }
 
   /**
@@ -233,7 +231,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void emptyOrNotContains(Map<K, V> actual, Map.Entry<K, V> expected) {
-    toVerifier(actual).verifyEmptyOrNotContains(verifier, expected);
+    toVerifier(actual).verifyEmptyOrNotContains(expected);
   }
 
   /**
@@ -241,14 +239,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void emptyOrNotContains(
       Map<K, V> actual, Map.Entry<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEmptyOrNotContains(verifier, expected, message, params);
+    toVerifier(actual).verifyEmptyOrNotContains(expected, message, params);
   }
 
   /**
@@ -262,7 +260,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void equals(Map<K, V> actual, Map<K, V> expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -272,14 +270,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   map to compare
    * @param expected map to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void equals(
       Map<K, V> actual, Map<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -293,7 +291,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void notEquals(Map<K, V> actual, Map<K, V> expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -303,14 +301,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   map to compare
    * @param expected map to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void notEquals(
       Map<K, V> actual, Map<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -321,20 +319,20 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>    type of map value
    */
   public <K, V> void isEmpty(Map<K, V> actual) {
-    toVerifier(actual).verifyIsEmpty(verifier);
+    toVerifier(actual).verifyIsEmpty();
   }
 
   /**
    * Verify that actual map is empty.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    * @param <K>     type of map key
    * @param <V>     type of map value
    */
   public <K, V> void isEmpty(Map<K, V> actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmpty(verifier, message, params);
+    toVerifier(actual).verifyIsEmpty(message, params);
   }
 
   /**
@@ -345,20 +343,20 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>    type of map value
    */
   public <K, V> void isNotEmpty(Map<K, V> actual) {
-    toVerifier(actual).verifyIsNotEmpty(verifier);
+    toVerifier(actual).verifyIsNotEmpty();
   }
 
   /**
    * Verify that actual map is not empty. (might contains null values)
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    * @param <K>     type of map key
    * @param <V>     type of map value
    */
   public <K, V> void isNotEmpty(Map<K, V> actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotEmpty(verifier, message, params);
+    toVerifier(actual).verifyIsNotEmpty(message, params);
   }
 
   /**
@@ -370,7 +368,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void notContains(Map<K, V> actual, Map.Entry<K, V> expected) {
-    toVerifier(actual).verifyNotContains(verifier, expected);
+    toVerifier(actual).verifyNotContains(expected);
   }
 
   /**
@@ -378,14 +376,14 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void notContains(
       Map<K, V> actual, Map.Entry<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(verifier, expected, message, params);
+    toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
   /**
@@ -398,7 +396,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>           type of map value
    */
   public <K, V> void notContains(Map<K, V> actual, K expectedKey, V expectedValue) {
-    toVerifier(actual).verifyNotContains(verifier, expectedKey, expectedValue);
+    toVerifier(actual).verifyNotContains(expectedKey, expectedValue);
   }
 
   /**
@@ -407,7 +405,7 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param actual        value to compare
    * @param expectedKey   key to compare
    * @param expectedValue value to compare
-   * @param message       information about the propose of this verification
+   * @param message       information about the purpose of this verification
    * @param params        parameters in case if message is a format {@link String#format}
    * @param <K>           type of map key
    * @param <V>           type of map value
@@ -418,12 +416,12 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
       V expectedValue,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotContains(verifier, expectedKey, expectedValue, message, params);
+    toVerifier(actual).verifyNotContains(expectedKey, expectedValue, message, params);
   }
 
   /**
    * Verify that actual map does not contain all entries from the expected map. Please note that
-   * actual map might have some of entries but the point is to ensure that not all expected entries
+   * actual map might have some entries but the point is to ensure that not all expected entries
    * are exist in it.
    *
    * @param actual   value to compare
@@ -432,28 +430,150 @@ public class CMapVerification<T extends CVerificationBuilder> extends CBaseVerif
    * @param <V>      type of map value
    */
   public <K, V> void notContainsAll(Map<K, V> actual, Map<K, V> expected) {
-    toVerifier(actual).verifyNotContainsAll(verifier, expected);
+    toVerifier(actual).verifyNotContainsAll(expected);
   }
 
   /**
    * Verify that actual map does not contain all entries from the expected map. Please note that
-   * actual map might have some of entries but the point is to ensure that not all expected entries
+   * actual map might have some entries but the point is to ensure that not all expected entries
    * are exist in it.
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    * @param <K>      type of map key
    * @param <V>      type of map value
    */
   public <K, V> void notContainsAll(
       Map<K, V> actual, Map<K, V> expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContainsAll(verifier, expected, message, params);
+    toVerifier(actual).verifyNotContainsAll(expected, message, params);
+  }
+
+
+  /**
+   * Verify the map size is equal to expected value.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   */
+  public <K, V> void sizeEquals(Map<K, V> actual, int expected) {
+    toVerifier(actual).verifySizeEquals(expected);
+  }
+
+  /**
+   * Verify the map size is equal to expected value.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   * @param message  information about the purpose of this verification
+   * @param params   parameters for message if message is a string format
+   */
+  public <K, V> void sizeEquals(Map<K, V> actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifySizeEquals(expected, message, params);
+  }
+
+  /**
+   * Verify that actual has value greater than expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   */
+  public <K, V> void sizeIsGreaterThan(Map<K, V> actual, int expected) {
+    toVerifier(actual).verifySizeIsGreaterThan(expected);
+  }
+
+  /**
+   * Verify that actual has value greater than expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   * @param message  information about the purpose of this verification
+   * @param params   parameters for message if message is a string format
+   */
+  public <K, V> void sizeIsGreaterThan(Map<K, V> actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifySizeIsGreaterThan(expected, message, params);
+  }
+
+  /**
+   * Verify that actual has value greater than or equals to expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   */
+  public <K, V> void sizeIsGreaterThanOrEqual(Map<K, V> actual, int expected) {
+    toVerifier(actual).verifySizeIsGreaterThanOrEqual(expected);
+  }
+
+  /**
+   * Verify that actual has value greater than or equals to expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   * @param message  information about the purpose of this verification
+   * @param params   parameters for message if message is a string format
+   */
+  public <K, V> void sizeIsGreaterThanOrEqual(Map<K, V> actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifySizeIsGreaterThanOrEqual(expected, message, params);
+  }
+
+  /**
+   * Verify that actual has value less than expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   */
+  public <K, V> void sizeIsLessThan(Map<K, V> actual, int expected) {
+    toVerifier(actual).verifySizeIsLessThan(expected);
+  }
+
+  /**
+   * Verify that actual has value less than expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   * @param message  information about the purpose of this verification
+   * @param params   parameters for message if message is a string format
+   */
+  public <K, V> void sizeIsLessThan(Map<K, V> actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifySizeIsLessThan(expected, message, params);
+  }
+
+  /**
+   * Verify that actual has value less than or equals to expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   */
+  public <K, V> void sizeIsLessThanOrEqual(Map<K, V> actual, int expected) {
+    toVerifier(actual).verifySizeIsLessThanOrEqual(expected);
+  }
+
+  /**
+   * Verify that actual has value less than or equals to expected.
+   *
+   * @param actual   value to compare
+   * @param expected value to compare
+   * @param message  information about the purpose of this verification
+   * @param params   parameters for message if message is a string format
+   */
+  public <K, V> void sizeIsLessThanOrEqual(Map<K, V> actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifySizeIsLessThanOrEqual(expected, message, params);
   }
 
   private <K, V> CMapVerifier<K, V> toVerifier(Map<K, V> actual) {
+    CBaseVerification that = this;
     return new CMapVerifier<K, V>() {
+      @Override
+      public Logger getLogger() {
+        return CMapVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

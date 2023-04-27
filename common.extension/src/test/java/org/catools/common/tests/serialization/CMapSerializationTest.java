@@ -19,7 +19,7 @@ public class CMapSerializationTest extends CBaseUnitTest {
     a.put("B", "FB");
     a.put("C", "FC");
     CHashMap<String, String> read = CJsonUtil.read(CJsonUtil.toString(a), CHashMap.class);
-    read.verifyContainsAll(this, a, "(De)serialization worked with CMap.");
+    read.verifyContainsAll(a, "(De)serialization worked with CMap.");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -29,7 +29,7 @@ public class CMapSerializationTest extends CBaseUnitTest {
     a.put("B", "FB");
     a.put("C", "FC");
     CHashMap<String, String> read = CJsonUtil.read(CJsonUtil.toString(a), CHashMap.class);
-    read.verifyContainsAll(this, a, "(De)serialization worked with CMap.");
+    read.verifyContainsAll(a, "(De)serialization worked with CMap.");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -39,6 +39,6 @@ public class CMapSerializationTest extends CBaseUnitTest {
     a.put("B", "FB");
     a.put("C", "FC");
     CLinkedMap<String, String> read = CJsonUtil.read(CJsonUtil.toString(a), CLinkedMap.class);
-    read.verifyContainsAll(this, a, "(De)serialization worked with CMap.");
+    read.verifyContainsAll(a, "(De)serialization worked with CMap.");
   }
 }

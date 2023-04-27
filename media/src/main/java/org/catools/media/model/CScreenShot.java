@@ -1,15 +1,18 @@
 package org.catools.media.model;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
 import org.catools.media.enums.CImageComparisonType;
-import org.catools.media.extensions.types.interfaces.CImageComparisionExtension;
+import org.catools.media.extensions.types.interfaces.CImageComparisonExtension;
 import org.catools.media.utils.CImageComparisionUtil;
 import org.catools.media.utils.CImageUtil;
+import org.slf4j.Logger;
 
 import java.awt.image.BufferedImage;
 
-public abstract class CScreenShot implements CImageComparisionExtension {
+@Slf4j
+public abstract class CScreenShot implements CImageComparisonExtension {
 
   @Override
   public boolean isEqual(BufferedImage expected) {
@@ -20,6 +23,11 @@ public abstract class CScreenShot implements CImageComparisionExtension {
   @Override
   public int hashCode() {
     return get().hashCode();
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

@@ -108,7 +108,7 @@ public interface CFileWaiter extends CObjectWaiter<File> {
   }
 
   /**
-   * Wait for defined number of seconds till the the file does not exists
+   * Wait for defined number of seconds till the the file does not exist
    *
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds

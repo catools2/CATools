@@ -3,6 +3,7 @@ package org.catools.web.config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
@@ -11,7 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 
-@Log4j2
+@Slf4j
 public class CGridConfigs {
 
   public static boolean isUseRemoteDriver() {

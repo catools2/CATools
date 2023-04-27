@@ -11,14 +11,12 @@ import java.util.function.Function;
 public class CVerify extends CVerificationBuilder<CVerify> {
 
   @Override
-  public CVerify queue(CVerificationInfo expectation) {
-    perform(messages -> expectation.test(messages));
-    return this;
+  public void queue(CVerificationInfo expectation) {
+    perform(expectation::test);
   }
 
   private void perform(Function<StringBuilder, Boolean> supplier) {
-    StringBuilder messages =
-        new StringBuilder(CAnsiConfigs.isPrintInColorAvailable() ? CAnsiUtil.RESET : "");
+    StringBuilder messages = new StringBuilder(CAnsiConfigs.isPrintInColorAvailable() ? CAnsiUtil.RESET : "");
     boolean result = supplier.apply(messages);
     String verificationMessages = messages.toString();
     if (!result) {
@@ -26,10 +24,5 @@ public class CVerify extends CVerificationBuilder<CVerify> {
       throw new AssertionError(verificationMessages);
     }
     log.info(verificationMessages);
-  }
-
-  @Override
-  public Logger getLogger() {
-    return log;
   }
 }

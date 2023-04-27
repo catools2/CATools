@@ -24,9 +24,8 @@ public class CVerifier extends CVerificationBuilder<CVerifier> {
   }
 
   @Override
-  public CVerifier queue(CVerificationInfo verificationInfo) {
+  public void queue(CVerificationInfo verificationInfo) {
     expectations.add(verificationInfo);
-    return this;
   }
 
   public void verify() {
@@ -102,10 +101,5 @@ public class CVerifier extends CVerificationBuilder<CVerifier> {
     } finally {
       expectations.clear();
     }
-  }
-
-  @Override
-  public Logger getLogger() {
-    return log;
   }
 }

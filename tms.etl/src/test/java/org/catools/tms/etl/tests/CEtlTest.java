@@ -1,8 +1,6 @@
 package org.catools.tms.etl.tests;
 
 import org.catools.common.date.CDate;
-import org.catools.common.extensions.verify.CVerify;
-import org.catools.tms.etl.configs.CEtlConfigs;
 import org.catools.tms.etl.dao.CEtlExecutionDao;
 import org.catools.tms.etl.model.*;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -62,7 +60,7 @@ public class CEtlTest {
         ));
       }
 
-      CEtlExecutionDao.getExecutionsByCycleId(cycle.getId()).verifyIsNotEmpty(new CVerify());
+      CEtlExecutionDao.getExecutionsByCycleId(cycle.getId()).verifyIsNotEmpty();
     }
   }
 }

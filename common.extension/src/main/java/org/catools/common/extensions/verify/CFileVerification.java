@@ -1,21 +1,18 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.CFileVerifier;
 import org.catools.common.io.CFile;
+import org.slf4j.Logger;
 
 import java.io.File;
 
 /**
  * File Content verification class contains all verification method which is related to File and its
  * content
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CFileVerification<T extends CVerificationBuilder> extends CBaseVerification<T> {
-
-  public CFileVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CFileVerification extends CBaseVerification {
 
   /**
    * Verify that actual and expected file have the exact same content.
@@ -32,14 +29,10 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actualFile   file full name to compare
    * @param expectedFile file full name to compare
-   * @param message      information about the propose of this verification
+   * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsStringContent(
-      final String actualFile,
-      final String expectedFile,
-      final String message,
-      final Object... params) {
+  public void equalsStringContent(final String actualFile, final String expectedFile, final String message, final Object... params) {
     equalsStringContent(new CFile(actualFile), new CFile(expectedFile), message, params);
   }
 
@@ -50,7 +43,7 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expectedFile file to compare
    */
   public void equalsStringContent(final CFile actualFile, final CFile expectedFile) {
-    toVerifier(actualFile).verifyEqualsStringContent(verifier, expectedFile);
+    toVerifier(actualFile).verifyEqualsStringContent(expectedFile);
   }
 
   /**
@@ -58,15 +51,11 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actualFile   file to compare
    * @param expectedFile file to compare
-   * @param message      information about the propose of this verification
+   * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsStringContent(
-      final CFile actualFile,
-      final CFile expectedFile,
-      final String message,
-      final Object... params) {
-    toVerifier(actualFile).verifyEqualsStringContent(verifier, expectedFile, message, params);
+  public void equalsStringContent(final CFile actualFile, final CFile expectedFile, final String message, final Object... params) {
+    toVerifier(actualFile).verifyEqualsStringContent(expectedFile, message, params);
   }
 
   /**
@@ -75,18 +64,18 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param actualFile file full name to compare
    */
   public void exists(final String actualFile) {
-    toVerifier(new File(actualFile)).verifyExists(verifier);
+    toVerifier(new File(actualFile)).verifyExists();
   }
 
   /**
    * Verify that the file exists
    *
    * @param actualFile file full name to compare
-   * @param message    information about the propose of this verification
+   * @param message    information about the purpose of this verification
    * @param params     parameters in case if message is a format {@link String#format}
    */
   public void exists(final String actualFile, final String message, final Object... params) {
-    toVerifier(new File(actualFile)).verifyExists(verifier, message, params);
+    toVerifier(new File(actualFile)).verifyExists(message, params);
   }
 
   /**
@@ -95,18 +84,18 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param actualFile file full name to compare
    */
   public void exists(final CFile actualFile) {
-    toVerifier(actualFile).verifyExists(verifier);
+    toVerifier(actualFile).verifyExists();
   }
 
   /**
    * Verify that the file exists
    *
    * @param actualFile file full name to compare
-   * @param message    information about the propose of this verification
+   * @param message    information about the purpose of this verification
    * @param params     parameters in case if message is a format {@link String#format}
    */
   public void exists(final CFile actualFile, final String message, final Object... params) {
-    toVerifier(actualFile).verifyExists(verifier, message, params);
+    toVerifier(actualFile).verifyExists(message, params);
   }
 
   /**
@@ -124,14 +113,10 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actualFile   file full name to compare
    * @param expectedFile file full name to compare
-   * @param message      information about the propose of this verification
+   * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void notEqualsStringContent(
-      final String actualFile,
-      final String expectedFile,
-      final String message,
-      final Object... params) {
+  public void notEqualsStringContent(final String actualFile, final String expectedFile, final String message, final Object... params) {
     notEqualsStringContent(new CFile(actualFile), new CFile(expectedFile), message, params);
   }
 
@@ -142,7 +127,7 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expectedFile file to compare
    */
   public void notEqualsStringContent(final CFile actualFile, final CFile expectedFile) {
-    toVerifier(actualFile).verifyNotEqualsStringContent(verifier, expectedFile);
+    toVerifier(actualFile).verifyNotEqualsStringContent(expectedFile);
   }
 
   /**
@@ -150,59 +135,66 @@ public class CFileVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actualFile   file to compare
    * @param expectedFile file to compare
-   * @param message      information about the propose of this verification
+   * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void notEqualsStringContent(
-      final CFile actualFile,
-      final CFile expectedFile,
-      final String message,
-      final Object... params) {
-    toVerifier(actualFile).verifyNotEqualsStringContent(verifier, expectedFile, message, params);
+  public void notEqualsStringContent(final CFile actualFile, final CFile expectedFile, final String message, final Object... params) {
+    toVerifier(actualFile).verifyNotEqualsStringContent(expectedFile, message, params);
   }
 
   /**
-   * Verify that the file does not exists
+   * Verify that the file does not exist
    *
    * @param actualFile file full name to compare
    */
   public void notExists(final String actualFile) {
-    toVerifier(new File(actualFile)).verifyIsNotExists(verifier);
+    toVerifier(new File(actualFile)).verifyIsNotExists();
   }
 
   /**
-   * Verify that the file does not exists
+   * Verify that the file does not exist
    *
    * @param actualFile file full name to compare
-   * @param message    information about the propose of this verification
+   * @param message    information about the purpose of this verification
    * @param params     parameters in case if message is a format {@link String#format}
    */
   public void notExists(final String actualFile, final String message, final Object... params) {
-    toVerifier(new File(actualFile)).verifyIsNotExists(verifier, message, params);
+    toVerifier(new File(actualFile)).verifyIsNotExists(message, params);
   }
 
   /**
-   * Verify that the file does not exists
+   * Verify that the file does not exist
    *
    * @param actualFile file full name to compare
    */
   public void notExists(final CFile actualFile) {
-    toVerifier(actualFile).verifyIsNotExists(verifier);
+    toVerifier(actualFile).verifyIsNotExists();
   }
 
   /**
-   * Verify that the file does not exists
+   * Verify that the file does not exist
    *
    * @param actualFile file full name to compare
-   * @param message    information about the propose of this verification
+   * @param message    information about the purpose of this verification
    * @param params     parameters in case if message is a format {@link String#format}
    */
   public void notExists(final CFile actualFile, final String message, final Object... params) {
-    toVerifier(actualFile).verifyIsNotExists(verifier, message, params);
+    toVerifier(actualFile).verifyIsNotExists(message, params);
   }
 
   private CFileVerifier toVerifier(File actual) {
+    CBaseVerification that = this;
     return new CFileVerifier() {
+      @Override
+      public Logger getLogger() {
+        return CFileVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

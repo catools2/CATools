@@ -1,14 +1,17 @@
 package org.catools.common.tests.verify.wait;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.types.interfaces.CDynamicMapExtension;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.slf4j.Logger;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
+@Slf4j
 public class CMapWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContains() {
@@ -240,6 +243,16 @@ public class CMapWaiterTest extends CBaseUnitTest {
   }
 
   private CDynamicMapExtension<String, Integer> toWaiter(Map<String, Integer> val) {
-    return () -> val;
+    return new CDynamicMapExtension<>() {
+      @Override
+      public Logger getLogger() {
+        return CMapWaiterTest.log;
+      }
+
+      @Override
+      public Map<String, Integer> get() {
+        return val;
+      }
+    };
   }
 }

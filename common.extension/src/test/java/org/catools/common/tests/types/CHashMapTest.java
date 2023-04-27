@@ -9,21 +9,21 @@ public class CHashMapTest extends BaseCMapTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest1() {
     CHashMap<String, String> map = CHashMap.of(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest2() {
     CHashMap<String, String> map = CHashMap.of(3);
     map.putAll(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest3() {
     CHashMap<String, String> map = CHashMap.of(3, 1);
     map.putAll(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

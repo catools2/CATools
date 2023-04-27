@@ -41,7 +41,6 @@ public class CDriverSession {
   @Getter(AccessLevel.PRIVATE)
   private RemoteWebDriver webDriver;
 
-
   private CDriverProvider driverProvider;
   private Dimension windowsSize = CWebConfigs.getWindowsDimension();
   private Point windowsPosition = CWebConfigs.getWindowsPosition();

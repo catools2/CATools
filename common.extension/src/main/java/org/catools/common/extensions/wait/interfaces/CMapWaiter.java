@@ -533,7 +533,7 @@ public interface CMapWaiter<K, V> extends CObjectWaiter<Map<K, V>> {
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of milliseconds till
    * the actual map might contains some but not all entries from the expected map. Please note that
-   * actual map might have some of entries but the point is to ensure that not all expected entries
+   * actual map might have some entries but the point is to ensure that not all expected entries
    * are exist in it. We do Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number
    * of milliseconds till the both key and value match in this comparision
    *
@@ -547,7 +547,7 @@ public interface CMapWaiter<K, V> extends CObjectWaiter<Map<K, V>> {
 
   /**
    * Wait for defined number of seconds till the actual map might contains some but not all entries
-   * from the expected map. Please note that actual map might have some of entries but the point is
+   * from the expected map. Please note that actual map might have some entries but the point is
    * to ensure that not all expected entries are exist in it. We do Wait for defined number of
    * seconds till the both key and value match in this comparision
    *
@@ -561,7 +561,7 @@ public interface CMapWaiter<K, V> extends CObjectWaiter<Map<K, V>> {
 
   /**
    * Wait for defined number of seconds till the actual map might contains some but not all entries
-   * from the expected map. Please note that actual map might have some of entries but the point is
+   * from the expected map. Please note that actual map might have some entries but the point is
    * to ensure that not all expected entries are exist in it. We do Wait for defined number of
    * seconds till the both key and value match in this comparision
    *

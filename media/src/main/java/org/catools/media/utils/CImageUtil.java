@@ -89,13 +89,13 @@ public class CImageUtil {
       String filename,
       CImageComparisonType comparisonType) {
     if (actual == null) {
-      log.warn("Cannot generate diff file {}. Actual image does not exists.", filename);
+      log.warn("Cannot generate diff file {}. Actual image does not exist.", filename);
       return;
     }
     writePNG(actual, CFile.of(CPathConfigs.getActualImagesFolder()).getChildFile(filename));
 
     if (expected == null) {
-      log.warn("Cannot generate diff file {}. Expected image does not exists.", filename);
+      log.warn("Cannot generate diff file {}. Expected image does not exist.", filename);
       return;
     }
     writePNG(expected, CFile.of(CPathConfigs.getExpectedImagesFolder()).getChildFile(filename));

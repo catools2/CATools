@@ -64,7 +64,7 @@ public abstract class CHttpClient<T extends CTest, O> {
       CHttpStatusCode expectedCode, BiConsumer<CHttpResponse, CVerifier> afterCall) {
     CHttpResponse response = send();
     CVerifier verifier = new CVerifier();
-    response.StatusCode.verifyEquals(verifier, expectedCode);
+    verifier.Object.equals(response.getStatusCode(), expectedCode);
     if (afterCall != null) {
       afterCall.accept(response, verifier);
     }
@@ -95,10 +95,10 @@ public abstract class CHttpClient<T extends CTest, O> {
       BiConsumer<CHttpResponse, CVerifier> afterCall) {
     CHttpResponse response = send();
     CVerifier verifier = new CVerifier();
-    response.StatusCode.verifyEquals(verifier, expectedCode);
+    verifier.Object.equals(response.getStatusCode(), expectedCode);
     CSet<Map.Entry<String, Object>> entrySet = new CSet<>(response.ContentMap.entrySet());
     for (Map.Entry<String, Object> entityValue : expectedEntityValues) {
-      entrySet.verifyContains(verifier, entityValue, "ContentMap matches expected value.");
+      verifier.Collection.contains(entrySet, entityValue, "ContentMap matches expected value.");
     }
 
     if (afterCall != null) {

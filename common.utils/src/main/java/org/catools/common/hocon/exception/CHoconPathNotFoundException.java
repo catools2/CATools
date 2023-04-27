@@ -1,7 +1,7 @@
 package org.catools.common.hocon.exception;
 
 /**
- * Signals that an attempt to read path from json object has failed because the path does not exists.
+ * Signals that an attempt to read path from json object has failed because the path does not exist.
  */
 public class CHoconPathNotFoundException extends RuntimeException {
 

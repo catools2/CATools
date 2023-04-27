@@ -17,36 +17,83 @@ import java.math.BigDecimal;
  * @see CStringVerification
  */
 @Slf4j
-public abstract class CVerificationBuilder<T extends CVerificationBuilder<T>> implements CVerificationQueue {
-  public final CObjectVerification<T> Object;
-  public final CCollectionVerification<T> Collection;
-  public final CMapVerification<T> Map;
-  public final CBooleanVerification<T> Bool;
-  public final CDateVerification<T> Date;
-  public final CStringVerification<T> String;
-  public final CFileVerification<T> File;
-  public final CNumberVerification<T, Long> Long;
-  public final CNumberVerification<T, BigDecimal> BigDecimal;
-  public final CNumberVerification<T, Double> Double;
-  public final CNumberVerification<T, Float> Float;
-  public final CNumberVerification<T, Integer> Int;
+public abstract class CVerificationBuilder<T extends CVerificationBuilder<T>> {
+  public final CObjectVerification Object = new CObjectVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CCollectionVerification Collection = new CCollectionVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CMapVerification Map = new CMapVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CBooleanVerification Bool = new CBooleanVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CDateVerification Date = new CDateVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CStringVerification String = new CStringVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CFileVerification File = new CFileVerification() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CNumberVerification<Long> Long = new CNumberVerification<>() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CNumberVerification<BigDecimal> BigDecimal = new CNumberVerification<>() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CNumberVerification<Double> Double = new CNumberVerification<>() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CNumberVerification<Float> Float = new CNumberVerification<>() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
+  public final CNumberVerification<Integer> Int = new CNumberVerification<>() {
+    @Override
+    protected void queue(CVerificationInfo expectation) {
+      CVerificationBuilder.this.queue(expectation);
+    }
+  };
 
   public CVerificationBuilder() {
     super();
-    this.Object = new CObjectVerification<>((T) this);
-    this.Collection = new CCollectionVerification<>((T) this);
-    this.Map = new CMapVerification<>((T) this);
-    this.Bool = new CBooleanVerification<>((T) this);
-    this.Date = new CDateVerification<>((T) this);
-    this.String = new CStringVerification<>((T) this);
-    this.File = new CFileVerification<>((T) this);
-
-    this.BigDecimal = new CNumberVerification<>((T) this);
-    this.Double = new CNumberVerification<>((T) this);
-    this.Float = new CNumberVerification<>((T) this);
-    this.Long = new CNumberVerification<>((T) this);
-    this.Int = new CNumberVerification<>((T) this);
   }
 
-  public abstract T queue(CVerificationInfo verificationInfo);
+  public abstract void queue(CVerificationInfo verificationInfo);
 }

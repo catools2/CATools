@@ -36,7 +36,7 @@ public class CFileWait extends CObjectWait {
   }
 
   /**
-   * Wait for defined number of seconds till the file does not exists
+   * Wait for defined number of seconds till the file does not exist
    *
    * @param actualFile             file full name to compare
    * @param waitInSeconds          maximum wait time
@@ -49,7 +49,7 @@ public class CFileWait extends CObjectWait {
   }
 
   /**
-   * Wait for defined number of seconds till the file does not exists
+   * Wait for defined number of seconds till the file does not exist
    *
    * @param actualFile             file full name to compare
    * @param waitInSeconds          maximum wait time

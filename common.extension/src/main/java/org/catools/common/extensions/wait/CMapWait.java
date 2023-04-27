@@ -1,7 +1,9 @@
 package org.catools.common.extensions.wait;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.wait.interfaces.CMapWaiter;
+import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +11,7 @@ import java.util.Set;
 /**
  * Map wait class contains all wait method which is related to Map
  */
+@Slf4j
 public class CMapWait extends CObjectWait {
   /**
    * Wait for defined number of seconds till actual map contains the expected entry.
@@ -271,7 +274,7 @@ public class CMapWait extends CObjectWait {
 
   /**
    * Wait for defined number of seconds till actual map does not contain all entries from the
-   * expected map. Please note that actual map might have some of entries but the point is to ensure
+   * expected map. Please note that actual map might have some entries but the point is to ensure
    * that not all expected entries are exist in it.
    *
    * @param actual                 value to compare
@@ -297,6 +300,11 @@ public class CMapWait extends CObjectWait {
             return (CMap<K, V>) actual;
           }
           return new CMap<>() {
+            @Override
+            public Logger getLogger() {
+              return CMapWait.log;
+            }
+
             @Override
             public boolean _useWaiter() {
               return true;

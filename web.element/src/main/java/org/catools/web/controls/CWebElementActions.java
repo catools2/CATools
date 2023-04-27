@@ -316,8 +316,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
             .performActionOnDriver(
                 "Get Download Folder", webDriver -> CWebConfigs.getDownloadFolder(webDriver));
     CFile downloadedFile = new CFile(downloadFolder, filename);
-    downloadedFile.verifyExists(
-        getVerify(), downloadWait, 500, "File downloaded! file:" + downloadedFile);
+    downloadedFile.verifyExists(downloadWait, 500, "File downloaded! file:" + downloadedFile);
     return downloadedFile.moveTo(CPathConfigs.getTempChildFile(renameTo));
   }
 

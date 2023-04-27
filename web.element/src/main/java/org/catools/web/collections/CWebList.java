@@ -1,8 +1,10 @@
 package org.catools.web.collections;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.web.controls.CWebElement;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.function.Predicate;
 import static org.catools.web.drivers.CDriver.DEFAULT_TIMEOUT;
 
 @Getter
+@Slf4j
 public class CWebList<E extends CWebElement> implements CWebIterable<E> {
   protected final String name;
   protected final String locator;
@@ -201,5 +204,10 @@ public class CWebList<E extends CWebElement> implements CWebIterable<E> {
   @Override
   public E getRecord(int idx) {
     return controlBuilder.apply(idx, String.format("(%s)[%s]", locator, idx + 1));
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

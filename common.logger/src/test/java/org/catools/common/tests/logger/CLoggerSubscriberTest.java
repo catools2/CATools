@@ -20,7 +20,7 @@ public class CLoggerSubscriberTest extends CBaseUnitTest {
     CLoggerSubscriber.unSubscribe("A");
     getLogger().error("ERROR2");
 
-    events.verifyContains(this, "ERROR", Level.ERROR);
-    events.verifyNotContains(this, "ERROR2", Level.ERROR);
+    events.verifyContains("ERROR", Level.ERROR);
+    events.verifyNotContains("ERROR2", Level.ERROR);
   }
 }

@@ -12,28 +12,28 @@ public class CLinkedMapTest extends BaseCMapTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest1() {
     CLinkedMap<String, String> map = CLinkedMap.of(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest2() {
     CLinkedMap<String, String> map = CLinkedMap.of(3);
     map.putAll(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest3() {
     CLinkedMap<String, String> map = CLinkedMap.of(3, 1);
     map.putAll(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void cLinkedMapTest4() {
     CLinkedMap<String, String> map = CLinkedMap.of(3, 1, true);
     map.putAll(getStringLinkedMap1());
-    map.verifyEquals(this, getStringLinkedMap1(), "Constructor works");
+    map.verifyEquals(getStringLinkedMap1(), "Constructor works");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

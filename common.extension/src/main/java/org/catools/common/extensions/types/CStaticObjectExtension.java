@@ -1,8 +1,10 @@
 package org.catools.common.extensions.types;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.extensions.verify.interfaces.CObjectVerifier;
 import org.catools.common.extensions.wait.interfaces.CObjectWaiter;
+import org.slf4j.Logger;
 
 import java.util.Objects;
 
@@ -10,8 +12,8 @@ import java.util.Objects;
  * CStaticObjectExtension is an central interface where we extend all Object related interfaces so
  * adding new functionality will be much easier.
  */
-public abstract class CStaticObjectExtension<O>
-    implements CObjectWaiter<O>, CObjectVerifier<O, CObjectState<O>>, CObjectState<O> {
+@Slf4j
+public abstract class CStaticObjectExtension<O> implements CObjectWaiter<O>, CObjectVerifier<O, CObjectState<O>>, CObjectState<O> {
 
   @Override
   public boolean _useWaiter() {
@@ -21,6 +23,11 @@ public abstract class CStaticObjectExtension<O>
   @Override
   public boolean isEqual(O expected) {
     return Objects.equals(get(), expected);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

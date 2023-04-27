@@ -1,20 +1,17 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.interfaces.CDateVerifier;
+import org.slf4j.Logger;
 
 import java.util.Date;
 
 /**
  * Date verification class contains all verification method which is related to Date
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CDateVerification<T extends CVerificationBuilder> extends CBaseVerification<T> {
-
-  public CDateVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CDateVerification extends CBaseVerification {
 
   /**
    * Verify that actual and expected have the exact same date value (compare to milliseconds) or
@@ -26,7 +23,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void equals(final Date actual, final Date expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -37,12 +34,12 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equals(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -57,7 +54,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param format   date format to be use
    */
   public void equalsByFormat(final Date actual, final Date expected, final String format) {
-    toVerifier(actual).verifyEqualsByFormat(verifier, expected, format);
+    toVerifier(actual).verifyEqualsByFormat(expected, format);
   }
 
   /**
@@ -70,7 +67,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param actual   value to compare
    * @param expected value to compare
    * @param format   date format to be use
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equalsByFormat(
@@ -79,7 +76,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
       final String format,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEqualsByFormat(verifier, expected, format, message, params);
+    toVerifier(actual).verifyEqualsByFormat(expected, format, message, params);
   }
 
   /**
@@ -92,7 +89,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void equalsDatePortion(final Date actual, final Date expected) {
-    toVerifier(actual).verifyEqualsDatePortion(verifier, expected);
+    toVerifier(actual).verifyEqualsDatePortion(expected);
   }
 
   /**
@@ -103,12 +100,12 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equalsDatePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsDatePortion(verifier, expected, message, params);
+    toVerifier(actual).verifyEqualsDatePortion(expected, message, params);
   }
 
   /**
@@ -121,7 +118,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void equalsTimePortion(final Date actual, final Date expected) {
-    toVerifier(actual).verifyEqualsTimePortion(verifier, expected);
+    toVerifier(actual).verifyEqualsTimePortion(expected);
   }
 
   /**
@@ -132,12 +129,12 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equalsTimePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsTimePortion(verifier, expected, message, params);
+    toVerifier(actual).verifyEqualsTimePortion(expected, message, params);
   }
 
   /**
@@ -150,7 +147,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void notEquals(final Date actual, final Date expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -161,12 +158,12 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -181,7 +178,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param format   date format to be use
    */
   public void notEqualsByFormat(final Date actual, final Date expected, final String format) {
-    toVerifier(actual).verifyNotEqualsByFormat(verifier, expected, format);
+    toVerifier(actual).verifyNotEqualsByFormat(expected, format);
   }
 
   /**
@@ -194,7 +191,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param actual   value to compare
    * @param expected value to compare
    * @param format   date format to be use
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEqualsByFormat(
@@ -203,7 +200,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
       final String format,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotEqualsByFormat(verifier, expected, format, message, params);
+    toVerifier(actual).verifyNotEqualsByFormat(expected, format, message, params);
   }
 
   /**
@@ -217,7 +214,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void notEqualsDatePortion(final Date actual, final Date expected) {
-    toVerifier(actual).verifyNotEqualsDatePortion(verifier, expected);
+    toVerifier(actual).verifyNotEqualsDatePortion(expected);
   }
 
   /**
@@ -229,12 +226,12 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEqualsDatePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEqualsDatePortion(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEqualsDatePortion(expected, message, params);
   }
 
   /**
@@ -248,7 +245,7 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    * @param expected value to compare
    */
   public void notEqualsTimePortion(final Date actual, final Date expected) {
-    toVerifier(actual).verifyNotEqualsTimePortion(verifier, expected);
+    toVerifier(actual).verifyNotEqualsTimePortion(expected);
   }
 
   /**
@@ -260,16 +257,27 @@ public class CDateVerification<T extends CVerificationBuilder> extends CBaseVeri
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEqualsTimePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEqualsTimePortion(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEqualsTimePortion(expected, message, params);
   }
 
   private CDateVerifier toVerifier(Date actual) {
+    CBaseVerification that = this;
     return new CDateVerifier() {
+      @Override
+      public Logger getLogger() {
+        return CDateVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

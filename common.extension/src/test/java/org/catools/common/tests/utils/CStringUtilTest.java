@@ -28,7 +28,7 @@ public class CStringUtilTest extends CBaseUnitTest {
   public void testWordWrap() {
     String original = "AQ! SW e3 ".repeat(10);
     CList<String> strings = CList.of(CStringUtil.wordWrap(original, 10));
-    strings.verifySizeEquals(this, 10, "wordWrap split long string to small ones");
+    strings.verifySizeEquals(10, "wordWrap split long string to small ones");
     strings.forEach(
         s ->
             verify.Int.lessOrEqual(

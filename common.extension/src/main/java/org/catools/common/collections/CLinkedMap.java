@@ -1,12 +1,15 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.utils.CJsonUtil;
+import org.slf4j.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @JsonDeserialize(as = CLinkedMap.class)
 public class CLinkedMap<K, V> extends LinkedHashMap<K, V> implements CMap<K, V> {
 
@@ -87,5 +90,10 @@ public class CLinkedMap<K, V> extends LinkedHashMap<K, V> implements CMap<K, V> 
   @Override
   public boolean _useWaiter() {
     return false;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

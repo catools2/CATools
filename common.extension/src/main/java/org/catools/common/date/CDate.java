@@ -1,10 +1,12 @@
 package org.catools.common.date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.catools.common.extensions.types.interfaces.CDynamicDateExtension;
 import org.catools.common.utils.CDateUtil;
 import org.catools.common.utils.CStringUtil;
+import org.slf4j.Logger;
 
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -24,6 +26,7 @@ import static org.catools.common.configs.CDateConfigs.getDefaultTimeZone;
  * A Wrapper to make our life easier with date related operations which is usually does through
  * DateUtil.
  */
+@Slf4j
 public class CDate extends Date implements CDynamicDateExtension {
   private static final String DATE_ONLY_FORMAT_STRING = "MM/dd/yyyy";
   private static final String TIME_FORMAT = "HH:mm:ss";
@@ -1017,5 +1020,10 @@ public class CDate extends Date implements CDynamicDateExtension {
       return String.format("%dd %s", duration.toDaysPart(), time);
     }
     return time;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

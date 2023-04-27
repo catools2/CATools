@@ -160,7 +160,7 @@ public class CIterableWait extends CObjectWait {
 
   /**
    * Wait for defined number of seconds till actual collection does not contain all elements from
-   * the expected collection. Please note that actual collection might have some of elements but the
+   * the expected collection. Please note that actual collection might have some elements but the
    * point is to ensure that not all expected elements are exist in it.
    *
    * @param actual                 value to compare

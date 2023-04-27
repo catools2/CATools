@@ -1,21 +1,18 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.CStringVerifier;
 import org.catools.common.utils.CStringUtil;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
  * String verification class contains all verification method which is related to String
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CStringVerification<T extends CVerificationBuilder> extends CBaseVerification<T> {
-  public CStringVerification(T verifier) {
-    super(verifier);
-  }
-
+@Slf4j
+public class CStringVerification extends CBaseVerification {
   /**
    * Verify if result of {@link CStringUtil#center(String, int, String)} is equals to expected
    * value.
@@ -26,7 +23,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void centerPadEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyCenterPadEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyCenterPadEquals(size, padStr, expected);
   }
 
   /**
@@ -37,17 +34,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the int size of new String, negative treated as zero
    * @param padStr   the String to pad the new String with, must not be null or empty
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void centerPadEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyCenterPadEquals(verifier, size, padStr, expected, message, params);
+  public void centerPadEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyCenterPadEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -60,7 +51,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void centerPadNotEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyCenterPadNotEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyCenterPadNotEquals(size, padStr, expected);
   }
 
   /**
@@ -71,17 +62,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the int size of new String, negative treated as zero
    * @param padStr   the String to pad the new String with, must not be null or empty
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void centerPadNotEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyCenterPadNotEquals(verifier, size, padStr, expected, message, params);
+  public void centerPadNotEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyCenterPadNotEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -92,7 +77,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected        the expected result.
    */
   public void compare(String actual, String stringToCompare, int expected) {
-    toVerifier(actual).verifyCompare(verifier, stringToCompare, expected);
+    toVerifier(actual).verifyCompare(stringToCompare, expected);
   }
 
   /**
@@ -101,16 +86,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual          value to compare
    * @param stringToCompare the string value to compare against
    * @param expected        the expected result.
-   * @param message         information about the propose of this verification.
+   * @param message         information about the purpose of this verification.
    * @param params          parameters in case if message is a format {@link String#format}
    */
-  public void compare(
-      String actual,
-      String stringToCompare,
-      int expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyCompare(verifier, stringToCompare, expected, message, params);
+  public void compare(String actual, String stringToCompare, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyCompare(stringToCompare, expected, message, params);
   }
 
   /**
@@ -122,7 +102,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected        the expected result.
    */
   public void compareIgnoreCase(String actual, String stringToCompare, int expected) {
-    toVerifier(actual).verifyCompareIgnoreCase(verifier, stringToCompare, expected);
+    toVerifier(actual).verifyCompareIgnoreCase(stringToCompare, expected);
   }
 
   /**
@@ -132,17 +112,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual          value to compare
    * @param stringToCompare the string value to compare against
    * @param expected        the expected result.
-   * @param message         information about the propose of this verification.
+   * @param message         information about the purpose of this verification.
    * @param params          parameters in case if message is a format {@link String#format}
    */
-  public void compareIgnoreCase(
-      String actual,
-      String stringToCompare,
-      int expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyCompareIgnoreCase(verifier, stringToCompare, expected, message, params);
+  public void compareIgnoreCase(String actual, String stringToCompare, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyCompareIgnoreCase(stringToCompare, expected, message, params);
   }
 
   /**
@@ -152,7 +126,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void contains(String actual, String expected) {
-    toVerifier(actual).verifyContains(verifier, expected);
+    toVerifier(actual).verifyContains(expected);
   }
 
   /**
@@ -160,12 +134,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void contains(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyContains(verifier, expected, message, params);
+  public void contains(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyContains(expected, message, params);
   }
 
   /**
@@ -175,7 +148,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void containsIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyContainsIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyContainsIgnoreCase(expected);
   }
 
   /**
@@ -183,12 +156,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void containsIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsIgnoreCase(verifier, expected, message, params);
+  public void containsIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyContainsIgnoreCase(expected, message, params);
   }
 
   /**
@@ -198,7 +170,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param suffix the suffix to find, may be {@code null}
    */
   public void endsWith(String actual, String suffix) {
-    toVerifier(actual).verifyEndsWith(verifier, suffix);
+    toVerifier(actual).verifyEndsWith(suffix);
   }
 
   /**
@@ -206,11 +178,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param suffix  the suffix to find, may be {@code null}
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void endsWith(String actual, String suffix, final String message, final Object... params) {
-    toVerifier(actual).verifyEndsWith(verifier, suffix, message, params);
+    toVerifier(actual).verifyEndsWith(suffix, message, params);
   }
 
   /**
@@ -221,7 +193,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                     null}
    */
   public void endsWithAny(String actual, List<String> searchInputs) {
-    toVerifier(actual).verifyEndsWithAny(verifier, searchInputs);
+    toVerifier(actual).verifyEndsWithAny(searchInputs);
   }
 
   /**
@@ -230,12 +202,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void endsWithAny(
-      String actual, List<String> searchInputs, final String message, final Object... params) {
-    toVerifier(actual).verifyEndsWithAny(verifier, searchInputs, message, params);
+  public void endsWithAny(String actual, List<String> searchInputs, final String message, final Object... params) {
+    toVerifier(actual).verifyEndsWithAny(searchInputs, message, params);
   }
 
   /**
@@ -245,7 +216,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param suffix the suffix to find, may be {@code null}
    */
   public void endsWithIgnoreCase(String actual, String suffix) {
-    toVerifier(actual).verifyEndsWithIgnoreCase(verifier, suffix);
+    toVerifier(actual).verifyEndsWithIgnoreCase(suffix);
   }
 
   /**
@@ -253,12 +224,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param suffix  the suffix to find, may be {@code null}
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void endsWithIgnoreCase(
-      String actual, String suffix, final String message, final Object... params) {
-    toVerifier(actual).verifyEndsWithIgnoreCase(verifier, suffix, message, params);
+  public void endsWithIgnoreCase(String actual, String suffix, final String message, final Object... params) {
+    toVerifier(actual).verifyEndsWithIgnoreCase(suffix, message, params);
   }
 
   /**
@@ -269,7 +239,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                     null}
    */
   public void endsWithNone(String actual, List<String> searchInputs) {
-    toVerifier(actual).verifyEndsWithNone(verifier, searchInputs);
+    toVerifier(actual).verifyEndsWithNone(searchInputs);
   }
 
   /**
@@ -278,12 +248,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void endsWithNone(
-      String actual, List<String> searchInputs, final String message, final Object... params) {
-    toVerifier(actual).verifyEndsWithNone(verifier, searchInputs, message, params);
+  public void endsWithNone(String actual, List<String> searchInputs, final String message, final Object... params) {
+    toVerifier(actual).verifyEndsWithNone(searchInputs, message, params);
   }
 
   /**
@@ -293,7 +262,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void equals(String actual, String expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -301,11 +270,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equals(String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -316,7 +285,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expectedList a list of strings, may be {@code null}.
    */
   public void equalsAny(String actual, List<String> expectedList) {
-    toVerifier(actual).verifyEqualsAny(verifier, expectedList);
+    toVerifier(actual).verifyEqualsAny(expectedList);
   }
 
   /**
@@ -325,12 +294,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsAny(
-      String actual, List<String> expectedList, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsAny(verifier, expectedList, message, params);
+  public void equalsAny(String actual, List<String> expectedList, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsAny(expectedList, message, params);
   }
 
   /**
@@ -341,7 +309,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expectedList a list of strings, may be {@code null}.
    */
   public void equalsAnyIgnoreCase(String actual, List<String> expectedList) {
-    toVerifier(actual).verifyEqualsAnyIgnoreCase(verifier, expectedList);
+    toVerifier(actual).verifyEqualsAnyIgnoreCase(expectedList);
   }
 
   /**
@@ -350,12 +318,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsAnyIgnoreCase(
-      String actual, List<String> expectedList, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsAnyIgnoreCase(verifier, expectedList, message, params);
+  public void equalsAnyIgnoreCase(String actual, List<String> expectedList, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsAnyIgnoreCase(expectedList, message, params);
   }
 
   /**
@@ -365,7 +332,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void equalsIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyEqualsIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyEqualsIgnoreCase(expected);
   }
 
   /**
@@ -373,12 +340,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equalsIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsIgnoreCase(verifier, expected, message, params);
+  public void equalsIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsIgnoreCase(expected, message, params);
   }
 
   /**
@@ -388,7 +354,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void equalsIgnoreWhiteSpaces(String actual, String expected) {
-    toVerifier(actual).verifyEqualsIgnoreWhiteSpaces(verifier, expected);
+    toVerifier(actual).verifyEqualsIgnoreWhiteSpaces(expected);
   }
 
   /**
@@ -396,12 +362,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equalsIgnoreWhiteSpaces(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsIgnoreWhiteSpaces(verifier, expected, message, params);
+  public void equalsIgnoreWhiteSpaces(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsIgnoreWhiteSpaces(expected, message, params);
   }
 
   /**
@@ -411,7 +376,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expectedList a list of strings, may be {@code null}.
    */
   public void equalsNone(String actual, List<String> expectedList) {
-    toVerifier(actual).verifyEqualsNone(verifier, expectedList);
+    toVerifier(actual).verifyEqualsNone(expectedList);
   }
 
   /**
@@ -419,12 +384,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsNone(
-      String actual, List<String> expectedList, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsNone(verifier, expectedList, message, params);
+  public void equalsNone(String actual, List<String> expectedList, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsNone(expectedList, message, params);
   }
 
   /**
@@ -435,7 +399,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expectedList a list of strings, may be {@code null}.
    */
   public void equalsNoneIgnoreCase(String actual, List<String> expectedList) {
-    toVerifier(actual).verifyEqualsNoneIgnoreCase(verifier, expectedList);
+    toVerifier(actual).verifyEqualsNoneIgnoreCase(expectedList);
   }
 
   /**
@@ -444,12 +408,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equalsNoneIgnoreCase(
-      String actual, List<String> expectedList, final String message, final Object... params) {
-    toVerifier(actual).verifyEqualsNoneIgnoreCase(verifier, expectedList, message, params);
+  public void equalsNoneIgnoreCase(String actual, List<String> expectedList, final String message, final Object... params) {
+    toVerifier(actual).verifyEqualsNoneIgnoreCase(expectedList, message, params);
   }
 
   /**
@@ -458,18 +421,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isAlpha(String actual) {
-    toVerifier(actual).verifyIsAlpha(verifier);
+    toVerifier(actual).verifyIsAlpha();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlpha(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsAlpha(message, params);
   }
 
   /**
@@ -478,18 +441,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isAlphaSpace(String actual) {
-    toVerifier(actual).verifyIsAlphaSpace(verifier);
+    toVerifier(actual).verifyIsAlphaSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphaSpace(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isAlphaSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsAlphaSpace(verifier, message, params);
+    toVerifier(actual).verifyIsAlphaSpace(message, params);
   }
 
   /**
@@ -498,18 +461,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsAlphanumeric(verifier);
+    toVerifier(actual).verifyIsAlphanumeric();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphanumeric(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isAlphanumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsAlphanumeric(verifier, message, params);
+    toVerifier(actual).verifyIsAlphanumeric(message, params);
   }
 
   /**
@@ -518,18 +481,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isAlphanumericSpace(String actual) {
-    toVerifier(actual).verifyIsAlphanumericSpace(verifier);
+    toVerifier(actual).verifyIsAlphanumericSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphanumericSpace(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isAlphanumericSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsAlphanumericSpace(verifier, message, params);
+    toVerifier(actual).verifyIsAlphanumericSpace(message, params);
   }
 
   /**
@@ -538,18 +501,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isAsciiPrintable(String actual) {
-    toVerifier(actual).verifyIsAsciiPrintable(verifier);
+    toVerifier(actual).verifyIsAsciiPrintable();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAsciiPrintable(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isAsciiPrintable(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsAsciiPrintable(verifier, message, params);
+    toVerifier(actual).verifyIsAsciiPrintable(message, params);
   }
 
   /**
@@ -558,18 +521,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlank(String actual) {
-    toVerifier(actual).verifyIsBlank(verifier);
+    toVerifier(actual).verifyIsBlank();
   }
 
   /**
    * Verify if String value is blank (Null or Empty)
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlank(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlank(verifier, message, params);
+    toVerifier(actual).verifyIsBlank(message, params);
   }
 
   /**
@@ -579,7 +542,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrAlpha(String actual) {
-    toVerifier(actual).verifyIsBlankOrAlpha(verifier);
+    toVerifier(actual).verifyIsBlankOrAlpha();
   }
 
   /**
@@ -587,11 +550,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlankOrAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsBlankOrAlpha(message, params);
   }
 
   /**
@@ -601,7 +564,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsBlankOrAlphanumeric(verifier);
+    toVerifier(actual).verifyIsBlankOrAlphanumeric();
   }
 
   /**
@@ -609,11 +572,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * CStringUtil#isAlphanumeric(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlankOrAlphanumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrAlphanumeric(verifier, message, params);
+    toVerifier(actual).verifyIsBlankOrAlphanumeric(message, params);
   }
 
   /**
@@ -623,7 +586,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrNotAlpha(String actual) {
-    toVerifier(actual).verifyIsBlankOrNotAlpha(verifier);
+    toVerifier(actual).verifyIsBlankOrNotAlpha();
   }
 
   /**
@@ -631,11 +594,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlankOrNotAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrNotAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsBlankOrNotAlpha(message, params);
   }
 
   /**
@@ -645,7 +608,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrNotAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsBlankOrNotAlphanumeric(verifier);
+    toVerifier(actual).verifyIsBlankOrNotAlphanumeric();
   }
 
   /**
@@ -653,12 +616,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * CStringUtil#isAlphanumeric(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void isBlankOrNotAlphanumeric(
-      String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrNotAlphanumeric(verifier, message, params);
+  public void isBlankOrNotAlphanumeric(String actual, final String message, final Object... params) {
+    toVerifier(actual).verifyIsBlankOrNotAlphanumeric(message, params);
   }
 
   /**
@@ -668,7 +630,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrNotNumeric(String actual) {
-    toVerifier(actual).verifyIsBlankOrNotNumeric(verifier);
+    toVerifier(actual).verifyIsBlankOrNotNumeric();
   }
 
   /**
@@ -676,11 +638,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlankOrNotNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrNotNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsBlankOrNotNumeric(message, params);
   }
 
   /**
@@ -690,7 +652,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isBlankOrNumeric(String actual) {
-    toVerifier(actual).verifyIsBlankOrNumeric(verifier);
+    toVerifier(actual).verifyIsBlankOrNumeric();
   }
 
   /**
@@ -698,11 +660,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isBlankOrNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsBlankOrNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsBlankOrNumeric(message, params);
   }
 
   /**
@@ -711,18 +673,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmpty(String actual) {
-    toVerifier(actual).verifyIsEmpty(verifier);
+    toVerifier(actual).verifyIsEmpty();
   }
 
   /**
    * Verify if String value is empty
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmpty(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmpty(verifier, message, params);
+    toVerifier(actual).verifyIsEmpty(message, params);
   }
 
   /**
@@ -732,7 +694,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrAlpha(String actual) {
-    toVerifier(actual).verifyIsEmptyOrAlpha(verifier);
+    toVerifier(actual).verifyIsEmptyOrAlpha();
   }
 
   /**
@@ -740,11 +702,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmptyOrAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsEmptyOrAlpha(message, params);
   }
 
   /**
@@ -754,7 +716,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsEmptyOrAlphanumeric(verifier);
+    toVerifier(actual).verifyIsEmptyOrAlphanumeric();
   }
 
   /**
@@ -762,11 +724,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * CStringUtil#isAlphanumeric(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmptyOrAlphanumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrAlphanumeric(verifier, message, params);
+    toVerifier(actual).verifyIsEmptyOrAlphanumeric(message, params);
   }
 
   /**
@@ -776,7 +738,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrNotAlpha(String actual) {
-    toVerifier(actual).verifyIsEmptyOrNotAlpha(verifier);
+    toVerifier(actual).verifyIsEmptyOrNotAlpha();
   }
 
   /**
@@ -784,11 +746,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmptyOrNotAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrNotAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsEmptyOrNotAlpha(message, params);
   }
 
   /**
@@ -798,7 +760,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrNotAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsEmptyOrNotAlphanumeric(verifier);
+    toVerifier(actual).verifyIsEmptyOrNotAlphanumeric();
   }
 
   /**
@@ -806,12 +768,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * CStringUtil#isAlphanumeric(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void isEmptyOrNotAlphanumeric(
-      String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrNotAlphanumeric(verifier, message, params);
+  public void isEmptyOrNotAlphanumeric(String actual, final String message, final Object... params) {
+    toVerifier(actual).verifyIsEmptyOrNotAlphanumeric(message, params);
   }
 
   /**
@@ -821,7 +782,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrNotNumeric(String actual) {
-    toVerifier(actual).verifyIsEmptyOrNotNumeric(verifier);
+    toVerifier(actual).verifyIsEmptyOrNotNumeric();
   }
 
   /**
@@ -829,11 +790,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmptyOrNotNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrNotNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsEmptyOrNotNumeric(message, params);
   }
 
   /**
@@ -843,7 +804,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isEmptyOrNumeric(String actual) {
-    toVerifier(actual).verifyIsEmptyOrNumeric(verifier);
+    toVerifier(actual).verifyIsEmptyOrNumeric();
   }
 
   /**
@@ -851,11 +812,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isEmptyOrNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsEmptyOrNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsEmptyOrNumeric(message, params);
   }
 
   /**
@@ -864,18 +825,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotAlpha(String actual) {
-    toVerifier(actual).verifyIsNotAlpha(verifier);
+    toVerifier(actual).verifyIsNotAlpha();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlpha(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotAlpha(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotAlpha(verifier, message, params);
+    toVerifier(actual).verifyIsNotAlpha(message, params);
   }
 
   /**
@@ -884,18 +845,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotAlphaSpace(String actual) {
-    toVerifier(actual).verifyIsNotAlphaSpace(verifier);
+    toVerifier(actual).verifyIsNotAlphaSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphaSpace(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotAlphaSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotAlphaSpace(verifier, message, params);
+    toVerifier(actual).verifyIsNotAlphaSpace(message, params);
   }
 
   /**
@@ -904,18 +865,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotAlphanumeric(String actual) {
-    toVerifier(actual).verifyIsNotAlphanumeric(verifier);
+    toVerifier(actual).verifyIsNotAlphanumeric();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphanumeric(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotAlphanumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotAlphanumeric(verifier, message, params);
+    toVerifier(actual).verifyIsNotAlphanumeric(message, params);
   }
 
   /**
@@ -924,18 +885,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotAlphanumericSpace(String actual) {
-    toVerifier(actual).verifyIsNotAlphanumericSpace(verifier);
+    toVerifier(actual).verifyIsNotAlphanumericSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAlphanumericSpace(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotAlphanumericSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotAlphanumericSpace(verifier, message, params);
+    toVerifier(actual).verifyIsNotAlphanumericSpace(message, params);
   }
 
   /**
@@ -944,18 +905,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotAsciiPrintable(String actual) {
-    toVerifier(actual).verifyIsNotAsciiPrintable(verifier);
+    toVerifier(actual).verifyIsNotAsciiPrintable();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isAsciiPrintable(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotAsciiPrintable(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotAsciiPrintable(verifier, message, params);
+    toVerifier(actual).verifyIsNotAsciiPrintable(message, params);
   }
 
   /**
@@ -964,18 +925,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotBlank(String actual) {
-    toVerifier(actual).verifyIsNotBlank(verifier);
+    toVerifier(actual).verifyIsNotBlank();
   }
 
   /**
    * Verify if String value is not blank (Null or Empty)
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotBlank(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotBlank(verifier, message, params);
+    toVerifier(actual).verifyIsNotBlank(message, params);
   }
 
   /**
@@ -984,18 +945,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotEmpty(String actual) {
-    toVerifier(actual).verifyIsNotEmpty(verifier);
+    toVerifier(actual).verifyIsNotEmpty();
   }
 
   /**
    * Verify String value is not empty
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotEmpty(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotEmpty(verifier, message, params);
+    toVerifier(actual).verifyIsNotEmpty(message, params);
   }
 
   /**
@@ -1004,18 +965,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotNumeric(String actual) {
-    toVerifier(actual).verifyIsNotNumeric(verifier);
+    toVerifier(actual).verifyIsNotNumeric();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isNumeric(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsNotNumeric(message, params);
   }
 
   /**
@@ -1024,18 +985,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNotNumericSpace(String actual) {
-    toVerifier(actual).verifyIsNotNumericSpace(verifier);
+    toVerifier(actual).verifyIsNotNumericSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isNumericSpace(CharSequence)} is false.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotNumericSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotNumericSpace(verifier, message, params);
+    toVerifier(actual).verifyIsNotNumericSpace(message, params);
   }
 
   /**
@@ -1044,18 +1005,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNumeric(String actual) {
-    toVerifier(actual).verifyIsNumeric(verifier);
+    toVerifier(actual).verifyIsNumeric();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isNumeric(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNumeric(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNumeric(verifier, message, params);
+    toVerifier(actual).verifyIsNumeric(message, params);
   }
 
   /**
@@ -1064,18 +1025,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual value to compare
    */
   public void isNumericSpace(String actual) {
-    toVerifier(actual).verifyIsNumericSpace(verifier);
+    toVerifier(actual).verifyIsNumericSpace();
   }
 
   /**
    * Verify if result of {@link CStringUtil#isNumericSpace(CharSequence)} is true.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNumericSpace(String actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNumericSpace(verifier, message, params);
+    toVerifier(actual).verifyIsNumericSpace(message, params);
   }
 
   /**
@@ -1088,7 +1049,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void leftPadEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyLeftPadEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyLeftPadEquals(size, padStr, expected);
   }
 
   /**
@@ -1099,17 +1060,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the size to pad to
    * @param padStr   the String to pad with, null or empty treated as single space
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void leftPadEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyLeftPadEquals(verifier, size, padStr, expected, message, params);
+  public void leftPadEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLeftPadEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -1122,7 +1077,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void leftPadNotEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyLeftPadNotEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyLeftPadNotEquals(size, padStr, expected);
   }
 
   /**
@@ -1133,17 +1088,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the size to pad to
    * @param padStr   the String to pad with, null or empty treated as single space
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void leftPadNotEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyLeftPadNotEquals(verifier, size, padStr, expected, message, params);
+  public void leftPadNotEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLeftPadNotEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -1154,7 +1103,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void leftValueEquals(String actual, int len, String expected) {
-    toVerifier(actual).verifyLeftValueEquals(verifier, len, expected);
+    toVerifier(actual).verifyLeftValueEquals(len, expected);
   }
 
   /**
@@ -1163,12 +1112,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void leftValueEquals(
-      String actual, int len, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLeftValueEquals(verifier, len, expected, message, params);
+  public void leftValueEquals(String actual, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLeftValueEquals(len, expected, message, params);
   }
 
   /**
@@ -1179,7 +1127,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void leftValueNotEquals(String actual, int len, String expected) {
-    toVerifier(actual).verifyLeftValueNotEquals(verifier, len, expected);
+    toVerifier(actual).verifyLeftValueNotEquals(len, expected);
   }
 
   /**
@@ -1188,12 +1136,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void leftValueNotEquals(
-      String actual, int len, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLeftValueNotEquals(verifier, len, expected, message, params);
+  public void leftValueNotEquals(String actual, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLeftValueNotEquals(len, expected, message, params);
   }
 
   /**
@@ -1203,7 +1150,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void lengthEquals(String actual, int expected) {
-    toVerifier(actual).verifyLengthEquals(verifier, expected);
+    toVerifier(actual).verifyLengthEquals(expected);
   }
 
   /**
@@ -1211,12 +1158,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void lengthEquals(
-      String actual, int expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLengthEquals(verifier, expected, message, params);
+  public void lengthEquals(String actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLengthEquals(expected, message, params);
   }
 
   /**
@@ -1226,7 +1172,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void lengthNotEquals(String actual, int expected) {
-    toVerifier(actual).verifyLengthNotEquals(verifier, expected);
+    toVerifier(actual).verifyLengthNotEquals(expected);
   }
 
   /**
@@ -1234,12 +1180,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void lengthNotEquals(
-      String actual, int expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLengthNotEquals(verifier, expected, message, params);
+  public void lengthNotEquals(String actual, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyLengthNotEquals(expected, message, params);
   }
 
   /**
@@ -1249,7 +1194,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param pattern regular expression pattern
    */
   public void matches(String actual, final Pattern pattern) {
-    toVerifier(actual).verifyMatches(verifier, pattern);
+    toVerifier(actual).verifyMatches(pattern);
   }
 
   /**
@@ -1257,12 +1202,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param pattern regular expression pattern
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void matches(
-      String actual, final Pattern pattern, final String message, final Object... params) {
-    toVerifier(actual).verifyMatches(verifier, pattern, message, params);
+  public void matches(String actual, final Pattern pattern, final String message, final Object... params) {
+    toVerifier(actual).verifyMatches(pattern, message, params);
   }
 
   /**
@@ -1271,8 +1215,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param patterns regular expression pattern
    */
-  public void waitMatchesAny(String actual, final List<Pattern> patterns) {
-    toVerifier(actual).waitMatchesAny(verifier, patterns);
+  public void matchesAny(String actual, final List<Pattern> patterns) {
+    toVerifier(actual).verifyMatchesAny(patterns);
   }
 
   /**
@@ -1280,12 +1224,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param patterns regular expression pattern
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void waitMatchesAny(
-      String actual, final List<Pattern> patterns, final String message, final Object... params) {
-    toVerifier(actual).waitMatchesAny(verifier, patterns, message, params);
+  public void matchesAny(String actual, final List<Pattern> patterns, final String message, final Object... params) {
+    toVerifier(actual).verifyMatchesAny(patterns, message, params);
   }
 
   /**
@@ -1294,8 +1237,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param patterns regular expression pattern
    */
-  public void waitMatchesNone(String actual, final List<Pattern> patterns) {
-    toVerifier(actual).waitMatchesNone(verifier, patterns);
+  public void verifyMatchesNone(String actual, final List<Pattern> patterns) {
+    toVerifier(actual).verifyMatchesNone(patterns);
   }
 
   /**
@@ -1303,12 +1246,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param patterns regular expression pattern
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void waitMatchesNone(
-      String actual, final List<Pattern> patterns, final String message, final Object... params) {
-    toVerifier(actual).waitMatchesNone(verifier, patterns, message, params);
+  public void verifyMatchesNone(String actual, final List<Pattern> patterns, final String message, final Object... params) {
+    toVerifier(actual).verifyMatchesNone(patterns, message, params);
   }
 
   /**
@@ -1318,7 +1260,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param pattern regular expression pattern
    */
   public void matches(String actual, final String pattern) {
-    toVerifier(actual).verifyMatches(verifier, pattern);
+    toVerifier(actual).verifyMatches(pattern);
   }
 
   /**
@@ -1326,12 +1268,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param pattern regular expression pattern
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void matches(
-      String actual, final String pattern, final String message, final Object... params) {
-    toVerifier(actual).verifyMatches(verifier, pattern, message, params);
+  public void matches(String actual, final String pattern, final String message, final Object... params) {
+    toVerifier(actual).verifyMatches(pattern, message, params);
   }
 
   /**
@@ -1343,7 +1284,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void midValueEquals(String actual, int pos, int len, String expected) {
-    toVerifier(actual).verifyMidValueEquals(verifier, pos, len, expected);
+    toVerifier(actual).verifyMidValueEquals(pos, len, expected);
   }
 
   /**
@@ -1353,17 +1294,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param pos      the position to start from, negative treated as zero
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void midValueEquals(
-      String actual,
-      int pos,
-      int len,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyMidValueEquals(verifier, pos, len, expected, message, params);
+  public void midValueEquals(String actual, int pos, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyMidValueEquals(pos, len, expected, message, params);
   }
 
   /**
@@ -1375,7 +1310,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void midValueNotEquals(String actual, int pos, int len, String expected) {
-    toVerifier(actual).verifyMidValueNotEquals(verifier, pos, len, expected);
+    toVerifier(actual).verifyMidValueNotEquals(pos, len, expected);
   }
 
   /**
@@ -1385,17 +1320,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param pos      the position to start from, negative treated as zero
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void midValueNotEquals(
-      String actual,
-      int pos,
-      int len,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyMidValueNotEquals(verifier, pos, len, expected, message, params);
+  public void midValueNotEquals(String actual, int pos, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyMidValueNotEquals(pos, len, expected, message, params);
   }
 
   /**
@@ -1405,7 +1334,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notContains(String actual, String expected) {
-    toVerifier(actual).verifyNotContains(verifier, expected);
+    toVerifier(actual).verifyNotContains(expected);
   }
 
   /**
@@ -1413,12 +1342,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notContains(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(verifier, expected, message, params);
+  public void notContains(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
   /**
@@ -1429,7 +1357,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notContainsIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyNotContainsIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyNotContainsIgnoreCase(expected);
   }
 
   /**
@@ -1438,12 +1366,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notContainsIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContainsIgnoreCase(verifier, expected, message, params);
+  public void notContainsIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotContainsIgnoreCase(expected, message, params);
   }
 
   /**
@@ -1453,7 +1380,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param suffix the suffix to find, may be {@code null}
    */
   public void notEndsWith(String actual, String suffix) {
-    toVerifier(actual).verifyNotEndsWith(verifier, suffix);
+    toVerifier(actual).verifyNotEndsWith(suffix);
   }
 
   /**
@@ -1461,12 +1388,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param suffix  the suffix to find, may be {@code null}
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void notEndsWith(
-      String actual, String suffix, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEndsWith(verifier, suffix, message, params);
+  public void notEndsWith(String actual, String suffix, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEndsWith(suffix, message, params);
   }
 
   /**
@@ -1477,7 +1403,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param suffix the suffix to find, may be {@code null}
    */
   public void notEndsWithIgnoreCase(String actual, String suffix) {
-    toVerifier(actual).verifyNotEndsWithIgnoreCase(verifier, suffix);
+    toVerifier(actual).verifyNotEndsWithIgnoreCase(suffix);
   }
 
   /**
@@ -1486,12 +1412,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual  value to compare
    * @param suffix  the suffix to find, may be {@code null}
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param params  parameters in case if message is a format {@link String#format}
    */
-  public void notEndsWithIgnoreCase(
-      String actual, String suffix, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEndsWithIgnoreCase(verifier, suffix, message, params);
+  public void notEndsWithIgnoreCase(String actual, String suffix, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEndsWithIgnoreCase(suffix, message, params);
   }
 
   /**
@@ -1501,7 +1426,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notEquals(String actual, String expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -1509,12 +1434,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+  public void notEquals(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -1524,7 +1448,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notEqualsIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyNotEqualsIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyNotEqualsIgnoreCase(expected);
   }
 
   /**
@@ -1532,12 +1456,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEqualsIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEqualsIgnoreCase(verifier, expected, message, params);
+  public void notEqualsIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEqualsIgnoreCase(expected, message, params);
   }
 
   /**
@@ -1547,7 +1470,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notEqualsIgnoreWhiteSpaces(String actual, String expected) {
-    toVerifier(actual).verifyNotEqualsIgnoreWhiteSpaces(verifier, expected);
+    toVerifier(actual).verifyNotEqualsIgnoreWhiteSpaces(expected);
   }
 
   /**
@@ -1555,12 +1478,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEqualsIgnoreWhiteSpaces(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEqualsIgnoreWhiteSpaces(verifier, expected, message, params);
+  public void notEqualsIgnoreWhiteSpaces(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEqualsIgnoreWhiteSpaces(expected, message, params);
   }
 
   /**
@@ -1570,19 +1492,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param pattern regular expression pattern
    */
   public void notMatches(String actual, final Pattern pattern) {
-    toVerifier(actual).verifyNotMatches(verifier, pattern);
+    toVerifier(actual).verifyNotMatches(pattern);
   }
 
   /**
    * Verify if String value does not match provided pattern
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param pattern regular expression pattern
    */
-  public void notMatches(
-      String actual, final Pattern pattern, final String message, final Object... params) {
-    toVerifier(actual).verifyNotMatches(verifier, pattern, message, params);
+  public void notMatches(String actual, final Pattern pattern, final String message, final Object... params) {
+    toVerifier(actual).verifyNotMatches(pattern, message, params);
   }
 
   /**
@@ -1592,19 +1513,18 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param pattern regular expression pattern
    */
   public void notMatches(String actual, final String pattern) {
-    toVerifier(actual).verifyNotMatches(verifier, pattern);
+    toVerifier(actual).verifyNotMatches(pattern);
   }
 
   /**
    * Verify if String value does not match provided pattern
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification.
+   * @param message information about the purpose of this verification.
    * @param pattern regular expression pattern
    */
-  public void notMatches(
-      String actual, final String pattern, final String message, final Object... params) {
-    toVerifier(actual).verifyNotMatches(verifier, pattern, message, params);
+  public void notMatches(String actual, final String pattern, final String message, final Object... params) {
+    toVerifier(actual).verifyNotMatches(pattern, message, params);
   }
 
   /**
@@ -1612,12 +1532,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notStartsWith(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotStartsWith(verifier, expected, message, params);
+  public void notStartsWith(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotStartsWith(expected, message, params);
   }
 
   /**
@@ -1627,7 +1546,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notStartsWith(String actual, String expected) {
-    toVerifier(actual).verifyNotStartsWith(verifier, expected);
+    toVerifier(actual).verifyNotStartsWith(expected);
   }
 
   /**
@@ -1636,12 +1555,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notStartsWithIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotStartsWithIgnoreCase(verifier, expected, message, params);
+  public void notStartsWithIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotStartsWithIgnoreCase(expected, message, params);
   }
 
   /**
@@ -1652,7 +1570,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void notStartsWithIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyNotStartsWithIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyNotStartsWithIgnoreCase(expected);
   }
 
   /**
@@ -1662,12 +1580,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param subString the substring to count, may be null
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void numberOfMatchesEquals(
-      String actual, String subString, int expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNumberOfMatchesEquals(verifier, subString, expected, message, params);
+  public void numberOfMatchesEquals(String actual, String subString, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNumberOfMatchesEquals(subString, expected, message, params);
   }
 
   /**
@@ -1679,7 +1596,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param subString the substring to count, may be null
    */
   public void numberOfMatchesEquals(String actual, String subString, int expected) {
-    toVerifier(actual).verifyNumberOfMatchesEquals(verifier, subString, expected);
+    toVerifier(actual).verifyNumberOfMatchesEquals(subString, expected);
   }
 
   /**
@@ -1689,13 +1606,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param subString the substring to count, may be null
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void numberOfMatchesNotEquals(
-      String actual, String subString, int expected, final String message, final Object... params) {
-    toVerifier(actual)
-        .verifyNumberOfMatchesNotEquals(verifier, subString, expected, message, params);
+  public void numberOfMatchesNotEquals(String actual, String subString, int expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNumberOfMatchesNotEquals(subString, expected, message, params);
   }
 
   /**
@@ -1707,7 +1622,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param subString the substring to count, may be null
    */
   public void numberOfMatchesNotEquals(String actual, String subString, int expected) {
-    toVerifier(actual).verifyNumberOfMatchesNotEquals(verifier, subString, expected);
+    toVerifier(actual).verifyNumberOfMatchesNotEquals(subString, expected);
   }
 
   /**
@@ -1716,12 +1631,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeEndEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveEndEquals(verifier, remove, expected, message, params);
+  public void removeEndEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveEndEquals(remove, expected, message, params);
   }
 
   /**
@@ -1732,7 +1646,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeEndEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveEndEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveEndEquals(remove, expected);
   }
 
   /**
@@ -1742,12 +1656,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeEndIgnoreCaseEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveEndIgnoreCaseEquals(verifier, remove, expected, message, params);
+  public void removeEndIgnoreCaseEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveEndIgnoreCaseEquals(remove, expected, message, params);
   }
 
   /**
@@ -1759,7 +1672,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeEndIgnoreCaseEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveEndIgnoreCaseEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveEndIgnoreCaseEquals(remove, expected);
   }
 
   /**
@@ -1769,13 +1682,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeEndIgnoreCaseNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual)
-        .verifyRemoveEndIgnoreCaseNotEquals(verifier, remove, expected, message, params);
+  public void removeEndIgnoreCaseNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveEndIgnoreCaseNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -1787,7 +1698,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeEndIgnoreCaseNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveEndIgnoreCaseNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveEndIgnoreCaseNotEquals(remove, expected);
   }
 
   /**
@@ -1797,12 +1708,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeEndNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveEndNotEquals(verifier, remove, expected, message, params);
+  public void removeEndNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveEndNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -1814,7 +1724,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeEndNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveEndNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveEndNotEquals(remove, expected);
   }
 
   /**
@@ -1823,12 +1733,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveEquals(verifier, remove, expected, message, params);
+  public void removeEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveEquals(remove, expected, message, params);
   }
 
   /**
@@ -1839,7 +1748,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveEquals(remove, expected);
   }
 
   /**
@@ -1849,12 +1758,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeIgnoreCaseEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveIgnoreCaseEquals(verifier, remove, expected, message, params);
+  public void removeIgnoreCaseEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveIgnoreCaseEquals(remove, expected, message, params);
   }
 
   /**
@@ -1866,7 +1774,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeIgnoreCaseEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveIgnoreCaseEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveIgnoreCaseEquals(remove, expected);
   }
 
   /**
@@ -1876,12 +1784,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeIgnoreCaseNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveIgnoreCaseNotEquals(verifier, remove, expected, message, params);
+  public void removeIgnoreCaseNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveIgnoreCaseNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -1893,7 +1800,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeIgnoreCaseNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveIgnoreCaseNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveIgnoreCaseNotEquals(remove, expected);
   }
 
   /**
@@ -1902,12 +1809,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveNotEquals(verifier, remove, expected, message, params);
+  public void removeNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -1918,7 +1824,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveNotEquals(remove, expected);
   }
 
   /**
@@ -1928,12 +1834,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeStartEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveStartEquals(verifier, remove, expected, message, params);
+  public void removeStartEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveStartEquals(remove, expected, message, params);
   }
 
   /**
@@ -1945,7 +1850,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeStartEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveStartEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveStartEquals(remove, expected);
   }
 
   /**
@@ -1955,13 +1860,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeStartIgnoreCaseEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual)
-        .verifyRemoveStartIgnoreCaseEquals(verifier, remove, expected, message, params);
+  public void removeStartIgnoreCaseEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveStartIgnoreCaseEquals(remove, expected, message, params);
   }
 
   /**
@@ -1973,7 +1876,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeStartIgnoreCaseEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveStartIgnoreCaseEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveStartIgnoreCaseEquals(remove, expected);
   }
 
   /**
@@ -1983,13 +1886,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeStartIgnoreCaseNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual)
-        .verifyRemoveStartIgnoreCaseNotEquals(verifier, remove, expected, message, params);
+  public void removeStartIgnoreCaseNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveStartIgnoreCaseNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -2001,7 +1902,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeStartIgnoreCaseNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveStartIgnoreCaseNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveStartIgnoreCaseNotEquals(remove, expected);
   }
 
   /**
@@ -2011,12 +1912,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param remove   the String to search for and remove, may be null
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void removeStartNotEquals(
-      String actual, String remove, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRemoveStartNotEquals(verifier, remove, expected, message, params);
+  public void removeStartNotEquals(String actual, String remove, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRemoveStartNotEquals(remove, expected, message, params);
   }
 
   /**
@@ -2028,7 +1928,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void removeStartNotEquals(String actual, String remove, String expected) {
-    toVerifier(actual).verifyRemoveStartNotEquals(verifier, remove, expected);
+    toVerifier(actual).verifyRemoveStartNotEquals(remove, expected);
   }
 
   /**
@@ -2039,18 +1939,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceEquals(verifier, searchString, replacement, expected, message, params);
+  public void replaceEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2062,9 +1955,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
    */
-  public void replaceEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual).verifyReplaceEquals(verifier, searchString, replacement, expected);
+  public void replaceEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2075,19 +1967,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceIgnoreCaseEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceIgnoreCaseEquals(
-            verifier, searchString, replacement, expected, message, params);
+  public void replaceIgnoreCaseEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceIgnoreCaseEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2099,9 +1983,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
    */
-  public void replaceIgnoreCaseEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual).verifyReplaceIgnoreCaseEquals(verifier, searchString, replacement, expected);
+  public void replaceIgnoreCaseEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceIgnoreCaseEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2112,19 +1995,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceIgnoreCaseNotEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceIgnoreCaseNotEquals(
-            verifier, searchString, replacement, expected, message, params);
+  public void replaceIgnoreCaseNotEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceIgnoreCaseNotEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2136,10 +2011,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
    */
-  public void replaceIgnoreCaseNotEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual)
-        .verifyReplaceIgnoreCaseNotEquals(verifier, searchString, replacement, expected);
+  public void replaceIgnoreCaseNotEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceIgnoreCaseNotEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2150,18 +2023,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceNotEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceNotEquals(verifier, searchString, replacement, expected, message, params);
+  public void replaceNotEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceNotEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2173,9 +2039,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace it with, may be null
    * @param expected     the expected result.
    */
-  public void replaceNotEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual).verifyReplaceNotEquals(verifier, searchString, replacement, expected);
+  public void replaceNotEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceNotEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2186,18 +2051,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for, may be null
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceOnceEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceOnceEquals(verifier, searchString, replacement, expected, message, params);
+  public void replaceOnceEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceOnceEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2209,9 +2067,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
    */
-  public void replaceOnceEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual).verifyReplaceOnceEquals(verifier, searchString, replacement, expected);
+  public void replaceOnceEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceOnceEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2222,19 +2079,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceOnceIgnoreCaseEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceOnceIgnoreCaseEquals(
-            verifier, searchString, replacement, expected, message, params);
+  public void replaceOnceIgnoreCaseEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceOnceIgnoreCaseEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2246,10 +2095,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
    */
-  public void replaceOnceIgnoreCaseEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual)
-        .verifyReplaceOnceIgnoreCaseEquals(verifier, searchString, replacement, expected);
+  public void replaceOnceIgnoreCaseEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceOnceIgnoreCaseEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2260,19 +2107,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for (case insensitive), may be null
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceOnceIgnoreCaseNotEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceOnceIgnoreCaseNotEquals(
-            verifier, searchString, replacement, expected, message, params);
+  public void replaceOnceIgnoreCaseNotEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceOnceIgnoreCaseNotEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2284,10 +2123,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
    */
-  public void replaceOnceIgnoreCaseNotEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual)
-        .verifyReplaceOnceIgnoreCaseNotEquals(verifier, searchString, replacement, expected);
+  public void replaceOnceIgnoreCaseNotEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceOnceIgnoreCaseNotEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2298,18 +2135,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param searchString the String to search for, may be null
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void replaceOnceNotEquals(
-      String actual,
-      String searchString,
-      String replacement,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyReplaceOnceNotEquals(verifier, searchString, replacement, expected, message, params);
+  public void replaceOnceNotEquals(String actual, String searchString, String replacement, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReplaceOnceNotEquals(searchString, replacement, expected, message, params);
   }
 
   /**
@@ -2321,9 +2151,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param replacement  the String to replace with, may be null
    * @param expected     the expected result.
    */
-  public void replaceOnceNotEquals(
-      String actual, String searchString, String replacement, String expected) {
-    toVerifier(actual).verifyReplaceOnceNotEquals(verifier, searchString, replacement, expected);
+  public void replaceOnceNotEquals(String actual, String searchString, String replacement, String expected) {
+    toVerifier(actual).verifyReplaceOnceNotEquals(searchString, replacement, expected);
   }
 
   /**
@@ -2331,12 +2160,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void reverseEquals(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyReverseEquals(verifier, expected, message, params);
+  public void reverseEquals(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReverseEquals(expected, message, params);
   }
 
   /**
@@ -2346,7 +2174,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void reverseEquals(String actual, String expected) {
-    toVerifier(actual).verifyReverseEquals(verifier, expected);
+    toVerifier(actual).verifyReverseEquals(expected);
   }
 
   /**
@@ -2354,12 +2182,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void reverseNotEquals(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyReverseNotEquals(verifier, expected, message, params);
+  public void reverseNotEquals(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyReverseNotEquals(expected, message, params);
   }
 
   /**
@@ -2369,7 +2196,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void reverseNotEquals(String actual, String expected) {
-    toVerifier(actual).verifyReverseNotEquals(verifier, expected);
+    toVerifier(actual).verifyReverseNotEquals(expected);
   }
 
   /**
@@ -2380,17 +2207,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the size to pad to
    * @param padStr   the String to pad with, null or empty treated as single space
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void rightPadEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyRightPadEquals(verifier, size, padStr, expected, message, params);
+  public void rightPadEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRightPadEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -2403,7 +2224,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void rightPadEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyRightPadEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyRightPadEquals(size, padStr, expected);
   }
 
   /**
@@ -2414,17 +2235,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param size     the size to pad to
    * @param padStr   the String to pad with, null or empty treated as single space
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void rightPadNotEquals(
-      String actual,
-      int size,
-      String padStr,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyRightPadNotEquals(verifier, size, padStr, expected, message, params);
+  public void rightPadNotEquals(String actual, int size, String padStr, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRightPadNotEquals(size, padStr, expected, message, params);
   }
 
   /**
@@ -2437,7 +2252,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void rightPadNotEquals(String actual, int size, String padStr, String expected) {
-    toVerifier(actual).verifyRightPadNotEquals(verifier, size, padStr, expected);
+    toVerifier(actual).verifyRightPadNotEquals(size, padStr, expected);
   }
 
   /**
@@ -2446,12 +2261,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void rightValueEquals(
-      String actual, int len, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRightValueEquals(verifier, len, expected, message, params);
+  public void rightValueEquals(String actual, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRightValueEquals(len, expected, message, params);
   }
 
   /**
@@ -2462,7 +2276,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void rightValueEquals(String actual, int len, String expected) {
-    toVerifier(actual).verifyRightValueEquals(verifier, len, expected);
+    toVerifier(actual).verifyRightValueEquals(len, expected);
   }
 
   /**
@@ -2471,12 +2285,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param len      the length of the required String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void rightValueNotEquals(
-      String actual, int len, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyRightValueNotEquals(verifier, len, expected, message, params);
+  public void rightValueNotEquals(String actual, int len, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyRightValueNotEquals(len, expected, message, params);
   }
 
   /**
@@ -2487,7 +2300,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param len      the length of the required String
    */
   public void rightValueNotEquals(String actual, int len, String expected) {
-    toVerifier(actual).verifyRightValueNotEquals(verifier, len, expected);
+    toVerifier(actual).verifyRightValueNotEquals(len, expected);
   }
 
   /**
@@ -2495,12 +2308,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void startsWith(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyStartsWith(verifier, expected, message, params);
+  public void startsWith(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStartsWith(expected, message, params);
   }
 
   /**
@@ -2510,7 +2322,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void startsWith(String actual, String expected) {
-    toVerifier(actual).verifyStartsWith(verifier, expected);
+    toVerifier(actual).verifyStartsWith(expected);
   }
 
   /**
@@ -2519,12 +2331,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void startsWithAny(
-      String actual, List<String> searchInputs, final String message, final Object... params) {
-    toVerifier(actual).verifyStartsWithAny(verifier, searchInputs, message, params);
+  public void startsWithAny(String actual, List<String> searchInputs, final String message, final Object... params) {
+    toVerifier(actual).verifyStartsWithAny(searchInputs, message, params);
   }
 
   /**
@@ -2535,7 +2346,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                     null}
    */
   public void startsWithAny(String actual, List<String> searchInputs) {
-    toVerifier(actual).verifyStartsWithAny(verifier, searchInputs);
+    toVerifier(actual).verifyStartsWithAny(searchInputs);
   }
 
   /**
@@ -2544,12 +2355,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void startsWithIgnoreCase(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyStartsWithIgnoreCase(verifier, expected, message, params);
+  public void startsWithIgnoreCase(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStartsWithIgnoreCase(expected, message, params);
   }
 
   /**
@@ -2560,7 +2370,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void startsWithIgnoreCase(String actual, String expected) {
-    toVerifier(actual).verifyStartsWithIgnoreCase(verifier, expected);
+    toVerifier(actual).verifyStartsWithIgnoreCase(expected);
   }
 
   /**
@@ -2569,12 +2379,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
-   * @param message      information about the propose of this verification.
+   * @param message      information about the purpose of this verification.
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void startsWithNone(
-      String actual, List<String> searchInputs, final String message, final Object... params) {
-    toVerifier(actual).verifyStartsWithNone(verifier, searchInputs, message, params);
+  public void startsWithNone(String actual, List<String> searchInputs, final String message, final Object... params) {
+    toVerifier(actual).verifyStartsWithNone(searchInputs, message, params);
   }
 
   /**
@@ -2585,7 +2394,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                     null}
    */
   public void startsWithNone(String actual, List<String> searchInputs) {
-    toVerifier(actual).verifyStartsWithNone(verifier, searchInputs);
+    toVerifier(actual).verifyStartsWithNone(searchInputs);
   }
 
   /**
@@ -2594,16 +2403,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedEndValue(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedEndValue(verifier, stripChars, expected, message, params);
+  public void stripedEndValue(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedEndValue(stripChars, expected, message, params);
   }
 
   /**
@@ -2614,7 +2418,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedEndValue(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedEndValue(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedEndValue(stripChars, expected);
   }
 
   /**
@@ -2623,16 +2427,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedEndValueNot(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedEndValueNot(verifier, stripChars, expected, message, params);
+  public void stripedEndValueNot(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedEndValueNot(stripChars, expected, message, params);
   }
 
   /**
@@ -2643,7 +2442,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedEndValueNot(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedEndValueNot(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedEndValueNot(stripChars, expected);
   }
 
   /**
@@ -2652,16 +2451,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedStartValue(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedStartValue(verifier, stripChars, expected, message, params);
+  public void stripedStartValue(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedStartValue(stripChars, expected, message, params);
   }
 
   /**
@@ -2672,7 +2466,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedStartValue(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedStartValue(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedStartValue(stripChars, expected);
   }
 
   /**
@@ -2681,16 +2475,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedStartValueNot(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedStartValueNot(verifier, stripChars, expected, message, params);
+  public void stripedStartValueNot(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedStartValueNot(stripChars, expected, message, params);
   }
 
   /**
@@ -2701,7 +2490,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedStartValueNot(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedStartValueNot(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedStartValueNot(stripChars, expected);
   }
 
   /**
@@ -2710,16 +2499,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedValue(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedValue(verifier, stripChars, expected, message, params);
+  public void stripedValue(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedValue(stripChars, expected, message, params);
   }
 
   /**
@@ -2730,7 +2514,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedValue(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedValue(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedValue(stripChars, expected);
   }
 
   /**
@@ -2739,16 +2523,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual     value to compare
    * @param stripChars the characters to remove, null treated as whitespace
    * @param expected   the expected result.
-   * @param message    information about the propose of this verification.
+   * @param message    information about the purpose of this verification.
    * @param params     parameters in case if message is a format {@link String#format}
    */
-  public void stripedValueNot(
-      String actual,
-      String stripChars,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifyStripedValueNot(verifier, stripChars, expected, message, params);
+  public void stripedValueNot(String actual, String stripChars, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyStripedValueNot(stripChars, expected, message, params);
   }
 
   /**
@@ -2759,7 +2538,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected   the expected result.
    */
   public void stripedValueNot(String actual, String stripChars, String expected) {
-    toVerifier(actual).verifyStripedValueNot(verifier, stripChars, expected);
+    toVerifier(actual).verifyStripedValueNot(stripChars, expected);
   }
 
   /**
@@ -2769,16 +2548,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringAfterEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifySubstringAfterEquals(verifier, separator, expected, message, params);
+  public void substringAfterEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringAfterEquals(separator, expected, message, params);
   }
 
   /**
@@ -2790,7 +2564,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringAfterEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringAfterEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringAfterEquals(separator, expected);
   }
 
   /**
@@ -2800,17 +2574,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringAfterLastEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringAfterLastEquals(verifier, separator, expected, message, params);
+  public void substringAfterLastEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringAfterLastEquals(separator, expected, message, params);
   }
 
   /**
@@ -2822,7 +2590,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringAfterLastEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringAfterLastEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringAfterLastEquals(separator, expected);
   }
 
   /**
@@ -2832,17 +2600,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringAfterLastNotEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringAfterLastNotEquals(verifier, separator, expected, message, params);
+  public void substringAfterLastNotEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringAfterLastNotEquals(separator, expected, message, params);
   }
 
   /**
@@ -2854,7 +2616,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringAfterLastNotEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringAfterLastNotEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringAfterLastNotEquals(separator, expected);
   }
 
   /**
@@ -2864,17 +2626,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringAfterNotEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringAfterNotEquals(verifier, separator, expected, message, params);
+  public void substringAfterNotEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringAfterNotEquals(separator, expected, message, params);
   }
 
   /**
@@ -2886,7 +2642,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringAfterNotEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringAfterNotEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringAfterNotEquals(separator, expected);
   }
 
   /**
@@ -2896,16 +2652,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringBeforeEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifySubstringBeforeEquals(verifier, separator, expected, message, params);
+  public void substringBeforeEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBeforeEquals(separator, expected, message, params);
   }
 
   /**
@@ -2917,7 +2668,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringBeforeEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringBeforeEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringBeforeEquals(separator, expected);
   }
 
   /**
@@ -2927,17 +2678,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringBeforeLastEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringBeforeLastEquals(verifier, separator, expected, message, params);
+  public void substringBeforeLastEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBeforeLastEquals(separator, expected, message, params);
   }
 
   /**
@@ -2949,7 +2694,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringBeforeLastEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringBeforeLastEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringBeforeLastEquals(separator, expected);
   }
 
   /**
@@ -2959,17 +2704,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringBeforeLastNotEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringBeforeLastNotEquals(verifier, separator, expected, message, params);
+  public void substringBeforeLastNotEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBeforeLastNotEquals(separator, expected, message, params);
   }
 
   /**
@@ -2981,7 +2720,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringBeforeLastNotEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringBeforeLastNotEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringBeforeLastNotEquals(separator, expected);
   }
 
   /**
@@ -2991,17 +2730,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual    value to compare
    * @param expected  the expected result.
    * @param separator the String to search for, may be {@code null}
-   * @param message   information about the propose of this verification.
+   * @param message   information about the purpose of this verification.
    * @param params    parameters in case if message is a format {@link String#format}
    */
-  public void substringBeforeNotEquals(
-      String actual,
-      String separator,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringBeforeNotEquals(verifier, separator, expected, message, params);
+  public void substringBeforeNotEquals(String actual, String separator, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBeforeNotEquals(separator, expected, message, params);
   }
 
   /**
@@ -3013,7 +2746,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param separator the String to search for, may be {@code null}
    */
   public void substringBeforeNotEquals(String actual, String separator, String expected) {
-    toVerifier(actual).verifySubstringBeforeNotEquals(verifier, separator, expected);
+    toVerifier(actual).verifySubstringBeforeNotEquals(separator, expected);
   }
 
   /**
@@ -3024,18 +2757,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringBetweenEquals(
-      String actual,
-      String open,
-      String close,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringBetweenEquals(verifier, open, close, expected, message, params);
+  public void substringBetweenEquals(String actual, String open, String close, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBetweenEquals(open, close, expected, message, params);
   }
 
   /**
@@ -3048,7 +2774,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param close    the String identifying the end of the substring, empty returns null
    */
   public void substringBetweenEquals(String actual, String open, String close, String expected) {
-    toVerifier(actual).verifySubstringBetweenEquals(verifier, open, close, expected);
+    toVerifier(actual).verifySubstringBetweenEquals(open, close, expected);
   }
 
   /**
@@ -3059,18 +2785,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringBetweenNotEquals(
-      String actual,
-      String open,
-      String close,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringBetweenNotEquals(verifier, open, close, expected, message, params);
+  public void substringBetweenNotEquals(String actual, String open, String close, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringBetweenNotEquals(open, close, expected, message, params);
   }
 
   /**
@@ -3083,7 +2802,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param close    the String identifying the end of the substring, empty returns null
    */
   public void substringBetweenNotEquals(String actual, String open, String close, String expected) {
-    toVerifier(actual).verifySubstringBetweenNotEquals(verifier, open, close, expected);
+    toVerifier(actual).verifySubstringBetweenNotEquals(open, close, expected);
   }
 
   /**
@@ -3092,12 +2811,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param start    the position to start from, negative means count back from the end of the String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringEquals(
-      String actual, int start, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifySubstringEquals(verifier, start, expected, message, params);
+  public void substringEquals(String actual, int start, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringEquals(start, expected, message, params);
   }
 
   /**
@@ -3108,7 +2826,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param start    the position to start from, negative means count back from the end of the String
    */
   public void substringEquals(String actual, int start, String expected) {
-    toVerifier(actual).verifySubstringEquals(verifier, start, expected);
+    toVerifier(actual).verifySubstringEquals(start, expected);
   }
 
   /**
@@ -3119,17 +2837,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param start    the position to start from, negative means count back from the end of the String
    * @param end      the position to end at (exclusive), negative means count back from the end of the
    *                 String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringEquals(
-      String actual,
-      int start,
-      int end,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifySubstringEquals(verifier, start, end, expected, message, params);
+  public void substringEquals(String actual, int start, int end, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringEquals(start, end, expected, message, params);
   }
 
   /**
@@ -3142,7 +2854,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                 String
    */
   public void substringEquals(String actual, int start, int end, String expected) {
-    toVerifier(actual).verifySubstringEquals(verifier, start, end, expected);
+    toVerifier(actual).verifySubstringEquals(start, end, expected);
   }
 
   /**
@@ -3151,12 +2863,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param expected the expected result.
    * @param start    the position to start from, negative means count back from the end of the String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringNotEquals(
-      String actual, int start, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifySubstringNotEquals(verifier, start, expected, message, params);
+  public void substringNotEquals(String actual, int start, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringNotEquals(start, expected, message, params);
   }
 
   /**
@@ -3167,7 +2878,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param start    the position to start from, negative means count back from the end of the String
    */
   public void substringNotEquals(String actual, int start, String expected) {
-    toVerifier(actual).verifySubstringNotEquals(verifier, start, expected);
+    toVerifier(actual).verifySubstringNotEquals(start, expected);
   }
 
   /**
@@ -3179,17 +2890,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param start    the position to start from, negative means count back from the end of the String
    * @param end      the position to end at (exclusive), negative means count back from the end of the
    *                 String
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringNotEquals(
-      String actual,
-      int start,
-      int end,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual).verifySubstringNotEquals(verifier, start, end, expected, message, params);
+  public void substringNotEquals(String actual, int start, int end, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringNotEquals(start, end, expected, message, params);
   }
 
   /**
@@ -3203,7 +2908,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *                 String
    */
   public void substringNotEquals(String actual, int start, int end, String expected) {
-    toVerifier(actual).verifySubstringNotEquals(verifier, start, end, expected);
+    toVerifier(actual).verifySubstringNotEquals(start, end, expected);
   }
 
   /**
@@ -3214,18 +2919,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringsBetweenContains(
-      String actual,
-      String open,
-      String close,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringsBetweenContains(verifier, open, close, expected, message, params);
+  public void substringsBetweenContains(String actual, String open, String close, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringsBetweenContains(open, close, expected, message, params);
   }
 
   /**
@@ -3238,7 +2936,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param close    the String identifying the end of the substring, empty returns null
    */
   public void substringsBetweenContains(String actual, String open, String close, String expected) {
-    toVerifier(actual).verifySubstringsBetweenContains(verifier, open, close, expected);
+    toVerifier(actual).verifySubstringsBetweenContains(open, close, expected);
   }
 
   /**
@@ -3249,18 +2947,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringsBetweenEquals(
-      String actual,
-      String open,
-      String close,
-      List<String> expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringsBetweenEquals(verifier, open, close, expected, message, params);
+  public void substringsBetweenEquals(String actual, String open, String close, List<String> expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringsBetweenEquals(open, close, expected, message, params);
   }
 
   /**
@@ -3272,9 +2963,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
    */
-  public void substringsBetweenEquals(
-      String actual, String open, String close, List<String> expected) {
-    toVerifier(actual).verifySubstringsBetweenEquals(verifier, open, close, expected);
+  public void substringsBetweenEquals(String actual, String open, String close, List<String> expected) {
+    toVerifier(actual).verifySubstringsBetweenEquals(open, close, expected);
   }
 
   /**
@@ -3285,18 +2975,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringsBetweenNotContains(
-      String actual,
-      String open,
-      String close,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringsBetweenNotContains(verifier, open, close, expected, message, params);
+  public void substringsBetweenNotContains(String actual, String open, String close, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringsBetweenNotContains(open, close, expected, message, params);
   }
 
   /**
@@ -3308,9 +2991,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
    */
-  public void substringsBetweenNotContains(
-      String actual, String open, String close, String expected) {
-    toVerifier(actual).verifySubstringsBetweenNotContains(verifier, open, close, expected);
+  public void substringsBetweenNotContains(String actual, String open, String close, String expected) {
+    toVerifier(actual).verifySubstringsBetweenNotContains(open, close, expected);
   }
 
   /**
@@ -3321,18 +3003,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void substringsBetweenNotEquals(
-      String actual,
-      String open,
-      String close,
-      List<String> expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifySubstringsBetweenNotEquals(verifier, open, close, expected, message, params);
+  public void substringsBetweenNotEquals(String actual, String open, String close, List<String> expected, final String message, final Object... params) {
+    toVerifier(actual).verifySubstringsBetweenNotEquals(open, close, expected, message, params);
   }
 
   /**
@@ -3344,9 +3019,8 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param open     the String identifying the start of the substring, empty returns null
    * @param close    the String identifying the end of the substring, empty returns null
    */
-  public void substringsBetweenNotEquals(
-      String actual, String open, String close, List<String> expected) {
-    toVerifier(actual).verifySubstringsBetweenNotEquals(verifier, open, close, expected);
+  public void substringsBetweenNotEquals(String actual, String open, String close, List<String> expected) {
+    toVerifier(actual).verifySubstringsBetweenNotEquals(open, close, expected);
   }
 
   /**
@@ -3354,12 +3028,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void trimmedValue(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyTrimmedValueEquals(verifier, expected, message, params);
+  public void trimmedValue(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTrimmedValueEquals(expected, message, params);
   }
 
   /**
@@ -3369,7 +3042,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void trimmedValue(String actual, String expected) {
-    toVerifier(actual).verifyTrimmedValueEquals(verifier, expected);
+    toVerifier(actual).verifyTrimmedValueEquals(expected);
   }
 
   /**
@@ -3377,12 +3050,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    *
    * @param actual   value to compare
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void trimmedValueNot(
-      String actual, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyTrimmedValueNotEquals(verifier, expected, message, params);
+  public void trimmedValueNot(String actual, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTrimmedValueNotEquals(expected, message, params);
   }
 
   /**
@@ -3392,7 +3064,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void trimmedValueNot(String actual, String expected) {
-    toVerifier(actual).verifyTrimmedValueNotEquals(verifier, expected);
+    toVerifier(actual).verifyTrimmedValueNotEquals(expected);
   }
 
   /**
@@ -3401,12 +3073,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void truncatedValue(
-      String actual, int maxWidth, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyTruncatedValueEquals(verifier, maxWidth, expected, message, params);
+  public void truncatedValue(String actual, int maxWidth, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTruncatedValueEquals(maxWidth, expected, message, params);
   }
 
   /**
@@ -3417,7 +3088,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void truncatedValue(String actual, int maxWidth, String expected) {
-    toVerifier(actual).verifyTruncatedValueEquals(verifier, maxWidth, expected);
+    toVerifier(actual).verifyTruncatedValueEquals(maxWidth, expected);
   }
 
   /**
@@ -3427,18 +3098,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param offset   left edge of string to start truncate from
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void truncatedValue(
-      String actual,
-      int offset,
-      int maxWidth,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyTruncatedValueEquals(verifier, offset, maxWidth, expected, message, params);
+  public void truncatedValue(String actual, int offset, int maxWidth, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTruncatedValueEquals(offset, maxWidth, expected, message, params);
   }
 
   /**
@@ -3450,7 +3114,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void truncatedValue(String actual, int offset, int maxWidth, String expected) {
-    toVerifier(actual).verifyTruncatedValueEquals(verifier, offset, maxWidth, expected);
+    toVerifier(actual).verifyTruncatedValueEquals(offset, maxWidth, expected);
   }
 
   /**
@@ -3459,12 +3123,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param actual   value to compare
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void truncatedValueNot(
-      String actual, int maxWidth, String expected, final String message, final Object... params) {
-    toVerifier(actual).verifyTruncatedValueNotEquals(verifier, maxWidth, expected, message, params);
+  public void truncatedValueNot(String actual, int maxWidth, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTruncatedValueNotEquals(maxWidth, expected, message, params);
   }
 
   /**
@@ -3475,7 +3138,7 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void truncatedValueNot(String actual, int maxWidth, String expected) {
-    toVerifier(actual).verifyTruncatedValueNotEquals(verifier, maxWidth, expected);
+    toVerifier(actual).verifyTruncatedValueNotEquals(maxWidth, expected);
   }
 
   /**
@@ -3485,18 +3148,11 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param offset   left edge of string to start truncate from
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
-   * @param message  information about the propose of this verification.
+   * @param message  information about the purpose of this verification.
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void truncatedValueNot(
-      String actual,
-      int offset,
-      int maxWidth,
-      String expected,
-      final String message,
-      final Object... params) {
-    toVerifier(actual)
-        .verifyTruncatedValueNotEquals(verifier, offset, maxWidth, expected, message, params);
+  public void truncatedValueNot(String actual, int offset, int maxWidth, String expected, final String message, final Object... params) {
+    toVerifier(actual).verifyTruncatedValueNotEquals(offset, maxWidth, expected, message, params);
   }
 
   /**
@@ -3508,11 +3164,22 @@ public class CStringVerification<T extends CVerificationBuilder> extends CBaseVe
    * @param expected the expected result.
    */
   public void truncatedValueNot(String actual, int offset, int maxWidth, String expected) {
-    toVerifier(actual).verifyTruncatedValueNotEquals(verifier, offset, maxWidth, expected);
+    toVerifier(actual).verifyTruncatedValueNotEquals(offset, maxWidth, expected);
   }
 
   private CStringVerifier toVerifier(String actual) {
+    CBaseVerification that = this;
     return new CStringVerifier() {
+      @Override
+      public Logger getLogger() {
+        return CStringVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

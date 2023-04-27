@@ -2,7 +2,6 @@ package org.catools.common.extensions.verify.interfaces;
 
 import org.catools.common.collections.CHashMap;
 import org.catools.common.extensions.states.interfaces.CNumberState;
-import org.catools.common.extensions.verify.CVerificationQueue;
 
 /**
  * CBooleanVerifier is an interface for Boolean verification related methods.
@@ -28,9 +27,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param higherBound       higher bound inclusive
    */
   default void verifyBetweenExclusive(
-      final CVerificationQueue verificationQueue, final N lowerBound, final N higherBound) {
+      final N lowerBound, final N higherBound) {
     verifyBetweenExclusive(
-        verificationQueue,
         lowerBound,
         higherBound,
         getDefaultMessage("Is Between %s And %s (Exclusive)", lowerBound, higherBound));
@@ -42,11 +40,10 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param lowerBound        lower bound inclusive
    * @param higherBound       higher bound inclusive
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyBetweenExclusive(
-      final CVerificationQueue verificationQueue,
       final N lowerBound,
       final N higherBound,
       final String message,
@@ -55,7 +52,6 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
     map.put("Lower Bound", lowerBound);
     map.put("Higher Bound", higherBound);
     _verify(
-        verificationQueue,
         map,
         false,
         (o, o2) -> _toState(o).betweenExclusive(lowerBound, higherBound),
@@ -71,9 +67,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param higherBound       higher bound inclusive
    */
   default void verifyBetweenInclusive(
-      final CVerificationQueue verificationQueue, final N lowerBound, final N higherBound) {
+      final N lowerBound, final N higherBound) {
     verifyBetweenInclusive(
-        verificationQueue,
         lowerBound,
         higherBound,
         getDefaultMessage("Is Between %s And %s (Inclusive)", lowerBound, higherBound));
@@ -85,11 +80,10 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param lowerBound        lower bound inclusive
    * @param higherBound       higher bound inclusive
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyBetweenInclusive(
-      final CVerificationQueue verificationQueue,
       final N lowerBound,
       final N higherBound,
       final String message,
@@ -98,7 +92,6 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
     map.put("Lower Bound", lowerBound);
     map.put("Higher Bound", higherBound);
     _verify(
-        verificationQueue,
         map,
         false,
         (o, o2) -> _toState(o).betweenInclusive(lowerBound, higherBound),
@@ -117,9 +110,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param precision         the acceptable precision
    */
   default void verifyEqualsP(
-      final CVerificationQueue verificationQueue, final N expected, final N precision) {
+      final N expected, final N precision) {
     verifyEqualsP(
-        verificationQueue,
         expected,
         precision,
         getDefaultMessage("Is Equal To The Expected Value"));
@@ -134,17 +126,15 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    * @param precision         the acceptable precision
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsP(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final N precision,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).isEqual(expected, precision),
@@ -158,9 +148,9 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    */
-  default void verifyGreater(final CVerificationQueue verificationQueue, final N expected) {
+  default void verifyGreater(final N expected) {
     verifyGreater(
-        verificationQueue, expected, getDefaultMessage("Is Greater Than The Expected Value"));
+        expected, getDefaultMessage("Is Greater Than The Expected Value"));
   }
 
   /**
@@ -168,16 +158,15 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    *
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyGreater(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue, expected, false, (o, o2) -> _toState(o).greater(o2), message, params);
+        expected, false, (o, o2) -> _toState(o).greater(o2), message, params);
   }
 
   /**
@@ -186,9 +175,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    */
-  default void verifyGreaterOrEqual(final CVerificationQueue verificationQueue, final N expected) {
+  default void verifyGreaterOrEqual(final N expected) {
     verifyGreaterOrEqual(
-        verificationQueue,
         expected,
         getDefaultMessage("Is Greater Than Or Equal To The Expected Value"));
   }
@@ -198,16 +186,14 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    *
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyGreaterOrEqual(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).greaterOrEqual(o2),
@@ -221,8 +207,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    */
-  default void verifyLess(final CVerificationQueue verificationQueue, final N expected) {
-    verifyLess(verificationQueue, expected, getDefaultMessage("Is Less Than The Expected Value"));
+  default void verifyLess(final N expected) {
+    verifyLess(expected, getDefaultMessage("Is Less Than The Expected Value"));
   }
 
   /**
@@ -230,15 +216,14 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    *
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyLess(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final String message,
       final Object... params) {
-    _verify(verificationQueue, expected, false, (o, o2) -> _toState(o).less(o2), message, params);
+    _verify(expected, false, (o, o2) -> _toState(o).less(o2), message, params);
   }
 
   /**
@@ -247,9 +232,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    */
-  default void verifyLessOrEqual(final CVerificationQueue verificationQueue, final N expected) {
+  default void verifyLessOrEqual(final N expected) {
     verifyLessOrEqual(
-        verificationQueue,
         expected,
         getDefaultMessage("Is Less Than Or Equal To The Expected Value"));
   }
@@ -259,16 +243,14 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    *
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyLessOrEqual(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).lessOrEqual(o2),
@@ -284,9 +266,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param higherBound       higher bound inclusive
    */
   default void verifyNotBetweenExclusive(
-      final CVerificationQueue verificationQueue, final N lowerBound, final N higherBound) {
+      final N lowerBound, final N higherBound) {
     verifyNotBetweenExclusive(
-        verificationQueue,
         lowerBound,
         higherBound,
         String.format("Not Is Between %s And %s (Exclusive)", lowerBound, higherBound));
@@ -298,11 +279,10 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param lowerBound        lower bound inclusive
    * @param higherBound       higher bound inclusive
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotBetweenExclusive(
-      final CVerificationQueue verificationQueue,
       final N lowerBound,
       final N higherBound,
       final String message,
@@ -311,7 +291,6 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
     map.put("Lower Bound", lowerBound);
     map.put("Higher Bound", higherBound);
     _verify(
-        verificationQueue,
         map,
         false,
         (o, o2) -> _toState(o).notBetweenExclusive(lowerBound, higherBound),
@@ -327,9 +306,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param higherBound       higher bound inclusive
    */
   default void verifyNotBetweenInclusive(
-      final CVerificationQueue verificationQueue, final N lowerBound, final N higherBound) {
+      final N lowerBound, final N higherBound) {
     verifyNotBetweenInclusive(
-        verificationQueue,
         lowerBound,
         higherBound,
         String.format("Not Is Between %s And %s (Inclusive)", lowerBound, higherBound));
@@ -341,11 +319,10 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param lowerBound        lower bound inclusive
    * @param higherBound       higher bound inclusive
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotBetweenInclusive(
-      final CVerificationQueue verificationQueue,
       final N lowerBound,
       final N higherBound,
       final String message,
@@ -354,7 +331,6 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
     map.put("Lower Bound", lowerBound);
     map.put("Higher Bound", higherBound);
     _verify(
-        verificationQueue,
         map,
         false,
         (o, o2) -> _toState(o).notBetweenInclusive(lowerBound, higherBound),
@@ -372,9 +348,8 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param precision         the acceptable precision
    */
   default void verifyNotEqualsP(
-      final CVerificationQueue verificationQueue, final N expected, final N precision) {
+      final N expected, final N precision) {
     verifyNotEqualsP(
-        verificationQueue,
         expected,
         precision,
         String.format("Is Not Equal To The Expected Value"));
@@ -388,17 +363,15 @@ public interface CNumberVerifier<N extends Number & Comparable<N>>
    * @param verificationQueue verification _verify builder for verification
    * @param expected          value to compare
    * @param precision         the acceptable precision
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsP(
-      final CVerificationQueue verificationQueue,
       final N expected,
       final N precision,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).notEquals(o2, precision),

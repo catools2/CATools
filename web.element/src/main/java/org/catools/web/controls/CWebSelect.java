@@ -1,5 +1,6 @@
 package org.catools.web.controls;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.types.CDynamicStringExtension;
@@ -10,9 +11,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ISelect;
 import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
 
 import java.util.regex.Pattern;
 
+@Slf4j
 public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
 
   public CWebSelect(String name, DR driver, By locator) {
@@ -24,151 +27,161 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   // Extensions
-  public CDynamicStringExtension SelectedText =
-      new CDynamicStringExtension() {
-        @Override
-        public String get() {
-          return getSelectedText();
-        }
+  public CDynamicStringExtension SelectedText = new CDynamicStringExtension() {
+    @Override
+    public String get() {
+      return getSelectedText();
+    }
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name + " Selected Text";
-        }
-      };
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name + " Selected Text";
+    }
+  };
 
-  public CDynamicStringExtension SelectedValue =
-      new CDynamicStringExtension() {
-        @Override
-        public String get() {
-          return getSelectedValue();
-        }
+  public CDynamicStringExtension SelectedValue = new CDynamicStringExtension() {
+    @Override
+    public String get() {
+      return getSelectedValue();
+    }
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name + " Selected Value";
-        }
-      };
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name + " Selected Value";
+    }
+  };
 
-  public CDynamicCollectionExtension<String> Values =
-      new CDynamicCollectionExtension<>() {
-        @Override
-        public Iterable<String> get() {
-          return getValues();
-        }
+  public CDynamicCollectionExtension<String> Values = new CDynamicCollectionExtension<>() {
+    @Override
+    public Logger getLogger() {
+      return CWebSelect.log;
+    }
 
-        @Override
-        public int hashCode() {
-          return get().hashCode();
-        }
+    @Override
+    public Iterable<String> get() {
+      return getValues();
+    }
 
-        @Override
-        public boolean equals(Object obj) {
-          if (obj == null)
-            return false;
+    @Override
+    public int hashCode() {
+      return get().hashCode();
+    }
 
-          try {
-            return isEqual((Iterable<String>) obj);
-          } catch (ClassCastException e) {
-            return false;
-          }
-        }
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == null) return false;
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name + " Values";
-        }
-      };
+      try {
+        return isEqual((Iterable<String>) obj);
+      } catch (ClassCastException e) {
+        return false;
+      }
+    }
 
-  public CDynamicCollectionExtension<String> Texts =
-      new CDynamicCollectionExtension<>() {
-        @Override
-        public Iterable<String> get() {
-          return getTexts();
-        }
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name + " Values";
+    }
+  };
 
-        @Override
-        public int hashCode() {
-          return get().hashCode();
-        }
+  public CDynamicCollectionExtension<String> Texts = new CDynamicCollectionExtension<>() {
+    @Override
+    public Logger getLogger() {
+      return CWebSelect.log;
+    }
 
-        @Override
-        public boolean equals(Object obj) {
-          if (obj == null)
-            return false;
+    @Override
+    public Iterable<String> get() {
+      return getTexts();
+    }
 
-          try {
-            return isEqual((Iterable<String>) obj);
-          } catch (ClassCastException e) {
-            return false;
-          }
-        }
+    @Override
+    public int hashCode() {
+      return get().hashCode();
+    }
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name + " Texts";
-        }
-      };
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == null) return false;
 
-  public CDynamicCollectionExtension<String> SelectedTexts =
-      new CDynamicCollectionExtension<>() {
-        @Override
-        public Iterable<String> get() {
-          return getSelectedTexts();
-        }
+      try {
+        return isEqual((Iterable<String>) obj);
+      } catch (ClassCastException e) {
+        return false;
+      }
+    }
 
-        @Override
-        public int hashCode() {
-          return get().hashCode();
-        }
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name + " Texts";
+    }
+  };
 
-        @Override
-        public boolean equals(Object obj) {
-          if (obj == null)
-            return false;
+  public CDynamicCollectionExtension<String> SelectedTexts = new CDynamicCollectionExtension<>() {
+    @Override
+    public Logger getLogger() {
+      return CWebSelect.log;
+    }
 
-          try {
-            return isEqual((Iterable<String>) obj);
-          } catch (ClassCastException e) {
-            return false;
-          }
-        }
+    @Override
+    public Iterable<String> get() {
+      return getSelectedTexts();
+    }
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name;
-        }
-      };
+    @Override
+    public int hashCode() {
+      return get().hashCode();
+    }
 
-  public CDynamicCollectionExtension<String> SelectedValues =
-      new CDynamicCollectionExtension<>() {
-        @Override
-        public Iterable<String> get() {
-          return getSelectedValues();
-        }
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == null) return false;
 
-        @Override
-        public int hashCode() {
-          return get().hashCode();
-        }
+      try {
+        return isEqual((Iterable<String>) obj);
+      } catch (ClassCastException e) {
+        return false;
+      }
+    }
 
-        @Override
-        public boolean equals(Object obj) {
-          if (obj == null)
-            return false;
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name;
+    }
+  };
 
-          try {
-            return isEqual((Iterable<String>) obj);
-          } catch (ClassCastException e) {
-            return false;
-          }
-        }
+  public CDynamicCollectionExtension<String> SelectedValues = new CDynamicCollectionExtension<>() {
+    @Override
+    public Logger getLogger() {
+      return CWebSelect.log;
+    }
 
-        @Override
-        public String getVerifyMessagePrefix() {
-          return name;
-        }
-      };
+    @Override
+    public Iterable<String> get() {
+      return getSelectedValues();
+    }
+
+    @Override
+    public int hashCode() {
+      return get().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == null) return false;
+
+      try {
+        return isEqual((Iterable<String>) obj);
+      } catch (ClassCastException e) {
+        return false;
+      }
+    }
+
+    @Override
+    public String getVerifyMessagePrefix() {
+      return name;
+    }
+  };
 
   // Getters
   public CList<String> getSelectedTexts() {
@@ -176,12 +189,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public CList<String> getSelectedTexts(int waitSec) {
-    return waitUntil(
-        "Get Selected Texts",
-        waitSec,
-        null,
-        el ->
-            new CList<>(getSelect(el).getAllSelectedOptions()).mapToList(e -> e.getText().trim()));
+    return waitUntil("Get Selected Texts", waitSec, null, el -> new CList<>(getSelect(el).getAllSelectedOptions()).mapToList(e -> e.getText().trim()));
   }
 
   public CList<String> getSelectedValues() {
@@ -189,13 +197,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public CList<String> getSelectedValues(int waitSec) {
-    return waitUntil(
-        "Get Selected Values",
-        waitSec,
-        null,
-        el ->
-            new CList<>(getSelect(el).getAllSelectedOptions())
-                .mapToList(e -> e.getAttribute("value").trim()));
+    return waitUntil("Get Selected Values", waitSec, null, el -> new CList<>(getSelect(el).getAllSelectedOptions()).mapToList(e -> e.getAttribute("value").trim()));
   }
 
   // Getter
@@ -204,11 +206,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public String getSelectedText(int waitSecs) {
-    return waitUntil(
-        "Get Selected Text",
-        waitSecs,
-        null,
-        el -> getSelect(el).getFirstSelectedOption().getText().trim());
+    return waitUntil("Get Selected Text", waitSecs, null, el -> getSelect(el).getFirstSelectedOption().getText().trim());
   }
 
   public String getSelectedValue() {
@@ -216,11 +214,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public String getSelectedValue(int waitSecs) {
-    return waitUntil(
-        "Get Selected Value",
-        waitSecs,
-        null,
-        el -> getSelect(el).getFirstSelectedOption().getAttribute("value").trim());
+    return waitUntil("Get Selected Value", waitSecs, null, el -> getSelect(el).getFirstSelectedOption().getAttribute("value").trim());
   }
 
   public CList<String> getTexts() {
@@ -228,11 +222,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public CList<String> getTexts(int waitSecs) {
-    return waitUntil(
-        "Get Text",
-        waitSecs,
-        null,
-        el -> new CList<>(getSelect(el).getOptions()).mapToList(e -> e.getText().trim()));
+    return waitUntil("Get Text", waitSecs, null, el -> new CList<>(getSelect(el).getOptions()).mapToList(e -> e.getText().trim()));
   }
 
   public CList<String> getValues() {
@@ -240,12 +230,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public CList<String> getValues(int waitSecs) {
-    return waitUntil(
-        "Get Values",
-        waitSecs,
-        null,
-        el ->
-            new CList<>(getSelect(el).getOptions()).mapToList(e -> e.getAttribute("value").trim()));
+    return waitUntil("Get Values", waitSecs, null, el -> new CList<>(getSelect(el).getOptions()).mapToList(e -> e.getAttribute("value").trim()));
   }
 
   // Actions
@@ -270,14 +255,10 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public void selectByText(String value, int waitSec) {
-    waitUntil(
-        "Select By Text",
-        waitSec,
-        null,
-        el -> {
-          getSelect(el).selectByVisibleText(StringUtils.defaultString(value));
-          return true;
-        });
+    waitUntil("Select By Text", waitSec, null, el -> {
+      getSelect(el).selectByVisibleText(StringUtils.defaultString(value));
+      return true;
+    });
   }
 
   public void selectByValue(String value) {
@@ -285,14 +266,10 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public void selectByValue(String value, int waitSec) {
-    waitUntil(
-        "Select By Value",
-        waitSec,
-        null,
-        el -> {
-          getSelect(el).selectByValue(StringUtils.defaultString(value));
-          return true;
-        });
+    waitUntil("Select By Value", waitSec, null, el -> {
+      getSelect(el).selectByValue(StringUtils.defaultString(value));
+      return true;
+    });
   }
 
   public void selectByIndex(int i) {
@@ -300,14 +277,10 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public void selectByIndex(int i, int waitSec) {
-    waitUntil(
-        "Select By Index",
-        waitSec,
-        null,
-        el -> {
-          getSelect(el).selectByIndex(i);
-          return true;
-        });
+    waitUntil("Select By Index", waitSec, null, el -> {
+      getSelect(el).selectByIndex(i);
+      return true;
+    });
   }
 
   public void selectByTextPattern(String pattern) {
@@ -315,20 +288,13 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   }
 
   public void selectByTextPattern(String pattern, int waitSec) {
-    waitUntil(
-        "Select By Text Pattern",
-        waitSec,
-        null,
-        el -> {
-          ISelect dropdown = getSelect(el);
-          int index =
-              CList.of(dropdown.getOptions())
-                  .indexOf(
-                      e -> Pattern.matches(pattern, CStringUtil.strip(e.getText(), "\\n").trim()));
-          verify.Int.greaterOrEqual(index, 0, pattern + " found in options.");
-          getSelect(el).selectByIndex(index);
-          return true;
-        });
+    waitUntil("Select By Text Pattern", waitSec, null, el -> {
+      ISelect dropdown = getSelect(el);
+      int index = CList.of(dropdown.getOptions()).indexOf(e -> Pattern.matches(pattern, CStringUtil.strip(e.getText(), "\\n").trim()));
+      verify.Int.greaterOrEqual(index, 0, pattern + " found in options.");
+      getSelect(el).selectByIndex(index);
+      return true;
+    });
   }
 
   public void set(boolean state) {

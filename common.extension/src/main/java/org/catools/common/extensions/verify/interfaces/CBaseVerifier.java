@@ -15,10 +15,10 @@ import java.util.function.Supplier;
  * CBaseVerifier is an interface to hold shared method between all verifier classes.
  */
 //
-public interface CBaseVerifier<O> extends CBaseWaiter<O> {
+public interface CBaseVerifier<O> extends CBaseWaiter<O>, CVerificationQueue {
 
+  @SuppressWarnings("unchecked")
   default <A, B> void _verify(
-      CVerificationQueue verificationQueue,
       Function<O, A> actualProvider,
       Supplier<B> expectedSupplier,
       boolean printDiff,
@@ -26,7 +26,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final String message,
       final Object... params) {
     if (_useWaiter()) {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               () -> actualProvider.apply(get()),
               (Supplier<Object>) expectedSupplier,
@@ -36,7 +36,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
               getDefaultWaitIntervalInMilliSeconds(),
               (BiFunction<Object, Object, Boolean>) verifyMethod));
     } else {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               () -> actualProvider.apply(get()),
               (Supplier<Object>) expectedSupplier,
@@ -46,8 +46,8 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       O actual,
       B expected,
       boolean printDiff,
@@ -55,7 +55,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final String message,
       final Object... params) {
     if (_useWaiter()) {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               () -> actual,
               () -> expected,
@@ -65,7 +65,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
               getDefaultWaitIntervalInMilliSeconds(),
               (BiFunction<Object, Object, Boolean>) verifyMethod));
     } else {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               () -> actual,
               () -> expected,
@@ -75,8 +75,8 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       O actual,
       B expected,
       boolean printDiff,
@@ -85,7 +85,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    verificationQueue.queue(
+    queue(
         new CVerificationInfo(
             () -> actual,
             () -> expected,
@@ -96,15 +96,15 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
             (BiFunction<Object, Object, Boolean>) verifyMethod));
   }
 
+  @SuppressWarnings("unchecked")
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<O, B, Boolean> verifyMethod,
       final String message,
       final Object... params) {
     if (_useWaiter()) {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               this::get,
               () -> expected,
@@ -114,7 +114,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
               getDefaultWaitIntervalInMilliSeconds(),
               (BiFunction<Object, Object, Boolean>) verifyMethod));
     } else {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               this::get,
               () -> expected,
@@ -124,8 +124,8 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<O, B, Boolean> verifyMethod,
@@ -133,7 +133,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final String message,
       final Object... params) {
     if (_useWaiter()) {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               this::get,
               () -> expected,
@@ -144,7 +144,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
               (BiFunction<Object, Object, Boolean>) verifyMethod,
               (BiConsumer<Object, Object>) onFail));
     } else {
-      verificationQueue.queue(
+      queue(
           new CVerificationInfo(
               this::get,
               () -> expected,
@@ -156,7 +156,6 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
   }
 
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<O, B, Boolean> verifyMethod,
@@ -164,7 +163,6 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         printDiff,
         verifyMethod,
@@ -175,7 +173,6 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
   }
 
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<O, B, Boolean> verifyMethod,
@@ -184,7 +181,6 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         printDiff,
         verifyMethod,
@@ -195,8 +191,8 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
         params);
   }
 
+  @SuppressWarnings("unchecked")
   default <B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<O, B, Boolean> verifyMethod,
@@ -204,7 +200,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    verificationQueue.queue(
+    queue(
         new CVerificationInfo(
             this::get,
             () -> expected,
@@ -215,8 +211,8 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
             (BiFunction<Object, Object, Boolean>) verifyMethod));
   }
 
+  @SuppressWarnings("unchecked")
   default <A, B> void _verify(
-      CVerificationQueue verificationQueue,
       B expected,
       boolean printDiff,
       BiFunction<A, B, Boolean> verifyMethod,
@@ -225,7 +221,7 @@ public interface CBaseVerifier<O> extends CBaseWaiter<O> {
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    verificationQueue.queue(
+    queue(
         new CVerificationInfo(
             () -> (A) get(),
             () -> expected,

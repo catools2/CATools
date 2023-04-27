@@ -260,7 +260,7 @@ public interface CIterableState<E> extends CObjectState<Iterable<E>> {
 
   /**
    * Check if actual collection does not contain all elements from the expected collection. Please
-   * note that actual collection might have some of elements but the point is to ensure that not all
+   * note that actual collection might have some elements but the point is to ensure that not all
    * expected elements are exist in it.
    *
    * @param expected value to compare
@@ -272,7 +272,7 @@ public interface CIterableState<E> extends CObjectState<Iterable<E>> {
 
   /**
    * Check if actual collection does not contain all elements from the expected collection. Please
-   * note that actual collection might have some of elements but the point is to ensure that not all
+   * note that actual collection might have some elements but the point is to ensure that not all
    * expected elements are exist in it.
    *
    * @param onActualContains consumer to call if match found

@@ -266,7 +266,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
 
   /**
    * Check if actual map might contains some but not all entries from the expected map. Please note
-   * that actual map might have some of entries but the point is to ensure that not all expected
+   * that actual map might have some entries but the point is to ensure that not all expected
    * entries are exist in it. We do verify that both key and value match in this comparision
    *
    * @param expected value to compare

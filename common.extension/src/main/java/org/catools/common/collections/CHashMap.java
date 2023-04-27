@@ -1,11 +1,14 @@
 package org.catools.common.collections;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.utils.CJsonUtil;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
   public static <A, B> CHashMap<A, B> of(Map<A, B> map) {
     return new CHashMap<>(map);
@@ -75,5 +78,10 @@ public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
   @Override
   public boolean _useWaiter() {
     return false;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

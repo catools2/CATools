@@ -17,10 +17,10 @@ public class CRegExUtilTest extends CBaseUnitTest {
             CRegExUtil.groups(
                 "kimiak2000@gmail.com",
                 Pattern.compile("([A-Za-z0-9\\+_-]+)@([A-Za-z0-9]+)\\.([A-Za-z0-9]+)")));
-    groups.verifySizeEquals(this, 3, "All group found");
-    groups.verifyContains(this, "kimiak2000", "first group found");
-    groups.verifyContains(this, "gmail", "second group found");
-    groups.verifyContains(this, "com", "third group found");
+    groups.verifySizeEquals(3, "All group found");
+    groups.verifyContains("kimiak2000", "first group found");
+    groups.verifyContains("gmail", "second group found");
+    groups.verifyContains("com", "third group found");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

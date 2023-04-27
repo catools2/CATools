@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -143,12 +144,17 @@ public interface CDriverNavigation extends CDriverWaiter {
   }
 
   default <P> P open(String url, Supplier<P> expectedPage) {
-    getVerify().String.isNotEmpty(url, "URL is valid.");
+    getVerify().String.isNotBlank(url, "URL is not blank.");
+    if (!isSessionStarted()) getDriverSession().startSession();
     return performActionOnDriver(
         "Open",
         webDriver -> {
           webDriver.navigate().to(url);
           return expectedPage == null ? null : expectedPage.get();
         });
+  }
+
+  private boolean isSessionStarted() {
+    return performActionOnDriver("Open", Objects::nonNull) != null;
   }
 }

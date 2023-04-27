@@ -389,7 +389,7 @@ public interface CIterableWaiter<E> extends CObjectWaiter<Iterable<E>> {
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of milliseconds till
    * the actual collection contains some but not all elements from the expected collection. Please
-   * note that actual collection might have some of elements but the point is to ensure that not all
+   * note that actual collection might have some elements but the point is to ensure that not all
    * expected elements are exist in it.
    *
    * @param expected value to compare

@@ -27,7 +27,7 @@ public class CStringMatchTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testGetMatches() {
     CList<CStringMatchInfo<String>> matches = CStringMatch.getMatches("12345", options, s -> s, 20);
-    matches.verifySizeEquals(this, 1);
+    matches.verifySizeEquals(1);
     verify.String.equals(
         matches.getFirst().getMatch(), "1234589qwertuiop!#$%^&()", "correct record found.");
     verify.Double.betweenInclusive(

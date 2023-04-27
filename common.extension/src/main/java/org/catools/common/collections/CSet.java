@@ -1,7 +1,9 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.interfaces.CCollection;
+import org.slf4j.Logger;
 import org.testng.collections.Lists;
 
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class CSet<E> extends HashSet<E> implements CCollection<E>, Set<E> {
 
   public static <C> CSet<C> of(C... c) {
@@ -83,5 +86,10 @@ public class CSet<E> extends HashSet<E> implements CCollection<E>, Set<E> {
   @Override
   public boolean _useWaiter() {
     return false;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

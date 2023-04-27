@@ -1,7 +1,6 @@
 package org.catools.common.extensions.wait.interfaces;
 
 import org.catools.common.extensions.states.interfaces.CStringState;
-import org.catools.common.extensions.verify.CVerificationBuilder;
 import org.catools.common.utils.CStringUtil;
 
 import java.util.List;
@@ -3488,7 +3487,6 @@ public interface CStringWaiter extends CObjectWaiter<String> {
    * equals to expected value.
    *
    * @param expected the expected result.
-   * @return caller {@link CVerificationBuilder} so we can do chain alls
    */
   default boolean waitReverseNotEquals(String expected) {
     return waitReverseNotEquals(
@@ -3501,7 +3499,6 @@ public interface CStringWaiter extends CObjectWaiter<String> {
    *
    * @param expected      the expected result.
    * @param waitInSeconds maximum wait time.
-   * @return caller {@link CVerificationBuilder} so we can do chain alls
    */
   default boolean waitReverseNotEquals(String expected, final int waitInSeconds) {
     return waitReverseNotEquals(expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
@@ -3514,7 +3511,6 @@ public interface CStringWaiter extends CObjectWaiter<String> {
    * @param expected               the expected result.
    * @param waitInSeconds          maximum wait time.
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @return caller {@link CVerificationBuilder} so we can do chain alls
    */
   default boolean waitReverseNotEquals(
       String expected, final int waitInSeconds, final int intervalInMilliSeconds) {

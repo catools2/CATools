@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.catools.common.config.CCoreConfigs;
 import org.catools.common.config.CTestManagementConfigs;
-import org.catools.common.extensions.verify.CVerificationInfo;
-import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.logger.CLoggerConfigs;
 import org.catools.common.testng.model.CExecutionStatus;
@@ -19,7 +17,7 @@ import org.testng.Reporter;
 import org.testng.annotations.*;
 
 @Slf4j
-public class CTest implements CVerificationQueue {
+public class CTest {
   static {
     AnsiConsole.systemInstall();
     ThreadContext.put("LogFolder", CLoggerConfigs.getLogFolderPath());
@@ -170,13 +168,7 @@ public class CTest implements CVerificationQueue {
     return context.getCurrentXmlTest().getName();
   }
 
-  @Override
   public Logger getLogger() {
     return log;
-  }
-
-  @Override
-  public CVerify queue(CVerificationInfo verificationInfo) {
-    return verify.queue(verificationInfo);
   }
 }

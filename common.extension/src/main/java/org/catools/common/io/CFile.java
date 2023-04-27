@@ -1,5 +1,6 @@
 package org.catools.common.io;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CPathConfigs;
@@ -7,6 +8,7 @@ import org.catools.common.exception.CFileNotFoundException;
 import org.catools.common.exception.CFileOperationException;
 import org.catools.common.extensions.types.interfaces.CDynamicFileExtension;
 import org.catools.common.utils.*;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@Slf4j
 public class CFile extends File implements CDynamicFileExtension {
   static {
     System.setProperty("file.encoding", "UTF-8");
@@ -741,8 +744,7 @@ public class CFile extends File implements CDynamicFileExtension {
    *
    * @return <code>true</code> if and only if the file or directory denoted by this abstract
    * pathname does not exist; <code>false</code> otherwise
-   * @throws SecurityException If a security manager exists and its {@link
-   *                           java.lang.SecurityManager#checkRead(java.lang.String)} method denies read access to the
+   * @throws SecurityException If a security manager exists and denies read access to the
    *                           file or directory
    */
   public boolean notExist() {
@@ -791,5 +793,10 @@ public class CFile extends File implements CDynamicFileExtension {
   @Override
   public CFile get() {
     return this;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

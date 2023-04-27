@@ -2,7 +2,7 @@ package org.catools.media.extensions.types.interfaces;
 
 import org.catools.media.extensions.states.interfaces.CImageComparisionState;
 import org.catools.media.extensions.wait.interfaces.CImageComparisionWaiter;
-import org.catools.media.extensions.waitVerify.interfaces.CImageComparisionWaitVerifier;
+import org.catools.media.extensions.waitVerify.interfaces.CImageComparisonWaitVerifier;
 
 /**
  * CImageComparisionExtension is an central interface where we extend all boolean related interfaces
@@ -22,6 +22,6 @@ import org.catools.media.extensions.waitVerify.interfaces.CImageComparisionWaitV
  * }
  * </code> </strong>
  */
-public interface CImageComparisionExtension
-    extends CImageComparisionWaiter, CImageComparisionWaitVerifier, CImageComparisionState {
+public interface CImageComparisonExtension
+    extends CImageComparisionWaiter, CImageComparisonWaitVerifier, CImageComparisionState {
 }

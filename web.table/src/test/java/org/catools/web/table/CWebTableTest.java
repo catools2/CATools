@@ -20,21 +20,21 @@ public class CWebTableTest extends CWebTest<CDriver> {
   public void testGetRecord() {
     customerTable.getFirst()
         .getRecord()
-        .verifyContains(verify, "Company", "Alfreds Futterkiste");
+        .verifyContains("Company", "Alfreds Futterkiste");
   }
 
   @Test
   public void testGetAll() {
-    customerTable.getAll().verifySizeEquals(verify, 6);
+    customerTable.getAll().verifySizeEquals(6);
     customerTable.getAll().get(0)
         .getRecord()
-        .verifyContains(verify, "Company", "Alfreds Futterkiste");
+        .verifyContains("Company", "Alfreds Futterkiste");
   }
 
   @Test
   public void testGetFirst() {
     customerTable.getFirst("Company", "Island Trading")
         .getRecord()
-        .verifyContains(verify, "Company", "Island Trading");
+        .verifyContains("Company", "Island Trading");
   }
 }

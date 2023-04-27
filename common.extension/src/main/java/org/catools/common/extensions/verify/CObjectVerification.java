@@ -1,20 +1,17 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.extensions.verify.interfaces.CObjectVerifier;
+import org.slf4j.Logger;
 
 import java.util.Objects;
 
 /**
  * Object verification class contains all verification method which is related to Object
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBaseVerification<T> {
-
-  public CObjectVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CObjectVerification extends CBaseVerification {
 
   /**
    * Verify that actual and expected value are equal objects.
@@ -23,7 +20,7 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    * @param expected value to compare
    */
   public void equals(final Object actual, final Object expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -31,12 +28,11 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equals(
-      final Object actual, final Object expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+  public void equals(final Object actual, final Object expected, final String message, final Object... params) {
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -45,18 +41,18 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    * @param actual value to compare
    */
   public void isNotNull(final Object actual) {
-    toVerifier(actual).verifyIsNotNull(verifier);
+    toVerifier(actual).verifyIsNotNull();
   }
 
   /**
    * Verify that actual value is NOT null.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNotNull(final Object actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNotNull(verifier, message, params);
+    toVerifier(actual).verifyIsNotNull(message, params);
   }
 
   /**
@@ -65,18 +61,18 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    * @param actual value to compare
    */
   public void isNull(final Object actual) {
-    toVerifier(actual).verifyIsNull(verifier);
+    toVerifier(actual).verifyIsNull();
   }
 
   /**
    * Verify that actual value is null.
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isNull(final Object actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsNull(verifier, message, params);
+    toVerifier(actual).verifyIsNull(message, params);
   }
 
   /**
@@ -86,7 +82,7 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    * @param expected value to compare
    */
   public void notEquals(final Object actual, final Object expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -94,16 +90,26 @@ public class CObjectVerification<T extends CVerificationBuilder<T>> extends CBas
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(
-      final Object actual, final Object expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+  public void notEquals(final Object actual, final Object expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   private CObjectVerifier<Object, CObjectState<Object>> toVerifier(Object actual) {
+    CBaseVerification that = this;
     return new CObjectVerifier<>() {
+      @Override
+      public Logger getLogger() {
+        return CObjectVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

@@ -1,8 +1,10 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.interfaces.CCollection;
 import org.catools.common.utils.CStringUtil;
+import org.slf4j.Logger;
 import org.testng.collections.Lists;
 
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class CList<E> extends ArrayList<E> implements CCollection<E>, List<E> {
 
   public static <C> CList<C> of(C... c) {
@@ -122,5 +125,10 @@ public class CList<E> extends ArrayList<E> implements CCollection<E>, List<E> {
   @Override
   public boolean _useWaiter() {
     return false;
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 }

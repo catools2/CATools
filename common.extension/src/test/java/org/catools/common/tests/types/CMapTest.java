@@ -36,15 +36,12 @@ public class CMapTest extends CBaseUnitTest {
     CVerifier verifier = new CVerifier();
     CSet<java.util.Map.Entry<String, String>> strings = getStringLinkedMap1().asSet();
     strings.verifyContains(
-        verifier,
         new HashMap.SimpleEntry<>("A", "1"),
         "CMapTest ::> testEntrySet ::> Entry Set Contains Correct Values");
     strings.verifyContains(
-        verifier,
         new HashMap.SimpleEntry<>("B", "2"),
         "CMapTest ::> testEntrySet ::> Entry Set Contains Correct Values");
     strings.verifyContains(
-        verifier,
         new HashMap.SimpleEntry<>("C", "3"),
         "CMapTest ::> testEntrySet ::> Entry Set Contains Correct Values");
     verifier.verify();
@@ -86,8 +83,8 @@ public class CMapTest extends CBaseUnitTest {
   public void testGetAllValuesByKey() {
     CVerifier verifier = new CVerifier();
     CList<String> strings = getStringLinkedMap1().getAllValues(k -> !k.equalsIgnoreCase("B"));
-    strings.verifySizeEquals(verifier, 2, "Size Matched");
-    strings.verifyEquals(verifier, new CSet<>("1", "3"), "Values Matched");
+    strings.verifySizeEquals(2, "Size Matched");
+    strings.verifyEquals(new CSet<>("1", "3"), "Values Matched");
     verifier.verify();
   }
 

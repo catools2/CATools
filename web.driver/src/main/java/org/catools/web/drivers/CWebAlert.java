@@ -162,7 +162,7 @@ public class CWebAlert<DR extends CDriver> {
   }
 
   public <A extends CWebAlert> A verifyIsPresent(int waitSec) {
-    Present.verifyIsTrue(verify, waitSec, "Verify that alert is present");
+    Present.verifyIsTrue(waitSec, "Verify that alert is present");
     return (A) this;
   }
 
@@ -172,7 +172,7 @@ public class CWebAlert<DR extends CDriver> {
 
   public <A extends CWebAlert> A verifyMessage(String message, int waitSec) {
     verifyIsPresent(waitSec);
-    Message.verifyEquals(verify, message, 0, "Verify that alert has a right message");
+    Message.verifyEquals(message, 0, "Verify that alert has a right message");
     return (A) this;
   }
 

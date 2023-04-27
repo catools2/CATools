@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.scale.configs.CZScaleConfigs;
 import org.catools.atlassian.scale.model.*;
@@ -15,7 +16,7 @@ import org.json.JSONObject;
 import java.util.Set;
 import java.util.function.Consumer;
 
-@Log4j2
+@Slf4j
 public class CZScaleTestRunClient extends CZScaleRestClient {
 
   public CZScaleTestRunClient() {

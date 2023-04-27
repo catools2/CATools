@@ -1,17 +1,14 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.CBooleanVerifier;
+import org.slf4j.Logger;
 
 /**
  * Boolean verification class contains all verification method which is related to Boolean
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseVerification<T> {
-
-  CBooleanVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CBooleanVerification extends CBaseVerification {
 
   /**
    * Verify that actual and expected have same boolean value or be null
@@ -20,7 +17,7 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    * @param expected value to compare
    */
   public void equals(final Boolean actual, final Boolean expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -28,12 +25,11 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equals(
-      final Boolean actual, final Boolean expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+  public void equals(final Boolean actual, final Boolean expected, final String message, final Object... params) {
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -42,18 +38,18 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    * @param actual value to compare
    */
   public void isFalse(Boolean actual) {
-    toVerifier(actual).verifyIsFalse(verifier);
+    toVerifier(actual).verifyIsFalse();
   }
 
   /**
    * Verify that actual value is false
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isFalse(Boolean actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsFalse(verifier, message, params);
+    toVerifier(actual).verifyIsFalse(message, params);
   }
 
   /**
@@ -62,18 +58,18 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    * @param actual value to compare
    */
   public void isTrue(Boolean actual) {
-    toVerifier(actual).verifyIsTrue(verifier);
+    toVerifier(actual).verifyIsTrue();
   }
 
   /**
    * Verify that actual value is true
    *
    * @param actual  value to compare
-   * @param message information about the propose of this verification
+   * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    */
   public void isTrue(Boolean actual, final String message, final Object... params) {
-    toVerifier(actual).verifyIsTrue(verifier, message, params);
+    toVerifier(actual).verifyIsTrue(message, params);
   }
 
   /**
@@ -83,7 +79,7 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    * @param expected value to compare
    */
   public void notEquals(final Boolean actual, final Boolean expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -91,16 +87,26 @@ public class CBooleanVerification<T extends CVerificationBuilder> extends CBaseV
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(
-      final Boolean actual, final Boolean expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+  public void notEquals(final Boolean actual, final Boolean expected, final String message, final Object... params) {
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   private CBooleanVerifier toVerifier(Boolean actual) {
+    CBaseVerification that = this;
     return new CBooleanVerifier() {
+      @Override
+      public Logger getLogger() {
+        return CBooleanVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

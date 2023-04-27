@@ -2040,20 +2040,6 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
-  public void WithInterval_testSubstringsBetweenEquals_Negative() {
-    verify(
-        string ->
-            string.substringsBetweenEquals(
-                "  some string   s ",
-                " ",
-                "s",
-                new CList<>(" ", "S", 0, 100, "  "),
-                "some string",
-                "%s#%s",
-                getParams()));
-  }
-
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void WithInterval_testSubstringsBetweenNotContains_Negative() {
     verify(
         string ->
@@ -4203,20 +4189,6 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
         string ->
             string.substringsBetweenContains(
                 "  some string   s ", " ", "s", "x", "%s#%s", getParams()));
-  }
-
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
-  public void testSubstringsBetweenEquals_Negative() {
-    verify(
-        string ->
-            string.substringsBetweenEquals(
-                "  some string   s ",
-                " ",
-                "s",
-                new CList<>(" ", "S", 1, "  "),
-                "some string",
-                "%s#%s",
-                getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

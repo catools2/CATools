@@ -26,18 +26,16 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param format            date format to be use
    * @param waitInSeconds     maximum wait time
    */
   default void verifyEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds) {
     verifyEqualsByFormat(
-        verificationQueue, expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+        expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -47,22 +45,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param format            date format to be use
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyEqualsByFormat(
-        verificationQueue,
         expected,
         format,
         waitInSeconds,
@@ -78,20 +73,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param format                 date format to be use
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyEqualsByFormat(
-        verificationQueue,
         expected,
         format,
         waitInSeconds,
@@ -106,16 +98,14 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param format                 date format to be use
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
@@ -123,7 +113,6 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).equalsByFormat(o2, format),
@@ -139,14 +128,11 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
    */
-  default void verifyEqualsDatePortion(
-      final CVerificationQueue verificationQueue, final Date expected, final int waitInSeconds) {
-    verifyEqualsDatePortion(
-        verificationQueue, expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+  default void verifyEqualsDatePortion(final Date expected, final int waitInSeconds) {
+    verifyEqualsDatePortion(expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -155,20 +141,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyEqualsDatePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         getDefaultWaitIntervalInMilliSeconds(),
@@ -182,18 +165,15 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyEqualsDatePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         intervalInMilliSeconds,
@@ -206,22 +186,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).equalsDatePortion(o2),
@@ -237,14 +214,11 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
    */
-  default void verifyEqualsTimePortion(
-      final CVerificationQueue verificationQueue, final Date expected, final int waitInSeconds) {
-    verifyEqualsTimePortion(
-        verificationQueue, expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+  default void verifyEqualsTimePortion(final Date expected, final int waitInSeconds) {
+    verifyEqualsTimePortion(expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -253,20 +227,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyEqualsTimePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         getDefaultWaitIntervalInMilliSeconds(),
@@ -280,18 +251,15 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyEqualsTimePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         intervalInMilliSeconds,
@@ -304,22 +272,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).equalsTimePortion(o2),
@@ -336,18 +301,16 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param format            date format to be use
    * @param waitInSeconds     maximum wait time
    */
   default void verifyNotEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds) {
     verifyNotEqualsByFormat(
-        verificationQueue, expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+        expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -357,22 +320,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param format            date format to be use
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyNotEqualsByFormat(
-        verificationQueue,
         expected,
         format,
         waitInSeconds,
@@ -388,20 +348,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param format                 date format to be use
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyNotEqualsByFormat(
-        verificationQueue,
         expected,
         format,
         waitInSeconds,
@@ -416,16 +373,14 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param format                 date format to be use
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsByFormat(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final String format,
       final int waitInSeconds,
@@ -433,7 +388,6 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).notEqualsByFormat(o2, format),
@@ -450,14 +404,11 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
    */
-  default void verifyNotEqualsDatePortion(
-      final CVerificationQueue verificationQueue, final Date expected, final int waitInSeconds) {
-    verifyNotEqualsDatePortion(
-        verificationQueue, expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+  default void verifyNotEqualsDatePortion(final Date expected, final int waitInSeconds) {
+    verifyNotEqualsDatePortion(expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -467,20 +418,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyNotEqualsDatePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         getDefaultWaitIntervalInMilliSeconds(),
@@ -495,18 +443,15 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyNotEqualsDatePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         intervalInMilliSeconds,
@@ -520,22 +465,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsDatePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).notEqualsDatePortion(o2),
@@ -552,14 +494,11 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
    */
-  default void verifyNotEqualsTimePortion(
-      final CVerificationQueue verificationQueue, final Date expected, final int waitInSeconds) {
-    verifyNotEqualsTimePortion(
-        verificationQueue, expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+  default void verifyNotEqualsTimePortion(final Date expected, final int waitInSeconds) {
+    verifyNotEqualsTimePortion(expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -569,20 +508,17 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue CTest, CVerifier or any other verification queue instance
    * @param expected          value to compare
    * @param waitInSeconds     maximum wait time
-   * @param message           information about the propose of this verification
+   * @param message           information about the purpose of this verification
    * @param params            parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final String message,
       final Object... params) {
     verifyNotEqualsTimePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         getDefaultWaitIntervalInMilliSeconds(),
@@ -597,18 +533,15 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyNotEqualsTimePortion(
-        verificationQueue,
         expected,
         waitInSeconds,
         intervalInMilliSeconds,
@@ -622,22 +555,19 @@ public interface CDateWaitVerifier extends CDateVerifier, CObjectWaitVerifier<Da
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param verificationQueue      CTest, CVerifier or any other verification queue instance
    * @param expected               value to compare
    * @param waitInSeconds          maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the propose of this verification
+   * @param message                information about the purpose of this verification
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsTimePortion(
-      final CVerificationQueue verificationQueue,
       final Date expected,
       final int waitInSeconds,
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
     _verify(
-        verificationQueue,
         expected,
         false,
         (o, o2) -> _toState(o).notEqualsTimePortion(o2),

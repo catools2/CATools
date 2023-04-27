@@ -147,7 +147,7 @@ public class CFileTest extends CBaseUnitTest {
     CFile.fromTmp("./testDeleteDirectory/" + getValidFileName()).createNewFile();
     verify.Bool.isTrue(
         directory.delete(), "CFile -> delete returns true if file is successfully deleted folder");
-    verify.Bool.isFalse(directory.exists(), "CFile -> deleted folder does not exists");
+    verify.Bool.isFalse(directory.exists(), "CFile -> deleted folder does not exist");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

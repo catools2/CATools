@@ -1,19 +1,15 @@
 package org.catools.common.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.CNumberVerifier;
+import org.slf4j.Logger;
 
 /**
  * Number verification class contains all verification method which is related to Number
  * (Int,Double,Long,Float,BigDecimal)
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CNumberVerification<T extends CVerificationBuilder, N extends Number & Comparable<N>>
-    extends CBaseVerification<T> {
-
-  public CNumberVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CNumberVerification<N extends Number & Comparable<N>> extends CBaseVerification {
 
   /**
    * Verify that actual value is between lower and higher bound values (exclusive).
@@ -23,7 +19,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param higherBound higher bound inclusive
    */
   public void betweenExclusive(final N actual, final N lowerBound, final N higherBound) {
-    toVerifier(actual).verifyBetweenExclusive(verifier, lowerBound, higherBound);
+    toVerifier(actual).verifyBetweenExclusive(lowerBound, higherBound);
   }
 
   /**
@@ -32,7 +28,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual      value to compare
    * @param lowerBound  lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the propose of this verification
+   * @param message     information about the purpose of this verification
    * @param params      parameters in case if message is a format {@link String#format}
    */
   public void betweenExclusive(
@@ -41,7 +37,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final N higherBound,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyBetweenExclusive(verifier, lowerBound, higherBound, message, params);
+    toVerifier(actual).verifyBetweenExclusive(lowerBound, higherBound, message, params);
   }
 
   /**
@@ -52,7 +48,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param higherBound higher bound inclusive
    */
   public void betweenInclusive(final N actual, final N lowerBound, final N higherBound) {
-    toVerifier(actual).verifyBetweenInclusive(verifier, lowerBound, higherBound);
+    toVerifier(actual).verifyBetweenInclusive(lowerBound, higherBound);
   }
 
   /**
@@ -61,7 +57,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual      value to compare
    * @param lowerBound  lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the propose of this verification
+   * @param message     information about the purpose of this verification
    * @param params      parameters in case if message is a format {@link String#format}
    */
   public void betweenInclusive(
@@ -70,7 +66,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final N higherBound,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyBetweenInclusive(verifier, lowerBound, higherBound, message, params);
+    toVerifier(actual).verifyBetweenInclusive(lowerBound, higherBound, message, params);
   }
 
   /**
@@ -82,7 +78,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void equals(final N actual, final N expected) {
-    toVerifier(actual).verifyEquals(verifier, expected);
+    toVerifier(actual).verifyEquals(expected);
   }
 
   /**
@@ -92,12 +88,12 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equals(
       final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -111,7 +107,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param precision the acceptable precision
    */
   public void equalsP(final N actual, final N expected, final N precision) {
-    toVerifier(actual).verifyEqualsP(verifier, expected, precision);
+    toVerifier(actual).verifyEqualsP(expected, precision);
   }
 
   /**
@@ -123,7 +119,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual    value to compare
    * @param expected  value to compare
    * @param precision the acceptable precision
-   * @param message   information about the propose of this verification
+   * @param message   information about the purpose of this verification
    * @param params    parameters in case if message is a format {@link String#format}
    */
   public void equalsP(
@@ -132,7 +128,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final N precision,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEqualsP(verifier, expected, precision, message, params);
+    toVerifier(actual).verifyEqualsP(expected, precision, message, params);
   }
 
   /**
@@ -142,7 +138,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void greater(final N actual, final N expected) {
-    toVerifier(actual).verifyGreater(verifier, expected);
+    toVerifier(actual).verifyGreater(expected);
   }
 
   /**
@@ -150,12 +146,12 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void greater(
       final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyGreater(verifier, expected, message, params);
+    toVerifier(actual).verifyGreater(expected, message, params);
   }
 
   /**
@@ -165,7 +161,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void greaterOrEqual(final N actual, final N expected) {
-    toVerifier(actual).verifyGreaterOrEqual(verifier, expected);
+    toVerifier(actual).verifyGreaterOrEqual(expected);
   }
 
   /**
@@ -173,12 +169,12 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void greaterOrEqual(
       final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyGreaterOrEqual(verifier, expected, message, params);
+    toVerifier(actual).verifyGreaterOrEqual(expected, message, params);
   }
 
   /**
@@ -188,7 +184,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void less(final N actual, final N expected) {
-    toVerifier(actual).verifyLess(verifier, expected);
+    toVerifier(actual).verifyLess(expected);
   }
 
   /**
@@ -196,11 +192,11 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void less(final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLess(verifier, expected, message, params);
+    toVerifier(actual).verifyLess(expected, message, params);
   }
 
   /**
@@ -210,7 +206,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void lessOrEqual(final N actual, final N expected) {
-    toVerifier(actual).verifyLessOrEqual(verifier, expected);
+    toVerifier(actual).verifyLessOrEqual(expected);
   }
 
   /**
@@ -218,12 +214,12 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void lessOrEqual(
       final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyLessOrEqual(verifier, expected, message, params);
+    toVerifier(actual).verifyLessOrEqual(expected, message, params);
   }
 
   /**
@@ -234,7 +230,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param higherBound higher bound inclusive
    */
   public void notBetweenExclusive(final N actual, final N lowerBound, final N higherBound) {
-    toVerifier(actual).verifyNotBetweenExclusive(verifier, lowerBound, higherBound);
+    toVerifier(actual).verifyNotBetweenExclusive(lowerBound, higherBound);
   }
 
   /**
@@ -243,7 +239,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual      value to compare
    * @param lowerBound  lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the propose of this verification
+   * @param message     information about the purpose of this verification
    * @param params      parameters in case if message is a format {@link String#format}
    */
   public void notBetweenExclusive(
@@ -253,7 +249,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final String message,
       final Object... params) {
     toVerifier(actual)
-        .verifyNotBetweenExclusive(verifier, lowerBound, higherBound, message, params);
+        .verifyNotBetweenExclusive(lowerBound, higherBound, message, params);
   }
 
   /**
@@ -264,7 +260,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param higherBound higher bound inclusive
    */
   public void notBetweenInclusive(final N actual, final N lowerBound, final N higherBound) {
-    toVerifier(actual).verifyNotBetweenInclusive(verifier, lowerBound, higherBound);
+    toVerifier(actual).verifyNotBetweenInclusive(lowerBound, higherBound);
   }
 
   /**
@@ -273,7 +269,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual      value to compare
    * @param lowerBound  lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the propose of this verification
+   * @param message     information about the purpose of this verification
    * @param params      parameters in case if message is a format {@link String#format}
    */
   public void notBetweenInclusive(
@@ -283,7 +279,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final String message,
       final Object... params) {
     toVerifier(actual)
-        .verifyNotBetweenInclusive(verifier, lowerBound, higherBound, message, params);
+        .verifyNotBetweenInclusive(lowerBound, higherBound, message, params);
   }
 
   /**
@@ -295,7 +291,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param expected value to compare
    */
   public void notEquals(final N actual, final N expected) {
-    toVerifier(actual).verifyNotEquals(verifier, expected);
+    toVerifier(actual).verifyNotEquals(expected);
   }
 
   /**
@@ -305,12 +301,12 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
       final N actual, final N expected, final String message, final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -323,7 +319,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param precision the acceptable precision
    */
   public void notEqualsP(final N actual, final N expected, final N precision) {
-    toVerifier(actual).verifyNotEqualsP(verifier, expected, precision);
+    toVerifier(actual).verifyNotEqualsP(expected, precision);
   }
 
   /**
@@ -334,7 +330,7 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
    * @param actual    value to compare
    * @param expected  value to compare
    * @param precision the acceptable precision
-   * @param message   information about the propose of this verification
+   * @param message   information about the purpose of this verification
    * @param params    parameters in case if message is a format {@link String#format}
    */
   public void notEqualsP(
@@ -343,11 +339,22 @@ public class CNumberVerification<T extends CVerificationBuilder, N extends Numbe
       final N precision,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotEqualsP(verifier, expected, precision, message, params);
+    toVerifier(actual).verifyNotEqualsP(expected, precision, message, params);
   }
 
   private CNumberVerifier<N> toVerifier(Number actual) {
+    CBaseVerification that = this;
     return new CNumberVerifier<>() {
+      @Override
+      public Logger getLogger() {
+        return CNumberVerification.log;
+      }
+
+      @Override
+      public void queue(CVerificationInfo expectation) {
+        that.queue(expectation);
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;

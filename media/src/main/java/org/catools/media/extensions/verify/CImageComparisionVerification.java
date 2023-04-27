@@ -1,24 +1,19 @@
 package org.catools.media.extensions.verify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.CBaseVerification;
-import org.catools.common.extensions.verify.CVerificationBuilder;
 import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
-import org.catools.media.extensions.verify.interfaces.CImageComparisionVerifier;
+import org.catools.media.extensions.verify.interfaces.CImageComparisonVerifier;
+import org.slf4j.Logger;
 
 import java.awt.image.BufferedImage;
 
 /**
  * Image verification class contains all verification method which is related to Image
- *
- * @param <T> represent any classes which extent {@link CVerificationBuilder}.
  */
-public class CImageComparisionVerification<T extends CVerificationBuilder>
-    extends CBaseVerification<T> {
-
-  public CImageComparisionVerification(T verifier) {
-    super(verifier);
-  }
+@Slf4j
+public class CImageComparisionVerification extends CBaseVerification {
 
   /**
    * Verify that actual and expected have same boolean value or be null
@@ -27,7 +22,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    * @param expected     value to compare
    * @param diffFileName the file name for diff image which should be generated in case if images
    *                     did not match
-   * @param message      information about the propose of this verification
+   * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
   public void equals(
@@ -36,7 +31,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final String diffFileName,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, diffFileName, message, params);
+    toVerifier(actual).verifyEquals(expected, diffFileName, message, params);
   }
 
   /**
@@ -44,7 +39,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equals(
@@ -52,7 +47,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final CFile expected,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -60,7 +55,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void equals(
@@ -68,7 +63,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final CResource expected,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
@@ -76,7 +71,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
@@ -84,7 +79,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final BufferedImage expected,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -92,7 +87,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
@@ -100,7 +95,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final CFile expected,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
   /**
@@ -108,7 +103,7 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
    *
    * @param actual   value to compare
    * @param expected value to compare
-   * @param message  information about the propose of this verification
+   * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
@@ -116,11 +111,16 @@ public class CImageComparisionVerification<T extends CVerificationBuilder>
       final CResource expected,
       final String message,
       final Object... params) {
-    toVerifier(actual).verifyNotEquals(verifier, expected, message, params);
+    toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
-  private CImageComparisionVerifier toVerifier(BufferedImage actual) {
-    return new CImageComparisionVerifier() {
+  private CImageComparisonVerifier toVerifier(BufferedImage actual) {
+    return new CImageComparisonVerifier() {
+      @Override
+      public Logger getLogger() {
+        return CImageComparisionVerification.log;
+      }
+
       @Override
       public boolean _useWaiter() {
         return false;
