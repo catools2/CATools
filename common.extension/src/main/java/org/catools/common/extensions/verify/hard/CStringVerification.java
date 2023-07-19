@@ -3167,11 +3167,6 @@ public class CStringVerification extends CBaseVerification {
   }
 
   protected CStringVerify toVerifier(String actual) {
-    return new CStringVerify() {
-      @Override
-      public String _get() {
-        return actual;
-      }
-    };
+    return () -> actual;
   }
 }
