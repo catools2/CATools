@@ -58,7 +58,7 @@
         <argLine></argLine>
 
         <!-- sonar -->
-        <sonar.coverage.exclusions>**src/test/**</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**src/test/**/*.*</sonar.coverage.exclusions>
 
         <!-- TestNG -->
         <TESTNG_TEST_RETRY_COUNT>3</TESTNG_TEST_RETRY_COUNT>
