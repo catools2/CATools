@@ -241,7 +241,7 @@ public class CFileTest extends CBaseUnitTest {
         "CFile -> fromRoot points to file in current folder");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, priority = 0)
   public void testFromStorage() {
     CVerify.String.startsWith(
         CFile.fromStorage(getValidFileName()).getCanonicalPath(),
