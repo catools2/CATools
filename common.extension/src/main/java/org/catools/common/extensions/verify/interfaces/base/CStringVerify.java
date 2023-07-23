@@ -1,8 +1,8 @@
-package org.catools.common.extensions.verify.interfaces.verifier;
+package org.catools.common.extensions.verify.interfaces.base;
 
+import org.catools.common.extensions.base.CBaseStringExtension;
 import org.catools.common.extensions.states.interfaces.CStringState;
 import org.catools.common.extensions.verify.hard.CStringVerification;
-import org.catools.common.extensions.verify.interfaces.base.CObjectVerify;
 import org.catools.common.utils.CStringUtil;
 
 import java.util.List;
@@ -19,11 +19,7 @@ import java.util.regex.Pattern;
  * <p>Please Note that we should extend manually {@link
  * CStringVerification} for each new added verification here
  */
-public interface CStringVerify extends CObjectVerify<String, CStringState> {
-
-  default CStringState _toState(String e) {
-    return () -> e;
-  }
+public interface CStringVerify extends CBaseStringExtension, CObjectVerify<String, CStringState> {
 
   @Override
   default boolean printDiff() {

@@ -1,8 +1,8 @@
 package org.catools.common.extensions.types;
 
 import org.catools.common.extensions.states.interfaces.CStringState;
+import org.catools.common.extensions.verify.interfaces.base.CStringVerify;
 import org.catools.common.extensions.verify.interfaces.verifier.CStringVerifier;
-import org.catools.common.extensions.verify.interfaces.verifier.CStringVerify;
 
 /**
  * CStaticStringExtension is an central interface where we extend all String related interfaces so

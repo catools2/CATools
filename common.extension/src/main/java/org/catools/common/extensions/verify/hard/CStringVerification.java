@@ -1,7 +1,7 @@
 package org.catools.common.extensions.verify.hard;
 
 import lombok.extern.slf4j.Slf4j;
-import org.catools.common.extensions.verify.interfaces.verifier.CStringVerify;
+import org.catools.common.extensions.verify.interfaces.base.CStringVerify;
 import org.catools.common.utils.CStringUtil;
 
 import java.util.List;

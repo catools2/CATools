@@ -2,7 +2,7 @@ package org.catools.common.tests.verify.interfaces.verifier;
 
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
-import org.catools.common.extensions.verify.interfaces.verifier.CStringVerify;
+import org.catools.common.extensions.verify.interfaces.base.CStringVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
