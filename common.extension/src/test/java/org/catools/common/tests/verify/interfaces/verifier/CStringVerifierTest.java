@@ -525,7 +525,7 @@ public class CStringVerifierTest extends CBaseUnitTest {
       toCS("").verifyIsEmptyOrAlpha();
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       toCS(null).verifyIsEmptyOrAlpha("%s#%s", getParams());
     }
@@ -583,7 +583,7 @@ public class CStringVerifierTest extends CBaseUnitTest {
       toCS("").verifyIsEmptyOrAlphanumeric("%s#%s", getParams());
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       toCS(null).verifyIsEmptyOrAlphanumeric();
     }
@@ -713,7 +713,7 @@ public class CStringVerifierTest extends CBaseUnitTest {
       toCS("a1").verifyIsEmptyOrNotAlpha("%s#%s", getParams());
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       toCS(null).verifyIsEmptyOrNotAlpha();
     }

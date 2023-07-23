@@ -58,7 +58,7 @@
         <argLine></argLine>
 
         <!-- sonar -->
-        <sonar.coverage.exclusions>**src/test/**/*.*</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**src/test/**/*.*,**/tests/**/*.*</sonar.coverage.exclusions>
 
         <!-- TestNG -->
         <TESTNG_TEST_RETRY_COUNT>3</TESTNG_TEST_RETRY_COUNT>
@@ -413,11 +413,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>${sonar.coverage.exclusions}</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-unit-tests</id>
@@ -439,6 +434,12 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**src/test/**/*.*</exclude>
+                                <exclude>**/tests/**/*.*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

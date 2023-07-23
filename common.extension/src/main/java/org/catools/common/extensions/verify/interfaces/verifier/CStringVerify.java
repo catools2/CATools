@@ -501,7 +501,7 @@ public interface CStringVerify extends CObjectVerify<String, CStringState> {
    * @param params  parameters in case if message is a format {@link String#format}
    */
   default void verifyIsBlankOrAlpha(final String message, final Object... params) {
-    _verify(true, (a, b) -> _toState(a).isBlankOrAlpha(), message, params);
+    _verify(true, (a, b) -> CStringUtil.isBlank(a) || _toState(a).isBlankOrAlpha(), message, params);
   }
 
   /**

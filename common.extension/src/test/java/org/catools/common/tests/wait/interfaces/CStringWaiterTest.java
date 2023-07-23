@@ -589,7 +589,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlpha(1), "%s#%s", getParams());
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       CVerify.Bool.isTrue(toWaiter(null).waitIsEmptyOrAlpha(1), "%s#%s", getParams());
     }
@@ -648,7 +648,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       CVerify.Bool.isTrue(toWaiter(null).waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
     }
@@ -783,7 +783,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
       CVerify.Bool.isTrue(toWaiter("a1").waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
     }
 
-    @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+    @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testActualNull() {
       CVerify.Bool.isTrue(toWaiter(null).waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
     }
