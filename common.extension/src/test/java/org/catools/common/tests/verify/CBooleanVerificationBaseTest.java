@@ -19,7 +19,6 @@ public abstract class CBooleanVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_ActualNull() {
     verify(bool -> bool.equals(null, false));
-    verify(bool -> bool.equals(null, false, "BooleanExpectationTest ::> negative equals ::> true==true"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -31,12 +30,10 @@ public abstract class CBooleanVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_ExpectedNull() {
     verify(bool -> bool.equals(true, null));
-    verify(bool -> bool.equals(true, null, "BooleanExpectationTest ::> negative equals ::> true==true"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N() {
-    verify(bool -> bool.equals(true, false));
     verify(bool -> bool.equals(true, false, "BooleanExpectationTest ::> negative equals ::> true==true"));
   }
 
@@ -48,7 +45,6 @@ public abstract class CBooleanVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsFalse_N() {
-    verify(bool -> bool.isFalse(true));
     verify(bool -> bool.isFalse(true, "BooleanExpectationTest ::> negative verifyIsFalse ::> false"));
   }
 
@@ -59,9 +55,8 @@ public abstract class CBooleanVerificationBaseTest extends CBaseUnitTest {
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
-  public void testIsTrue_N() {
+  public void testIsTrue_N1() {
     verify(bool -> bool.isTrue(false));
-    verify(bool -> bool.isTrue(false, "BooleanExpectationTest ::> negative verifyIsTrue ::> true"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -81,18 +76,15 @@ public abstract class CBooleanVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals_BothNull() {
     verify(bool -> bool.notEquals(null, null));
-    verify(bool -> bool.notEquals(null, null, "BooleanExpectationTest ::> negative equals ::> true==true"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEquals_ExpectedNull() {
     verify(bool -> bool.notEquals(true, null));
-    verify(bool -> bool.notEquals(true, null, "BooleanExpectationTest ::> negative equals ::> true==true"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals_N() {
-    verify(bool -> bool.notEquals(true, true));
     verify(bool -> bool.notEquals(true, true, "BooleanExpectationTest ::> negative verifyNotEquals ::> false==true"));
   }
 

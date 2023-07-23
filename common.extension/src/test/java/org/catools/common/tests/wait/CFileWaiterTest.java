@@ -14,13 +14,13 @@ public class CFileWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testExists() {
     CVerify.Bool.isTrue(
-        toWaiter(getPath("testExists", "anything")).waitIsExists(1), "%s#%s", getParams());
+        toWaiter(getPath("testExists", "anything")).waitIsExists(), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotExists() {
     CVerify.Bool.isTrue(
-        toWaiter(getPath("testNotExists", "anything") + "1").waitIsNotExists(1),
+        toWaiter(getPath("testNotExists", "anything") + "1").waitIsNotExists(),
         "%s#%s",
         getParams());
   }

@@ -113,6 +113,47 @@ public class CMapWaiterTest extends CBaseUnitTest {
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testEmptyOrContainsWithEntry() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("1", 1)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(toMap()).waitEmptyOrContains(Map.entry("5", 5)), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testEmptyOrContainsWithEntry_N() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("6", 6)), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeEquals() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeEquals(3), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testWaitSizeEquals_N() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeEquals(2), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeIsGreaterThan() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testWaitSizeIsGreaterThan_N() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeIsGreaterThan(3), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeIsLessThan() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeIsLessThan(4), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testWaitSizeIsLessThan_N() {
+    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitSizeIsLessThan(2), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEquals() {
     CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitEquals(toMap(1, 2, 3)), "%s#%s", getParams());
     CVerify.Bool.isTrue(toWaiter(toMap()).waitEquals(toMap()), "%s#%s", getParams());

@@ -36,25 +36,21 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N() {
     verify(collection -> collection.containsAll(toMap(1, 2, 3), toMap(1, 23)));
-    verify(collection -> collection.containsAll(toMap(1, 2, 3), toMap(1, 23), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N2() {
     verify(collection -> collection.containsAll(toMap(1, 2, 3), toMap(1, 2, 3, 4)));
-    verify(collection -> collection.containsAll(toMap(1, 2, 3), toMap(1, 2, 3, 4), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N3() {
     verify(collection -> collection.containsAll(toMap(), toMap(1)));
-    verify(collection -> collection.containsAll(toMap(), toMap(1), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N4() {
     verify(collection -> collection.containsAll(toMap(), null));
-    verify(collection -> collection.containsAll(toMap(), null, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -70,43 +66,36 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N() {
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(1, 5, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(1, 5, 6), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N2() {
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(2, 5, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(2, 5, 6), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N3() {
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(3, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(3, 6), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N4() {
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap()));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContains_N() {
     verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5));
-    verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContains_N2() {
     verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5));
-    verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContains_N3() {
     verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5));
-    verify(collection -> collection.contains(toMap(1, 2, 3), "5", 5, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -120,13 +109,11 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrContains_N() {
     verify(collection -> collection.emptyOrContains(toMap(1, 2, 3), "6", 6));
-    verify(collection -> collection.emptyOrContains(toMap(1, 2, 3), "6", 6, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrContains_Null() {
     verify(collection -> collection.emptyOrContains(null, "6", 6));
-    verify(collection -> collection.emptyOrContains(null, "6", 6, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -140,7 +127,6 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrNotContains_N() {
     verify(collection -> collection.emptyOrNotContains(toMap(1, 2, 3), "3", 3));
-    verify(collection -> collection.emptyOrNotContains(toMap(1, 2, 3), "3", 3, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -165,13 +151,11 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N() {
     verify(collection -> collection.equals(toMap(1, 2, 3), toMap(1, 3)));
-    verify(collection -> collection.equals(toMap(1, 2, 3), toMap(1, 3), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N2() {
     verify(collection -> collection.equals(toMap(1, 2, 3), toMap(3)));
-    verify(collection -> collection.equals(toMap(1, 2, 3), toMap(3), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -209,6 +193,11 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsNotEmpty_N() {
+    verify(collection -> collection.isNotEmpty(toMap()));
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmpty_N3() {
     verify(collection -> collection.isEmpty(toMap(3)));
     verify(collection -> collection.isEmpty(toMap(3), "%s#%s", getParams()));
@@ -225,21 +214,13 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
-  public void testIsNotEmpty_N() {
-    verify(collection -> collection.isNotEmpty(toMap()));
-    verify(collection -> collection.isNotEmpty(toMap(), "%s#%s", getParams()));
-  }
-
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotEmpty_N2() {
     verify(collection -> collection.isNotEmpty(toMap()));
-    verify(collection -> collection.isNotEmpty(toMap(), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotEmpty_N3() {
     verify(collection -> collection.isNotEmpty(toMap()));
-    verify(collection -> collection.isNotEmpty(toMap(), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -267,37 +248,31 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N() {
     verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 2, 3)));
-    verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 2, 3), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N2() {
     verify(collection -> collection.notContainsAll(toMap(1, 2, 3), null));
-    verify(collection -> collection.notContainsAll(toMap(1, 2, 3), null, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N3() {
     verify(collection -> collection.notContainsAll(toMap(), toMap()));
-    verify(collection -> collection.notContainsAll(toMap(), toMap(), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContains_N() {
     verify(collection -> collection.notContains(toMap(1, 2, 3), "1", 1));
-    verify(collection -> collection.notContains(toMap(1, 2, 3), "1", 1, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContains_N2() {
     verify(collection -> collection.notContains(toMap(1, 2, 3), null));
-    verify(collection -> collection.notContains(toMap(1, 2, 3), null, "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContains_N3() {
     verify(collection -> collection.notContains(toMap(1), toEntity(1)));
-    verify(collection -> collection.notContains(toMap(1), toEntity(1), "%s#%s", getParams()));
   }
 
   public Map.Entry<String, Integer> toEntity(Integer item) {

@@ -75,7 +75,7 @@ public interface CBooleanWaitVerifier extends CObjectWaitVerifier<Boolean, CBool
     _verify(
         verifier,
         false,
-        (a, b) -> Objects.equals(a, b),
+        Objects::equals,
         waitInSeconds,
         intervalInMilliSeconds,
         message,
@@ -140,7 +140,7 @@ public interface CBooleanWaitVerifier extends CObjectWaitVerifier<Boolean, CBool
     _verify(
         verifier,
         true,
-        (a, b) -> Objects.equals(a, b),
+        Objects::equals,
         waitInSeconds,
         intervalInMilliSeconds,
         message,

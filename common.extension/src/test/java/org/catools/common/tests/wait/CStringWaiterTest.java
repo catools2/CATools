@@ -7,6 +7,7 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Test(priority = 10)
@@ -358,7 +359,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNumeric() {
-    CVerify.Bool.isTrue(toWaiter("1234567").waitIsNumeric(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter("1234567").waitIsNumeric(), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -2087,6 +2088,36 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public void testIsMatchesPattern_Negative() {
     CVerify.Bool.isTrue(
         toWaiter("some string    ").waitMatches(Pattern.compile("\\d+")), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testIsMatchesAny() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesAny(List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d"))), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsMatchesAny_ExpectedNull() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesAny(null), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsMatchesAny_Negative() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesAny(List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d"))), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testIsMatchesNone() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesNone(List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d"))), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsMatchesNone_ExpectedNull() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesNone(null), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsMatchesNone_Negative() {
+    CVerify.Bool.isTrue(toWaiter("some string    ").waitMatchesNone(List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d"))), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

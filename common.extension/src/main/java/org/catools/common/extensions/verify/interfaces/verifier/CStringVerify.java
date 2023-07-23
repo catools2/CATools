@@ -6,6 +6,7 @@ import org.catools.common.extensions.verify.interfaces.base.CObjectVerify;
 import org.catools.common.utils.CStringUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -803,6 +804,7 @@ public interface CStringVerify extends CObjectVerify<String, CStringState> {
    * @param pattern regular expression pattern
    */
   default void verifyMatches(final String pattern) {
+    Objects.requireNonNull(pattern);
     verifyMatches(Pattern.compile(pattern));
   }
 

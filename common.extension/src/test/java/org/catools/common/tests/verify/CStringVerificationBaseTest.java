@@ -1022,133 +1022,111 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testCenterPadEquals_Negative() {
     verify(string -> string.centerPadEquals("  some string    ", 10, NULL, "  somestring    "));
-    verify(string -> string.centerPadEquals("  some string    ", 10, NULL, "  somestring    ", "testCenterPadEquals_PadNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testCenterPadNotEquals_Negative() {
     verify(string -> string.centerPadNotEquals("  some string    ", 10, NULL, "  some string    "));
-    verify(string -> string.centerPadNotEquals("  some string    ", 10, NULL, "  some string    ", "testCenterPadEquals_PadNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testCompare_Negative() {
     verify(string -> string.compare(NULL, "  some string    ", 0));
-    verify(string -> string.compare(NULL, "  some string    ", 0, "testCompare_ActualNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testCompareIgnoreCase_Negative() {
     verify(string -> string.compareIgnoreCase("  some string    ", "  ScOME string    ", 1));
-    verify(string -> string.compareIgnoreCase("  some string    ", "  ScOME string    ", 1, "testCompareIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContains_Negative() {
     verify(string -> string.contains("  some string    ", "sso"));
-    verify(string -> string.contains("  some string    ", "sso", "testContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsIgnoreCase_Negative() {
     verify(string -> string.containsIgnoreCase("  Some string    ", " sco"));
-    verify(string -> string.containsIgnoreCase("  Some string    ", " sco", "testContainsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEndsWith_Negative() {
     verify(string -> string.endsWith("  some string   s ", "   x "));
-    verify(string -> string.endsWith("  some string   s ", "   x ", "testEndsWith"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEndsWithAny_Negative() {
     verify(string -> string.endsWithAny("  some string   s ", new CList<>("X", null, " D ")));
-    verify(string -> string.endsWithAny("  some string   s ", new CList<>("X", null, " D "), "testEndsWithAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEndsWithIgnoreCase_Negative() {
     verify(string -> string.endsWithIgnoreCase("  some string   s ", "   xs "));
-    verify(string -> string.endsWithIgnoreCase("  some string   s ", "   xs ", "testEndsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEndsWithNone_Negative() {
     verify(string -> string.endsWithNone("  some string   s ", new CList<>("a", " s ")));
-    verify(string -> string.endsWithNone("  some string   s ", new CList<>("a", " s "), "testEndsWithNone"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_Negative() {
     verify(string -> string.equals(NULL, "x"));
-    verify(string -> string.equals(NULL, "x", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAny_Negative() {
     verify(string -> string.equalsAny("  some string    ", new CList<>("", "  sxme string    ")));
-    verify(string -> string.equalsAny("  some string    ", new CList<>("", "  sxme string    "), "testEqualsAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAnyIgnoreCase_Negative() {
     verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>("", "  SXME string    ")));
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>("", "  SXME string    "), "testEqualsAnyIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsIgnoreCase_Negative() {
     verify(string -> string.equalsIgnoreCase("  some string    ", "  SXME string    "));
-    verify(string -> string.equalsIgnoreCase("  some string    ", "  SXME string    ", "testEqualsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsIgnoreWhiteSpaces_Negative() {
     verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", " s x me s t r ing    "));
-    verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", " s x me s t r ing    ", "testEqualsIgnoreWhiteSpaces"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsNone_Negative() {
     verify(string -> string.equalsNone("  some string    ", new CList<>("  some string    ", "  sxe String    ")));
-    verify(string -> string.equalsNone("  some string    ", new CList<>("  some string    ", "  sxe String    "), "testNone"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsNoneIgnoreCase_Negative() {
     verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>("  some string    ", null)));
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>("  some string    ", null), "testNoneIgnoreCase_ExpectedNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsAlpha_Negative() {
     verify(string -> string.isAlpha("aiul@ajksn"));
-    verify(string -> string.isAlpha("aiul@ajksn", "testIsAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmptyOrAlpha_Negative() {
     verify(string -> string.isEmptyOrAlpha("&"));
-    verify(string -> string.isEmptyOrAlpha("&", "testIsEmptyOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsAlphaSpace_Negative() {
     verify(string -> string.isAlphaSpace(" aiu@l ajk sn"));
-    verify(string -> string.isAlphaSpace(" aiu@l ajk sn", "testIsAlphaSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsAlphanumeric_Negative() {
     verify(string -> string.isAlphanumeric("blka$jsblas"));
-    verify(string -> string.isAlphanumeric("blka$jsblas", "testIsAlphanumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsAlphanumericSpace_Negative() {
     verify(string -> string.isAlphanumericSpace(" ai1ul#@90 ajk sn"));
-    verify(string -> string.isAlphanumericSpace(" ai1ul#@90 ajk sn", "testIsAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1156,55 +1134,46 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     char[] chars = "5rtfghuik".toCharArray();
     chars[5] = 30;
     verify(string -> string.isAsciiPrintable(String.valueOf(chars)));
-    verify(string -> string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsBlank_Negative() {
     verify(string -> string.isBlank("asas"));
-    verify(string -> string.isBlank("asas", "testIsBlank"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmpty_Negative() {
     verify(string -> string.isEmpty("asas"));
-    verify(string -> string.isEmpty("asas", "testIsEmpty"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotAlpha_Negative() {
     verify(string -> string.isNotAlpha("aasf"));
-    verify(string -> string.isNotAlpha("aasf", "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmptyOrNotAlpha_Negative() {
     verify(string -> string.isEmptyOrNotAlpha("aiulaj"));
-    verify(string -> string.isEmptyOrNotAlpha("aiulaj", "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotAlphaSpace_Negative() {
     verify(string -> string.isNotAlphaSpace("aiulaj"));
-    verify(string -> string.isNotAlphaSpace("aiulaj", "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotAlphanumeric_Negative() {
     verify(string -> string.isNotAlphanumeric("aiulaj6265opksn"));
-    verify(string -> string.isNotAlphanumeric("aiulaj6265opksn", "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmptyOrNotAlphanumeric_Negative() {
     verify(string -> string.isEmptyOrNotAlphanumeric("aiulaj6265opksn"));
-    verify(string -> string.isEmptyOrNotAlphanumeric("aiulaj6265opksn", "testIsEmptyOrNotAlphanumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotAlphanumericSpace_Negative() {
     verify(string -> string.isNotAlphanumericSpace("aiulaj6265opksn"));
-    verify(string -> string.isNotAlphanumericSpace("aiulaj6265opksn", "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1212,643 +1181,536 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     char[] chars = "5rtfghuik".toCharArray();
     chars[5] = 32;
     verify(string -> string.isNotAsciiPrintable(String.valueOf(chars)));
-    verify(string -> string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotBlank_Negative() {
     verify(string -> string.isNotBlank(""));
-    verify(string -> string.isNotBlank("", "testIsNotBlank"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotEmpty_Negative() {
     verify(string -> string.isNotEmpty(EMPTY));
-    verify(string -> string.isNotEmpty(EMPTY, "testIsNotEmpty"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotNumeric_Negative() {
     verify(string -> string.isNotNumeric("1"));
-    verify(string -> string.isNotNumeric("1", "testIsNotNumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmptyOrNotNumeric_Negative() {
     verify(string -> string.isEmptyOrNotNumeric("1234567"));
-    verify(string -> string.isEmptyOrNotNumeric("1234567", "testIsEmptyOrNotNumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotNumericSpace_Negative() {
     verify(string -> string.isNotNumericSpace(""));
-    verify(string -> string.isNotNumericSpace("", "testIsNotNumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNumeric_Negative() {
     verify(string -> string.isNumeric("123a4567"));
-    verify(string -> string.isNumeric("123a4567", "testIsNumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsEmptyOrNumeric_Negative() {
     verify(string -> string.isEmptyOrNumeric("1a234567"));
-    verify(string -> string.isEmptyOrNumeric("1a234567", "testIsEmptyOrNumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNumericSpace_Negative() {
     verify(string -> string.isNumericSpace("23a45678"));
-    verify(string -> string.isNumericSpace("23a45678", "testIsNumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadEquals_Negative() {
     verify(string -> string.leftPadEquals("  some string   s ", 30, "", "            some string   s "));
-    verify(string -> string.leftPadEquals("  some string   s ", 30, "", "            some string   s ", "testLeftPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadNotEquals_Negative() {
     verify(string -> string.leftPadNotEquals("  some string   s ", 30, "", "              some string   s "));
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, "", "              some string   s ", "testLeftPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftValueEquals_Negative() {
     verify(string -> string.leftValueEquals("  some string    ", 7, " some "));
-    verify(string -> string.leftValueEquals("  some string    ", 7, " some ", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftValueNotEquals_Negative() {
     verify(string -> string.leftValueNotEquals("  some string    ", 7, "  some "));
-    verify(string -> string.leftValueNotEquals("  some string    ", 7, "  some ", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLengthEquals_Negative() {
     verify(string -> string.lengthEquals("  some string   s ", 7));
-    verify(string -> string.lengthEquals("  some string   s ", 7, "testLength"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLengthNotEquals_Negative() {
     verify(string -> string.lengthNotEquals("  some string   s ", 18));
-    verify(string -> string.lengthNotEquals("  some string   s ", 18, "testLength"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testMidValueEquals_Negative() {
     verify(string -> string.midValueEquals("  some string    ", 2, 4, "some "));
-    verify(string -> string.midValueEquals("  some string    ", 2, 4, "some ", "testMid"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testMidValueNotEquals_Negative() {
     verify(string -> string.midValueNotEquals("  some string    ", 2, 4, "some"));
-    verify(string -> string.midValueNotEquals("  some string    ", 2, 4, "some", "testMid"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContains_Negative() {
     verify(string -> string.notContains("  some string    ", "some"));
-    verify(string -> string.notContains("  some string    ", "some", "testNotContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsIgnoreCase_Negative() {
     verify(string -> string.notContainsIgnoreCase("  Some string    ", " Some"));
-    verify(string -> string.notContainsIgnoreCase("  Some string    ", " Some", "testNotContainsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEndsWith_Negative() {
     verify(string -> string.notEndsWith("  some string   s ", "s "));
-    verify(string -> string.notEndsWith("  some string   s ", "s ", "testEndsWith_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEndsWithIgnoreCase_Negative() {
     verify(string -> string.notEndsWithIgnoreCase("  some string   s ", "   S "));
-    verify(string -> string.notEndsWithIgnoreCase("  some string   s ", "   S ", "testEndsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEqualsIgnoreCase_Negative() {
     verify(string -> string.notEqualsIgnoreCase("  some string    ", "  SOME string    "));
-    verify(string -> string.notEqualsIgnoreCase("  some string    ", "  SOME string    ", "testEqualsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEqualsIgnoreWhiteSpaces_Negative() {
     verify(string -> string.notEqualsIgnoreWhiteSpaces("  some string    ", "  so me string    "));
-    verify(string -> string.notEqualsIgnoreWhiteSpaces("  some string    ", "  so me string    ", "testEqualsIgnoreWhiteSpaces"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotStartsWith_Negative() {
     verify(string -> string.notStartsWith("  some string   s ", "  some"));
-    verify(string -> string.notStartsWith("  some string   s ", "  some", "testStartsWith"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotStartsWithIgnoreCase_Negative() {
     verify(string -> string.notStartsWithIgnoreCase("  some string   s ", "  some"));
-    verify(string -> string.notStartsWithIgnoreCase("  some string   s ", "  some", "testStartsWith"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNumberOfMatchesEquals_Negative() {
     verify(string -> string.numberOfMatchesEquals("  some string   s ", "s", 2));
-    verify(string -> string.numberOfMatchesEquals("  some string   s ", "s", 2, "testNumberOfMatches"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNumberOfMatchesNotEquals_Negative() {
     verify(string -> string.numberOfMatchesNotEquals("  some String   s ", "s", 2));
-    verify(string -> string.numberOfMatchesNotEquals("  some String   s ", "s", 2, "testNumberOfMatches_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndEquals_Negative() {
     verify(string -> string.removeEndEquals("  some string   s ", "  some ", "  some string   S "));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some ", "  some string   S ", "testRemoveEnd"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndIgnoreCaseEquals_Negative() {
     verify(string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   x ", "  some $"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   x ", "  some $", "testRemoveEndIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndIgnoreCaseNotEquals_Negative() {
     verify(string -> string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING   "));
-    verify(string -> string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING   ", "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndNotEquals_Negative() {
     verify(string -> string.removeEndNotEquals("  some STRING    ", "STRING    ", "  some "));
-    verify(string -> string.removeEndNotEquals("  some STRING    ", "STRING    ", "  some ", "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEquals_Negative() {
     verify(string -> string.removeEquals("  some String   so ", "so", "  me string    "));
-    verify(string -> string.removeEquals("  some String   so ", "so", "  me string    ", "testRemove"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveIgnoreCaseEquals_Negative() {
     verify(string -> string.removeIgnoreCaseEquals("  some String   so ", "SO", "  me Xtring    "));
-    verify(string -> string.removeIgnoreCaseEquals("  some String   so ", "SO", "  me Xtring    ", "testRemoveIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveIgnoreCaseNotEquals_Negative() {
     verify(string -> string.removeIgnoreCaseNotEquals("  some STRING    ", " ", "someSTRING"));
-    verify(string -> string.removeIgnoreCaseNotEquals("  some STRING    ", " ", "someSTRING", "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveNotEquals_Negative() {
     verify(string -> string.removeNotEquals("  some STRING    ", "STRING   ", "  some  "));
-    verify(string -> string.removeNotEquals("  some STRING    ", "STRING   ", "  some  ", "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartEquals_Negative() {
     verify(string -> string.removeStartEquals("  some string   s ", "  some ", "  some string   s "));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some ", "  some string   s ", "testRemoveStartEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartIgnoreCaseEquals_Negative() {
     verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "some string   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "some string   s ", "testRemoveStartIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartIgnoreCaseNotEquals_Negative() {
     verify(string -> string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", "$tring   s "));
-    verify(string -> string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", "$tring   s ", "testRemoveStartIgnoreCaseEquals_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartNotEquals_Negative() {
     verify(string -> string.removeStartNotEquals("  some string   s ", "  some ", "string   s "));
-    verify(string -> string.removeStartNotEquals("  some string   s ", "  some ", "string   s ", "testRemoveStartNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceEquals_Negative() {
     verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX"));
-    verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX", "testReplaceEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceIgnoreCaseEquals_Negative() {
     verify(string -> string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x"));
-    verify(string -> string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x", "testReplaceIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceIgnoreCaseNotEquals_Negative() {
     verify(string -> string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xomextring  x "));
-    verify(string -> string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xomextring  x ", "testReplace_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceNotEquals_Negative() {
     verify(string -> string.replaceNotEquals("  some String   s ", " s", "x", " xome String  x "));
-    verify(string -> string.replaceNotEquals("  some String   s ", " s", "x", " xome String  x ", "testReplace_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceEquals_Negative() {
     verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  some String   so "));
-    verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  some String   so ", "testReplaceOnceEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceIgnoreCaseEquals_Negative() {
     verify(string -> string.replaceOnceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome string   s"));
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome string   s", "testReplaceOnceIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceIgnoreCaseNotEquals_Negative() {
     verify(string -> string.replaceOnceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xome String   s "));
-    verify(string -> string.replaceOnceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xome String   s ", "testReplaceOnceIgnoreCaseNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceNotEquals_Negative() {
     verify(string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " xome String   s "));
-    verify(string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " xome String   s ", "testReplaceOnceIgnoreCaseNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReverseEquals_Negative() {
     verify(string -> string.reverseEquals("  some @#$%^&*.   so ", " os   .*&^%$#@ emos "));
-    verify(string -> string.reverseEquals("  some @#$%^&*.   so ", " os   .*&^%$#@ emos ", "testReverse"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReverseNotEquals_Negative() {
     verify(string -> string.reverseNotEquals("  some string  s ", " s  gnirts emos  "));
-    verify(string -> string.reverseNotEquals("  some string  s ", " s  gnirts emos  ", "testReverse"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRightPadEquals_Negative() {
     verify(string -> string.rightPadEquals("  some string    ", 10, "@", "  some string   "));
-    verify(string -> string.rightPadEquals("  some string    ", 10, "@", "  some string   ", "testRightPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRightPadNotEquals_Negative() {
     verify(string -> string.rightPadNotEquals("  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx"));
-    verify(string -> string.rightPadNotEquals("  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx", "testRightPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRightValueEquals_Negative() {
     verify(string -> string.rightValueEquals("  some string    ", 7, "ing   "));
-    verify(string -> string.rightValueEquals("  some string    ", 7, "ing   ", "testRight"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRightValueNotEquals_Negative() {
     verify(string -> string.rightValueNotEquals("  some string    ", 7, "ing    "));
-    verify(string -> string.rightValueNotEquals("  some string    ", 7, "ing    ", "testRight_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStartsWith_Negative() {
     verify(string -> string.startsWith("  some string   s ", " some"));
-    verify(string -> string.startsWith("  some string   s ", " some", "testStartsWith"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStartsWithAny_Negative() {
     verify(string -> string.startsWithAny("  some string   s ", new CList<>("A", null, "some")));
-    verify(string -> string.startsWithAny("  some string   s ", new CList<>("A", null, "some"), "testStartsWithAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStartsWithIgnoreCase_Negative() {
     verify(string -> string.startsWithIgnoreCase("  some string   s ", "some"));
-    verify(string -> string.startsWithIgnoreCase("  some string   s ", "some", "testStartsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStartsWithNone_Negative() {
     verify(string -> string.startsWithNone("  some string   s ", new CList<>("  some", "     ", "s ")));
-    verify(string -> string.startsWithNone("  some string   s ", new CList<>("  some", "     ", "s "), "testStartsWithIgnoreCase_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedEndValue_Negative() {
     verify(string -> string.stripedEndValue("  some string    ", " ", "  some string "));
-    verify(string -> string.stripedEndValue("  some string    ", " ", "  some string ", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedEndValueNot_Negative() {
-    verify(string -> string.stripedEndValueNot("  some string    ", " ", "  some string"));
     verify(string -> string.stripedEndValueNot("  some string    ", " ", "  some string", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedStartValue_Negative() {
-    verify(string -> string.stripedStartValue("  some string    ", " ", "some string   "));
     verify(string -> string.stripedStartValue("  some string    ", " ", "some string   ", "testStripedStartValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedStartValueNot_Negative() {
     verify(string -> string.stripedStartValueNot("  some string    ", " ", "some string    "));
-    verify(string -> string.stripedStartValueNot("  some string    ", " ", "some string    ", "testStripedStartValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedValue_Negative() {
     verify(string -> string.stripedValue("  some string    ", " ", "some string "));
-    verify(string -> string.stripedValue("  some string    ", " ", "some string ", "testStripedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedValueNot_Negative() {
     verify(string -> string.stripedValueNot("  some string    ", " ", "some string"));
-    verify(string -> string.stripedValueNot("  some string    ", " ", "some string", "testStripedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterEquals1_Negative() {
     verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string   "));
-    verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string   ", "testSubstringAfter"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterEquals2_Negative() {
     verify(string -> string.substringAfterEquals("  some string    ", null, "s"));
-    verify(string -> string.substringAfterEquals("  some string    ", null, "s", "testSubstringAfter"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterLastEquals1_Negative() {
     verify(string -> string.substringAfterLastEquals("  some string    ", null, "s"));
-    verify(string -> string.substringAfterLastEquals("  some string    ", null, "s", "testSubstringAfterLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterLastEquals2_Negative() {
     verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring   "));
-    verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring   ", "testSubstringAfterLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterLastNotEquals_Negative() {
     verify(string -> string.substringAfterLastNotEquals("  some string    ", " s", "tring    "));
-    verify(string -> string.substringAfterLastNotEquals("  some string    ", " s", "tring    ", "testSubstringAfterLast_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringAfterNotEquals_Negative() {
     verify(string -> string.substringAfterNotEquals("  some string    ", " s", "ome string    "));
-    verify(string -> string.substringAfterNotEquals("  some string    ", " s", "ome string    ", "testSubstringAfter_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeEquals1_Negative() {
     verify(string -> string.substringBeforeEquals("  some string    ", " st", "  some "));
-    verify(string -> string.substringBeforeEquals("  some string    ", " st", "  some ", "testSubstringBefore"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeEquals2_Negative() {
     verify(string -> string.substringBeforeEquals("  some string    ", null, "  some string   "));
-    verify(string -> string.substringBeforeEquals("  some string    ", null, "  some string   ", "testSubstringBefore"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeLastEquals1_Negative() {
     verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some "));
-    verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some ", "testSubstringBeforeLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeLastEquals2_Negative() {
     verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some "));
-    verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some ", "testSubstringBeforeLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeLastNotEquals_Negative() {
     verify(string -> string.substringBeforeLastNotEquals("  some string    ", " s", "  some"));
-    verify(string -> string.substringBeforeLastNotEquals("  some string    ", " s", "  some", "testSubstringBeforeLast_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBeforeNotEquals_Negative() {
     verify(string -> string.substringBeforeNotEquals("  some string    ", " st", "  some"));
-    verify(string -> string.substringBeforeNotEquals("  some string    ", " st", "  some", "testSubstringBefore_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBetweenEquals_Negative() {
     verify(string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some sstring"));
-    verify(string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some sstring", "testSubstringBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBetweenNotEquals_Negative() {
     verify(string -> string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some string"));
-    verify(string -> string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some string", "testSubstringBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringEquals1_Negative() {
     verify(string -> string.substringEquals("  some string    ", 0, "  some strin    "));
-    verify(string -> string.substringEquals("  some string    ", 0, "  some strin    ", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringEquals2_Negative() {
     verify(string -> string.substringEquals("  some string    ", 0, 3, "  sx"));
-    verify(string -> string.substringEquals("  some string    ", 0, 3, "  sx", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringEquals3_Negative() {
     verify(string -> string.substringEquals("  some string    ", 2, 4, "sxo"));
-    verify(string -> string.substringEquals("  some string    ", 2, 4, "sxo", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringNotEquals1_Negative() {
     verify(string -> string.substringNotEquals("  some string    ", 0, "  some string    "));
-    verify(string -> string.substringNotEquals("  some string    ", 0, "  some string    ", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringNotEquals2_Negative() {
     verify(string -> string.substringNotEquals("  some string    ", 0, 3, "  s"));
-    verify(string -> string.substringNotEquals("  some string    ", 0, 3, "  s", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringNotEquals3_Negative() {
     verify(string -> string.substringNotEquals("  some string    ", 2, 4, "so"));
-    verify(string -> string.substringNotEquals("  some string    ", 2, 4, "so", "testSubstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenContains_Negative() {
     verify(string -> string.substringsBetweenContains("  some string   s ", " ", "s", "x"));
-    verify(string -> string.substringsBetweenContains("  some string   s ", " ", "s", "x", "testSubstringsBetweenContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenEquals_Negative() {
     verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", "S", "  "), "some string"));
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", "S", "  "), "some string", "testSubstringsBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenNotContains_Negative() {
     verify(string -> string.substringsBetweenNotContains("  some string   s ", " ", "s", " "));
-    verify(string -> string.substringsBetweenNotContains("  some string   s ", " ", "s", " ", "testSubstringsBetweenContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenNotEquals_Negative() {
     verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", "", "  "), "some string"));
-    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", "", "  "), "some string", "testSubstringsBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTrimmedValue_Negative() {
     verify(string -> string.trimmedValue("some string    ", "some String"));
-    verify(string -> string.trimmedValue("some string    ", "some String", "testTrimmedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTrimmedValueNot_Negative() {
     verify(string -> string.trimmedValueNot("some string    ", "some string"));
-    verify(string -> string.trimmedValueNot("some string    ", "some string", "testTrimmedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTruncatedValue1_Negative() {
     verify(string -> string.truncatedValue("some string    ", 10, "some sxtrin"));
-    verify(string -> string.truncatedValue("some string    ", 10, "some sxtrin", "testTruncatedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTruncatedValue2_Negative() {
     verify(string -> string.truncatedValue("some string    ", 4, 10, " sxtring   "));
-    verify(string -> string.truncatedValue("some string    ", 4, 10, " sxtring   ", "testTruncatedValueWithOffset"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTruncatedValueNot1_Negative() {
     verify(string -> string.truncatedValueNot("some string    ", 10, "some strin"));
-    verify(string -> string.truncatedValueNot("some string    ", 10, "some strin", "testTruncatedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testTruncatedValueNot2_Negative() {
     verify(string -> string.truncatedValueNot("some string    ", 4, 10, " string   "));
-    verify(string -> string.truncatedValueNot("some string    ", 4, 10, " string   ", "testTruncatedValueWithOffset"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatches() {
     verify(string -> string.matches("some string    ", "[a-z ]+"));
-    verify(string -> string.matches("some string    ", "[a-z ]+", "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsMatches_ExpectedNull() {
     verify(string -> string.matches(null, " tring   "));
-    verify(string -> string.matches(null, " tring   ", "%s#%s"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsMatches_Negative() {
     verify(string -> string.matches("some string    ", "\\d+"));
-    verify(string -> string.matches("some string    ", "\\d+", "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatchesPattern() {
     verify(string -> string.matches("some string    ", Pattern.compile("[a-z ]+")));
-    verify(string -> string.matches("some string    ", Pattern.compile("[a-z ]+"), "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsMatchesPattern_ExpectedNull() {
     verify(string -> string.matches(null, " tring   "));
-    verify(string -> string.matches(null, " tring   ", "%s#%s"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsMatchesPattern_Negative() {
     verify(string -> string.matches("some string    ", Pattern.compile("\\d+")));
-    verify(string -> string.matches("some string    ", Pattern.compile("\\d+"), "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatchesAny() {
-    verify(string -> string.matchesAny("some string    ", List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d"))));
     verify(string -> string.matchesAny("some string    ", List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d")), "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatchesNone() {
     verify(string -> string.matchesNone("some string    ", List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d"))));
-    verify(string -> string.matchesNone("some string    ", List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d")), "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotMatches() {
     verify(string -> string.notMatches("some string    ", "\\d+"));
-    verify(string -> string.notMatches("some string    ", "\\d+", "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotMatches_ExpectedNull() {
     verify(string -> string.notMatches(null, " tring   "));
-    verify(string -> string.notMatches(null, " tring   ", "%s#%s"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotMatches_Negative() {
     verify(string -> string.notMatches("some string    ", "[a-z ]+"));
-    verify(string -> string.notMatches("some string    ", "[a-z ]+", "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotMatchesPattern() {
     verify(string -> string.notMatches("some string    ", Pattern.compile("\\d+")));
-    verify(string -> string.notMatches("some string    ", Pattern.compile("\\d+"), "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotMatchesPattern_ExpectedNull() {
     verify(string -> string.notMatches(null, " tring   "));
-    verify(string -> string.notMatches(null, " tring   ", "%s#%s"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotMatchesPattern_Negative() {
     verify(string -> string.notMatches("some string    ", Pattern.compile("[a-z ]+")));
-    verify(string -> string.notMatches("some string    ", Pattern.compile("[a-z ]+"), "testPositive"));
   }
 
   public abstract void verify(Consumer<CStringVerification> action);

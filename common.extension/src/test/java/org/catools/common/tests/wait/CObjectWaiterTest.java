@@ -7,6 +7,16 @@ import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
 
 public class CObjectWaiterTest extends CBaseUnitTest {
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testIsNull() {
+    CVerify.Bool.isTrue(toWaiter(null).waitIsNull(), "%s#%s", getParams());
+  }
+
+  // Negative
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
+  public void testIsNull_N() {
+    CVerify.Bool.isTrue(toWaiter("").waitIsNull(), "%s#%s", getParams());
+  }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEquals() {
@@ -37,12 +47,12 @@ public class CObjectWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotNull() {
-    CVerify.Bool.isTrue(toWaiter(new Object()).waitIsNotNull(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(new Object()).waitIsNotNull(), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotNull_N() {
-    CVerify.Bool.isFalse(toWaiter(null).waitIsNotNull(1), "%s#%s", getParams());
+    CVerify.Bool.isFalse(toWaiter(null).waitIsNotNull(), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

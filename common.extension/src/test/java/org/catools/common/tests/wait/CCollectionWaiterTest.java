@@ -13,6 +13,31 @@ import java.util.List;
 
 public class CCollectionWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeEquals() {
+    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitSizeEquals(3), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(new CSet<>(1, 2, 3)).waitSizeEquals(3), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeIsGreaterThan() {
+    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(new CSet<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitSizeIsLessThan() {
+    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitSizeIsLessThan(4), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(new CSet<>(1, 2, 3)).waitSizeIsLessThan(4), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
+  public void testWaitHas() {
+    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitHas(i -> i == 2), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(List.of(1, 2, 3)).waitHas(i -> i == 2), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(new CSet<>(1, 2, 3)).waitHas(i -> i == 2), "%s#%s", getParams());
+  }
+
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContains() {
     CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitContains(1), "%s#%s", getParams());
     CVerify.Bool.isTrue(toWaiter(List.of(1, 2, 3)).waitContains(2), "%s#%s", getParams());

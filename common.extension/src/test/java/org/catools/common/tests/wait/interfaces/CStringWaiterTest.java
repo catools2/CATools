@@ -568,7 +568,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsAlpha {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("aiulajksn").waitIsAlpha(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("aiulajksn").waitIsAlpha(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -585,7 +585,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsEmptyOrAlpha {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("aiulajksn").waitIsEmptyOrAlpha(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("aiulajksn").waitIsEmptyOrAlpha(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlpha(1), "%s#%s", getParams());
     }
 
@@ -603,7 +603,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsAlphaSpace {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter(" aiu ajk sn").waitIsAlphaSpace(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter(" aiu ajk sn").waitIsAlphaSpace(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -620,7 +620,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsAlphanumeric {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("aiulaj45872ksn1").waitIsAlphanumeric(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("aiulaj45872ksn1").waitIsAlphanumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("blkajsblas").waitIsAlphanumeric(1), "%s#%s", getParams());
     }
 
@@ -644,7 +644,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       CVerify.Bool.isTrue(
-          toWaiter("aiulaj6265opksn").waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
+          toWaiter("aiulaj6265opksn").waitIsEmptyOrAlphanumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
     }
 
@@ -663,7 +663,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsAlphanumericSpace {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("ai1ul90jksn").waitIsAlphanumericSpace(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("ai1ul90jksn").waitIsAlphanumericSpace(), "%s#%s", getParams());
       CVerify.Bool.isTrue(
           toWaiter(" ai1ul90 ajk sn").waitIsAlphanumericSpace(1), "%s#%s", getParams());
     }
@@ -685,7 +685,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     public void testPositive() {
       char[] chars = "5rtfghuik".toCharArray();
       chars[5] = 32;
-      CVerify.Bool.isTrue(toWaiter(new String(chars)).waitIsAsciiPrintable(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter(new String(chars)).waitIsAsciiPrintable(), "%s#%s", getParams());
       chars[5] = 33;
       CVerify.Bool.isTrue(toWaiter(new String(chars)).waitIsAsciiPrintable(1), "%s#%s", getParams());
       chars[5] = 125;
@@ -713,7 +713,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
       char[] chars = "5rtfghuik".toCharArray();
       chars[5] = 31;
       CVerify.Bool.isTrue(
-          toWaiter(new String(chars)).waitIsNotAsciiPrintable(1), "%s#%s", getParams());
+          toWaiter(new String(chars)).waitIsNotAsciiPrintable(), "%s#%s", getParams());
       chars[5] = 127;
       CVerify.Bool.isTrue(
           toWaiter(new String(chars)).waitIsNotAsciiPrintable(1), "%s#%s", getParams());
@@ -733,7 +733,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsBlank {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter(null).waitIsBlank(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter(null).waitIsBlank(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsBlank(1), "%s#%s", getParams());
     }
 
@@ -746,7 +746,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsEmpty {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("").waitIsEmpty(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("").waitIsEmpty(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -763,7 +763,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotAlpha {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("aiu1lajks1n").waitIsNotAlpha(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("aiu1lajks1n").waitIsNotAlpha(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -780,7 +780,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsEmptyOrNotAlpha {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("a1").waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("a1").waitIsEmptyOrNotAlpha(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -797,7 +797,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotAlphaSpace {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("1aiul ajk sn").waitIsNotAlphaSpace(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("1aiul ajk sn").waitIsNotAlphaSpace(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -815,7 +815,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       CVerify.Bool.isTrue(
-          toWaiter("aiulaj4587 2ksn1").waitIsNotAlphanumeric(1), "%s#%s", getParams());
+          toWaiter("aiulaj4587 2ksn1").waitIsNotAlphanumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("blkajsbla!s").waitIsNotAlphanumeric(1), "%s#%s", getParams());
     }
 
@@ -835,7 +835,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       CVerify.Bool.isTrue(
-          toWaiter("aiulaj6265!opksn").waitIsEmptyOrNotAlphanumeric(1), "%s#%s", getParams());
+          toWaiter("aiulaj6265!opksn").waitIsEmptyOrNotAlphanumeric(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -854,7 +854,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       CVerify.Bool.isTrue(
-          toWaiter("ai1ul90jks!n").waitIsNotAlphanumericSpace(1), "%s#%s", getParams());
+          toWaiter("ai1ul90jks!n").waitIsNotAlphanumericSpace(), "%s#%s", getParams());
       CVerify.Bool.isTrue(
           toWaiter("ai1ul90jks !").waitIsNotAlphanumericSpace(1), "%s#%s", getParams());
     }
@@ -874,7 +874,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotBlank {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("ai1ul90jks !").waitIsNotBlank(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("ai1ul90jks !").waitIsNotBlank(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -891,7 +891,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotEmpty {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("ai1ul90jks !").waitIsNotEmpty(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("ai1ul90jks !").waitIsNotEmpty(), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -908,7 +908,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotNumeric {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("1234567A").waitIsNotNumeric(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("1234567A").waitIsNotNumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsNotNumeric(1), "%s#%s", getParams());
     }
 
@@ -926,7 +926,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsEmptyOrNotNumeric {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("12345A67").waitIsEmptyOrNotNumeric(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("12345A67").waitIsEmptyOrNotNumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("A").waitIsEmptyOrNotNumeric(1), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrNotNumeric(1), "%s#%s", getParams());
     }
@@ -945,7 +945,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNotNumericSpace {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("234567!8").waitIsNotNumericSpace(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("234567!8").waitIsNotNumericSpace(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter(" 1254 7A86 1").waitIsNotNumericSpace(1), "%s#%s", getParams());
     }
 
@@ -980,7 +980,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsEmptyOrNumeric {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("1234567").waitIsEmptyOrNumeric(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("1234567").waitIsEmptyOrNumeric(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrNumeric(1), "%s#%s", getParams());
     }
 
@@ -998,7 +998,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public static class VerifyIsNumericSpace {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      CVerify.Bool.isTrue(toWaiter("2345678").waitIsNumericSpace(1), "%s#%s", getParams());
+      CVerify.Bool.isTrue(toWaiter("2345678").waitIsNumericSpace(), "%s#%s", getParams());
       CVerify.Bool.isTrue(toWaiter(" 1254 786 1").waitIsNumericSpace(1), "%s#%s", getParams());
     }
 

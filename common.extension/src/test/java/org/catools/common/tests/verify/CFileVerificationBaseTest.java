@@ -47,42 +47,36 @@ public abstract class CFileVerificationBaseTest extends CBaseUnitTest {
   public void testExistsWhenNot() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.exists(getFile("testExistsWhenNot", paragraphs) + "Invalid"));
-    verify(fileContent -> fileContent.exists(getFile("testExistsWhenNot", paragraphs) + "Invalid", "FileContentExpectationTest ::> testExistsWhenNot"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotExistsWhenIs() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.notExists(getFile("testExistsWhenNot", paragraphs)));
-    verify(fileContent -> fileContent.notExists(getFile("testExistsWhenNot", paragraphs), "FileContentExpectationTest ::> testNotExistsWhenIs"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals1WhenNoDest() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.equalsStringContent(getFile("testEquals1WhenNoDest1", paragraphs), CFile.fromTmp(RandomStringUtils.randomAlphabetic(10))));
-    verify(fileContent -> fileContent.equalsStringContent(getFile("testEquals1WhenNoDest1", paragraphs), CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), "FileContentExpectationTest ::> testEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals1WhenNoSource() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.equalsStringContent(CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), getFile("testEquals1WhenNoSource2", paragraphs + "1")));
-    verify(fileContent -> fileContent.equalsStringContent(CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), getFile("testEquals1WhenNoSource2", paragraphs + "1"), "FileContentExpectationTest ::> testEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals1WhenNotEqual() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.equalsStringContent(getFile("testEquals1WhenNotEqual1", paragraphs), getFile("testEquals1WhenNotEqual2", paragraphs + "1")));
-    verify(fileContent -> fileContent.equalsStringContent(getFile("testEquals1WhenNotEqual1", paragraphs), getFile("testEquals1WhenNotEqual2", paragraphs + "1"), "FileContentExpectationTest ::> testEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsWhenNotEqual() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.equalsStringContent(getPath("testEqualsWhenNotEqual1", paragraphs), getPath("testEqualsWhenNotEqual2", paragraphs + "1")));
-    verify(fileContent -> fileContent.equalsStringContent(getPath("testEqualsWhenNotEqual1", paragraphs), getPath("testEqualsWhenNotEqual2", paragraphs + "1"), "FileContentExpectationTest ::> testEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -103,28 +97,24 @@ public abstract class CFileVerificationBaseTest extends CBaseUnitTest {
   public void testNotEquals1_NoDest() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.notEqualsStringContent(getFile("testNotEquals1_NoDest1", paragraphs), CFile.fromTmp(RandomStringUtils.randomAlphabetic(10))));
-    verify(fileContent -> fileContent.notEqualsStringContent(getFile("testNotEquals1_NoDest1", paragraphs), CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), "FileContentExpectationTest ::> notEqualsStringContent"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals1_NoSrc() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.notEqualsStringContent(CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), getFile("testNotEquals1_NoSrc2", paragraphs)));
-    verify(fileContent -> fileContent.notEqualsStringContent(CFile.fromTmp(RandomStringUtils.randomAlphabetic(10)), getFile("testNotEquals1_NoSrc2", paragraphs), "FileContentExpectationTest ::> notEqualsStringContent"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals1_NotEqual() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.notEqualsStringContent(getFile("testNotEquals1_NotEqual1", paragraphs), getFile("testNotEquals1_NotEqual2", paragraphs)));
-    verify(fileContent -> fileContent.notEqualsStringContent(getFile("testNotEquals1_NotEqual1", paragraphs), getFile("testNotEquals1_NotEqual2", paragraphs), "FileContentExpectationTest ::> notEqualsStringContent"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals_NotEquals() {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     verify(fileContent -> fileContent.notEqualsStringContent(getPath("testNotEquals_NotEquals1", paragraphs), getPath("testNotEquals_NotEquals2", paragraphs)));
-    verify(fileContent -> fileContent.notEqualsStringContent(getPath("testNotEquals_NotEquals1", paragraphs), getPath("testNotEquals_NotEquals2", paragraphs), "FileContentExpectationTest ::> notEqualsStringContent"));
   }
 
   public abstract void verify(Consumer<CFileVerification> action);
