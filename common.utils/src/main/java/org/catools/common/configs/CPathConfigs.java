@@ -11,6 +11,12 @@ import org.catools.common.utils.CFileUtil;
 import java.io.File;
 
 public class CPathConfigs {
+
+  /**
+   * Get path to the resource folder inside temp folder. See {@link CPathConfigs#getTempFolder()}.
+   *
+   * @return path to tmp resource folder
+   */
   public static File getTmpResourcesFolder() {
     return getTempChildFolder("resources");
   }
@@ -19,6 +25,11 @@ public class CPathConfigs {
     return getHomeChildFolder("downloads");
   }
 
+  /**
+   * Get path to the uploads folder inside temp folder. See {@link CPathConfigs#getTempFolder()}.
+   *
+   * @return path to tmp uploads folder
+   */
   public static File getTmpUploadFolder() {
     return getTempChildFolder("uploads");
   }

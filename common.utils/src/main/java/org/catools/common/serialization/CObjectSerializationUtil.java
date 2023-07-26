@@ -32,7 +32,6 @@ public class CObjectSerializationUtil {
    * @param file file to write object into
    * @param t    Object to serialize
    * @param <T>  Object type
-   * @throws IOException
    */
   public static <T> void write(File file, T t) {
     try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
