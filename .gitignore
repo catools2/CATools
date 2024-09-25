@@ -9,3 +9,4 @@
 **/testng-failed*.xml
 **/TestSuite.json
 **/.flattened-pom.xml
+**/.DS_Store
