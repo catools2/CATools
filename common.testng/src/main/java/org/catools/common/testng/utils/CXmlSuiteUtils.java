@@ -27,7 +27,6 @@ public class CXmlSuiteUtils {
 
   public static XmlTest buildTestForClasses(CSet<String> testClasses, String testName) {
     XmlTest xmlTest = new XmlTest();
-    xmlTest.setJUnit(false);
     xmlTest.setName(testName);
 
     // Sort list
@@ -40,7 +39,6 @@ public class CXmlSuiteUtils {
   public static XmlSuite buildTestSuiteForTests(CList<XmlTest> tests, String suiteName, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
     XmlSuite xmlSuite = new XmlSuite();
     xmlSuite.setName(suiteName);
-    xmlSuite.setJUnit(false);
     xmlSuite.setAllowReturnValues(true);
     if (!XmlSuite.ParallelMode.NONE.equals(CTestNGConfigs.getSuiteLevelParallel())) {
       xmlSuite.setParallel(CTestNGConfigs.getSuiteLevelParallel());

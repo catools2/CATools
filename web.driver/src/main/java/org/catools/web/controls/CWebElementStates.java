@@ -275,6 +275,11 @@ public interface CWebElementStates<DR extends CDriver> {
         el -> CImageUtil.readImageOrNull(el.getScreenshotAs(OutputType.BYTES)));
   }
 
+  default Platform getPlatform() {
+    return getDriver().getDriverSession().getPlatform();
+  }
+
+
   // Protected
   default <C> C waitUntil(String actionName, int waitSec, Function<WebElement, C> action) {
     return getDriver()

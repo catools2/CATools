@@ -1,23 +1,16 @@
 package org.catools.reportportal.service;
 
-import com.epam.reportportal.annotations.UniqueID;
+import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.TestMethodType;
 import com.epam.reportportal.testng.TestNGService;
 import com.epam.ta.reportportal.ws.model.StartTestItemRQ;
 import org.catools.common.config.CTestManagementConfigs;
-import org.catools.common.testng.CTestNGConfigs;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CStringUtil;
 import org.catools.reportportal.configs.CRPConfigs;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
-import org.testng.internal.ConstructorOrMethod;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Base64;
-import java.util.Date;
+import javax.annotation.Nonnull;
 
 /**
  * 99% copied from com.epam.reportportal.testng.TestNGService We need to have it separated with
@@ -25,48 +18,28 @@ import java.util.Date;
  */
 public class CReportPortalService extends TestNGService {
 
-  /**
-   * Extension point to customize beforeXXX creation event/request
-   *
-   * @param testResult TestNG's testResult context
-   * @param type       Type of method
-   * @return Request to ReportPortal
-   */
-  protected StartTestItemRQ buildStartConfigurationRq(ITestResult testResult, TestMethodType type) {
-    StartTestItemRQ rq = new StartTestItemRQ();
-    rq.setName(getMethodName(testResult));
-
-    rq.setDescription(getMethodDescription(testResult));
-    rq.setStartTime(new Date(testResult.getStartMillis()));
-    rq.setType(type == null ? null : type.toString());
-    return rq;
+  public CReportPortalService(@Nonnull ReportPortal reportPortal) {
+    super(reportPortal);
   }
 
-  /**
-   * Extension point to customize test step creation event/request
-   *
-   * @param testResult TestNG's testResult context
-   * @return Request to ReportPortal
-   */
   @Override
-  protected StartTestItemRQ buildStartStepRq(ITestResult testResult) {
-    StartTestItemRQ rq = new StartTestItemRQ();
-    String testStepName;
-    if (testResult.getTestName() != null) {
-      testStepName = testResult.getTestName();
+  protected StartTestItemRQ buildStartStepRq(final @Nonnull ITestResult testResult, final @Nonnull TestMethodType type) {
+    StartTestItemRQ rq = super.buildStartStepRq(testResult, type);
+
+    CTestResult result = new CTestResult(testResult);
+
+    if (result.getTestIds() != null)
+      rq.setTestCaseId(String.join("", result.getTestIds()));
+
+    rq.setName(getMethodName(testResult));
+    if (rq.getAttributes() == null) {
+      rq.setAttributes(CRPConfigs.getAttributes());
     } else {
-      testStepName = getMethodName(testResult);
+      rq.getAttributes().addAll(CRPConfigs.getAttributes());
     }
-    rq.setName(testStepName);
-
+    rq.getAttributes().addAll(CRPConfigs.getAttributes());
     rq.setDescription(createStepDescription(testResult));
-    rq.setParameters(createStepParameters(testResult));
-    rq.setUniqueId(getUniqueID(testResult));
-    rq.setStartTime(new Date(testResult.getStartMillis()));
-    rq.setAttributes(CRPConfigs.getAttributes());
-    rq.setType(TestMethodType.getStepType(testResult.getMethod()).toString());
 
-    rq.setRetry(retry(testResult));
     return rq;
   }
 
@@ -78,140 +51,82 @@ public class CReportPortalService extends TestNGService {
    */
   protected String createStepDescription(ITestResult testResult) {
     StringBuilder stringBuffer = new StringBuilder();
-    CTestResult result = new CTestResult(testResult);
-    if (result.getTestIds().isEmpty() && getMethodDescription(testResult) != null) {
-      stringBuffer.append(getMethodDescription(testResult) + "\n");
-    }
-    stringBuffer.append(getTestInfoForReport(result));
+    stringBuffer.append(super.createStepDescription(testResult));
+
+    if (!stringBuffer.isEmpty())
+      stringBuffer.append("\n");
+
+    stringBuffer.append(getTestInfoForReport(testResult));
     return stringBuffer.toString();
   }
 
-  public static String getTestInfoForReport(CTestResult result) {
+  public static String getTestInfoForReport(ITestResult testResult) {
+    CTestResult result = new CTestResult(testResult);
     StringBuilder stringBuffer = new StringBuilder();
 
-    stringBuffer.append("Package: " + result.getPackageName() + "\n");
+    stringBuffer.append("Package: ").append(result.getPackageName()).append("\n");
 
     if (result.getTestIds().isNotEmpty()) {
       if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToTest())) {
-        stringBuffer.append("Tests: " + result.getTestIds().join(", ") + "\n");
+        stringBuffer.append("Tests: ")
+            .append(result.getTestIds().join(", "))
+            .append("\n");
       } else {
-        stringBuffer.append(
-            "Tests: "
-                + result
-                .getTestIds()
-                .mapToSet(
-                    i -> String.format("[%s](%s)", i, CTestManagementConfigs.getUrlToTest(i)))
-                .join(", ")
-                + "\n");
+        stringBuffer.append("Tests: ")
+            .append(result.getTestIds().mapToSet(CReportPortalService::getJiraUrl).join(", "))
+            .append("\n");
       }
     }
 
     if (result.getDefectIds().isNotEmpty()) {
       if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToDefect())) {
-        stringBuffer.append("Defects: " + result.getDefectIds().join(", ") + "\n");
+        stringBuffer.append("Defects: ")
+            .append(result.getDefectIds().join(", "))
+            .append("\n");
       } else {
-        stringBuffer.append(
-            "Defects: "
-                + result
-                .getDefectIds()
-                .mapToSet(
-                    i -> String.format("[%s](%s)", i, CTestManagementConfigs.getUrlToDefect(i)))
-                .join(", ")
-                + "\n");
+        stringBuffer.append("Defects: ")
+            .append(result.getDefectIds().mapToSet(CReportPortalService::getDefectLink).join(", "))
+            .append("\n");
       }
     }
 
     if (result.getOpenDefectIds().isNotEmpty()) {
       if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToDefect())) {
-        stringBuffer.append("Open Defects: " + result.getOpenDefectIds().join(", ") + "\n");
+        stringBuffer.append("Open Defects: ")
+            .append(result.getOpenDefectIds().join(", "))
+            .append("\n");
       } else {
-        stringBuffer.append(
-            "Open Defects: "
-                + result
-                .getOpenDefectIds()
-                .mapToSet(
-                    i -> String.format("[%s](%s)", i, CTestManagementConfigs.getUrlToDefect(i)))
-                .join(", ")
-                + "\n");
+        stringBuffer.append("Open Defects: ")
+            .append(result.getOpenDefectIds().mapToSet(CReportPortalService::getDefectLink).join(", "))
+            .append("\n");
       }
     }
 
     if (CStringUtil.isNoneBlank(result.getAwaiting())) {
-      stringBuffer.append("Awaiting: " + result.getAwaiting() + "\n");
+      stringBuffer.append("Awaiting: ").append(result.getAwaiting()).append("\n");
     }
 
-    if (CStringUtil.isNoneBlank(result.getVersion())) {
-      stringBuffer.append("Version: " + result.getVersion() + "\n");
+    if (CStringUtil.isNoneBlank(CTestResult.getVersion())) {
+      stringBuffer.append("Version: ").append(CTestResult.getVersion()).append("\n");
     }
 
     if (result.getSeverityLevel() != null) {
-      stringBuffer.append("Severity Level: " + result.getSeverityLevel() + "\n");
+      stringBuffer.append("Severity Level: ").append(result.getSeverityLevel()).append("\n");
     }
 
     if (result.getRegressionDepth() != null) {
-      stringBuffer.append("Regression Depth: " + result.getRegressionDepth() + "\n");
+      stringBuffer.append("Regression Depth: ").append(result.getRegressionDepth()).append("\n");
     }
 
     return stringBuffer.toString();
   }
 
-  /**
-   * Check is current method passed according the number of failed tests and configurations
-   *
-   * @param testContext TestNG's test content
-   * @return TRUE if passed, FALSE otherwise
-   */
-  protected boolean isTestPassed(ITestContext testContext) {
-    return testContext.getFailedTests().size() == 0
-        && testContext.getFailedConfigurations().size() == 0
-        && testContext.getSkippedConfigurations().size() == 0
-        && testContext.getSkippedTests().size() == 0;
+  private static String getJiraUrl(String i) {
+    return String.format("[%s](%s)", i, CTestManagementConfigs.getUrlToTest(i));
   }
 
-  /**
-   * Returns test item ID from annotation if it provided.
-   *
-   * @param testResult Where to find
-   * @return test item ID or null
-   */
-  private String getUniqueID(ITestResult testResult) {
-    UniqueID itemUniqueID = getAnnotation(UniqueID.class, testResult);
-    if (itemUniqueID != null) {
-      return itemUniqueID.value();
-    }
-    return Base64.getEncoder().encodeToString(testResult.getMethod().getQualifiedName().getBytes());
-  }
-
-  /**
-   * Returns method annotation by specified annotation class from from TestNG Method or null if the
-   * method does not contain such annotation.
-   *
-   * @param annotation Annotation class to find
-   * @param testResult Where to find
-   * @return {@link Annotation} or null if doesn't exists
-   */
-  private <T extends Annotation> T getAnnotation(Class<T> annotation, ITestResult testResult) {
-    ITestNGMethod testNGMethod = testResult.getMethod();
-    if (null != testNGMethod) {
-      ConstructorOrMethod constructorOrMethod = testNGMethod.getConstructorOrMethod();
-      if (null != constructorOrMethod) {
-        Method method = constructorOrMethod.getMethod();
-        if (null != method) {
-          return method.getAnnotation(annotation);
-        }
-      }
-    }
-    return null;
-  }
-
-  private boolean retry(ITestResult result) {
-    return (result.getMethod().getRetryAnalyzer(result) != null
-        && CTestNGConfigs.getTestRetryCount() > 0)
-        || CTestNGConfigs.getSuiteRetryCount() > 0;
-  }
-
-  private String getMethodDescription(ITestResult testResult) {
-    return testResult.getMethod().getDescription();
+  private static String getDefectLink(String i) {
+    return String.format("[%s](%s)", i, CTestManagementConfigs.getUrlToDefect(i));
   }
 
   // Originally this method returned getName() but I had to change it to getQualifiedName().
@@ -225,7 +140,7 @@ public class CReportPortalService extends TestNGService {
 
     if (CRPConfigs.addClassNameToMethodDescription()) {
       if (CStringUtil.isNotBlank(name)) {
-        name += ".";
+        name += "\n";
       }
       name += testResult.getTestClass().getRealClass().getSimpleName();
     }

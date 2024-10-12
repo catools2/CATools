@@ -1,5 +1,6 @@
 package org.catools.common.testng.listeners;
 
+import lombok.Getter;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.testng.model.CExecutionStatus;
 import org.testng.ISuite;
@@ -10,36 +11,18 @@ import org.testng.internal.IResultListener;
 
 public class CExecutionStatisticListener implements ISuiteListener, IResultListener {
   private static final CHashMap<String, CExecutionStatus> methodSignatures = new CHashMap<>();
+  @Getter
   private static int total;
+  @Getter
   private static int passed;
+  @Getter
   private static int failed;
+  @Getter
   private static int skipped;
+  @Getter
   private static int running;
+  @Getter
   private static int waiting;
-
-  public static int getTotal() {
-    return total;
-  }
-
-  public static int getTotalPassed() {
-    return passed;
-  }
-
-  public static int getTotalFailed() {
-    return failed;
-  }
-
-  public static int getTotalSkipped() {
-    return skipped;
-  }
-
-  public static int getTotalRunning() {
-    return running;
-  }
-
-  public static int getTotalWaiting() {
-    return waiting;
-  }
 
   private static void updateVariables() {
     total = methodSignatures.size();

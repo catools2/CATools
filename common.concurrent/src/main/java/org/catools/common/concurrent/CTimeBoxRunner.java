@@ -89,7 +89,7 @@ public class CTimeBoxRunner<R> implements Runnable {
     try {
       r =
           SimpleTimeLimiter.create(Executors.newFixedThreadPool(1))
-              .callWithTimeout(() -> job.get(), timeoutInSeconds, TimeUnit.SECONDS);
+              .callWithTimeout(job::get, timeoutInSeconds, TimeUnit.SECONDS);
     } catch (TimeoutException e) {
       if (throwExceptionIfTimeout) {
         throw new CThreadTimeoutException("Job execution takes more time than expected");

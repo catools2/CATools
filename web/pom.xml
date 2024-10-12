@@ -16,31 +16,56 @@
         <relativePath>../catools.parent/pom.xml</relativePath>
     </parent>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>web.table</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>web.testng</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>web.driver</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>web.driver.provider</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>web.axe</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>web.table</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>web.testng</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>web.driver</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>web.driver.provider</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>web.axe</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

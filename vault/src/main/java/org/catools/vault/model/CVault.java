@@ -21,16 +21,22 @@ import static org.catools.vault.configs.CVaultConfigs.getVaultBaseConfig;
 
 @Slf4j
 public class CVault {
-  private static Map<String, String> kVData;
+  private Map<String, String> kVData;
 
-  private Vault vault;
+  private final Vault vault;
+  private final String path;
 
   public CVault() {
-      this(new Vault(getVaultBaseConfig().token(getAuthClientToken())));
+    this(new Vault(getVaultBaseConfig().token(getAuthClientToken())), CVaultConfigs.getPath());
   }
 
-  public CVault(Vault vault) {
+  public CVault(String path) {
+    this(new Vault(getVaultBaseConfig().token(getAuthClientToken())), path);
+  }
+
+  public CVault(Vault vault, String path) {
     this.vault = vault;
+    this.path = path;
   }
 
   public String getValue(String key) {
@@ -38,6 +44,7 @@ public class CVault {
     if (value == null) {
       throw new CVaultSecretNotFoundException(getFullKey(key));
     }
+    CSensitiveDataMaskingManager.addMask(value);
     return value;
   }
 
@@ -46,29 +53,22 @@ public class CVault {
       return null;
     }
 
-    String value = getPath().get(getFullKey(key));
-    String finalValue = value == null ? defaultTo : value;
-    if (defaultTo != null) {
-      CSensitiveDataMaskingManager.addMask(finalValue);
-    }
-    return finalValue;
+    String value = getData().get(getFullKey(key));
+    return value == null ? defaultTo : value;
   }
 
-  public Map<String, String> getPath() {
+  public Map<String, String> getData() {
     if (!Objects.isNull(kVData)) {
       return kVData;
     }
 
-    return getData(CVaultConfigs.getPath());
-  }
-
-  public Map<String, String> getData(String path) {
     try {
-      return vault.logical().read(path).getData();
-    }
-    catch (VaultException e) {
+      kVData = vault.logical().read(path).getData();
+    } catch (VaultException e) {
       throw new CVaultOperationException("Read", e);
     }
+
+    return kVData;
   }
 
   public Credential issuePKI(String pkiMountPath,
@@ -103,11 +103,11 @@ public class CVault {
       return switch (authType) {
         case TOKEN -> CVaultConfigs.getAuthToken();
         case LDAP -> new Vault(getVaultBaseConfig()).auth()
-                                                    .loginByLDAP(CVaultConfigs.getAuthLdapUsername(), CVaultConfigs.getAuthLdapPassword())
-                                                    .getAuthClientToken();
+            .loginByLDAP(CVaultConfigs.getAuthLdapUsername(), CVaultConfigs.getAuthLdapPassword())
+            .getAuthClientToken();
         case APP_ROLE -> new Vault(getVaultBaseConfig()).auth()
-                                                        .loginByAppRole(CVaultConfigs.getAuthAppRoleRoleId(), CVaultConfigs.getAuthAppRoleSecretId())
-                                                        .getAuthClientToken();
+            .loginByAppRole(CVaultConfigs.getAuthAppRoleRoleId(), CVaultConfigs.getAuthAppRoleSecretId())
+            .getAuthClientToken();
         default -> throw new CVaultAuthenticationException(authType.name());
       };
     }

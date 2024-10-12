@@ -16,7 +16,7 @@ public class CTotalWaitingTestCountConverter extends CBaseExecutionStatisticConv
    */
   protected CTotalWaitingTestCountConverter(final String stringFormat) {
     super(
-        "Total Waiting", "ETW", stringFormat, () -> CExecutionStatisticListener.getTotalWaiting());
+        "Total Waiting", "ETW", stringFormat, () -> CExecutionStatisticListener.getWaiting());
   }
 
   public static CTotalWaitingTestCountConverter newInstance(final String[] options) {

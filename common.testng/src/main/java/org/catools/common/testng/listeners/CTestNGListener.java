@@ -1,12 +1,8 @@
 package org.catools.common.testng.listeners;
 
+import lombok.Getter;
 import org.catools.common.collections.CList;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.functions.CMemoize;
-import org.catools.common.testng.CTestNGConfigs;
-import org.catools.common.testng.CTestNGResultGenerator;
 import org.catools.common.testng.utils.CTestSuiteUtil;
-import org.catools.common.testng.utils.CXmlSuiteUtils;
 import org.catools.common.tests.exception.CSkipAwaitingTestException;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
@@ -16,16 +12,12 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class CTestNGListener implements CITestNGListener, IMethodInterceptor, IAlterSuiteListener, IReporter {
-  private static final CMemoize<Integer> suiteCounter = new CMemoize(CTestNGConfigs::incrementSuiteRun);
+public final class CTestNGListener implements CITestNGListener, IMethodInterceptor, IReporter {
+  @Getter
   private static final CList<ITestNGListener> listeners = new CList<>();
   private static final CList<ISuite> suites = new CList<>();
 
   public CTestNGListener() {
-  }
-
-  public static CList<ITestNGListener> getListeners() {
-    return listeners;
   }
 
   public static void addListeners(ITestNGListener... listeners) {
@@ -45,7 +37,6 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   @Override // 2- ISuiteListener
   public void onStart(ISuite suite) {
     doIf(l -> l instanceof ISuiteListener, l -> ((ISuiteListener) l).onStart(suite));
-    suiteCounter.reset();
   }
 
   @Override // 3- IConfigurationListener2
@@ -146,13 +137,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   public void onFinish(ISuite suite) {
     doIf(l -> l instanceof ISuiteListener, l -> ((ISuiteListener) l).onFinish(suite));
     suites.add(suite);
-    suiteCounter.get();
   }
 
   @Override // 17- IExecutionListener
   public void onExecutionFinish() {
     doIf(l -> l instanceof IExecutionListener, l -> ((IExecutionListener) l).onExecutionFinish());
-    CTestNGResultGenerator.generateReport(suites, CPathConfigs.getOutputPath());
   }
 
   @Override
@@ -167,18 +156,6 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   @Override
   public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
     doIf(l -> l instanceof IReporter, l -> ((IReporter) l).generateReport(xmlSuites, suites, outputDirectory));
-  }
-
-  @Override
-  public void alter(List<XmlSuite> list) {
-    CList<XmlSuite> retryList = new CList<>();
-    for (int i = 0; i < CTestNGConfigs.getSuiteRetryCount(); i++) {
-      for (XmlSuite xmlSuite : list) {
-        XmlSuite suite = CXmlSuiteUtils.copy(xmlSuite, " Retry " + (i + 1));
-        retryList.add(suite);
-      }
-    }
-    list.addAll(retryList);
   }
 
   private <T extends ITestNGListener> void doIf(Predicate<ITestNGListener> predicate, Consumer<T> action) {

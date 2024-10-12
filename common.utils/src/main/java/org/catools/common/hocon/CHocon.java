@@ -3,18 +3,11 @@ package org.catools.common.hocon;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigValue;
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.exception.CFileOperationException;
 import org.catools.common.hocon.exception.CHoconException;
 import org.catools.common.hocon.model.CHoconConfig;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.hocon.utils.CHoconUtils;
-import org.catools.common.utils.CFileUtil;
-import org.catools.common.utils.CRetry;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -23,25 +16,26 @@ import java.util.stream.Stream;
  * A class to work safe with Type Safe Configuration
  */
 public class CHocon {
-  public static final String CONFIGS_TO_LOAD = "CONFIGS_TO_LOAD";
   private static Config CONFIG;
+
+  public static final String CONFIGS_TO_LOAD = "CONFIGS_TO_LOAD";
 
   /**
    * Load configuration and set them in System.properties
    */
-  public static synchronized void reload() {
+  public synchronized static void reload() {
     ConfigFactory.invalidateCaches();
-    String configToLoad = System.getProperty(CONFIGS_TO_LOAD);
+    String configToLoad = CHoconUtils.getProperty(CONFIGS_TO_LOAD);
     CONFIG = configToLoad != null ? ConfigFactory.load(configToLoad) : ConfigFactory.load();
-    getUserDefinedSettings()
-        .forEach(
-            entry -> {
-              String key = entry.getKey();
-              String propName = CHoconUtils.pathToEnvVariableName(key);
-              if (System.getProperty(propName) == null) {
-                System.setProperty(propName, CONFIG.getValue(key).unwrapped().toString());
-              }
-            });
+    getUserDefinedSettings().forEach(entry -> {
+      String key = entry.getKey();
+      if (key.toLowerCase().startsWith("catools")) {
+        String propName = CHoconUtils.pathToEnvVariableName(key);
+        if (CHoconUtils.getProperty(propName) == null) {
+          System.setProperty(propName, CONFIG.getValue(key).unwrapped().toString());
+        }
+      }
+    });
   }
 
   public static Stream<Map.Entry<String, ConfigValue>> getUserDefinedSettings() {
@@ -51,25 +45,10 @@ public class CHocon {
         .filter(entry -> entry.getValue().origin().resource() != null);
   }
 
-  private static synchronized void cleaUp() {
-    if (StringUtils.isNotBlank(CPathConfigs.getOutputPath())) {
-      File outputRoot = CPathConfigs.getOutputRoot();
-      CRetry.retry(idx -> {
-        try {
-          CFileUtil.deleteDirectory(outputRoot);
-          return true;
-        } catch (IOException e) {
-          throw new CFileOperationException(outputRoot, "Delete output directory.");
-        }
-      }, 30, 1000);
-    }
-  }
-
   public static Config getConfig() {
     if (CONFIG == null) {
       try {
         reload();
-        cleaUp();
       } catch (Exception e) {
         throw new CHoconException("Failed to initialize hocon", e);
       }

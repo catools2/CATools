@@ -109,7 +109,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
   public void testReadString() {
     ASet read = CJsonUtil.read(jsonInfo, ASet.class);
     CVerify.String.equals(
-        read.mapToList(i -> i.getA1()).join(), "A1A2A3", "write method add correct value to file");
+        read.mapToList(A::getA1).join(), "A1A2A3", "write method add correct value to file");
   }
 
   @Test(

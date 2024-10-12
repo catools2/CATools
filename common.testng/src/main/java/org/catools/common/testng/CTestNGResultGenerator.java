@@ -57,7 +57,6 @@ public class CTestNGResultGenerator {
     Utils.writeUtf8File(
         config.getOutputDirectory(),
         CStringUtil.removeEnd(FILE_NAME, XML_EXTENSION)
-            + (CTestNGConfigs.isLastSuiteRun() ? "" : CTestNGConfigs.getSuiteRunCounter())
             + XML_EXTENSION,
         rootBuffer,
         null);

@@ -3,6 +3,7 @@ package org.catools.common.utils;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.enums.CPlatform;
+import org.catools.common.hocon.utils.CHoconUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,13 +18,13 @@ public class CSystemUtil {
 
   public static synchronized CPlatform getPlatform() {
     if (platform == null) {
-      platform = CPlatform.fromName(System.getProperty("os.name"));
+      platform = CPlatform.fromName(CHoconUtils.getProperty("os.name"));
     }
     return platform;
   }
 
   public static String getUserName() {
-    return System.getProperty("user.name");
+    return CHoconUtils.getProperty("user.name");
   }
 
   public static synchronized String getHostIP() {

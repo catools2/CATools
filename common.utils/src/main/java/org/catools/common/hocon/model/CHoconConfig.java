@@ -3,18 +3,24 @@ package org.catools.common.hocon.model;
 import com.typesafe.config.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CJsonUtil;
-import org.testng.collections.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 import static org.catools.common.hocon.utils.CHoconUtils.SENSITIVE_PATH;
 import static org.catools.common.hocon.utils.CHoconUtils.VALUE_PATH;
 
+@Slf4j
 @NoArgsConstructor
 public class CHoconConfig implements CConfig {
-  private static final String TEMP_LIST_VALUE_PLACE_HODLER = "value";
+  private static final String PRINT_PATH_VALUE = "PRINT_PATH_VALUE";
+  private static final String VALUE = "value";
   private Config config;
 
   @Getter
@@ -34,19 +40,12 @@ public class CHoconConfig implements CConfig {
     this.valuePath = config.hasPath(path + VALUE_PATH) ? path + VALUE_PATH : path;
   }
 
-  private static <T> T getModelFromConfig(Class<T> clazz, Config val) {
-    try {
-      return ConfigBeanFactory.create(val, clazz);
-    } catch (Exception ex) {
-      String jsonFormatString = val.resolve().root().render(ConfigRenderOptions.concise());
-      return CJsonUtil.read(jsonFormatString, clazz);
-    }
-  }
-
+  @Override
   public boolean isSensitive() {
     return config.hasPath(path + SENSITIVE_PATH) && config.getBoolean(path + SENSITIVE_PATH);
   }
 
+  @Override
   public boolean isDefined() {
     try {
       return !getConfig().getIsNull(valuePath);
@@ -55,108 +54,164 @@ public class CHoconConfig implements CConfig {
     }
   }
 
+  @Override
+  public String asString(String defaultValue) {
+    return asT(defaultValue, (c, path) -> c.getString(valuePath));
+  }
+
+  @Override
   public String asString() {
-    return isNotDefined() ? "" : getConfig().getString(valuePath);
+    return asString("");
   }
 
-  public Boolean asBoolean() {
-    return isDefined() && getConfig().getBoolean(valuePath);
+  @Override
+  public List<String> asStrings(List<String> defaultValue) {
+    return asT(defaultValue, Config::getStringList);
   }
 
-  public Number asNumber() {
-    return isNotDefined() ? null : getConfig().getNumber(valuePath);
-  }
-
-  public Integer asInteger() {
-    return isNotDefined() ? 0 : getConfig().getInt(valuePath);
-  }
-
-  public Long asLong() {
-    return isNotDefined() ? 0 : getConfig().getLong(valuePath);
-  }
-
-  public Double asDouble() {
-    return isNotDefined() ? 0 : getConfig().getDouble(valuePath);
-  }
-
-  public <T extends Enum<T>> T asEnum(Class<T> aClass) {
-    return isNotDefined() ? null : getConfig().getEnum(aClass, valuePath);
-  }
-
-  public Object asObject() {
-    return isNotDefined() ? null : getConfig().getAnyRef(valuePath);
-  }
-
-  public List<Boolean> asBooleans() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getBooleanList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getBooleanList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
-  }
-
-  public List<Number> asNumbers() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getNumberList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getNumberList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
-  }
-
-  public List<Integer> asIntegers() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getIntList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getIntList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
-  }
-
-  public List<Long> asLongs() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getLongList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getLongList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
-  }
-
-  public List<Double> asDoubles() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getDoubleList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getDoubleList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
-  }
-
+  @Override
   public List<String> asStrings() {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getStringList(valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getStringList(TEMP_LIST_VALUE_PLACE_HODLER);
-    }
+    return asStrings(List.of());
   }
 
+  @Override
+  public Boolean asBoolean(Boolean defaultValue) {
+    return asT(defaultValue, Config::getBoolean);
+  }
+
+  @Override
+  public Boolean asBoolean() {
+    return asBoolean(false);
+  }
+
+  @Override
+  public List<Boolean> asBooleans(List<Boolean> defaultValue) {
+    return asT(defaultValue, Config::getBooleanList);
+  }
+
+  @Override
+  public List<Boolean> asBooleans() {
+    return asBooleans(List.of());
+  }
+
+  @Override
+  public Number asNumber(Number defaultValue) {
+    return asT(defaultValue, Config::getNumber);
+  }
+
+  @Override
+  public Number asNumber() {
+    return asNumber(0);
+  }
+
+  @Override
+  public List<Number> asNumbers(List<Number> defaultValue) {
+    return asT(defaultValue, Config::getNumberList);
+  }
+
+  @Override
+  public List<Number> asNumbers() {
+    return asNumbers(List.of());
+  }
+
+  @Override
+  public Integer asInteger(Integer defaultValue) {
+    return asT(defaultValue, Config::getInt);
+  }
+
+  @Override
+  public Integer asInteger() {
+    return asInteger(0);
+  }
+
+  @Override
+  public List<Integer> asIntegers(List<Integer> defaultValue) {
+    return asT(defaultValue, Config::getIntList);
+  }
+
+  @Override
+  public List<Integer> asIntegers() {
+    return asIntegers(List.of());
+  }
+
+  @Override
+  public Long asLong(Long defaultValue) {
+    return asT(defaultValue, Config::getLong);
+  }
+
+  @Override
+  public Long asLong() {
+    return asLong(0L);
+  }
+
+  @Override
+  public List<Long> asLongs(List<Long> defaultValue) {
+    return asT(defaultValue, Config::getLongList);
+  }
+
+  @Override
+  public List<Long> asLongs() {
+    return asLongs(List.of());
+  }
+
+  @Override
+  public Double asDouble(Double defaultValue) {
+    return asT(defaultValue, Config::getDouble);
+  }
+
+  @Override
+  public Double asDouble() {
+    return asDouble(0D);
+  }
+
+  @Override
+  public List<Double> asDoubles(List<Double> defaultValue) {
+    return asT(defaultValue, Config::getDoubleList);
+  }
+
+  @Override
+  public List<Double> asDoubles() {
+    return asDoubles(List.of());
+  }
+
+  @Override
+  public <T extends Enum<T>> T asEnum(Class<T> aClass) {
+    return asEnum(aClass, null);
+  }
+
+  @Override
+  public <T extends Enum<T>> T asEnum(Class<T> aClass, T defaultValue) {
+    return asT(defaultValue, (c, path) -> c.getEnum(aClass, path));
+  }
+
+  @Override
   public <T extends Enum<T>> List<T> asEnums(Class<T> aClass) {
-    try {
-      return isNotDefined() ? Lists.newArrayList() : getConfig().getEnumList(aClass, valuePath);
-    } catch (ConfigException ex) {
-      return parseStringList().getEnumList(aClass, TEMP_LIST_VALUE_PLACE_HODLER);
-    }
+    return asEnums(aClass, List.of());
   }
 
-  public List<? extends Object> asObjects() {
-    return isNotDefined() ? Lists.newArrayList() : getConfig().getAnyRefList(valuePath);
+  @Override
+  public <T extends Enum<T>> List<T> asEnums(Class<T> aClass, List<T> defaultValue) {
+    return asT(defaultValue, (c, path) -> c.getEnumList(aClass, path));
   }
 
-  /**
-   * Read model using Type Safe Configuration implementation or Jackson
-   *
-   * @param clazz model class type
-   * @param <T>   class Type
-   * @return the model
-   */
-  public <T> T asModel(Class<T> clazz) {
-    Config val = getConfig().getConfig(this.valuePath);
-    return getModelFromConfig(clazz, val);
+  @Override
+  public Object asObject() {
+    return asObject(null);
+  }
+
+  @Override
+  public Object asObject(Object defaultValue) {
+    return asT(defaultValue, Config::getAnyRef);
+  }
+
+  @Override
+  public List<?> asObjects() {
+    return asObjects(List.of());
+  }
+
+  @Override
+  public List<?> asObjects(List<Object> defaultValue) {
+    return asT(defaultValue, Config::getAnyRefList);
   }
 
   /**
@@ -175,12 +230,97 @@ public class CHoconConfig implements CConfig {
     return output;
   }
 
+  /**
+   * Read model using Type Safe Configuration implementation or Jackson
+   *
+   * @param clazz model class type
+   * @param <T>   class Type
+   * @return the model
+   */
+  @Override
+  public <T> T asModel(Class<T> clazz) {
+    return asModel(clazz, null);
+  }
+
+  @Override
+  public <T> T asModel(Class<T> clazz, T defaultValue) {
+    try {
+      return asT(defaultValue, (c, p) -> getModelFromConfig(clazz, c.getConfig(p)));
+    } catch (ConfigException.WrongType ignored) {
+      return asT(defaultValue, (c, p) -> getModelFromConfigs(clazz, c.getList(p)));
+    }
+  }
+
+  private <T> T asT(T defaultValue, BiFunction<Config, String, T> fuc) {
+    // If configuration defined then we might have 2 scenarios.
+    // 1- Case when value setup directly in configuration.
+    // 2- Case when value setup value using environmental variables.
+    // In the second scenario we need to read and parse the string value and process it.
+    // 3- If the value is not defined in configuration then try to read value
+    // from Environmental Variables or System Properties, considering that value should parse as yaml
+    // property so we try to read value as is and if conversion failed, then try quoted value
+
+    if (isDefined()) {
+      try {
+        return printPathValue(path, fuc.apply(config, valuePath));
+      } catch (ConfigException ex) {
+        return printPathValue(path, fuc.apply(parseString(), VALUE));
+      }
+    }
+
+    String value = readPropertyOrEnv(valuePath);
+
+    if (StringUtils.isBlank(value)) {
+      return defaultValue;
+    }
+
+    try {
+      return printPathValue(path, Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+    } catch (ConfigException ignored) {
+      return printPathValue(path, Optional.of(parseString(String.format("\"%s\"", value))).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+    }
+  }
+
+  private <T> T printPathValue(String path, T value) {
+    String printPathValue = CHoconUtils.getProperty(PRINT_PATH_VALUE);
+    if (StringUtils.isNoneBlank(printPathValue)) {
+      log.debug("{} value is set to {}", path, value);
+    }
+    return value;
+  }
+
+  private static <T> T getModelFromConfig(Class<T> clazz, Config val) {
+    try {
+      return ConfigBeanFactory.create(val, clazz);
+    } catch (Exception ex) {
+      String jsonFormatString = val.resolve().root().render(ConfigRenderOptions.concise());
+      return CJsonUtil.read(jsonFormatString, clazz);
+    }
+  }
+
+  private static <T> T getModelFromConfigs(Class<T> clazz, ConfigList config) {
+    String jsonFormatString = config.render(ConfigRenderOptions.concise());
+    return CJsonUtil.read(jsonFormatString, clazz);
+  }
+
   private Config getConfig() {
     return config;
   }
 
-  private Config parseStringList() {
-    String listString = config.getString(valuePath);
-    return ConfigFactory.parseString(TEMP_LIST_VALUE_PLACE_HODLER + " = " + listString);
+  private Config parseString() {
+    return parseString(config.getString(valuePath));
+  }
+
+  private static Config parseString(String input) {
+    return ConfigFactory.parseString(VALUE + " = " + input);
+  }
+
+  private static String readPropertyOrEnv(String property) {
+    String key = convertToEnvVariable(property);
+    return CHoconUtils.getProperty(key);
+  }
+
+  private static String convertToEnvVariable(final String property) {
+    return property.toUpperCase().replaceAll("[^a-zA-Z0-9]+", "_");
   }
 }

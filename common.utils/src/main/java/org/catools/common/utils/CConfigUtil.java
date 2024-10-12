@@ -2,12 +2,13 @@ package org.catools.common.utils;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.catools.common.hocon.utils.CHoconUtils;
 
 @UtilityClass
 /** */
 public class CConfigUtil {
   public static String getRunName() {
-    return StringUtils.defaultString(System.getProperty("RUN_NAME"));
+    return StringUtils.defaultString(CHoconUtils.getProperty("RUN_NAME"));
   }
 
   public static void setRunName(String value) {

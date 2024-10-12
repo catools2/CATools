@@ -16,46 +16,83 @@
         <relativePath>../catools.parent/pom.xml</relativePath>
     </parent>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.extension</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.utils</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.logger</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.concurrent</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.testng</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.faker</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.k8s</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.extension</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.utils</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.logger</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.concurrent</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.security</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.testng</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.faker</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.k8s</artifactId>
-            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

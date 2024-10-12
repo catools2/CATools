@@ -1,7 +1,5 @@
 package org.catools.common.testng.annotatoins;
 
-import org.catools.common.annotations.CAwaiting;
-import org.catools.common.annotations.CIgnored;
 import org.catools.common.annotations.CRegression;
 import org.catools.common.annotations.CSeverity;
 import org.catools.common.exception.CRuntimeException;
@@ -100,8 +98,8 @@ public class CLabelTest extends CTest {
   @Test
   @CRegression(depth = 1)
   @CSeverity(level = 1)
-  public void ignoreByNoRunAnyOrAllAnnotation() {
-    throw new CRuntimeException("Should skip by missing any RAny annotation");
+  public void ignoreBecauseHasNoRunTag() {
+    throw new CRuntimeException("Should skip if test execution requires test execution by specific tag condition");
   }
 
   @Test
@@ -127,21 +125,5 @@ public class CLabelTest extends CTest {
   @CRegression(depth = 1)
   @CSeverity(level = 1)
   public void testLabels() {
-  }
-
-  @Test
-  @CAwaiting(cause = "something")
-  @CRegression(depth = 1)
-  @CSeverity(level = 1)
-  public void testAwaitLabels() {
-    throw new CRuntimeException("Should skip by Awaiting tag");
-  }
-
-  @Test
-  @CIgnored
-  @CRegression(depth = 1)
-  @CSeverity(level = 1)
-  public void testIgnoreLabels() {
-    throw new CRuntimeException("Should skip by Ignored tag");
   }
 }

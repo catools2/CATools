@@ -7,19 +7,14 @@ import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.catools.common.utils.CConfigUtil;
-import org.catools.common.utils.CStringUtil;
 import org.testng.ITestNGListener;
 import org.testng.xml.XmlSuite;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @UtilityClass
 public class CTestNGConfigs {
-  private static final AtomicInteger SUITE_RUN_COUNTER = new AtomicInteger(1);
-
   public static Class<?> getBaseClassLoader() {
     try {
       return Class.forName(CHocon.asString(Configs.CATOOLS_TESTNG_BASE_TEST_CLASS_LOADER));
@@ -71,14 +66,6 @@ public class CTestNGConfigs {
     return CHocon.asInteger(Configs.CATOOLS_TESTNG_TEST_RETRY_COUNT);
   }
 
-  public static int getSuiteRetryCount() {
-    return CHocon.asInteger(Configs.CATOOLS_TESTNG_SUITE_RETRY_COUNT);
-  }
-
-  public static int getSuiteRunCounter() {
-    return SUITE_RUN_COUNTER.get();
-  }
-
   public static CSet<String> getTestPackages() {
     return new CSet<>(CHocon.asStrings(Configs.CATOOLS_TESTNG_TEST_PACKAGES));
   }
@@ -97,20 +84,6 @@ public class CTestNGConfigs {
 
   public static int getSuiteLevelThreadCount() {
     return CHocon.asInteger(Configs.CATOOLS_TESTNG_SUITE_LEVEL_THREAD_COUNT);
-  }
-
-  public static Integer incrementSuiteRun() {
-    int suiteRun = SUITE_RUN_COUNTER.incrementAndGet();
-    CConfigUtil.setRunName(isLastSuiteRun() ? CStringUtil.EMPTY : "run_" + suiteRun);
-    return suiteRun;
-  }
-
-  public static boolean isFirstSuiteRun() {
-    return getSuiteRunCounter() == 1;
-  }
-
-  public static boolean isLastSuiteRun() {
-    return getSuiteRunCounter() >= getSuiteRetryCount() + 1;
   }
 
   public static boolean skipClassWithAwaitingTest() {
@@ -135,7 +108,6 @@ public class CTestNGConfigs {
     CATOOLS_TESTNG_SUITE_LEVEL_THREAD_COUNT("catools.testng.suite_level.thread_count"),
     CATOOLS_TESTNG_LISTENERS("catools.testng.listeners"),
     CATOOLS_TESTNG_TEST_RETRY_COUNT("catools.testng.test_retry_count"),
-    CATOOLS_TESTNG_SUITE_RETRY_COUNT("catools.testng.suite_retry_count"),
     CATOOLS_TESTNG_BASE_TEST_CLASS_LOADER("catools.testng.base_test_class_loader"),
     CATOOLS_TESTNG_SKIP_CLASS_WITH_AWAITING_TEST("catools.testng.skip_class_with_awaiting_test"),
     CATOOLS_TESTNG_SKIP_CLASS_WITH_IGNORED_TEST("catools.testng.skip_class_with_ignored_test"),

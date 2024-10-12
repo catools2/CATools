@@ -16,7 +16,7 @@ public class CTotalSkippedTestCountConverter extends CBaseExecutionStatisticConv
    */
   protected CTotalSkippedTestCountConverter(final String stringFormat) {
     super(
-        "Total Skipped", "ETS", stringFormat, () -> CExecutionStatisticListener.getTotalSkipped());
+        "Total Skipped", "ETS", stringFormat, () -> CExecutionStatisticListener.getSkipped());
   }
 
   public static CTotalSkippedTestCountConverter newInstance(final String[] options) {

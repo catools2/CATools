@@ -7,7 +7,7 @@ import com.typesafe.config.ConfigBeanFactory;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.exception.CHoconPathNotFoundException;
 import org.catools.common.hocon.exception.CHoconPathOperationException;
 import org.catools.common.utils.CJsonUtil;
@@ -80,30 +80,6 @@ public class CHoconUtils {
   }
 
   /**
-   * Read first value from json using <a href="https://github.com/json-path/JsonPath">JsonPath
-   * expression</a>.
-   *
-   * @param input    valid json string value
-   * @param jsonPath JsonPath expression to search for
-   * @param clazz    model type to be used
-   * @param <T>      generic type for class
-   * @return a model
-   * @throws CHoconPathNotFoundException if the given path is not valid
-   */
-  public static <T> T getFirstModelByJsonPath(String input, String jsonPath, Class<T> clazz) {
-    try {
-      Object obj = JsonPath.read(input, jsonPath);
-      if (obj instanceof JSONArray array) {
-        obj = array.get(0);
-      }
-      String json = CJsonUtil.toString(obj);
-      return CJsonUtil.read(json, clazz);
-    } catch (PathNotFoundException ex) {
-      throw new CHoconPathNotFoundException(input, jsonPath, ex);
-    }
-  }
-
-  /**
    * Read value from json using <a href="https://github.com/json-path/JsonPath">JsonPath
    * expression</a>.
    *
@@ -117,28 +93,6 @@ public class CHoconUtils {
     Object obj = JsonPath.read(input, jsonPath);
     String json = CJsonUtil.toString(obj);
     return CJsonUtil.read(json, clazz);
-  }
-
-  /**
-   * Read string value from json input using <a
-   * href="https://github.com/json-path/JsonPath">JsonPath expression</a>. <br>
-   * If the given expression points to the array, then return the string value of first element.
-   *
-   * @param input    valid json string value
-   * @param jsonPath JsonPath expression to search for
-   * @return String value
-   * @throws CHoconPathNotFoundException if the given path is not valid
-   */
-  public static String getFirstStringFromJsonPath(String input, String jsonPath) {
-    try {
-      Object value = JsonPath.read(input, jsonPath);
-      if (value instanceof JSONArray array) {
-        return String.valueOf(array.get(0));
-      }
-      return String.valueOf(value);
-    } catch (PathNotFoundException ex) {
-      throw new CHoconPathNotFoundException(input, jsonPath, ex);
-    }
   }
 
   /**
@@ -160,6 +114,27 @@ public class CHoconUtils {
     } catch (PathNotFoundException ex) {
       throw new CHoconPathNotFoundException(input, jsonPath, ex);
     }
+  }
+
+  /**
+   * Read system property or environment variable and return the value.
+   *
+   * @param key key to search for
+   * @return value from System Property or Environmental Variables
+   */
+  public static String getProperty(String key) {
+    return StringUtils.defaultIfBlank(System.getProperty(key), System.getenv(key));
+  }
+
+  /**
+   * Read system property or environment variable and return the value.
+   *
+   * @param key          key to search for
+   * @param defaultValue default value in a case when key does not exist
+   * @return value from System Property or Environmental Variables
+   */
+  public static String getProperty(String key, String defaultValue) {
+    return StringUtils.defaultIfBlank(getProperty(key), defaultValue);
   }
 
   /**

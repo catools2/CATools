@@ -128,7 +128,7 @@ public class CFakerResourceManager {
     for (String line :
         CResourceUtil.readLines(resourceFullName.trim(), CFakerResourceManager.class).stream()
             .filter(CStringUtil::isNotBlank)
-            .collect(Collectors.toList())) {
+            .toList()) {
       if (line.startsWith(RESOURCE_MARKER)) {
         output.addAll(readResource(CStringUtil.substringAfter(line, RESOURCE_MARKER)));
       } else if (line.startsWith(REGEX_MARKER)) {

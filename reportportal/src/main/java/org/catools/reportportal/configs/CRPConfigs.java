@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
+import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CStringUtil;
 import org.catools.reportportal.utils.CReportPortalAttributeUtil;
 
@@ -26,11 +27,11 @@ public class CRPConfigs {
   }
 
   public static String getLaunchId() {
-    return System.getProperty("rp.launch.id");
+    return CHoconUtils.getProperty("rp.launch.id");
   }
 
   public static Set<ItemAttributesRQ> getAttributes() {
-    return CReportPortalAttributeUtil.getAttributes(System.getProperty("rp.attributes", ""));
+    return CReportPortalAttributeUtil.getAttributes(CHoconUtils.getProperty("rp.attributes", ""));
   }
 
   @Getter

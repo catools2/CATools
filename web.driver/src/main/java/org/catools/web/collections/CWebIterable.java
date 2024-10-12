@@ -2,13 +2,12 @@ package org.catools.web.collections;
 
 import org.catools.common.collections.interfaces.CIterable;
 import org.catools.common.extensions.types.interfaces.CDynamicIterableExtension;
-import org.catools.web.controls.CWebElement;
 
 import javax.ws.rs.NotSupportedException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public interface CWebIterable<E extends CWebElement<?>> extends CIterable<E, Iterable<E>>, CDynamicIterableExtension<E> {
+public interface CWebIterable<E> extends CIterable<E, Iterable<E>>, CDynamicIterableExtension<E> {
 
   /**
    * The Zero based index which means the first record has index 0. In case if you want to use it in

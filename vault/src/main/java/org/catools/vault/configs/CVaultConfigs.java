@@ -1,20 +1,17 @@
 package org.catools.vault.configs;
 
-import com.bettercloud.vault.*;
+import com.bettercloud.vault.SslConfig;
+import com.bettercloud.vault.VaultConfig;
+import com.bettercloud.vault.VaultException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.catools.vault.exception.CVaultAuthenticationException;
 import org.catools.vault.exception.CVaultOperationException;
-import org.catools.vault.model.CVault;
 import org.catools.vault.model.CVaultAuthType;
 
 import java.io.File;
-import java.util.Objects;
 
 public class CVaultConfigs {
 

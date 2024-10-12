@@ -84,8 +84,9 @@ public class CPipelineConfigs {
   }
 
   public static String getExecutorName() {
-    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && CStringUtil.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME)))
+    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && CStringUtil.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
       return CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME);
+    }
 
     return CSystemUtil.getUserName();
   }

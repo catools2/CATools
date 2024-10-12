@@ -15,7 +15,7 @@ public class CTotalFailedTestCountConverter extends CBaseExecutionStatisticConve
    * @param stringFormat format to be used. defaults to "%d"
    */
   protected CTotalFailedTestCountConverter(final String stringFormat) {
-    super("Total Failed", "ETF", stringFormat, () -> CExecutionStatisticListener.getTotalFailed());
+    super("Total Failed", "ETF", stringFormat, () -> CExecutionStatisticListener.getFailed());
   }
 
   public static CTotalFailedTestCountConverter newInstance(final String[] options) {

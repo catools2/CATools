@@ -59,6 +59,11 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
     }
 
     @Override
+    public int hashCode() {
+      return _get().hashCode();
+    }
+
+    @Override
     public String getVerifyMessagePrefix() {
       return name + " Values";
     }
@@ -68,6 +73,11 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
     @Override
     public Collection<String> _get() {
       return getTexts();
+    }
+
+    @Override
+    public int hashCode() {
+      return _get().hashCode();
     }
 
     @Override
@@ -83,6 +93,11 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
     }
 
     @Override
+    public int hashCode() {
+      return _get().hashCode();
+    }
+
+    @Override
     public String getVerifyMessagePrefix() {
       return name;
     }
@@ -92,6 +107,11 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
     @Override
     public Collection<String> _get() {
       return getSelectedValues();
+    }
+
+    @Override
+    public int hashCode() {
+      return _get().hashCode();
     }
 
     @Override

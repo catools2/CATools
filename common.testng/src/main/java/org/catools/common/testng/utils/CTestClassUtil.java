@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.annotations.CTestIds;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
@@ -15,6 +16,7 @@ import org.testng.internal.annotations.DisabledRetryAnalyzer;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +32,7 @@ public class CTestClassUtil {
     for (IMethodInstance method : list) {
       for (TestClassInfo testClassInfo : classNameMap) {
         if (testClassInfo.getClassName().equals(method.getMethod().getTestClass().getName())) {
-          issueKeys.add(testClassInfo.getTestId());
+          issueKeys.add(StringUtils.strip(testClassInfo.getTestId()));
         }
       }
     }
@@ -39,7 +41,7 @@ public class CTestClassUtil {
 
   public static CSet<String> getClassNameForIssueKeys(CSet<String> issueIds, boolean filterTestsWhichWillSkipInRun) {
     return getClassNameMap(filterTestsWhichWillSkipInRun)
-        .getAll(k -> issueIds.contains(k.getTestId()))
+        .getAll(k -> issueIds.contains(StringUtils.strip(k.getTestId())))
         .mapToSet(TestClassInfo::getClassName);
   }
 
@@ -50,25 +52,21 @@ public class CTestClassUtil {
         ClassPath classpath = ClassPath.from(loader);
         for (String testPackage : CTestNGConfigs.getTestPackages()) {
           for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive(testPackage)) {
-            new CList<>(classInfo.load().getMethods())
-                .forEach(
-                    m -> {
-                      CList<Annotation> annotations = CList.of(m.getAnnotations());
-                      if (annotations.has(a -> a instanceof Test)) {
-                        boolean shouldSkipByAnnotation = CTestSuiteUtil.shouldSkipByAnnotation(annotations);
-                        Annotation testIds = annotations.getFirstOrNull(a -> a instanceof CTestIds);
-                        if (testIds != null) {
-                          List.of(((CTestIds) testIds).ids())
-                              .forEach(
-                                  s -> {
-                                    s = s.trim();
-                                    keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, s, classInfo.getName()));
-                                  });
-                        } else {
-                          keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, null, classInfo.getName()));
-                        }
-                      }
-                    });
+            new CList<>(classInfo.load().getMethods()).forEach(m -> {
+              CList<Annotation> annotations = CList.of(m.getAnnotations());
+              if (annotations.has(a -> a instanceof Test)) {
+                boolean shouldSkipByAnnotation = CTestSuiteUtil.shouldSkipByAnnotation(annotations);
+                Annotation testIds = annotations.getFirstOrNull(a -> a instanceof CTestIds);
+                if (testIds != null) {
+                  Arrays.asList(((CTestIds) testIds).ids()).forEach(s -> {
+                    s = s.trim();
+                    keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, s, classInfo.getName()));
+                  });
+                } else {
+                  keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, null, classInfo.getName()));
+                }
+              }
+            });
           }
         }
       } catch (IOException e) {
@@ -83,14 +81,10 @@ public class CTestClassUtil {
     return testClazz.getName().replaceAll("\\W", "_");
   }
 
-  public static boolean noRetryLeft(ITestResult result, boolean considerSuiteRetry) {
-    if (considerSuiteRetry && !CTestNGConfigs.isLastSuiteRun()) {
-      return false;
-    }
-
-    if (result.getMethod() == null
-        || result.getMethod().getRetryAnalyzer(result) == null
-        || result.getMethod().getRetryAnalyzer(result) instanceof DisabledRetryAnalyzer) {
+  public static boolean noRetryLeft(ITestResult result) {
+    if (result.getMethod() == null ||
+        result.getMethod().getRetryAnalyzer(result) == null ||
+        result.getMethod().getRetryAnalyzer(result) instanceof DisabledRetryAnalyzer) {
       return true;
     }
 

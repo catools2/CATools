@@ -15,7 +15,7 @@ public class CTotalPassedTestCountConverter extends CBaseExecutionStatisticConve
    * @param stringFormat format to be used. defaults to "%d"
    */
   protected CTotalPassedTestCountConverter(final String stringFormat) {
-    super("Total Pass", "ETP", stringFormat, () -> CExecutionStatisticListener.getTotalPassed());
+    super("Total Pass", "ETP", stringFormat, () -> CExecutionStatisticListener.getPassed());
   }
 
   public static CTotalPassedTestCountConverter newInstance(final String[] options) {

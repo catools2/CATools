@@ -12,8 +12,8 @@ import org.catools.common.testng.utils.CTestClassUtil;
 import org.catools.common.testng.utils.CXmlSuiteUtils;
 import org.testng.ITestNGListener;
 import org.testng.TestNG;
-import org.testng.xml.Parser;
 import org.testng.xml.XmlSuite;
+import org.testng.xml.internal.Parser;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -54,7 +54,7 @@ public class CTestNGProcessor {
     CVerify.Bool.isTrue(suiteName.toLowerCase().trim().endsWith(".xml"), "TestNG suite file name should end with xml.");
     CFile localXmlFile = new CFile(suiteName);
     CVerify.Bool.isTrue(localXmlFile.exists(), "Xml file exists. file: " + localXmlFile.getCanonicalPath());
-    log.info("Running local xml file:" + localXmlFile.getCanonicalPath());
+    print("Running local xml file:" + localXmlFile.getCanonicalPath());
     processFile(localXmlFile);
   }
 
@@ -97,7 +97,7 @@ public class CTestNGProcessor {
 
   public static void processXmlSuites(Collection<XmlSuite> xmlSuites) {
     try {
-      new CList<>(xmlSuites).forEach(x -> log.info("Processing Xml Suites \n" + x.toXml()));
+      new CList<>(xmlSuites).forEach(x -> print("Processing Xml Suites \n" + x.toXml()));
       TestNG testNG = new TestNG();
       testNG.setXmlSuites((List<XmlSuite>) (xmlSuites));
 
@@ -114,8 +114,15 @@ public class CTestNGProcessor {
     }
   }
 
+  private static void print(String x) {
+    log.info(x);
+    if (!log.isInfoEnabled()) {
+      System.out.print(x);
+    }
+  }
+
   private static void processFile(CFile xmlFile) {
-    log.info("Processing " + xmlFile);
+    print("Processing " + xmlFile);
     try {
       processXmlSuites(new Parser(xmlFile.getCanonicalPath()).parse());
     } catch (Throwable t) {

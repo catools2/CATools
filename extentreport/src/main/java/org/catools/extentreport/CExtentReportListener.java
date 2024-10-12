@@ -80,11 +80,11 @@ public class CExtentReportListener implements CITestNGListener {
   @Override
   public synchronized void onTestFailure(ITestResult result) {
     if (suiteExtentReport != null && suiteTest.get() != null) {
-      if (noRetryLeft(result, false)) {
+      if (noRetryLeft(result)) {
         suiteTest.get().fail(result.getThrowable());
       }
 
-      if (noRetryLeft(result, true)) {
+      if (noRetryLeft(result)) {
         overallTest.get().fail(result.getThrowable());
       }
     }
@@ -93,11 +93,11 @@ public class CExtentReportListener implements CITestNGListener {
   @Override
   public synchronized void onTestSkipped(ITestResult result) {
     if (suiteExtentReport != null && suiteTest.get() != null) {
-      if (noRetryLeft(result, false)) {
+      if (noRetryLeft(result)) {
         suiteTest.get().skip(result.getThrowable());
       }
 
-      if (noRetryLeft(result, true)) {
+      if (noRetryLeft(result)) {
         overallTest.get().skip(result.getThrowable());
       }
     }
@@ -106,11 +106,11 @@ public class CExtentReportListener implements CITestNGListener {
   @Override
   public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
     if (suiteExtentReport != null && suiteTest.get() != null) {
-      if (noRetryLeft(result, false)) {
+      if (noRetryLeft(result)) {
         suiteTest.get().pass("Passed with failed percentage.");
       }
 
-      if (noRetryLeft(result, true)) {
+      if (noRetryLeft(result)) {
         overallTest.get().pass("Passed with failed percentage.");
       }
     }

@@ -1,5 +1,6 @@
 package org.catools.common.utils;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
 import org.catools.common.exception.CFileNotFoundException;
 import org.catools.common.exception.CFileOperationException;
@@ -25,6 +26,7 @@ import java.util.List;
  * list of throws on test methods. To avoid it we wrap some FileUtils methods to throw specific
  * runtime exceptions here.
  */
+@UtilityClass
 public class CFileUtil extends FileUtils {
   static {
     System.setProperty("file.encoding", "UTF-8");

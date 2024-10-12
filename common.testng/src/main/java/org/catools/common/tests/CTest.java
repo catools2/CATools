@@ -38,8 +38,7 @@ public class CTest {
   private final String name = CTestClassUtil.getTestName(getClass());
 
   @BeforeSuite
-  public void beforeSuite(ITestContext context) {
-    log.debug("BeforeSuite Started for suite {} ", getSuiteName(context));
+  public void beforeSuite() {
     if (!FIRST_RUN_PREPARATION_CALLED) {
       onFirstRun();
       FIRST_RUN_PREPARATION_CALLED = true;
@@ -97,8 +96,7 @@ public class CTest {
   }
 
   @AfterSuite
-  public void afterSuite(ITestContext context) {
-    log.debug("AfterSuite Started for {} suite.", getSuiteName(context));
+  public void afterSuite() {
   }
 
   public void updateDataState(String key, Object value) {

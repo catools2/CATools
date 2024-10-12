@@ -1,6 +1,5 @@
 package org.catools.reportportal.tests.package2;
 
-import org.catools.common.testng.CTestNGConfigs;
 import org.catools.common.testng.utils.CRetryAnalyzer;
 import org.catools.common.tests.CTest;
 import org.testng.annotations.Test;
@@ -17,16 +16,6 @@ public class CRPTestClass3 extends CTest {
   @Test(retryAnalyzer = CRetryAnalyzer.class)
   public void testPassOnSecondTestRun() {
     assert instanceValue.getAndIncrement() > 1;
-  }
-
-  @Test(retryAnalyzer = CRetryAnalyzer.class)
-  public void testPassOnSecondSuiteRun() {
-    assert CTestNGConfigs.getSuiteRunCounter() == 2;
-  }
-
-  @Test(retryAnalyzer = CRetryAnalyzer.class)
-  public void testPassOnThirdSuiteRun() {
-    assert CTestNGConfigs.getSuiteRunCounter() == 3;
   }
 
   @Test(retryAnalyzer = CRetryAnalyzer.class)

@@ -16,7 +16,7 @@ public class CTotalRunningTestCountConverter extends CBaseExecutionStatisticConv
    */
   protected CTotalRunningTestCountConverter(final String stringFormat) {
     super(
-        "Total Running", "ETR", stringFormat, () -> CExecutionStatisticListener.getTotalRunning());
+        "Total Running", "ETR", stringFormat, () -> CExecutionStatisticListener.getRunning());
   }
 
   public static CTotalRunningTestCountConverter newInstance(final String[] options) {

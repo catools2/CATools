@@ -19,7 +19,6 @@
     <properties>
         <!-- TestNG -->
         <TESTNG_TEST_RETRY_COUNT>1</TESTNG_TEST_RETRY_COUNT>
-        <TESTNG_SUITE_RETRY_COUNT>1</TESTNG_SUITE_RETRY_COUNT>
     </properties>
     <dependencies>
         <!-- ######################  CATS ######################### -->
