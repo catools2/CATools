@@ -19,6 +19,13 @@ public interface CConfig {
   boolean isDefined();
 
   /**
+   * Define if the config value is set as property.
+   *
+   * @return true if value is set otherwise false
+   */
+  boolean isDefinedAsProperty();
+
+  /**
    * Define if the config value is not set.
    *
    * @return true if value is NOT set otherwise false

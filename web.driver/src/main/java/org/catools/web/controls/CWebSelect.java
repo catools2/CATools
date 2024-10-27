@@ -3,6 +3,7 @@ package org.catools.web.controls;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
+import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.extensions.types.interfaces.CDynamicCollectionExtension;
 import org.catools.common.extensions.verify.CVerify;
@@ -152,6 +153,22 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
 
   public String getSelectedValue(int waitSecs) {
     return waitUntil("Get Selected Value", waitSecs, el -> getSelect(el).getFirstSelectedOption().getAttribute("value").trim());
+  }
+
+  public CMap<String, String> getTextValue() {
+    return getTextValue(0);
+  }
+
+  public CMap<String, String> getTextValue(int waitSecs) {
+    return waitUntil("Get Text/Value", waitSecs, el -> new CList<>(getSelect(el).getOptions()).toMap(e -> e.getText().trim(), e -> e.getAttribute("value").trim()));
+  }
+
+  public CMap<String, String> getValueText() {
+    return getValueText(0);
+  }
+
+  public CMap<String, String> getValueText(int waitSecs) {
+    return waitUntil("Get Value/Text", waitSecs, el -> new CList<>(getSelect(el).getOptions()).toMap(e -> e.getAttribute("value").trim(), e -> e.getText().trim()));
   }
 
   public CList<String> getTexts() {

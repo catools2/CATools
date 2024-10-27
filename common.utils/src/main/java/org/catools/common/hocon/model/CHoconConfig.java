@@ -55,6 +55,15 @@ public class CHoconConfig implements CConfig {
   }
 
   @Override
+  public boolean isDefinedAsProperty() {
+    try {
+      return !getConfig().getIsNull(convertToEnvVariable(valuePath));
+    } catch (ConfigException ex) {
+      return false;
+    }
+  }
+
+  @Override
   public String asString(String defaultValue) {
     return asT(defaultValue, (c, path) -> c.getString(valuePath));
   }
@@ -261,11 +270,11 @@ public class CHoconConfig implements CConfig {
     // property so we try to read value as is and if conversion failed, then try quoted value
 
     if (isDefined()) {
-      try {
-        return printPathValue(path, fuc.apply(config, valuePath));
-      } catch (ConfigException ex) {
-        return printPathValue(path, fuc.apply(parseString(), VALUE));
-      }
+      return getDefinedValue(fuc);
+    }
+
+    if (isDefinedAsProperty()) {
+      return getDefinedPropertyValue(fuc);
     }
 
     String value = readPropertyOrEnv(valuePath);
@@ -278,6 +287,23 @@ public class CHoconConfig implements CConfig {
       return printPathValue(path, Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
     } catch (ConfigException ignored) {
       return printPathValue(path, Optional.of(parseString(String.format("\"%s\"", value))).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+    }
+  }
+
+  private <T> T getDefinedValue(BiFunction<Config, String, T> fuc) {
+    try {
+      return printPathValue(path, fuc.apply(config, valuePath));
+    } catch (ConfigException ex) {
+      return printPathValue(path, fuc.apply(parseString(), VALUE));
+    }
+  }
+
+  private <T> T getDefinedPropertyValue(BiFunction<Config, String, T> fuc) {
+    String property = convertToEnvVariable(path);
+    try {
+      return printPathValue(property, fuc.apply(config, valuePath));
+    } catch (ConfigException ex) {
+      return printPathValue(property, fuc.apply(parseString(), VALUE));
     }
   }
 

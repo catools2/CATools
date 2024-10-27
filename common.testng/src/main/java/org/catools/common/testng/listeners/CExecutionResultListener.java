@@ -1,6 +1,5 @@
 package org.catools.common.testng.listeners;
 
-import lombok.Getter;
 import org.catools.common.collections.CList;
 import org.catools.common.io.CFile;
 import org.catools.common.testng.model.CTestResult;
@@ -15,12 +14,7 @@ import org.testng.ITestResult;
 import static org.catools.common.testng.utils.CTestClassUtil.noRetryLeft;
 
 public class CExecutionResultListener implements CITestNGListener {
-  @Getter
-  private static final CTestResults executionResults = new CTestResults();
-
-  public static boolean isPassed(ITestNGMethod method) {
-    return executionResults.isPassed(method);
-  }
+  private final CTestResults executionResults = new CTestResults();
 
   @Override
   public int priority() {

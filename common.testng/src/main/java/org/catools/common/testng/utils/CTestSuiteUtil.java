@@ -15,29 +15,25 @@ import org.testng.ITestNGMethod;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import static org.catools.common.testng.listeners.CExecutionResultListener.isPassed;
-
 @UtilityClass
 public class CTestSuiteUtil {
 
   public static List<IMethodInstance> filterMethodInstanceToExecute(List<IMethodInstance> list) {
     CList<IMethodInstance> output = new CList<>(list);
     if (!output.isEmpty()) {
-      output.removeIf(
-          method -> {
-            boolean result = method.getMethod().isTest() && shouldSkipForThisRun(method.getMethod());
-            if (result) {
-              CExecutionStatisticListener.removeTestMethod(method.getMethod());
-            }
-            return result;
-          });
+      output.removeIf(method -> {
+        boolean result = method.getMethod().isTest() && shouldSkipForThisRun(method.getMethod());
+        if (result) {
+          CExecutionStatisticListener.removeTestMethod(method.getMethod());
+        }
+        return result;
+      });
     }
     return output;
   }
 
   public static boolean shouldSkipForThisRun(ITestNGMethod method) {
-    // if test passed previously then there is not reason to run it again
-    return isPassed(method) || shouldSkipByAnnotation(getAnnotations(method));
+    return shouldSkipByAnnotation(getAnnotations(method));
   }
 
   public static boolean shouldSkipByAnnotation(CList<Annotation> annotations) {

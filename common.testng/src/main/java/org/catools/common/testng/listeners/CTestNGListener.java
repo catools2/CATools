@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 public final class CTestNGListener implements CITestNGListener, IMethodInterceptor, IReporter {
   @Getter
   private static final CList<ITestNGListener> listeners = new CList<>();
-  private static final CList<ISuite> suites = new CList<>();
 
   public CTestNGListener() {
   }
@@ -136,7 +135,6 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   @Override // 16- ISuiteListener
   public void onFinish(ISuite suite) {
     doIf(l -> l instanceof ISuiteListener, l -> ((ISuiteListener) l).onFinish(suite));
-    suites.add(suite);
   }
 
   @Override // 17- IExecutionListener

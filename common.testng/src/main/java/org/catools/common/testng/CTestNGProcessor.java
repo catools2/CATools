@@ -25,22 +25,14 @@ import java.util.function.Function;
 @Slf4j
 public class CTestNGProcessor {
 
-  public static CFile buildTestSuite(CHashMap<String, CSet<String>> testClassesMap,
-                                     String suiteName,
-                                     String filename,
-                                     @Nullable
-                                     Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static CFile buildTestSuite(CHashMap<String, CSet<String>> testClassesMap, String suiteName, String filename, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
     CFile file = new CFile(filename);
     file.getParentFile().mkdirs();
     file.write(CXmlSuiteUtils.buildTestSuiteForClasses(testClassesMap, suiteName, xmlSuiteAdjuster).toXml());
     return file;
   }
 
-  public static CFile buildTestSuiteForClasses(CSet<String> testClasses,
-                                               String filename,
-                                               @Nullable
-                                               Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper,
-                                               Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static CFile buildTestSuiteForClasses(CSet<String> testClasses, String filename, @Nullable Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster) {
     CHashMap<String, CSet<String>> map = new CHashMap<>();
     if (testClassGroupMapper == null) {
       map.put("Test", testClasses);
@@ -50,52 +42,37 @@ public class CTestNGProcessor {
     return buildTestSuite(map, "Suite", filename, xmlSuiteAdjuster);
   }
 
-  public static void processLocalXmlSuite(String suiteName) {
+  public static int processLocalXmlSuite(String suiteName) {
     CVerify.Bool.isTrue(suiteName.toLowerCase().trim().endsWith(".xml"), "TestNG suite file name should end with xml.");
     CFile localXmlFile = new CFile(suiteName);
     CVerify.Bool.isTrue(localXmlFile.exists(), "Xml file exists. file: " + localXmlFile.getCanonicalPath());
     print("Running local xml file:" + localXmlFile.getCanonicalPath());
-    processFile(localXmlFile);
+    return processFile(localXmlFile);
   }
 
-  public static void processResourceXmlSuite(String suiteName) {
+  public static int processResourceXmlSuite(String suiteName) {
     CVerify.Bool.isTrue(suiteName.toLowerCase().trim().endsWith(".xml"), "TestNG suite file name should end with xml.");
     String resourceContent = new CResource(suiteName, CTestNGConfigs.getBaseClassLoader()).getString();
     CVerify.String.isNotBlank(resourceContent, "Xml resource file exists and it is not empty. Resource Name: " + suiteName);
     CFile localXmlFile = CFile.fromTmp(suiteName);
     localXmlFile.write(resourceContent);
     CVerify.Bool.isTrue(localXmlFile.exists(), "Xml file copied to resource folder. file: " + localXmlFile);
-    processFile(localXmlFile);
+    return processFile(localXmlFile);
   }
 
-  public static void processTestByTestIds(CSet<String> issueIds,
-                                          String filename,
-                                          Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper,
-                                          Consumer<XmlSuite> xmlSuiteAdjuster,
-                                          boolean filterTestsWhichWillSkipInRun) {
-    processTestClasses(CTestClassUtil.getClassNameForIssueKeys(issueIds, filterTestsWhichWillSkipInRun),
-        filename,
-        testClassGroupMapper,
-        xmlSuiteAdjuster);
+  public static int processTestByTestIds(CSet<String> issueIds, String filename, Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster, boolean filterTestsWhichWillSkipInRun) {
+    return processTestClasses(CTestClassUtil.getClassNameForIssueKeys(issueIds, filterTestsWhichWillSkipInRun), filename, testClassGroupMapper, xmlSuiteAdjuster);
   }
 
-  public static void processTestByClassNames(CSet<String> classNames,
-                                             String filename,
-                                             Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper,
-                                             Consumer<XmlSuite> xmlSuiteAdjuster) {
-    processTestClasses(classNames, filename, testClassGroupMapper, xmlSuiteAdjuster);
+  public static int processTestByClassNames(CSet<String> classNames, String filename, Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster) {
+    return processTestClasses(classNames, filename, testClassGroupMapper, xmlSuiteAdjuster);
   }
 
-  public static void processTestClasses(CSet<String> testClasses,
-                                        String filename,
-                                        @Nullable
-                                        Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper,
-                                        @Nullable
-                                        Consumer<XmlSuite> xmlSuiteAdjuster) {
-    processFile(buildTestSuiteForClasses(testClasses, filename, testClassGroupMapper, xmlSuiteAdjuster));
+  public static int processTestClasses(CSet<String> testClasses, String filename, @Nullable Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
+    return processFile(buildTestSuiteForClasses(testClasses, filename, testClassGroupMapper, xmlSuiteAdjuster));
   }
 
-  public static void processXmlSuites(Collection<XmlSuite> xmlSuites) {
+  public static int processXmlSuites(Collection<XmlSuite> xmlSuites) {
     try {
       new CList<>(xmlSuites).forEach(x -> print("Processing Xml Suites \n" + x.toXml()));
       TestNG testNG = new TestNG();
@@ -107,10 +84,10 @@ public class CTestNGProcessor {
 
       CFile.fromOutput(CDate.now().toTimeStampForFileName() + ".xml").write(xmlSuites.toString());
       testNG.run();
-      System.exit(testNG.getStatus());
+      return testNG.getStatus();
     } catch (Throwable t) {
       log.error("Could Not Processing Xml Suites", t);
-      System.exit(1);
+      return 1;
     }
   }
 
@@ -121,13 +98,12 @@ public class CTestNGProcessor {
     }
   }
 
-  private static void processFile(CFile xmlFile) {
+  private static int processFile(CFile xmlFile) {
     print("Processing " + xmlFile);
     try {
-      processXmlSuites(new Parser(xmlFile.getCanonicalPath()).parse());
+      return processXmlSuites(new Parser(xmlFile.getCanonicalPath()).parse());
     } catch (Throwable t) {
-      System.exit(1);
-      throw new RuntimeException(t);
+      return 1;
     }
   }
 }
