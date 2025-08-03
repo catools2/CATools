@@ -10,7 +10,6 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 @UtilityClass
@@ -20,7 +19,7 @@ public class CXmlSuiteUtils {
     return buildTestForClasses(classNameForIssueKeys, testName);
   }
 
-  public static XmlSuite buildTestSuiteForClasses(CHashMap<String, CSet<String>> testClasses, String suiteName, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static XmlSuite buildTestSuiteForClasses(CHashMap<String, CSet<String>> testClasses, String suiteName, Consumer<XmlSuite> xmlSuiteAdjuster) {
     CList<XmlTest> tests = testClasses.asSet().mapToList(e -> buildTestForClasses(e.getValue(), e.getKey()));
     return buildTestSuiteForTests(tests, suiteName, xmlSuiteAdjuster);
   }
@@ -36,7 +35,7 @@ public class CXmlSuiteUtils {
     return xmlTest;
   }
 
-  public static XmlSuite buildTestSuiteForTests(CList<XmlTest> tests, String suiteName, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static XmlSuite buildTestSuiteForTests(CList<XmlTest> tests, String suiteName, Consumer<XmlSuite> xmlSuiteAdjuster) {
     XmlSuite xmlSuite = new XmlSuite();
     xmlSuite.setName(suiteName);
     xmlSuite.setAllowReturnValues(true);

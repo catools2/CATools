@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import javax.annotation.Nullable;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.Set;
@@ -47,16 +46,16 @@ public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient 
   }
 
   @Override
-  public Promise<SearchResult> searchJql(@Nullable String jql) {
+  public Promise<SearchResult> searchJql(String jql) {
     return searchJql(jql, null, null, null);
   }
 
   @Override
   public Promise<SearchResult> searchJql(
-      @Nullable String jql,
-      @Nullable Integer maxResults,
-      @Nullable Integer startAt,
-      @Nullable Set<String> fields) {
+      String jql,
+      Integer maxResults,
+      Integer startAt,
+      Set<String> fields) {
     final Iterable<String> expandosValues =
         Stream.of(SCHEMA, NAMES, CHANGELOG, TRANSITIONS).map(EXPANDO_TO_PARAM).collect(Collectors.toList());
     final String notNullJql = StringUtils.defaultString(jql);
@@ -68,11 +67,11 @@ public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient 
   }
 
   private Promise<SearchResult> getJql(
-      @Nullable Integer maxResults,
-      @Nullable Integer startAt,
+      Integer maxResults,
+      Integer startAt,
       Iterable<String> expandosValues,
       String jql,
-      @Nullable Set<String> fields) {
+      Set<String> fields) {
     final UriBuilder uriBuilder =
         UriBuilder.fromUri(searchUri)
             .queryParam(JQL_ATTRIBUTE, jql)
@@ -95,11 +94,11 @@ public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient 
   }
 
   private Promise<SearchResult> postJql(
-      @Nullable Integer maxResults,
-      @Nullable Integer startAt,
+      Integer maxResults,
+      Integer startAt,
       Iterable<String> expandosValues,
       String jql,
-      @Nullable Set<String> fields) {
+      Set<String> fields) {
     final JSONObject postEntity = new JSONObject();
 
     try {

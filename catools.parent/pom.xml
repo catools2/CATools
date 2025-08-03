@@ -42,15 +42,16 @@
         <!-- Versions -->
         <revision>0.0.1</revision>
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>1.2.17-atlassian-18</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
         <apache-log4j.version>2.24.1</apache-log4j.version>
         <lombok.version>1.18.34</lombok.version>
         <typesafe.version>1.4.3</typesafe.version>
         <json-path.version>2.9.0</json-path.version>
+        <json-smart.version>2.5.2</json-smart.version>
         <spring.version>6.1.13</spring.version>
-        <jira-rest-java-client-core.version>5.2.6</jira-rest-java-client-core.version>
-        <fugue.version>4.7.2</fugue.version>
+        <jira-rest-java-client-core.version>6.0.1</jira-rest-java-client-core.version>
+        <fugue.version>6.1.0</fugue.version>
         <rest-assured.version>5.5.0</rest-assured.version>
         <json.version>20240303</json.version>
         <generex.version>1.0.2</generex.version>
@@ -59,7 +60,7 @@
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
-        <guava.version>33.3.1-jre</guava.version>
+        <guava.version>33.4.8-jre</guava.version>
         <testng.version>7.10.2</testng.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <apache-commons-collections4.version>4.5.0-M2</apache-commons-collections4.version>
@@ -68,7 +69,7 @@
         <apache-commons-text.version>1.12.0</apache-commons-text.version>
         <commons-io.version>2.17.0</commons-io.version>
         <assertj-core.version>3.26.3</assertj-core.version>
-        <groovy.version>3.0.22</groovy.version>
+        <groovy.version>3.0.25</groovy.version>
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
         <jansi.version>2.4.1</jansi.version>
@@ -84,13 +85,16 @@
         <mockito-core.version>5.14.1</mockito-core.version>
         <byte-buddy.version>1.15.4</byte-buddy.version>
 
+        <!-- influxdb -->
+        <influxdb-client-java.version>6.6.0</influxdb-client-java.version>
+
         <!-- log4j -->
         <slf4j-api.version>2.0.12</slf4j-api.version>
         <log4j-slf4j2-impl.version>2.24.1</log4j-slf4j2-impl.version>
 
         <!-- Athena -->
         <athena-core.version>1-20240501.1423</athena-core.version>
-        <athena-feign.version>1-20241003.1714</athena-feign.version>
+        <athena-feign.version>1-20250630.0553</athena-feign.version>
         <feign.version>13.4</feign.version>
 
         <!-- Javax -->
@@ -112,16 +116,16 @@
         <extent.reports.version>5.1.2</extent.reports.version>
 
         <!-- Selenium Devtools -->
-        <selenium-devtools.artifactId>selenium-devtools-v128</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.25.0</selenium.devtools.version>
+        <selenium-devtools.artifactId>selenium-devtools-v138</selenium-devtools.artifactId>
+        <selenium.devtools.version>4.34.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.25.0</selenium.version>
+        <selenium.version>4.34.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
         <selenium-axe.version>4.9.1</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
-        <webdrivermanager.version>5.9.2</webdrivermanager.version>
+        <webdrivermanager.version>6.2.0</webdrivermanager.version>
 
         <!-- Report Portal -->
         <reportportal.version>5.2.14</reportportal.version>
@@ -441,6 +445,11 @@
                 <groupId>com.jayway.jsonpath</groupId>
                 <artifactId>json-path</artifactId>
                 <version>${json-path.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.minidev</groupId>
+                <artifactId>json-smart</artifactId>
+                <version>${json-smart.version}</version>
             </dependency>
             <!-- ###################### /WS ######################### -->
             <!-- ###################### WEB ######################### -->

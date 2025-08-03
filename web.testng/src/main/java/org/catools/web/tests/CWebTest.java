@@ -33,6 +33,8 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static org.catools.web.entities.CWebPageInfo.BLANK_PAGE;
+
 public class CWebTest<DR extends CDriver> extends CTest {
   private static final String DEFAULT_SESSION = "DEFAULT_SESSION";
   private final ThreadLocal<String> currentSession = ThreadLocal.withInitial(() -> DEFAULT_SESSION);
@@ -247,7 +249,7 @@ public class CWebTest<DR extends CDriver> extends CTest {
   protected BiPredicate<CDriverSession, WebDriver> getPageTransitionIndicator() {
     return (session, driver) -> {
       CWebPageInfo tmpPage = CDriverSession.getPageInfo(driver);
-      return !CDriverSession.BLANK_PAGE.equals(tmpPage) && !session.getCurrentPage().equals(tmpPage);
+      return !BLANK_PAGE.equals(tmpPage) && !session.getCurrentPage().equals(tmpPage);
     };
   }
 

@@ -4,7 +4,6 @@ import org.catools.common.collections.CList;
 import org.catools.common.utils.CResourceUtil;
 import org.catools.common.utils.CStringUtil;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.util.function.BiFunction;
@@ -18,7 +17,7 @@ public class CResource {
     this(resourceFullName, CResource.class);
   }
 
-  public CResource(String resourceFullName, @Nullable Class clazz) {
+  public CResource(String resourceFullName, Class clazz) {
     this.resourceFullName = resourceFullName;
     this.clazz = clazz;
   }

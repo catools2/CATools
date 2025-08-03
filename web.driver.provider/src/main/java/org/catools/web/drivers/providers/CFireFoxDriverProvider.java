@@ -9,6 +9,7 @@ import org.catools.web.drivers.config.CWebDriverManagerConfigs;
 import org.catools.web.enums.CBrowser;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.devtools.Connection;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -18,12 +19,14 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
 import java.util.Objects;
+import java.util.logging.Level;
 
 import static org.catools.web.config.CGridConfigs.getHubURL;
 
 public class CFireFoxDriverProvider implements CDriverProvider {
   static {
     java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(CGridConfigs.getLogLevel());
+    java.util.logging.Logger.getLogger(Connection.class.getPackage().getName()).setLevel(Level.SEVERE);
     if (CWebDriverManagerConfigs.isEnabled()) {
       WebDriverManager.firefoxdriver().setup();
     }
@@ -60,6 +63,7 @@ public class CFireFoxDriverProvider implements CDriverProvider {
 
   @Override
   public RemoteWebDriver buildLocalDriver() {
+    options.setCapability("webSocketUrl", true);
     return new FirefoxDriver(options.setProfile(profile));
   }
 
