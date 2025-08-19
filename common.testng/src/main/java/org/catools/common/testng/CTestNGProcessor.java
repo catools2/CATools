@@ -15,7 +15,6 @@ import org.testng.TestNG;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.internal.Parser;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +24,14 @@ import java.util.function.Function;
 @Slf4j
 public class CTestNGProcessor {
 
-  public static CFile buildTestSuite(CHashMap<String, CSet<String>> testClassesMap, String suiteName, String filename, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static CFile buildTestSuite(CHashMap<String, CSet<String>> testClassesMap, String suiteName, String filename, Consumer<XmlSuite> xmlSuiteAdjuster) {
     CFile file = new CFile(filename);
     file.getParentFile().mkdirs();
     file.write(CXmlSuiteUtils.buildTestSuiteForClasses(testClassesMap, suiteName, xmlSuiteAdjuster).toXml());
     return file;
   }
 
-  public static CFile buildTestSuiteForClasses(CSet<String> testClasses, String filename, @Nullable Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static CFile buildTestSuiteForClasses(CSet<String> testClasses, String filename, Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster) {
     CHashMap<String, CSet<String>> map = new CHashMap<>();
     if (testClassGroupMapper == null) {
       map.put("Test", testClasses);
@@ -68,7 +67,7 @@ public class CTestNGProcessor {
     return processTestClasses(classNames, filename, testClassGroupMapper, xmlSuiteAdjuster);
   }
 
-  public static int processTestClasses(CSet<String> testClasses, String filename, @Nullable Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, @Nullable Consumer<XmlSuite> xmlSuiteAdjuster) {
+  public static int processTestClasses(CSet<String> testClasses, String filename, Function<CSet<String>, Map<String, CSet<String>>> testClassGroupMapper, Consumer<XmlSuite> xmlSuiteAdjuster) {
     return processFile(buildTestSuiteForClasses(testClasses, filename, testClassGroupMapper, xmlSuiteAdjuster));
   }
 

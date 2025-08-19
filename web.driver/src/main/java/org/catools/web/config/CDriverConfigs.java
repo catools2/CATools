@@ -21,6 +21,18 @@ public class CDriverConfigs {
     return CHocon.asBoolean(Configs.CATOOLS_WEB_DRIVER_COLLECT_PERFORMANCE_METRICS);
   }
 
+  public static boolean isCollectNetworkMetricsEnable() {
+    return CHocon.asBoolean(Configs.CATOOLS_WEB_DRIVER_COLLECT_NETWORK_METRICS);
+  }
+
+  public static boolean isCollectRequestCountsEnable() {
+    return CHocon.asBoolean(Configs.CATOOLS_WEB_DRIVER_COLLECT_REQUEST_COUNT_METRICS);
+  }
+
+  public static String getRequestCountPattern() {
+    return CHocon.asString(Configs.CATOOLS_WEB_DRIVER_REQUEST_COUNT_PATTERN);
+  }
+
   public static int getTimeout() {
     return CHocon.asInteger(Configs.CATOOLS_WEB_DRIVER_BROWSER_TIMEOUT);
   }
@@ -31,6 +43,9 @@ public class CDriverConfigs {
     CATOOLS_WEB_DRIVER_WAIT_READY_STATE_BEFORE_ACTION("catools.web.driver.wait_ready_state_before_action"),
     CATOOLS_WEB_DRIVER_WAIT_READY_STATE_AFTER_ACTION("catools.web.driver.wait_ready_state_after_action"),
     CATOOLS_WEB_DRIVER_COLLECT_PERFORMANCE_METRICS("catools.web.driver.collect_performance_metrics"),
+    CATOOLS_WEB_DRIVER_COLLECT_NETWORK_METRICS("catools.web.driver.collect_network_metrics"),
+    CATOOLS_WEB_DRIVER_COLLECT_REQUEST_COUNT_METRICS("catools.web.driver.collect_request_count_metrics"),
+    CATOOLS_WEB_DRIVER_REQUEST_COUNT_PATTERN("catools.web.driver.request_count_pattern"),
     CATOOLS_WEB_DRIVER_BROWSER_TIMEOUT("catools.web.driver.browser_timeout");
 
     private final String path;

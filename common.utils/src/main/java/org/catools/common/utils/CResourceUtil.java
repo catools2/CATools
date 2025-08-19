@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CResourceNotFoundException;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
@@ -25,15 +24,15 @@ import static org.catools.common.utils.CSystemUtil.getPlatform;
 @UtilityClass
 public class CResourceUtil {
 
-  public static List<String> readLines(String resourceFullName, @Nullable Class<?> clazz) {
+  public static List<String> readLines(String resourceFullName, Class<?> clazz) {
     return List.of(getString(resourceFullName, clazz).split("\n"));
   }
 
-  public static String getString(String resourceFullName, @Nullable Class<?> clazz) {
+  public static String getString(String resourceFullName, Class<?> clazz) {
     return new String(getByteArray(resourceFullName, clazz));
   }
 
-  public static byte[] getByteArray(String resourceFullName, @Nullable Class<?> clazz) {
+  public static byte[] getByteArray(String resourceFullName, Class<?> clazz) {
     try {
       return performActionOnResource(resourceFullName, clazz, (resourceName, is) -> CInputStreamUtil.toByteArray((is)));
     } catch (Exception e) {
@@ -41,7 +40,7 @@ public class CResourceUtil {
     }
   }
 
-  public static File saveToFolder(String resourceFullName, @Nullable Class<?> clazz, File targetFolder) {
+  public static File saveToFolder(String resourceFullName, Class<?> clazz, File targetFolder) {
     return performActionOnResource(
         resourceFullName,
         clazz,
@@ -53,7 +52,7 @@ public class CResourceUtil {
         });
   }
 
-  public static File saveToFile(String resourceFullName, @Nullable Class<?> clazz, File destFile) {
+  public static File saveToFile(String resourceFullName, Class<?> clazz, File destFile) {
     return performActionOnResource(
         resourceFullName,
         clazz,

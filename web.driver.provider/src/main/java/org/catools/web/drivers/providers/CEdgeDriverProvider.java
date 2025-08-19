@@ -9,12 +9,14 @@ import org.catools.web.drivers.config.CWebDriverManagerConfigs;
 import org.catools.web.enums.CBrowser;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.devtools.Connection;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 
 import java.util.Objects;
+import java.util.logging.Level;
 
 import static org.catools.web.config.CGridConfigs.getHubURL;
 
@@ -22,6 +24,7 @@ public class CEdgeDriverProvider implements CDriverProvider {
 
   static {
     java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(CGridConfigs.getLogLevel());
+    java.util.logging.Logger.getLogger(Connection.class.getPackage().getName()).setLevel(Level.SEVERE);
     System.setProperty("webdriver.http.factory", "jdk-http-client");
     if (CWebDriverManagerConfigs.isEnabled()) {
       WebDriverManager.edgedriver().setup();
@@ -58,6 +61,7 @@ public class CEdgeDriverProvider implements CDriverProvider {
 
   @Override
   public RemoteWebDriver buildLocalDriver() {
+    options.setCapability("webSocketUrl", true);
     return new EdgeDriver(options);
   }
 

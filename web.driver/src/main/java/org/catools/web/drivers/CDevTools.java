@@ -6,23 +6,21 @@ import org.catools.web.config.CDriverConfigs;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.entities.CWebPageInfo;
 import org.catools.web.metrics.CWebPageTransitionInfo;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.DevToolsException;
-import org.openqa.selenium.devtools.v129.log.Log;
-import org.openqa.selenium.devtools.v129.performance.Performance;
-import org.openqa.selenium.devtools.v129.performance.model.Metric;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v138.log.Log;
+import org.openqa.selenium.devtools.v138.performance.Performance;
+import org.openqa.selenium.devtools.v138.performance.model.Metric;
 
+import javax.ws.rs.NotSupportedException;
 import java.util.Optional;
 
 public class CDevTools {
 
   private DevTools devTools;
 
-  public void startRecording(CDriverProvider driverProvider, RemoteWebDriver webDriver) {
+  public void startRecording(CDriverProvider driverProvider, HasDevTools webDriver) {
     if (!isEnable()) return;
 
     init(driverProvider, webDriver);
@@ -54,16 +52,16 @@ public class CDevTools {
     }
   }
 
-  private void init(CDriverProvider driverProvider, RemoteWebDriver webDriver) {
-    if (devTools != null) return;
-
-    if (driverProvider.getBrowser().isEdge()) {
-      devTools = ((EdgeDriver) webDriver).getDevTools();
-    } else if (driverProvider.getBrowser().isFirefox()) {
-      devTools = ((FirefoxDriver) webDriver).getDevTools();
-    } else {
-      devTools = ((ChromeDriver) webDriver).getDevTools();
+  private void init(CDriverProvider driverProvider, HasDevTools webDriver) {
+    if (devTools != null) {
+      return;
     }
+
+    if (driverProvider.getBrowser().isFirefox()) {
+      throw new NotSupportedException("DevTools doesn't support by Firefox");
+    }
+
+    devTools = webDriver.getDevTools();
   }
 
   private boolean isEnable() {

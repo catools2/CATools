@@ -16,17 +16,15 @@ import org.catools.ws.model.CHttpRequest;
 import org.catools.ws.model.CHttpResponse;
 import org.catools.ws.rest.CFilterListener;
 
-import javax.annotation.Nullable;
-
 @Slf4j
 @UtilityClass
 public class CRestAssuredUtil {
 
-  public static CHttpResponse send(CHttpRequest request, @Nullable CFilterListener listener) {
+  public static CHttpResponse send(CHttpRequest request, CFilterListener listener) {
     return send(RestAssuredConfig.newConfig(), request, listener);
   }
 
-  public static CHttpResponse send(RestAssuredConfig config, CHttpRequest request, @Nullable CFilterListener listener) {
+  public static CHttpResponse send(RestAssuredConfig config, CHttpRequest request, CFilterListener listener) {
     RequestSpecification requestSpecification = request.toRequestSpecification(config);
 
     if (listener != null) {

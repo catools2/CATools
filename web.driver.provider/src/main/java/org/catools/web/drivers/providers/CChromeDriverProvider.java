@@ -24,13 +24,14 @@ import org.testcontainers.containers.BrowserWebDriverContainer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
 
 import static org.catools.web.config.CGridConfigs.getHubURL;
 
 public class CChromeDriverProvider implements CDriverProvider {
   static {
     java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(CGridConfigs.getLogLevel());
-    java.util.logging.Logger.getLogger(Connection.class.getName()).setLevel(CGridConfigs.getLogLevel());
+    java.util.logging.Logger.getLogger(Connection.class.getPackage().getName()).setLevel(Level.SEVERE);
     System.setProperty("webdriver.http.factory", "jdk-http-client");
     if (CWebDriverManagerConfigs.isEnabled()) {
       WebDriverManager.chromedriver().setup();
@@ -88,6 +89,7 @@ public class CChromeDriverProvider implements CDriverProvider {
 
   @Override
   public RemoteWebDriver buildLocalDriver() {
+    options.setCapability("webSocketUrl", true);
     return new ChromeDriver(buildDefaultService(), options);
   }
 

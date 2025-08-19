@@ -5,40 +5,36 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.common.utils.CObjectUtil;
 import org.catools.web.config.CBrowserConfigs;
+import org.catools.web.config.CProxyConfigs;
 import org.catools.web.entities.CWebPageInfo;
 import org.catools.web.listeners.CDriverListener;
 import org.catools.web.metrics.CWebPageTransitionInfo;
 import org.catools.web.utils.CWebDriverUtil;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+import static org.catools.web.entities.CWebPageInfo.BLANK_PAGE;
+
 /**
  * Driver close the alert when it opens and we try to get Title or URL. So to avoid any impact on
  * flow we do not perform any session update and we do not call listeners
  */
-@Slf4j
 @Data
 @Accessors(chain = true)
 public class CDriverSession {
-  public static final CWebPageInfo BLANK_PAGE = new CWebPageInfo();
-
-  @Setter(AccessLevel.PRIVATE)
   @Getter(AccessLevel.PRIVATE)
   private final CList<CDriverListener> listeners = new CList<>();
 
-  @Setter(AccessLevel.PRIVATE)
   @Getter(AccessLevel.PRIVATE)
   private final CDevTools devTools = new CDevTools();
 
@@ -67,6 +63,7 @@ public class CDriverSession {
   public CDriverSession(CDriverProvider driverProvider, BiPredicate<CDriverSession, WebDriver> pageTransitionIndicator) {
     this.driverProvider = driverProvider;
     this.pageTransitionIndicator = pageTransitionIndicator;
+    addProxyIfEnabled();
   }
 
   public void startSession() {
@@ -86,7 +83,8 @@ public class CDriverSession {
         listeners.forEach(event -> event.beforeAction(webDriver, currentPage, actionName));
       }
 
-      devTools.startRecording(driverProvider, webDriver);
+      if (webDriver instanceof HasDevTools hasDevTools)
+        devTools.startRecording(driverProvider, hasDevTools);
     }
 
     CDate startTime = CDate.now();
@@ -149,7 +147,7 @@ public class CDriverSession {
     try {
       return webDriver == null
           ? BLANK_PAGE
-          : new CWebPageInfo(webDriver.getCurrentUrl(), webDriver.getTitle());
+          : new CWebPageInfo(webDriver);
     } catch (Throwable t) {
       return BLANK_PAGE;
     }
@@ -167,9 +165,22 @@ public class CDriverSession {
 
   private boolean alertPresent() {
     try {
-      return isActive() && webDriver.switchTo().alert() != null;
+      if (!isActive()) return false;
+      webDriver.switchTo().alert();
+      return true;
     } catch (Throwable t) {
       return false;
     }
+  }
+
+  private void addProxyIfEnabled() {
+    if (!CProxyConfigs.isEnabled()) return;
+    addListeners(new CDriverListener() {
+      @Override
+      public void beforeInit(Capabilities capabilities) {
+        MutableCapabilities mc = (MutableCapabilities) capabilities;
+        mc.setCapability(CapabilityType.PROXY, CProxyConfigs.getProxy());
+      }
+    });
   }
 }
