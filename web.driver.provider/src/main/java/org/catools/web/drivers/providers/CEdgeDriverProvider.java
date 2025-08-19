@@ -44,6 +44,7 @@ public class CEdgeDriverProvider implements CDriverProvider {
 
   @Override
   public Capabilities getCapabilities() {
+    options.setEnableDownloads(true);
     return options;
   }
 

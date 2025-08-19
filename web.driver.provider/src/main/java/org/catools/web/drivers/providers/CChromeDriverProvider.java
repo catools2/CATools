@@ -71,6 +71,7 @@ public class CChromeDriverProvider implements CDriverProvider {
     setSystemProperties();
     options.setExperimentalOption("prefs", prefs);
 
+    options.setEnableDownloads(true);
     options.setAcceptInsecureCerts(true);
 
     options.setCapability(ChromeOptions.CAPABILITY, options);
