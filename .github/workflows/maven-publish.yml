@@ -39,6 +39,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --allow-secret-key-import --import
           echo "$GPG_PUBLIC_KEY" | gpg --import
@@ -46,11 +48,13 @@ jobs:
           ./mvnw -B verify -P release org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=catools2_catools $MAVEN_OPTS
 
       - name: Deploying to GitHub
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
         if: ${{ github.ref_type == 'tag' }}
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --allow-secret-key-import --import
           echo "$GPG_PUBLIC_KEY" | gpg --import
           ./mvnw org.codehaus.mojo:versions-maven-plugin:2.15.0:set-property -Dproperty=revision -DnewVersion=$GITHUB_REF_NAME -q
           ./mvnw deploy -P release -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
