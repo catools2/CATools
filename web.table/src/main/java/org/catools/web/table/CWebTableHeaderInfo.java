@@ -17,7 +17,7 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
   public CWebTableHeaderInfo(DR driver, String headersLocator) {
     new CWebElements<>("Headers", driver, headersLocator).forEach(h -> {
       String headerText = CStringUtil.normalizeSpace(h.getText(1));
-      if (CStringUtil.isBlank(headersLocator)) {
+      if (StringUtils.isBlank(headersLocator)) {
         h.moveTo();
         headerText = CStringUtil.normalizeSpace(h.getText(1));
       }

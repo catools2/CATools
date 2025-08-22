@@ -1,6 +1,7 @@
 package org.catools.common.extensions.states.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CRegExUtil;
 import org.catools.common.utils.CStringUtil;
@@ -209,7 +210,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean equalsIgnoreCase(String expected) {
-    return CStringUtil.equalsIgnoreCase(_get(), expected);
+    return StringUtils.equalsIgnoreCase(_get(), expected);
   }
 
   /**
@@ -304,7 +305,7 @@ public interface CStringState extends CObjectState<String> {
    */
   @JsonIgnore
   default boolean isBlank() {
-    return CStringUtil.isBlank(_get());
+    return StringUtils.isBlank(_get());
   }
 
   /**
@@ -316,7 +317,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrAlpha() {
     String a = _get();
-    return CStringUtil.isBlank(a) || CStringUtil.isAlpha(a);
+    return StringUtils.isBlank(a) || CStringUtil.isAlpha(a);
   }
 
   /**
@@ -328,7 +329,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrAlphanumeric() {
     String a = _get();
-    return CStringUtil.isBlank(a) || CStringUtil.isAlphanumeric(a);
+    return StringUtils.isBlank(a) || CStringUtil.isAlphanumeric(a);
   }
 
   /**
@@ -343,7 +344,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean isBlankOrAlphanumeric(int minLength, int maxLength) {
     String a = _get();
     return a != null
-        && (CStringUtil.isBlank(a)
+        && (StringUtils.isBlank(a)
         || (CStringUtil.isAlphanumeric(a)
         && a.length() >= minLength
         && a.length() <= maxLength));
@@ -358,7 +359,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrNotAlpha() {
     String a = _get();
-    return CStringUtil.isBlank(a) || !CStringUtil.isAlpha(a);
+    return StringUtils.isBlank(a) || !CStringUtil.isAlpha(a);
   }
 
   /**
@@ -370,7 +371,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrNotAlphanumeric() {
     String a = _get();
-    return CStringUtil.isBlank(a) || !CStringUtil.isAlphanumeric(a);
+    return StringUtils.isBlank(a) || !CStringUtil.isAlphanumeric(a);
   }
 
   /**
@@ -382,7 +383,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrNotNumeric() {
     String a = _get();
-    return a != null && (CStringUtil.isBlank(a) || !CStringUtil.isNumeric(a));
+    return a != null && (StringUtils.isBlank(a) || !CStringUtil.isNumeric(a));
   }
 
   /**
@@ -393,7 +394,7 @@ public interface CStringState extends CObjectState<String> {
   @JsonIgnore
   default boolean isBlankOrNumeric() {
     String a = _get();
-    return a != null && CStringUtil.isBlank(a) || CStringUtil.isNumeric(a);
+    return a != null && StringUtils.isBlank(a) || CStringUtil.isNumeric(a);
   }
 
   /**
@@ -407,7 +408,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean isBlankOrNumeric(int minLength, int maxLength) {
     String a = _get();
     return a != null
-        && (CStringUtil.isBlank(a)
+        && (StringUtils.isBlank(a)
         || (CStringUtil.isNumeric(a) && a.length() >= minLength && a.length() <= maxLength));
   }
 
@@ -583,7 +584,7 @@ public interface CStringState extends CObjectState<String> {
    */
   @JsonIgnore
   default boolean isNotBlank() {
-    return CStringUtil.isNotBlank(_get());
+    return StringUtils.isNotBlank(_get());
   }
 
   /**
@@ -850,7 +851,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean notEqualsIgnoreCase(String expected) {
-    return !CStringUtil.equalsIgnoreCase(_get(), expected);
+    return !StringUtils.equalsIgnoreCase(_get(), expected);
   }
 
   /**

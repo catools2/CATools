@@ -3,9 +3,9 @@ package org.catools.common.configs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.TimeZone;
 
@@ -20,7 +20,7 @@ public class CDateConfigs {
    */
   public static TimeZone getDefaultTimeZone() {
     String val = CHocon.asString(Configs.CATOOLS_DATE_TIME_ZONE);
-    return CStringUtil.isBlank(val) ? TimeZone.getDefault() : TimeZone.getTimeZone(val);
+    return StringUtils.isBlank(val) ? TimeZone.getDefault() : TimeZone.getTimeZone(val);
   }
 
   @Getter

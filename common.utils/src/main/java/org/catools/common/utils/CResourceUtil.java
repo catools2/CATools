@@ -2,6 +2,7 @@ package org.catools.common.utils;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CResourceNotFoundException;
@@ -64,7 +65,7 @@ public class CResourceUtil {
   }
 
   public static <T> T performActionOnResource(String resourceName, Class<?> clazz, BiFunction<String, InputStream, T> action) {
-    if (CStringUtil.isBlank(resourceName)) {
+    if (StringUtils.isBlank(resourceName)) {
       throw new CResourceNotFoundException("Resource name cannot be null or empty!");
     }
 

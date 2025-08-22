@@ -3,8 +3,8 @@ package org.catools.web.utils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.utils.CFileUtil;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.config.CGridConfigs;
 import org.openqa.selenium.remote.SessionId;
 
@@ -31,7 +31,7 @@ public class CGridUtil {
       Response response = RestAssured.post(targetURL);
 
       String proxyId = response.body().jsonPath().getString("proxyId");
-      if (CStringUtil.isNotBlank(proxyId)) {
+      if (StringUtils.isNotBlank(proxyId)) {
         URL myURL = new URL(proxyId);
         if ((myURL.getHost() != null) && (myURL.getPort() != -1)) {
           hostAndPort[0] = myURL.getHost();

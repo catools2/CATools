@@ -3,6 +3,7 @@ package org.catools.sql;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
@@ -754,7 +755,7 @@ public class CSqlDataSource {
       throw new IndexOutOfBoundsException("No connection available.\nUse CSqlDataSource.addDataSource to add new datasource.");
     }
 
-    if (CStringUtil.isNotBlank(parameters)) {
+    if (StringUtils.isNotBlank(parameters)) {
       log.trace(actionName + " on " + dbSource + " => " + sql + " with parameters " + parameters);
     }
     else {
@@ -769,7 +770,7 @@ public class CSqlDataSource {
         return t instanceof CannotGetJdbcConnectionException || t instanceof SQLRecoverableException;
       }, retryCount, interval, null, true);
     }
-    catch (Exception t) {
+    catch (Throwable t) {
       log.error("Failed to Perform " + actionName + " against " + dbSource, t);
       throw t;
     } finally {

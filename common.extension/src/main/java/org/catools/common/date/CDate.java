@@ -1,10 +1,10 @@
 package org.catools.common.date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.catools.common.extensions.types.interfaces.CDynamicDateExtension;
 import org.catools.common.utils.CDateUtil;
-import org.catools.common.utils.CStringUtil;
 
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -40,7 +40,7 @@ public class CDate extends Date implements CDynamicDateExtension {
   }
 
   public CDate(String date, String format) {
-    if (CStringUtil.isNotBlank(date)) {
+    if (StringUtils.isNotBlank(date)) {
       valueOf(date, format);
     }
   }
@@ -914,6 +914,7 @@ public class CDate extends Date implements CDynamicDateExtension {
     return toFormat(format);
   }
 
+  @Override
   public String toString() {
     return toFormat(LONG_DATE_FORMAT_STRING_MILI_SECONDS);
   }

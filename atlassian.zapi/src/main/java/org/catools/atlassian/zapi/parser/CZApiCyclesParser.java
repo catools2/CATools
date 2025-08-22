@@ -1,6 +1,7 @@
 package org.catools.atlassian.zapi.parser;
 
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.*;
 import org.catools.common.utils.CStringUtil;
@@ -18,7 +19,7 @@ public class CZApiCyclesParser extends CZApiBaseParser {
       JSONArray names = input.names();
       for (int i = 0; i < names.length(); i++) {
         String key = names.getString(i);
-        if (CStringUtil.equalsIgnoreCase(key, "recordsCount")) {
+        if (StringUtils.equalsIgnoreCase(key, "recordsCount")) {
           continue;
         }
 
@@ -43,7 +44,7 @@ public class CZApiCyclesParser extends CZApiBaseParser {
       JSONArray names = input.names();
       for (int i = 0; i < names.length(); i++) {
         String key = names.getString(i);
-        if (CStringUtil.equalsIgnoreCase(key, "recordsCount")) {
+        if (StringUtils.equalsIgnoreCase(key, "recordsCount")) {
           continue;
         }
 

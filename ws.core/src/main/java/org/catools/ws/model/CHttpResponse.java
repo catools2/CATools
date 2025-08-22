@@ -62,8 +62,8 @@ public class CHttpResponse {
         this.content = new byte[0];
         this.contentLength = 0;
       }
-    } catch (Throwable t) {
-      throw new RuntimeException(t);
+    } catch (Exception ex) {
+      throw new RuntimeException(ex);
     }
   }
 

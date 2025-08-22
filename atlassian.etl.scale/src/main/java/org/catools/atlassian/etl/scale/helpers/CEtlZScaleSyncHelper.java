@@ -3,6 +3,7 @@ package org.catools.atlassian.etl.scale.helpers;
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.etl.jira.translators.CEtlJiraTranslator;
 import org.catools.atlassian.etl.scale.translators.CEtlZScaleTestCaseTranslator;
 import org.catools.atlassian.jira.client.CJiraClient;
@@ -11,7 +12,6 @@ import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlItemDao;
 import org.catools.etl.tms.model.CEtlItem;
@@ -36,7 +36,7 @@ public class CEtlZScaleSyncHelper {
 
   private static CEtlProject getProject(CZScaleTestCase testcase) {
     BasicProject project = getProjectByKey(testcase.getProjectKey());
-    return project == null || CStringUtil.isBlank(project.getName()) ?
+    return project == null || StringUtils.isBlank(project.getName()) ?
         CEtlProject.UNSET :
         new CEtlProject(project.getName());
   }

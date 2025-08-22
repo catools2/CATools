@@ -1,5 +1,6 @@
 package org.catools.common.extensions.verify.interfaces.base;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.extensions.base.CBaseStringExtension;
 import org.catools.common.extensions.states.interfaces.CStringState;
 import org.catools.common.extensions.verify.hard.CStringVerification;
@@ -498,7 +499,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
    * @param params  parameters in case if message is a format {@link String#format}
    */
   default void verifyIsBlankOrAlpha(final String message, final Object... params) {
-    _verify(true, (a, b) -> CStringUtil.isBlank(a) || _toState(a).isBlankOrAlpha(), message, params);
+    _verify(true, (a, b) -> StringUtils.isBlank(a) || _toState(a).isBlankOrAlpha(), message, params);
   }
 
   /**

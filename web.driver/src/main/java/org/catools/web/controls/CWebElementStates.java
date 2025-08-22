@@ -2,7 +2,6 @@ package org.catools.web.controls;
 
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.date.CDate;
-import org.catools.common.utils.CStringUtil;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.config.CDriverConfigs;
 import org.catools.web.drivers.CDriver;
@@ -204,12 +203,12 @@ public interface CWebElementStates<DR extends CDriver> {
 
   default Date getDate(String dateFormat) {
     String text = getText();
-    return CStringUtil.isBlank(text) ? null : CDate.of(text, dateFormat);
+    return StringUtils.isBlank(text) ? null : CDate.of(text, dateFormat);
   }
 
   default Date getDate(String dateFormat, int waitSec) {
     String text = getText(waitSec);
-    return CStringUtil.isBlank(text) ? null : CDate.of(text, dateFormat);
+    return StringUtils.isBlank(text) ? null : CDate.of(text, dateFormat);
   }
 
   default String getValue() {

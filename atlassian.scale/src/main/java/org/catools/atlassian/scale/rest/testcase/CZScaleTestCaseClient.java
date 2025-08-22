@@ -11,7 +11,6 @@ import org.catools.atlassian.scale.model.CZScaleTestCase;
 import org.catools.atlassian.scale.model.CZScaleTestCases;
 import org.catools.atlassian.scale.rest.CZScaleRestClient;
 import org.catools.common.utils.CSleeper;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.Set;
 import java.util.function.Consumer;
@@ -34,7 +33,7 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
                                               int parallelOutputCount,
                                               Consumer<CZScaleTestCase> onAction) {
     String query = String.format("projectKey = \"%s\"", project);
-    if (CStringUtil.isNotBlank(folder))
+    if (StringUtils.isNotBlank(folder))
       query += String.format(" AND folder = \"%s\"", folder);
 
     return getAllTestCases(

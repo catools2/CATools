@@ -1,7 +1,7 @@
 package org.catools.etl.tms.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -23,12 +23,12 @@ public class CEtlVersions extends CSet<CEtlVersion> {
   }
 
   public CEtlVersion getByNameForProject(String name) {
-    return getFirst(v -> CStringUtil.equalsIgnoreCase(name, v.getName()));
+    return getFirst(v -> StringUtils.equalsIgnoreCase(name, v.getName()));
   }
 
   public CEtlVersion getByNameForProject(String name, CEtlProject project) {
     Objects.requireNonNull(project);
     return getFirst(
-        v -> CStringUtil.equalsIgnoreCase(name, v.getName()) && v.getProject().equals(project));
+        v -> StringUtils.equalsIgnoreCase(name, v.getName()) && v.getProject().equals(project));
   }
 }

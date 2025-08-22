@@ -1,6 +1,7 @@
 package org.catools.common.extensions.verify;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CAnsiConfigs;
 import org.catools.common.extensions.CTypeExtensionConfigs;
@@ -79,7 +80,7 @@ public class CVerifier implements CVerificationQueue {
 
     StringBuilder messages = new StringBuilder();
 
-    boolean hasHeader = CStringUtil.isNotBlank(header);
+    boolean hasHeader = StringUtils.isNotBlank(header);
 
     if (hasHeader) {
       messages.append(line).append(System.lineSeparator());

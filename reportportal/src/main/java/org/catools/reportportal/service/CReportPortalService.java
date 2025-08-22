@@ -4,6 +4,7 @@ import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.TestMethodType;
 import com.epam.reportportal.testng.TestNGService;
 import com.epam.ta.reportportal.ws.model.StartTestItemRQ;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.config.CTestManagementConfigs;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CStringUtil;
@@ -67,7 +68,7 @@ public class CReportPortalService extends TestNGService {
     stringBuffer.append("Package: ").append(result.getPackageName()).append("\n");
 
     if (result.getTestIds().isNotEmpty()) {
-      if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToTest())) {
+      if (StringUtils.isBlank(CTestManagementConfigs.getUrlToTest())) {
         stringBuffer.append("Tests: ")
             .append(result.getTestIds().join(", "))
             .append("\n");
@@ -79,7 +80,7 @@ public class CReportPortalService extends TestNGService {
     }
 
     if (result.getDefectIds().isNotEmpty()) {
-      if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToDefect())) {
+      if (StringUtils.isBlank(CTestManagementConfigs.getUrlToDefect())) {
         stringBuffer.append("Defects: ")
             .append(result.getDefectIds().join(", "))
             .append("\n");
@@ -91,7 +92,7 @@ public class CReportPortalService extends TestNGService {
     }
 
     if (result.getOpenDefectIds().isNotEmpty()) {
-      if (CStringUtil.isBlank(CTestManagementConfigs.getUrlToDefect())) {
+      if (StringUtils.isBlank(CTestManagementConfigs.getUrlToDefect())) {
         stringBuffer.append("Open Defects: ")
             .append(result.getOpenDefectIds().join(", "))
             .append("\n");
@@ -139,7 +140,7 @@ public class CReportPortalService extends TestNGService {
     }
 
     if (CRPConfigs.addClassNameToMethodDescription()) {
-      if (CStringUtil.isNotBlank(name)) {
+      if (StringUtils.isNotBlank(name)) {
         name += "\n";
       }
       name += testResult.getTestClass().getRealClass().getSimpleName();

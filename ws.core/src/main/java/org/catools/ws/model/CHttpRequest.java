@@ -11,10 +11,10 @@ import io.restassured.specification.RequestSpecification;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.utils.CStringUtil;
 import org.catools.ws.enums.CHttpRequestType;
 import org.catools.ws.rest.CFilterListener;
 
@@ -114,7 +114,7 @@ public class CHttpRequest {
   public RequestSpecification toRequestSpecification(RestAssuredConfig config) {
     RequestSpecification requestSpecification = RestAssured.given().config(config).baseUri(getTarget());
 
-    if (CStringUtil.isNotBlank(getPath())) {
+    if (StringUtils.isNotBlank(getPath())) {
       requestSpecification.basePath(getPath());
     }
 

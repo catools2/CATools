@@ -1,7 +1,7 @@
 package org.catools.atlassian.zapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class CZApiProjectVersions {
 
   @JsonIgnore
   public CZApiVersion getByName(String name) {
-    return getAllVersions().getFirst(v -> CStringUtil.equalsIgnoreCase(name, v.getName()));
+    return getAllVersions().getFirst(v -> StringUtils.equalsIgnoreCase(name, v.getName()));
   }
 
   @JsonIgnore

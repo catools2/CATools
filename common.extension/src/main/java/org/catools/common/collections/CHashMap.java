@@ -72,7 +72,7 @@ public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
   public String toString() {
     try {
       return CJsonUtil.toString(this);
-    } catch (Exception t) {
+    } catch (Throwable t) {
       return keySet().mapToList(CJsonUtil::toString).toString();
     }
   }

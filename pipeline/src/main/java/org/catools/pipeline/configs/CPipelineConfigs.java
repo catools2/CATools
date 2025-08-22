@@ -3,6 +3,7 @@ package org.catools.pipeline.configs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
@@ -84,7 +85,7 @@ public class CPipelineConfigs {
   }
 
   public static String getExecutorName() {
-    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && CStringUtil.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
+    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && StringUtils.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
       return CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME);
     }
 

@@ -1,7 +1,7 @@
 package org.catools.etl.tms.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -25,7 +25,7 @@ public class CEtlCycles extends CSet<CEtlCycle> {
   public CEtlCycle getByName(long projectId, long versionId, String name) {
     return getFirstOrNull(
         c ->
-            CStringUtil.equalsIgnoreCase(c.getName(), name)
+            StringUtils.equalsIgnoreCase(c.getName(), name)
                 && Objects.equals(c.getVersion().getProject().getId(), projectId)
                 && Objects.equals(c.getVersion().getId(), versionId));
   }
