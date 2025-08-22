@@ -10,10 +10,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * Listener to collect all performance metrics related to the current browser interaction.
  */
 public class CWebMetricCollectorListener implements CDriverListener {
-  private ThreadLocal<CWebMetric> pageMetricThreadLocal = ThreadLocal.withInitial(CWebMetric::new);
+  private final ThreadLocal<CWebMetric> pageMetricThreadLocal = ThreadLocal.withInitial(CWebMetric::new);
 
   public CWebMetricCollectorListener() {
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> pageMetricThreadLocal.remove()));
+    Runtime.getRuntime().addShutdownHook(new Thread(pageMetricThreadLocal::remove));
   }
 
   /**

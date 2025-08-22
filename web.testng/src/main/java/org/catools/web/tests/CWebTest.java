@@ -243,7 +243,7 @@ public class CWebTest<DR extends CDriver> extends CTest {
     } else {
       driverProvider = new CChromeDriverProvider();
     }
-    return (DR) new CDriver(new CDriverSession(driverProvider, getPageTransitionIndicator()));
+    return (DR) new CDriver(new CDriverSession(this, driverProvider, getPageTransitionIndicator()));
   }
 
   protected BiPredicate<CDriverSession, WebDriver> getPageTransitionIndicator() {

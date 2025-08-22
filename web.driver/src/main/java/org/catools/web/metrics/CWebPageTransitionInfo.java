@@ -9,7 +9,6 @@ import org.openqa.selenium.devtools.v138.performance.model.Metric;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 @Data
 public class CWebPageTransitionInfo {
@@ -41,11 +40,6 @@ public class CWebPageTransitionInfo {
     }
 
     this.actionTime = actionTime;
-  }
-
-  private static double getMetric(List<Metric> metricList, String metricName) {
-    Metric metric = metricList.stream().filter(m -> m.getName().equals(metricName)).findFirst().orElse(null);
-    return metric == null ? -1 : metric.getValue().doubleValue();
   }
 
   public String getTitleBeforeAction() {

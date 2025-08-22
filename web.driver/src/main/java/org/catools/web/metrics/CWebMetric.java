@@ -1,13 +1,9 @@
 package org.catools.web.metrics;
 
 import lombok.Data;
-import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.web.entities.CWebPageInfo;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.devtools.v138.performance.model.Metric;
-
-import java.util.Date;
 
 @Data
 public class CWebMetric {
@@ -23,11 +19,6 @@ public class CWebMetric {
         .setActionTime(startTime)
         .setDuration(startTime.getDurationToNow().getNano());
     actionPerformances.add(action);
-  }
-
-  public void addPagePerformance(String actionName, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CList<Metric> metricList, Date actionTime) {
-    CWebPageTransitionInfo pagePerformance = new CWebPageTransitionInfo(actionName, pageBeforeAction, pageAfterAction, metricList, actionTime);
-    addPagePerformance(pagePerformance);
   }
 
   public void addPagePerformance(CWebPageTransitionInfo pageTransitionInfo) {
