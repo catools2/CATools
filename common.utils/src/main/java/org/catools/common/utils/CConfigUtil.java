@@ -20,6 +20,6 @@ public class CConfigUtil {
   }
 
   public static void setProperty(String config, String value) {
-    System.setProperty(config, CStringUtil.defaultString(value));
+    System.setProperty(config, StringUtils.defaultString(value));
   }
 }

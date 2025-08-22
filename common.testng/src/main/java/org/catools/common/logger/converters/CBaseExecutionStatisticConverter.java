@@ -1,8 +1,8 @@
 package org.catools.common.logger.converters;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.function.Supplier;
 
@@ -16,7 +16,7 @@ public abstract class CBaseExecutionStatisticConverter extends LogEventPatternCo
       final String stringFormat,
       final Supplier<Integer> supplier) {
     super(name, style);
-    this.stringFormat = CStringUtil.defaultIfBlank(stringFormat, "%d");
+    this.stringFormat = StringUtils.defaultIfBlank(stringFormat, "%d");
     this.supplier = supplier;
   }
 

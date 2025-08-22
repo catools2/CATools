@@ -1,14 +1,14 @@
 package org.catools.common.exception;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.Objects;
 
 public class CExceptionInfo {
-  private String type = CStringUtil.EMPTY;
-  private String message = CStringUtil.EMPTY;
-  private String stackTrace = CStringUtil.EMPTY;
+  private String type = StringUtils.EMPTY;
+  private String message = StringUtils.EMPTY;
+  private String stackTrace = StringUtils.EMPTY;
 
   public CExceptionInfo() {
   }
@@ -36,7 +36,7 @@ public class CExceptionInfo {
   }
 
   public String getAllInfo() {
-    return new CSet<>(type, message, stackTrace).getAll(s -> CStringUtil.isNotBlank(s)).join("\n");
+    return new CSet<>(type, message, stackTrace).getAll(StringUtils::isNotBlank).join("\n");
   }
 
   public String getMessage() {

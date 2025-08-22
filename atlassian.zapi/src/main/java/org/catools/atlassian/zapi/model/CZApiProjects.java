@@ -1,7 +1,7 @@
 package org.catools.atlassian.zapi.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.stream.Stream;
 
@@ -26,6 +26,6 @@ public class CZApiProjects extends CSet<CZApiProject> {
   }
 
   public CZApiProject getByName(String name) {
-    return getFirstOrNull(v -> CStringUtil.equals(v.getName(), name));
+    return getFirstOrNull(v -> StringUtils.equals(v.getName(), name));
   }
 }

@@ -1,7 +1,7 @@
 package org.catools.web.factory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.collections.CWebElements;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriverWaiter;
@@ -83,7 +83,7 @@ public class CWebElementFactory {
         by = new FindBy.FindByBuilder().buildIt(cFindBYInfo.findBy(), field);
       }
 
-      if (CStringUtil.isNotBlank(cFindBYInfo.name())) {
+      if (StringUtils.isNotBlank(cFindBYInfo.name())) {
         name = cFindBYInfo.name();
       }
 
@@ -100,10 +100,10 @@ public class CWebElementFactory {
 
   private static CWebElements<?> buildWebElements(CWebComponent<?> component, Field field) {
     CFindBys elementInfo = field.getAnnotation(CFindBys.class);
-    if (CStringUtil.isBlank(elementInfo.xpath()))
+    if (StringUtils.isBlank(elementInfo.xpath()))
       throw new IllegalArgumentException("CWebElements requires xpath (String) to find element.");
 
-    String name = CStringUtil.defaultString(elementInfo.name(), field.getName());
+    String name = StringUtils.defaultString(elementInfo.name(), field.getName());
 
     if (elementInfo.waitForFirstElementInSecond() < 0)
       return new CWebElements<>(name, component.getDriver(), elementInfo.xpath());

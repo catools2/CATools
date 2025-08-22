@@ -1,14 +1,13 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.interfaces.CCollection;
-import org.catools.common.utils.CStringUtil;
 import org.testng.collections.Lists;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<E>>, List<E> {
@@ -22,7 +21,7 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
   }
 
   public CList(final Stream<E> stream) {
-    super(stream.collect(Collectors.toSet()));
+    super(stream.toList());
   }
 
   public CList(final Iterable<E> iterable) {
@@ -81,24 +80,24 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
    * @return the joined String with no separator
    */
   public String join(int fromIndex, int toIndex) {
-    return join(fromIndex, toIndex, CStringUtil.EMPTY);
+    return join(fromIndex, toIndex, StringUtils.EMPTY);
   }
 
   /**
    * Joins the elements of {@code CList} into a single String containing the provided elements.
    *
    * <p>No delimiter is added before or after the list. A {@code null} separator is the same as an
-   * empty String (CStringUtil.EMPTY).
+   * empty String (StringUtils.EMPTY).
    *
    * <p>See the examples here: {@see #join(String)}.
    *
    * @param fromIndex low endpoint (inclusive) of the subList
    * @param toIndex   high endpoint (exclusive) of the subList
-   * @param separator the separator character to use, null treated as CStringUtil.EMPTY
+   * @param separator the separator character to use, null treated as StringUtils.EMPTY
    * @return the joined String separated by separator
    */
   public String join(int fromIndex, int toIndex, String separator) {
-    return CStringUtil.join(subList(fromIndex, toIndex), separator);
+    return StringUtils.join(subList(fromIndex, toIndex), separator);
   }
 
   public Stream<E> stream() {

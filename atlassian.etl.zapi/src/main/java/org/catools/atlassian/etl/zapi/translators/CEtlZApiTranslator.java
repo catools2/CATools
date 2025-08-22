@@ -1,10 +1,10 @@
 package org.catools.atlassian.etl.zapi.translators;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.model.*;
-import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.cache.CEtlCacheManager;
-import org.catools.etl.tms.dao.CEtlExecutionDao;
+import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class CEtlZApiTranslator {
     Objects.requireNonNull(zVersion);
     Objects.requireNonNull(cycle);
 
-    CEtlCycle etlCycle = CEtlExecutionDao.find(CEtlCycle.class, cycle.getId().toString());
+    CEtlCycle etlCycle = CEtlBaseDao.find(CEtlCycle.class, cycle.getId().toString());
     if (etlCycle == null) {
       etlCycle = new CEtlCycle();
       etlCycle.setId(cycle.getId().toString());
@@ -47,7 +47,7 @@ public class CEtlZApiTranslator {
     Objects.requireNonNull(cycles);
     Objects.requireNonNull(execution);
 
-    CEtlExecution etlExecution = CEtlExecutionDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
+    CEtlExecution etlExecution = CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
     if (etlExecution == null) {
       etlExecution = new CEtlExecution();
       etlExecution.setId(String.valueOf(execution.getId()));
@@ -69,13 +69,13 @@ public class CEtlZApiTranslator {
   }
 
   private static CEtlUser getExecutor(CZApiExecution execution) {
-    return CStringUtil.isBlank(execution.getExecutedByUserName()) ?
+    return StringUtils.isBlank(execution.getExecutedByUserName()) ?
         CEtlUser.UNSET :
         CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedByUserName()));
   }
 
   private static CEtlExecutionStatus getStatus(String statusName) {
-    return CStringUtil.isBlank(statusName) ?
+    return StringUtils.isBlank(statusName) ?
         CEtlExecutionStatus.UNSET :
         CEtlCacheManager.readExecutionStatus(new CEtlExecutionStatus(statusName.toUpperCase()));
   }

@@ -3,6 +3,7 @@ package org.catools.common.collections.interfaces;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
@@ -57,7 +58,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * @return the collection of value described by this {@code Optional}
    */
   default CList<E> getAll() {
-    return new CList<>(stream().collect(Collectors.toList()));
+    return new CList<>(stream().toList());
   }
 
   /**
@@ -67,7 +68,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * @return the collection of value described by this {@code Optional}
    */
   default CList<E> getAll(Predicate<E> predicate) {
-    return new CList<>(stream().filter(predicate).collect(Collectors.toList()));
+    return new CList<>(stream().filter(predicate).toList());
   }
 
   /**
@@ -257,7 +258,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * @return the joined String with no separator
    */
   default String join() {
-    return join(CStringUtil.EMPTY);
+    return join(StringUtils.EMPTY);
   }
 
   // ------------------------------------------------------------
@@ -268,27 +269,27 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * Joins the elements of {@code CCollection} into single String containing the provided elements.
    *
    * <p>No delimiter is added before or after the list. A {@code null} separator is the same as an
-   * empty String (CStringUtil.EMPTY).
+   * empty String (StringUtils.EMPTY).
    *
    * <p>See the examples here: {@see #join(String)}.
    *
-   * @param separator the separator character to use, null treated as CStringUtil.EMPTY
+   * @param separator the separator character to use, null treated as StringUtils.EMPTY
    * @return the joined String separated by separator
    */
   default String join(String separator) {
-    return CStringUtil.join(_get(), separator);
+    return StringUtils.join(_get(), separator);
   }
 
   /**
    * Joins the elements of {@code CCollection} into single String containing the provided elements.
    *
    * <p>No delimiter is added before or after the list. A {@code null} separator is the same as an
-   * empty String (CStringUtil.EMPTY).
+   * empty String (StringUtils.EMPTY).
    *
    * <p>See the examples here: {@see #join(String)}.
    *
-   * @param mapper    the mapper to use, null treated as CStringUtil.EMPTY
-   * @param separator the separator character to use, null treated as CStringUtil.EMPTY
+   * @param mapper    the mapper to use, null treated as StringUtils.EMPTY
+   * @param separator the separator character to use, null treated as StringUtils.EMPTY
    * @return the joined String separated by separator
    */
   default String join(Function<? super E, ? extends String> mapper, String separator) {
@@ -328,7 +329,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * @return the new {@code CSet}
    */
   default <R> CSet<R> mapToSet(Function<? super E, ? extends R> mapper) {
-    return new CSet<>(map(mapper).collect(Collectors.toList()));
+    return new CSet<>(map(mapper).collect(Collectors.toSet()));
   }
 
   /**

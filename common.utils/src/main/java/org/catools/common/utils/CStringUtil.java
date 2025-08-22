@@ -26,7 +26,7 @@ public class CStringUtil extends StringUtils {
    * @return
    */
   public static String trySubstring(String input, int maxLength) {
-    if (CStringUtil.isBlank(input)) return "";
+    if (StringUtils.isBlank(input)) return "";
     return input.substring(0, Math.min(input.length(), maxLength));
   }
 

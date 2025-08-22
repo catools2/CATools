@@ -3,7 +3,7 @@ package org.catools.etl.k8s.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -84,10 +84,10 @@ public class CEtlKubePod implements Serializable {
       Date deletedAt,
       CEtlKubeProject project,
       CEtlKubePodStatus status) {
-    this.name = CStringUtil.substring(name, 0, 200);
-    this.uid = CStringUtil.substring(uid, 0, 36);
-    this.hostname = CStringUtil.substring(hostname, 0, 200);
-    this.nodeName = CStringUtil.substring(nodeName, 0, 200);
+    this.name = StringUtils.substring(name, 0, 200);
+    this.uid = StringUtils.substring(uid, 0, 36);
+    this.hostname = StringUtils.substring(hostname, 0, 200);
+    this.nodeName = StringUtils.substring(nodeName, 0, 200);
     this.createdAt = createdAt;
     this.deletedAt = deletedAt;
     this.project = project;

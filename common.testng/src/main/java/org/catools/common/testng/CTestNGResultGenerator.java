@@ -1,11 +1,11 @@
 package org.catools.common.testng;
 
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.io.CFile;
 import org.catools.common.security.CSensitiveDataMaskingManager;
 import org.catools.common.testng.utils.CTestReportUtil;
-import org.catools.common.utils.CStringUtil;
 import org.testng.*;
 import org.testng.internal.Utils;
 import org.testng.reporters.XMLReporter;
@@ -56,7 +56,7 @@ public class CTestNGResultGenerator {
     new File(config.getOutputDirectory()).mkdirs();
     Utils.writeUtf8File(
         config.getOutputDirectory(),
-        CStringUtil.removeEnd(FILE_NAME, XML_EXTENSION)
+        StringUtils.removeEnd(FILE_NAME, XML_EXTENSION)
             + XML_EXTENSION,
         rootBuffer,
         null);

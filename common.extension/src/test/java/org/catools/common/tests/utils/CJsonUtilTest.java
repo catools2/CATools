@@ -1,6 +1,7 @@
 package org.catools.common.tests.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.exception.CInvalidJsonFormatException;
@@ -10,7 +11,6 @@ import org.catools.common.io.CFile;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CJsonUtil;
-import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.stream.Stream;
@@ -81,7 +81,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
   public void testClone() {
     ASet clone = CJsonUtil.clone(info);
     CVerify.String.equals(
-        CJsonUtil.toString(info).replaceAll("\r", CStringUtil.EMPTY),
+        CJsonUtil.toString(info).replaceAll("\r", StringUtils.EMPTY),
         jsonInfo,
         "Clone generate same object");
     clone.remove(0);
@@ -122,7 +122,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testToString() {
     CVerify.String.equals(
-        CJsonUtil.toString(info).replaceAll("\r", CStringUtil.EMPTY),
+        CJsonUtil.toString(info).replaceAll("\r", StringUtils.EMPTY),
         jsonInfo,
         "toString returns correct value");
   }
@@ -139,7 +139,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
     CFile file = CFile.fromTmp(RandomStringUtils.randomAlphabetic(10) + ".file");
     CJsonUtil.write(file, info);
     CVerify.String.equals(
-        file.readString().replaceAll("\r", CStringUtil.EMPTY),
+        file.readString().replaceAll("\r", StringUtils.EMPTY),
         jsonInfo,
         "write method add correct value to file");
   }

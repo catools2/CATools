@@ -1,10 +1,10 @@
 package org.catools.atlassian.zapi.parser;
 
 import io.restassured.path.json.JsonPath;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.configs.CZApiConfigs;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
-import org.catools.common.utils.CStringUtil;
 import org.json.JSONObject;
 
 public class CZApiBaseParser {
@@ -12,7 +12,7 @@ public class CZApiBaseParser {
 
   protected static Boolean getBoolean(JsonPath json, String createdDate) {
     String val = json.getString(createdDate);
-    if (CStringUtil.isBlank(val)) {
+    if (StringUtils.isBlank(val)) {
       return false;
     }
     return Boolean.valueOf(val);
@@ -20,7 +20,7 @@ public class CZApiBaseParser {
 
   protected static CDate getDate(JsonPath json, String createdDate) {
     String val = json.getString(createdDate);
-    if (CStringUtil.isBlank(val)) {
+    if (StringUtils.isBlank(val)) {
       return null;
     }
     return CDate.valueOf(val, dateFormats.toArray(new String[dateFormats.size()]));
@@ -28,7 +28,7 @@ public class CZApiBaseParser {
 
   protected static CDate getDate(JSONObject json, String createdDate) {
     String val = json.optString(createdDate);
-    if (CStringUtil.isBlank(val)) {
+    if (StringUtils.isBlank(val)) {
       return null;
     }
     return CDate.valueOf(val, dateFormats.toArray(new String[dateFormats.size()]));

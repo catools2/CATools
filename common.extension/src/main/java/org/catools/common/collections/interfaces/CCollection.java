@@ -116,7 +116,7 @@ public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>
     return new CList<>(
         Lists.partition(new ArrayList<>(_get()), size).stream()
             .map(CList::new)
-            .collect(Collectors.toList()));
+            .toList());
   }
 
   /**

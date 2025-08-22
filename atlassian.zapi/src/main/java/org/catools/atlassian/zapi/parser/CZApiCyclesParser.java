@@ -1,9 +1,9 @@
 package org.catools.atlassian.zapi.parser;
 
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.*;
-import org.catools.common.utils.CStringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,7 +18,7 @@ public class CZApiCyclesParser extends CZApiBaseParser {
       JSONArray names = input.names();
       for (int i = 0; i < names.length(); i++) {
         String key = names.getString(i);
-        if (CStringUtil.equalsIgnoreCase(key, "recordsCount")) {
+        if (StringUtils.equalsIgnoreCase(key, "recordsCount")) {
           continue;
         }
 
@@ -43,7 +43,7 @@ public class CZApiCyclesParser extends CZApiBaseParser {
       JSONArray names = input.names();
       for (int i = 0; i < names.length(); i++) {
         String key = names.getString(i);
-        if (CStringUtil.equalsIgnoreCase(key, "recordsCount")) {
+        if (StringUtils.equalsIgnoreCase(key, "recordsCount")) {
           continue;
         }
 
@@ -68,7 +68,7 @@ public class CZApiCyclesParser extends CZApiBaseParser {
     cycle.setEnvironment(json.optString("environment"));
     cycle.setBuild(json.optString("build"));
     cycle.setName(json.optString("name"));
-    cycle.setModifiedBy(CStringUtil.removeEnd(json.optString("modifiedBy"), "(Inactive)"));
+    cycle.setModifiedBy(StringUtils.removeEnd(json.optString("modifiedBy"), "(Inactive)"));
     return cycle;
   }
 }

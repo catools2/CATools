@@ -1,12 +1,12 @@
 package org.catools.atlassian.etl.zapi;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.etl.zapi.translators.CEtlZApiTranslator;
 import org.catools.atlassian.zapi.CZApiClient;
 import org.catools.atlassian.zapi.model.*;
 import org.catools.common.collections.CSet;
 import org.catools.common.date.CDate;
-import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.dao.CEtlExecutionDao;
 import org.catools.etl.tms.dao.CEtlLastSyncDao;
 import org.catools.etl.tms.model.CEtlExecution;
@@ -25,7 +25,7 @@ public class CEtlZApiSyncClient {
       CZApiVersions projectVersions = CZApiClient.Version.getProjectVersions(project).getAllVersions();
 
       // remove Unscheduled cycles
-      projectVersions.removeIf(v -> CStringUtil.containsIgnoreCase(UNSCHEDULED, v.getName()));
+      projectVersions.removeIf(v -> StringUtils.containsIgnoreCase(UNSCHEDULED, v.getName()));
 
       // If there were full sync then we read diff and update versions to be update to read only
       // changed ones.

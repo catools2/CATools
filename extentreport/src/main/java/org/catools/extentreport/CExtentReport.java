@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.config.CTestManagementConfigs;
 import org.catools.common.exception.CFileOperationException;
@@ -58,7 +59,7 @@ public class CExtentReport extends ExtentReports {
               .join(", "));
     }
 
-    if (CStringUtil.isNotBlank(exec.getAwaiting())) {
+    if (StringUtils.isNotBlank(exec.getAwaiting())) {
       if (list.isNotEmpty()) {
         list.add(" | ");
       }

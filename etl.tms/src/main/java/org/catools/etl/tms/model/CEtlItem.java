@@ -3,7 +3,7 @@ package org.catools.etl.tms.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -114,7 +114,7 @@ public class CEtlItem implements Serializable {
       CEtlStatus status,
       CEtlPriority priority) {
     this.id = id;
-    this.name = CStringUtil.substring(name, 0, 1000);
+    this.name = StringUtils.substring(name, 0, 1000);
     this.created = created;
     this.updated = updated;
     this.project = project;

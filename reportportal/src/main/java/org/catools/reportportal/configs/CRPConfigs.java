@@ -4,10 +4,10 @@ import com.epam.ta.reportportal.ws.model.attribute.ItemAttributesRQ;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.hocon.utils.CHoconUtils;
-import org.catools.common.utils.CStringUtil;
 import org.catools.reportportal.utils.CReportPortalAttributeUtil;
 
 import java.util.Set;
@@ -23,7 +23,7 @@ public class CRPConfigs {
   }
 
   public static boolean isReportPortalEnable() {
-    return CStringUtil.isNotBlank(getLaunchId());
+    return StringUtils.isNotBlank(getLaunchId());
   }
 
   public static String getLaunchId() {

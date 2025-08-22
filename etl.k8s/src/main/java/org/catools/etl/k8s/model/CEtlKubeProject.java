@@ -3,7 +3,7 @@ package org.catools.etl.k8s.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -30,6 +30,6 @@ public class CEtlKubeProject implements Serializable {
   private String name;
 
   public CEtlKubeProject(String name) {
-    this.name = CStringUtil.substring(name, 0, 100);
+    this.name = StringUtils.substring(name, 0, 100);
   }
 }

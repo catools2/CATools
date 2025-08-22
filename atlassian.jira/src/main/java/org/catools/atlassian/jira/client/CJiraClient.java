@@ -6,6 +6,7 @@ import com.atlassian.jira.rest.client.api.domain.*;
 import com.atlassian.jira.rest.client.api.domain.input.IssueInput;
 import com.atlassian.jira.rest.client.api.domain.input.LinkIssuesInput;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.atlassian.jira.configs.CJiraConfigs;
 import org.catools.atlassian.jira.exception.CJiraClientException;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Slf4j
+@UtilityClass
 public class CJiraClient {
   private static final CList<IssueRestClient.Expandos> expandos =
       new CList<>(

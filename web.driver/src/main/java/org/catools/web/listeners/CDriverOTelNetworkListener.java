@@ -5,8 +5,8 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.otel.COTelConfig;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.config.CDriverConfigs;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v138.network.Network;
@@ -113,13 +113,13 @@ public class CDriverOTelNetworkListener {
   }
 
   private static void addUriAttributes(Span span, URI uri) {
-    if (CStringUtil.isNotBlank(uri.getScheme()))
+    if (StringUtils.isNotBlank(uri.getScheme()))
       span.setAttribute("schema", uri.getScheme());
 
-    if (CStringUtil.isNotBlank(uri.getHost()))
+    if (StringUtils.isNotBlank(uri.getHost()))
       span.setAttribute("host", uri.getHost());
 
-    if (CStringUtil.isNotBlank(uri.getPath()))
+    if (StringUtils.isNotBlank(uri.getPath()))
       span.setAttribute("path", uri.getPath());
 
     if (uri.getPort() > 0)

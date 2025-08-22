@@ -3,10 +3,10 @@ package org.catools.pipeline.configs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.catools.common.utils.CStringUtil;
 import org.catools.common.utils.CSystemUtil;
 import org.catools.pipeline.model.CPipelineEnvironment;
 import org.catools.pipeline.model.CPipelineMetaData;
@@ -47,7 +47,7 @@ public class CPipelineConfigs {
   }
 
   public static CPipelineMetaData getPipelineMetaData(String metadataName) {
-    return CList.of(getPipelineMetaData()).getFirstOrNull(m -> CStringUtil.equalsAnyIgnoreCase(m.getName(), metadataName));
+    return CList.of(getPipelineMetaData()).getFirstOrNull(m -> StringUtils.equalsAnyIgnoreCase(m.getName(), metadataName));
   }
 
   public static String getPipelineMetaData(String metadataName, String defaultValue) {
@@ -84,7 +84,7 @@ public class CPipelineConfigs {
   }
 
   public static String getExecutorName() {
-    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && CStringUtil.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
+    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && StringUtils.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
       return CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME);
     }
 

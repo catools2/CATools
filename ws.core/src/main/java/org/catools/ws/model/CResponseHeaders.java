@@ -1,8 +1,8 @@
 package org.catools.ws.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.stream.Stream;
 
@@ -25,7 +25,7 @@ public class CResponseHeaders extends CSet<CResponseHeader> {
   @JsonIgnore
   public String getValue(String name) {
     CResponseHeader firstOrNull =
-        getFirstOrNull(h -> CStringUtil.equalsIgnoreCase(name, h.getName()));
+        getFirstOrNull(h -> StringUtils.equalsIgnoreCase(name, h.getName()));
     if (firstOrNull == null) {
       return "";
     }
@@ -34,6 +34,6 @@ public class CResponseHeaders extends CSet<CResponseHeader> {
 
   @JsonIgnore
   public CResponseHeader getHeader(String name) {
-    return getFirstOrNull(h -> CStringUtil.equalsIgnoreCase(name, h.getName()));
+    return getFirstOrNull(h -> StringUtils.equalsIgnoreCase(name, h.getName()));
   }
 }

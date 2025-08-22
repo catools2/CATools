@@ -3,7 +3,7 @@ package org.catools.etl.tms.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -53,7 +53,7 @@ public class CEtlCycle implements Serializable {
       Date endDate,
       Date startDate) {
     this.id = id;
-    this.name = CStringUtil.substring(name, 0, 250);
+    this.name = StringUtils.substring(name, 0, 250);
     this.version = version;
     this.endDate = endDate;
     this.startDate = startDate;

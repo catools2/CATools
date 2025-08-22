@@ -7,7 +7,6 @@ import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.extensions.types.interfaces.CDynamicCollectionExtension;
 import org.catools.common.extensions.verify.CVerify;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.drivers.CDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -244,7 +243,7 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
   public void selectByTextPattern(String pattern, int waitSec) {
     waitUntil("Select By Text Pattern", waitSec, el -> {
       ISelect dropdown = getSelect(el);
-      int index = CList.of(dropdown.getOptions()).indexOf(e -> Pattern.matches(pattern, CStringUtil.strip(e.getText(), "\\n").trim()));
+      int index = CList.of(dropdown.getOptions()).indexOf(e -> Pattern.matches(pattern, StringUtils.strip(e.getText(), "\\n").trim()));
       CVerify.Int.greaterOrEqual(index, 0, pattern + " found in options.");
       getSelect(el).selectByIndex(index);
       return true;

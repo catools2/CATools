@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CSet<E> extends HashSet<E> implements CCollection<E, Collection<E>>, Set<E> {
@@ -23,7 +22,7 @@ public class CSet<E> extends HashSet<E> implements CCollection<E, Collection<E>>
   }
 
   public CSet(final Stream<E> stream) {
-    super(stream.collect(Collectors.toSet()));
+    super(stream.toList());
   }
 
   public CSet(final Iterable<E> iterable) {

@@ -3,7 +3,7 @@ package org.catools.etl.k8s.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -75,9 +75,9 @@ public class CEtlKubeContainer implements Serializable {
       Date startedAt,
       Date syncTime) {
     this.type = type;
-    this.name = CStringUtil.substring(name, 0, 300);
-    this.image = CStringUtil.substring(image, 0, 300);
-    this.imageId = CStringUtil.substring(imageId, 0, 300);
+    this.name = StringUtils.substring(name, 0, 300);
+    this.image = StringUtils.substring(image, 0, 300);
+    this.imageId = StringUtils.substring(imageId, 0, 300);
     this.ready = ready;
     this.started = started;
     this.startedAt = startedAt;

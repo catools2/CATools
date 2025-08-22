@@ -1,12 +1,12 @@
 package org.catools.common.extensions.verify;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CAnsiConfigs;
 import org.catools.common.extensions.CTypeExtensionConfigs;
 import org.catools.common.extensions.verify.soft.*;
 import org.catools.common.utils.CAnsiUtil;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.function.Function;
 
@@ -40,7 +40,7 @@ public class CVerifier implements CVerificationQueue {
   }
 
   public void verify() {
-    verify(CStringUtil.EMPTY);
+    verify(StringUtils.EMPTY);
   }
 
   public void verify(final java.lang.String header) {
@@ -51,7 +51,7 @@ public class CVerifier implements CVerificationQueue {
   }
 
   public void verifyAny() {
-    verifyAny(CStringUtil.EMPTY);
+    verifyAny(StringUtils.EMPTY);
   }
 
   public void verifyAny(final java.lang.String header) {
@@ -62,7 +62,7 @@ public class CVerifier implements CVerificationQueue {
   }
 
   public void verifyNone() {
-    verifyNone(CStringUtil.EMPTY);
+    verifyNone(StringUtils.EMPTY);
   }
 
   public void verifyNone(final java.lang.String header) {
@@ -79,7 +79,7 @@ public class CVerifier implements CVerificationQueue {
 
     StringBuilder messages = new StringBuilder();
 
-    boolean hasHeader = CStringUtil.isNotBlank(header);
+    boolean hasHeader = StringUtils.isNotBlank(header);
 
     if (hasHeader) {
       messages.append(line).append(System.lineSeparator());

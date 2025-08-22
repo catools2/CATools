@@ -2,9 +2,9 @@ package org.catools.etl.k8s.utils;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.concurrent.CParallelRunner;
 import org.catools.common.date.CDate;
-import org.catools.common.utils.CStringUtil;
 import org.catools.etl.k8s.cache.CEtlKubeCacheManager;
 import org.catools.etl.k8s.dao.CEtlKubeBaseDao;
 import org.catools.etl.k8s.dao.CEtlKubePodDao;
@@ -96,19 +96,19 @@ public class CEtlKubeLoader {
 
     CKubeContainerStateInfo terminatedState = c.getTerminatedState();
     if (terminatedState != null) {
-      if (CStringUtil.isNotBlank(terminatedState.getMessage()))
+      if (StringUtils.isNotBlank(terminatedState.getMessage()))
         kubeContainer.addMetaData(CEtlKubeCacheManager.getContainerMetadata("terminated_message", terminatedState.getMessage()));
 
-      if (CStringUtil.isNotBlank(terminatedState.getReason()))
+      if (StringUtils.isNotBlank(terminatedState.getReason()))
         kubeContainer.addMetaData(CEtlKubeCacheManager.getContainerMetadata("terminated_reason", terminatedState.getReason()));
     }
 
     CKubeContainerStateInfo waitingState = c.getWaitingState();
     if (waitingState != null) {
-      if (CStringUtil.isNotBlank(waitingState.getMessage()))
+      if (StringUtils.isNotBlank(waitingState.getMessage()))
         kubeContainer.addMetaData(CEtlKubeCacheManager.getContainerMetadata("waiting_message", waitingState.getMessage()));
 
-      if (CStringUtil.isNotBlank(waitingState.getReason()))
+      if (StringUtils.isNotBlank(waitingState.getReason()))
         kubeContainer.addMetaData(CEtlKubeCacheManager.getContainerMetadata("waiting_reason", waitingState.getReason()));
     }
 

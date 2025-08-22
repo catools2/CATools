@@ -3,12 +3,12 @@ package org.catools.sql;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.common.utils.CRegExUtil;
 import org.catools.common.utils.CRetry;
-import org.catools.common.utils.CStringUtil;
 import org.catools.metrics.configs.CMetricsConfigs;
 import org.catools.metrics.model.CMetric;
 import org.catools.metrics.utils.CMetricsUtils;
@@ -52,8 +52,7 @@ public class CSqlDataSource {
           String result = jdbcTemplate.queryForObject(sql, paramSource, String.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -98,8 +97,7 @@ public class CSqlDataSource {
           Date result = jdbcTemplate.queryForObject(sql, paramSource, Date.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -144,8 +142,7 @@ public class CSqlDataSource {
           int result = jdbcTemplate.queryForObject(sql, paramSource, Integer.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -190,8 +187,7 @@ public class CSqlDataSource {
           Long result = jdbcTemplate.queryForObject(sql, paramSource, Long.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -236,8 +232,7 @@ public class CSqlDataSource {
           Double result = jdbcTemplate.queryForObject(sql, paramSource, Double.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -282,8 +277,7 @@ public class CSqlDataSource {
           BigDecimal result = jdbcTemplate.queryForObject(sql, paramSource, BigDecimal.class);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -336,8 +330,7 @@ public class CSqlDataSource {
           List<T> result = jdbcTemplate.query(sql, paramSource, rowMapper);
           log.trace("Row found: " + result.size());
           return new CList<>(result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return new CList<>();
         }
       });
@@ -353,8 +346,7 @@ public class CSqlDataSource {
           List<T> result = jdbcTemplate.queryForList(sql, paramSource, elementType);
           log.trace("Row found: " + result.size());
           return new CList<>(result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return new CList<>();
         }
       });
@@ -370,8 +362,7 @@ public class CSqlDataSource {
           List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, paramSource);
           log.trace("Row found: " + result.size());
           return new CList<>(result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return new CList<>();
         }
       });
@@ -505,8 +496,7 @@ public class CSqlDataSource {
           Map<String, Object> result = jdbcTemplate.queryForMap(sql, paramSource);
           log.trace("Row found: " + result.size());
           return new CHashMap<>(result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return new CHashMap<>();
         }
       });
@@ -558,8 +548,7 @@ public class CSqlDataSource {
       return doAction("queryForObject", dbSource, sql, paramSource, jdbcTemplate -> {
         try {
           return jdbcTemplate.queryForObject(sql, paramSource, Object.class);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -575,8 +564,7 @@ public class CSqlDataSource {
           T result = jdbcTemplate.queryForObject(sql, paramSource, rowMapper);
           log.trace(RESULT + result);
           return result;
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -624,8 +612,7 @@ public class CSqlDataSource {
         try {
           Object result = QueryObject.query(sql, dbSource);
           return result == null ? null : new String((byte[]) result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -636,8 +623,7 @@ public class CSqlDataSource {
         try {
           Object result = QueryObject.query(sql, paramSource, dbSource);
           return result == null ? null : new String((byte[]) result);
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
           return null;
         }
       });
@@ -677,7 +663,7 @@ public class CSqlDataSource {
     }
 
     public static CList<Integer> update(List<String> batches, int partitionSize, String dbSource) {
-      return doAction("batchUpdate", dbSource, CStringUtil.join(batches, "\n"), "", jdbcTemplate -> {
+      return doAction("batchUpdate", dbSource, StringUtils.join(batches, "\n"), "", jdbcTemplate -> {
         CList<Integer> output = new CList<>();
         for (CList<String> partition : new CList<>(batches).partition(partitionSize)) {
           output.addAll(List.of(ArrayUtils.toObject(jdbcTemplate.getJdbcOperations().batchUpdate(partition.toArray(new String[0])))));
@@ -692,7 +678,7 @@ public class CSqlDataSource {
 
     public static CList<Integer> update(String sql, List<MapSqlParameterSource> parameters, int partitionSize, String dbSource) {
       List<Map<String, Object>> batchValues = new CList<>(parameters).mapToList(MapSqlParameterSource::getValues);
-      return doAction("batchUpdate", dbSource, sql, CStringUtil.join(batchValues, "\n"), jdbcTemplate -> {
+      return doAction("batchUpdate", dbSource, sql, StringUtils.join(batchValues, "\n"), jdbcTemplate -> {
         CList<Integer> output = new CList<>();
         for (CList<MapSqlParameterSource> partition : new CList<>(parameters).partition(partitionSize)) {
           output.addAll(List.of(ArrayUtils.toObject(jdbcTemplate.batchUpdate(sql, partition.toArray(new MapSqlParameterSource[0])))));
@@ -730,8 +716,7 @@ public class CSqlDataSource {
     return doAction("get", dbSource, statement.toString(), params.toString(), jdbcTemplate -> {
       try {
         return new CHashMap<>(jdbcTemplate.getJdbcOperations().call(statement, params));
-      }
-      catch (EmptyResultDataAccessException e) {
+      } catch (EmptyResultDataAccessException e) {
         return new CHashMap<>();
       }
     });
@@ -754,10 +739,9 @@ public class CSqlDataSource {
       throw new IndexOutOfBoundsException("No connection available.\nUse CSqlDataSource.addDataSource to add new datasource.");
     }
 
-    if (CStringUtil.isNotBlank(parameters)) {
+    if (StringUtils.isNotBlank(parameters)) {
       log.trace(actionName + " on " + dbSource + " => " + sql + " with parameters " + parameters);
-    }
-    else {
+    } else {
       log.trace(actionName + " on " + dbSource + " => " + sql);
     }
     CDate startTime = CDate.now();
@@ -768,8 +752,7 @@ public class CSqlDataSource {
         log.warn("Failed to obtain DB connection on {} try with exception {}.", idx, t);
         return t instanceof CannotGetJdbcConnectionException || t instanceof SQLRecoverableException;
       }, retryCount, interval, null, true);
-    }
-    catch (Exception t) {
+    } catch (Throwable t) {
       log.error("Failed to Perform " + actionName + " against " + dbSource, t);
       throw t;
     } finally {

@@ -2,6 +2,7 @@ package org.catools.common.tests.types;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CFileOperationException;
 import org.catools.common.extensions.verify.CVerify;
@@ -11,7 +12,6 @@ import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CInputStreamUtil;
 import org.catools.common.utils.CSleeper;
-import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Field;
@@ -264,7 +264,7 @@ public class CFileTest extends CBaseUnitTest {
   public void testGetCanonicalPath() {
     CVerify.String.endsWith(
         getValidFile().getCanonicalPath(),
-        CStringUtil.EMPTY,
+        StringUtils.EMPTY,
         "CFile -> getCanonicalPath returns the right value");
   }
 

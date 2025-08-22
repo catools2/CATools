@@ -1,6 +1,7 @@
 package org.catools.common.faker.etl;
 
 import com.mifmif.common.regex.Generex;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.faker.exception.CFakerCountryNotFoundException;
 import org.catools.common.faker.model.CRandomCities;
 import org.catools.common.faker.model.CRandomCity;
@@ -26,7 +27,7 @@ public class CFakerResourceManager {
     lines.remove(0);
 
     for (String line : lines) {
-      String[] vals = CStringUtil.split(line, "\t");
+      String[] vals = StringUtils.split(line, "\t");
       if (countryCode3.equalsIgnoreCase(vals[1])) {
         return new CFakerCountryProvider(
             new CRandomCountry(
@@ -70,7 +71,7 @@ public class CFakerResourceManager {
         readResource("cities.txt", countryCode).stream()
             .map(l -> l.split("\t"))
             .filter(v -> v.length == 3)
-            .collect(Collectors.toList());
+            .toList();
 
     // remove header
     lines.remove(0);

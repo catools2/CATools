@@ -1,7 +1,7 @@
 package org.catools.web.drivers.providers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.drivers.CDriverProvider;
 import org.catools.web.drivers.config.CFireFoxConfigs;
@@ -36,7 +36,7 @@ public class CFireFoxDriverProvider implements CDriverProvider {
   private FirefoxProfile profile = getFirefoxProfile(options);
 
   public CFireFoxDriverProvider() {
-    if (CStringUtil.isNotBlank(CFireFoxConfigs.getBinaryPath())) {
+    if (StringUtils.isNotBlank(CFireFoxConfigs.getBinaryPath())) {
       setBinary(CFireFoxConfigs.getBinaryPath());
     }
     addArguments(CFireFoxConfigs.getDefaultArguments());

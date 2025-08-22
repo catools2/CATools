@@ -1,8 +1,8 @@
 package org.catools.common.io;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CResourceUtil;
-import org.catools.common.utils.CStringUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -45,10 +45,10 @@ public class CResource {
 
   public String getResourceName() {
     if (resourceFullName.contains("\\")) {
-      return CStringUtil.substringAfterLast(resourceFullName.replaceAll("\\\\", "/"), "/");
+      return StringUtils.substringAfterLast(resourceFullName.replaceAll("\\\\", "/"), "/");
     }
     if (resourceFullName.contains("/")) {
-      return CStringUtil.substringAfterLast(resourceFullName, "/");
+      return StringUtils.substringAfterLast(resourceFullName, "/");
     }
     return resourceFullName;
   }

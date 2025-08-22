@@ -1,10 +1,10 @@
 package org.catools.atlassian.etl.jira.translators.parsers;
 
 import com.atlassian.jira.rest.client.api.domain.IssueField;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CJsonUtil;
-import org.catools.common.utils.CStringUtil;
 import org.codehaus.jettison.json.JSONArray;
 
 import java.util.LinkedHashMap;
@@ -24,7 +24,7 @@ public class CEtlJiraCustomFieldOptionParser implements CEtlJiraFieldParser {
   @Override
   public boolean isRightParser() {
     return field.getValue() instanceof JSONArray
-        && CStringUtil.containsIgnoreCase(field.getValue().toString(), "customFieldOption");
+        && StringUtils.containsIgnoreCase(field.getValue().toString(), "customFieldOption");
   }
 
   @Override

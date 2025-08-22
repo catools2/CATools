@@ -17,7 +17,6 @@ import org.codehaus.jettison.json.JSONObject;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.atlassian.jira.rest.client.api.IssueRestClient.Expandos.*;
@@ -57,7 +56,7 @@ public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient 
       Integer startAt,
       Set<String> fields) {
     final Iterable<String> expandosValues =
-        Stream.of(SCHEMA, NAMES, CHANGELOG, TRANSITIONS).map(EXPANDO_TO_PARAM).collect(Collectors.toList());
+        Stream.of(SCHEMA, NAMES, CHANGELOG, TRANSITIONS).map(EXPANDO_TO_PARAM).toList();
     final String notNullJql = StringUtils.defaultString(jql);
     if (notNullJql.length() > MAX_JQL_LENGTH_FOR_HTTP_GET) {
       return postJql(maxResults, startAt, expandosValues, notNullJql, fields);

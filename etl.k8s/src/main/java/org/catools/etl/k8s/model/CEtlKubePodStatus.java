@@ -3,7 +3,7 @@ package org.catools.etl.k8s.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,9 +43,9 @@ public class CEtlKubePodStatus implements Serializable {
   private String reason;
 
   public CEtlKubePodStatus(String status, String phase, String message, String reason) {
-    this.status = CStringUtil.substring(status, 0, 100);
-    this.phase = CStringUtil.substring(phase, 0, 100);
-    this.message = CStringUtil.substring(message, 0, 500);
-    this.reason = CStringUtil.substring(reason, 0, 500);
+    this.status = StringUtils.substring(status, 0, 100);
+    this.phase = StringUtils.substring(phase, 0, 100);
+    this.message = StringUtils.substring(message, 0, 500);
+    this.reason = StringUtils.substring(reason, 0, 500);
   }
 }

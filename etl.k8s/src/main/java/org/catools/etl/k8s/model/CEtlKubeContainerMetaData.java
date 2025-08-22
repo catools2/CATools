@@ -3,7 +3,7 @@ package org.catools.etl.k8s.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -37,7 +37,7 @@ public class CEtlKubeContainerMetaData implements Serializable {
   private String value;
 
   public CEtlKubeContainerMetaData(String name, String value) {
-    this.name = CStringUtil.substring(name, 0, 50);
-    this.value = CStringUtil.substring(value, 0, 500);
+    this.name = StringUtils.substring(name, 0, 50);
+    this.value = StringUtils.substring(value, 0, 500);
   }
 }

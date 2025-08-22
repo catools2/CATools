@@ -1,7 +1,7 @@
 package org.catools.common.extensions.states.interfaces;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.io.CFile;
-import org.catools.common.utils.CStringUtil;
 
 import java.io.File;
 import java.util.Objects;
@@ -30,7 +30,7 @@ public interface CFileState extends CObjectState<File> {
         && expectedFile != null
         && f1.exists()
         && expectedFile.exists()
-        && CStringUtil.equals(new CFile(f1).readString(), new CFile(expectedFile).readString());
+        && StringUtils.equals(new CFile(f1).readString(), new CFile(expectedFile).readString());
   }
 
   /**
@@ -43,6 +43,6 @@ public interface CFileState extends CObjectState<File> {
     File f1 = _get();
     return f1.exists()
         && expectedFile.exists()
-        && !CStringUtil.equals(new CFile(f1).readString(), new CFile(expectedFile).readString());
+        && !StringUtils.equals(new CFile(f1).readString(), new CFile(expectedFile).readString());
   }
 }

@@ -1,10 +1,10 @@
 package org.catools.web.drivers.providers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.drivers.CDriverProvider;
 import org.catools.web.drivers.config.CChromeConfigs;
@@ -43,7 +43,7 @@ public class CChromeDriverProvider implements CDriverProvider {
   private ChromeOptions options = new ChromeOptions();
 
   public CChromeDriverProvider() {
-    if (CStringUtil.isNotBlank(CChromeConfigs.getBinaryPath())) {
+    if (StringUtils.isNotBlank(CChromeConfigs.getBinaryPath())) {
       setBinary(CChromeConfigs.getBinaryPath());
     }
     addArguments(CChromeConfigs.getDefaultArguments());
@@ -54,7 +54,7 @@ public class CChromeDriverProvider implements CDriverProvider {
 
     prefs.put("plugins.plugins_list", plugins);
 
-    if (CStringUtil.isNotBlank(CChromeConfigs.getChromeMobileEmulationDeviceName())) {
+    if (StringUtils.isNotBlank(CChromeConfigs.getChromeMobileEmulationDeviceName())) {
       setDeviceEmulation(CChromeConfigs.getChromeMobileEmulationDeviceName());
     }
 

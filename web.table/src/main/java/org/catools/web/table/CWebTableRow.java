@@ -3,6 +3,7 @@ package org.catools.web.table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
@@ -106,7 +107,7 @@ public abstract class CWebTableRow<DR extends CDriver, P extends CWebTable<DR, ?
   }
 
   protected By getCellLocator(String header, int index, String childLocator) {
-    CHashMap<Integer, String> allMatches = parentTable.getHeadersMap().getAll((k, v) -> CStringUtil.equals(header, v));
+    CHashMap<Integer, String> allMatches = parentTable.getHeadersMap().getAll((k, v) -> StringUtils.equals(header, v));
 
     if (allMatches.isEmpty() || allMatches.size() < index) {
       // We send invalid locator in case if header does not exist

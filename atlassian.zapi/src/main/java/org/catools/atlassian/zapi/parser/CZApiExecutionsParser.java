@@ -2,12 +2,12 @@ package org.catools.atlassian.zapi.parser;
 
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.CZApiExecution;
 import org.catools.atlassian.zapi.model.CZApiExecutionDefects;
 import org.catools.atlassian.zapi.model.CZApiExecutions;
 import org.catools.common.utils.CJsonUtil;
-import org.catools.common.utils.CStringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class CZApiExecutionsParser extends CZApiBaseParser {
 
   public static CZApiExecutions parse(Response response) {
-    if (CStringUtil.isBlank(response.body().asString())) {
+    if (StringUtils.isBlank(response.body().asString())) {
       return new CZApiExecutions();
     }
     return parse(new JSONObject(response.body().asString()));

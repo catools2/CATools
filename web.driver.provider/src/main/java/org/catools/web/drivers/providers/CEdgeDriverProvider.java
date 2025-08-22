@@ -1,7 +1,7 @@
 package org.catools.web.drivers.providers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.catools.common.utils.CStringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.drivers.CDriverProvider;
 import org.catools.web.drivers.config.CEdgeConfigs;
@@ -34,7 +34,7 @@ public class CEdgeDriverProvider implements CDriverProvider {
   private EdgeOptions options = new EdgeOptions();
 
   public CEdgeDriverProvider() {
-    if (CStringUtil.isNotBlank(CEdgeConfigs.getBinaryPath())) {
+    if (StringUtils.isNotBlank(CEdgeConfigs.getBinaryPath())) {
       setBinary(CEdgeConfigs.getBinaryPath());
     }
     addArguments(CEdgeConfigs.getDefaultArguments());

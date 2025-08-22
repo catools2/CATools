@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.annotations.*;
 import org.catools.common.collections.CList;
 import org.catools.common.config.CTestManagementConfigs;
@@ -12,7 +13,6 @@ import org.catools.common.date.CDate;
 import org.catools.common.exception.CExceptionInfo;
 import org.catools.common.tests.CTest;
 import org.catools.common.tests.CTestMetadata;
-import org.catools.common.utils.CStringUtil;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
@@ -69,7 +69,7 @@ public class CTestResult implements Comparable<CTestResult> {
   private CList<String> defectIds = new CList<>();
   private CList<String> openDefectIds = new CList<>();
   private CList<String> deferredId = new CList<>();
-  private String awaiting = CStringUtil.EMPTY;
+  private String awaiting = StringUtils.EMPTY;
   private boolean configurationMethod = true;
   private Integer severityLevel = null;
   private Integer regressionDepth = null;

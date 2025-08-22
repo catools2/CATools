@@ -1,10 +1,10 @@
 package org.catools.pipeline.helpers;
 
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.annotations.*;
 import org.catools.common.date.CDate;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CJsonUtil;
-import org.catools.common.utils.CStringUtil;
 import org.catools.pipeline.configs.CPipelineConfigs;
 import org.catools.pipeline.configs.CPipelineTestNGConfigs;
 import org.catools.pipeline.dao.CPipelineBaseDao;
@@ -16,7 +16,6 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.catools.pipeline.cache.CPipelineCacheManager.*;
 
@@ -63,7 +62,7 @@ public class CPipelineHelper {
     if (testResult.getParameters() != null && testResult.getParameters().length > 0)
       executionMetaData.add(readExecutionMetaData("Parameters", CJsonUtil.toString(testResult.getParameters())));
 
-    if (CStringUtil.isNotBlank(testResult.getAwaiting()))
+    if (StringUtils.isNotBlank(testResult.getAwaiting()))
       executionMetaData.add(readExecutionMetaData("Awaiting", testResult.getAwaiting()));
 
     if (testResult.getRegressionDepth() != null)
@@ -72,7 +71,7 @@ public class CPipelineHelper {
     if (testResult.getSeverityLevel() != null)
       executionMetaData.add(readExecutionMetaData("Severity Level", testResult.getSeverityLevel().toString()));
 
-    if (CStringUtil.isNotBlank(testResult.getHost()))
+    if (StringUtils.isNotBlank(testResult.getHost()))
       executionMetaData.add(readExecutionMetaData("Host", testResult.getHost()));
 
     if (testResult.getAnnotations() != null) {
@@ -134,7 +133,7 @@ public class CPipelineHelper {
         .getPipelineMetaData()
         .stream()
         .map(md -> readMetaData(md.getName(), md.getValue()))
-        .collect(Collectors.toList());
+        .toList();
 
     CPipeline pipeline = new CPipeline()
         .setType(CPipelineConfigs.getPipelineType())

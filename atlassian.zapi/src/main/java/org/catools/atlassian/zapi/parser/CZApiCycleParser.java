@@ -2,11 +2,11 @@ package org.catools.atlassian.zapi.parser;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.CZApiCycle;
 import org.catools.atlassian.zapi.model.CZApiProjects;
 import org.catools.atlassian.zapi.model.CZApiVersion;
-import org.catools.common.utils.CStringUtil;
 
 public class CZApiCycleParser extends CZApiBaseParser {
 
@@ -25,7 +25,7 @@ public class CZApiCycleParser extends CZApiBaseParser {
       cycle.setEnvironment(json.getString("environment"));
       cycle.setBuild(json.getString("get"));
       cycle.setName(json.getString("name"));
-      cycle.setModifiedBy(CStringUtil.removeEnd(json.getString("modifiedBy"), "(Inactive)"));
+      cycle.setModifiedBy(StringUtils.removeEnd(json.getString("modifiedBy"), "(Inactive)"));
       return cycle;
     } catch (Exception e) {
       throw new CZApiClientException(

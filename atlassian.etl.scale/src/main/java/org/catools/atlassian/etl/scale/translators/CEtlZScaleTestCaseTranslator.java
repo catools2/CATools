@@ -6,9 +6,8 @@ import org.catools.atlassian.scale.model.CZScaleChangeHistory;
 import org.catools.atlassian.scale.model.CZScaleChangeHistoryItem;
 import org.catools.atlassian.scale.model.CZScaleTestCase;
 import org.catools.common.collections.CList;
-import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.cache.CEtlCacheManager;
-import org.catools.etl.tms.dao.CEtlItemDao;
+import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
 
 import java.util.Comparator;
@@ -25,7 +24,7 @@ public class CEtlZScaleTestCaseTranslator {
     Objects.requireNonNull(testCase);
 
     try {
-      CEtlItem item = CEtlItemDao.find(CEtlItem.class, String.valueOf(testCase.getKey()));
+      CEtlItem item = CEtlBaseDao.find(CEtlItem.class, String.valueOf(testCase.getKey()));
       if (item == null) {
         item = new CEtlItem();
         item.setId(String.valueOf(testCase.getKey()));
@@ -84,7 +83,7 @@ public class CEtlZScaleTestCaseTranslator {
       if (changelog.getChangeHistoryItems() == null) continue;
 
       for (CZScaleChangeHistoryItem statusChangelog : changelog.getChangeHistoryItems()) {
-        if (!CStringUtil.equalsIgnoreCase(statusChangelog.getFieldName(), "status")) continue;
+        if (!StringUtils.equalsIgnoreCase(statusChangelog.getFieldName(), "status")) continue;
 
         Date occurred = changelog.getHistoryDate();
         CEtlStatus to = getStatus(statusChangelog.getNewValue());
@@ -139,13 +138,13 @@ public class CEtlZScaleTestCaseTranslator {
 
 
   private static CEtlStatus getStatus(String statusName) {
-    return CStringUtil.isBlank(statusName) ?
+    return StringUtils.isBlank(statusName) ?
         CEtlStatus.UNSET :
         CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
   }
 
   private static CEtlPriority getPriority(String priorityName) {
-    return CStringUtil.isBlank(priorityName) ?
+    return StringUtils.isBlank(priorityName) ?
         CEtlPriority.UNSET :
         CEtlCacheManager.readPriority(new CEtlPriority(priorityName.toUpperCase()));
   }

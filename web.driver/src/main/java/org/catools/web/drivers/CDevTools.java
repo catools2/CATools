@@ -1,10 +1,10 @@
 package org.catools.web.drivers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.common.tests.CTest;
-import org.catools.common.utils.CStringUtil;
 import org.catools.web.config.CDriverConfigs;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.entities.CWebPageInfo;
@@ -50,7 +50,7 @@ public class CDevTools {
       devTools.send(Performance.disable());
 
     String title = webDriver.getTitle();
-    String tracerName = CStringUtil.isBlank(title) ? actionName : "%s on \"%s\"".formatted(actionName, title);
+    String tracerName = StringUtils.isBlank(title) ? actionName : "%s on \"%s\"".formatted(actionName, title);
     listener = new CDriverOTelNetworkListener(testInstance.getName(), tracerName);
     listener.attach(devTools);
   }

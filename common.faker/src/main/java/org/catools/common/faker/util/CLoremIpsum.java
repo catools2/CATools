@@ -5,7 +5,6 @@ import org.apache.commons.text.RandomStringGenerator;
 import org.catools.common.exception.CInvalidRangeException;
 import org.catools.common.faker.CRandom;
 import org.catools.common.utils.CIterableUtil;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +16,7 @@ import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
 public class CLoremIpsum {
   private static final Set<String> specialChars =
-      new HashSet<>(List.of("!?,;......".split(CStringUtil.EMPTY)));
+      new HashSet<>(List.of("!?,;......".split(StringUtils.EMPTY)));
 
   public static String getParagraph(
       int minWordLength,
@@ -75,7 +74,7 @@ public class CLoremIpsum {
       throw new CInvalidRangeException("Both statement length range values must be non-negative.");
     }
     StringBuilder sb = new StringBuilder();
-    sb.append(CIterableUtil.getRandom("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(CStringUtil.EMPTY)));
+    sb.append(CIterableUtil.getRandom("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(StringUtils.EMPTY)));
     int length = CRandom.Int.next(minStatementLength, maxStatementLength);
     while (sb.toString().trim().length() < length) {
       sb.append(getWord(minWordLength, maxWordLength) + " ");

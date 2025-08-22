@@ -2,6 +2,7 @@ package org.catools.common.utils;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class CRegExUtil extends RegExUtils {
 
   public static boolean isAlphaNumericSpace(String input) {
     input = removeAll(input, "\\s+");
-    return CStringUtil.isNotBlank(input) && isMatch(input, ALPHANUMERIC_PATTERN);
+    return StringUtils.isNotBlank(input) && isMatch(input, ALPHANUMERIC_PATTERN);
   }
 
   public static boolean isMatch(String input, String pattern) {
@@ -50,7 +51,7 @@ public class CRegExUtil extends RegExUtils {
   }
 
   public static boolean isMatch(String input, Pattern pattern) {
-    return pattern.matcher(CStringUtil.defaultString(input)).find();
+    return pattern.matcher(StringUtils.defaultString(input)).find();
   }
 
   public static boolean isNumeric(String input) {

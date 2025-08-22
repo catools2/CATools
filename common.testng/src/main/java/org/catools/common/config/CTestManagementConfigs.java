@@ -3,6 +3,7 @@ package org.catools.common.config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.utils.CStringUtil;
@@ -23,7 +24,7 @@ public class CTestManagementConfigs {
 
   public static String getUrlToTest(String testKey) {
     String string = getUrlToTest();
-    return CStringUtil.isBlank(string) ? CStringUtil.EMPTY : CStringUtil.format(string, testKey);
+    return StringUtils.isBlank(string) ? StringUtils.EMPTY : CStringUtil.format(string, testKey);
   }
 
   public static String getUrlToDefect() {
@@ -32,7 +33,7 @@ public class CTestManagementConfigs {
 
   public static String getUrlToDefect(String testKey) {
     String string = getUrlToDefect();
-    return CStringUtil.isBlank(string) ? CStringUtil.EMPTY : CStringUtil.format(string, testKey);
+    return StringUtils.isBlank(string) ? StringUtils.EMPTY : CStringUtil.format(string, testKey);
   }
 
   @Getter

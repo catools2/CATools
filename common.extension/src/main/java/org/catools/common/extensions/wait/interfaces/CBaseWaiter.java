@@ -1,11 +1,11 @@
 package org.catools.common.extensions.wait.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.CTypeExtensionConfigs;
 import org.catools.common.extensions.states.interfaces.CBaseState;
 import org.catools.common.utils.CSleeper;
-import org.catools.common.utils.CStringUtil;
 
 import java.util.function.Predicate;
 
@@ -56,7 +56,7 @@ public interface CBaseWaiter<O> extends CBaseState<O> {
    * @return default message for waiters and verifier
    */
   default String getDefaultMessage(final String methodDescription) {
-    if (CStringUtil.isBlank(getVerifyMessagePrefix())) {
+    if (StringUtils.isBlank(getVerifyMessagePrefix())) {
       return "Verify " + methodDescription + ".";
     }
     return String.format("Verify %s %s.", getVerifyMessagePrefix(), methodDescription);

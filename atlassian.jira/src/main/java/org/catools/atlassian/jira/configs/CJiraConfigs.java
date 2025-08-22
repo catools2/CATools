@@ -3,9 +3,9 @@ package org.catools.atlassian.jira.configs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.catools.common.utils.CStringUtil;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +17,7 @@ public class CJiraConfigs {
     public static URI getHomeUri() {
       try {
         String string = CHocon.asString(Configs.CATOOLS_ATLASSIAN_JIRA_HOME);
-        if (CStringUtil.isBlank(string)) {
+        if (StringUtils.isBlank(string)) {
           return null;
         }
         return new URI(string);
