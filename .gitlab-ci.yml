@@ -50,7 +50,7 @@ install:
         - '**/target/surefire-reports/TEST-*.xml'
   script:
     - mvn org.jacoco:jacoco-maven-plugin:prepare-agent install $MAVEN_CLI_OPTS $MAVEN_OPTS
-    - mvn -T 2C sonar:sonar $MAVEN_CLI_OPTS $MAVEN_OPTS
+    - mvn -DSONAR_TOKEN=$SONAR_TOKEN sonar:sonar $MAVEN_CLI_OPTS $MAVEN_OPTS
   only:
     - merge_requests
     - main
