@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
+import org.catools.common.tests.CTest;
 import org.catools.common.utils.CObjectUtil;
 import org.catools.web.config.CBrowserConfigs;
 import org.catools.web.config.CProxyConfigs;
@@ -38,6 +39,9 @@ public class CDriverSession {
   @Getter(AccessLevel.PRIVATE)
   private final CDevTools devTools = new CDevTools();
 
+  @Getter(AccessLevel.PRIVATE)
+  private final CTest testInstance;
+
   @Setter(AccessLevel.PRIVATE)
   private CWebPageInfo previousPage = BLANK_PAGE;
 
@@ -56,11 +60,12 @@ public class CDriverSession {
   @Getter(AccessLevel.PRIVATE)
   private BiPredicate<CDriverSession, WebDriver> pageTransitionIndicator;
 
-  public CDriverSession(CDriverProvider driverProvider) {
-    this(driverProvider, null);
+  public CDriverSession(CTest testInstance, CDriverProvider driverProvider) {
+    this(testInstance, driverProvider, null);
   }
 
-  public CDriverSession(CDriverProvider driverProvider, BiPredicate<CDriverSession, WebDriver> pageTransitionIndicator) {
+  public CDriverSession(CTest testInstance, CDriverProvider driverProvider, BiPredicate<CDriverSession, WebDriver> pageTransitionIndicator) {
+    this.testInstance = testInstance;
     this.driverProvider = driverProvider;
     this.pageTransitionIndicator = pageTransitionIndicator;
     addProxyIfEnabled();
@@ -82,9 +87,8 @@ public class CDriverSession {
       if (listeners.isNotEmpty()) {
         listeners.forEach(event -> event.beforeAction(webDriver, currentPage, actionName));
       }
-
-      if (webDriver instanceof HasDevTools hasDevTools)
-        devTools.startRecording(driverProvider, hasDevTools);
+      if (webDriver instanceof HasDevTools || webDriver.getCapabilities().asMap().containsKey("se:cdp"))
+        devTools.startRecording(testInstance, actionName, webDriver);
     }
 
     CDate startTime = CDate.now();

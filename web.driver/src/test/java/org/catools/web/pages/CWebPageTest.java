@@ -16,14 +16,14 @@ public class CWebPageTest extends CTest {
 
   @Test(expectedExceptions = CPageNotOpenedException.class)
   public void buildPageWithValidField() {
-    WebTest1 webTest1 = new WebTest1(new CDriver(new CDriverSession(null)), ".*");
+    WebTest1 webTest1 = new WebTest1(new CDriver(new CDriverSession(this, null)), ".*");
     CVerify.Object.isNotNull(webTest1.element1);
     CVerify.Object.isNotNull(webTest1.elements1);
   }
 
   @Test(expectedExceptions = CPageNotOpenedException.class)
   public void buildPageWithWebElementWithoutAnnotation() {
-    WebTest2 webTest2 = new WebTest2(new CDriver(new CDriverSession(null)), ".*");
+    WebTest2 webTest2 = new WebTest2(new CDriver(new CDriverSession(this, null)), ".*");
     CVerify.Object.isNotNull(webTest2.element1);
     CVerify.Object.isNotNull(webTest2.element2);
     CVerify.Object.isNotNull(webTest2.element3);
@@ -32,7 +32,7 @@ public class CWebPageTest extends CTest {
 
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void buildPageWithWebElementsWithoutAnnotation() {
-    new WebTest3(new CDriver(new CDriverSession(null)), ".*");
+    new WebTest3(new CDriver(new CDriverSession(this, null)), ".*");
   }
 
   public static class WebTest1 extends CWebPage<CDriver> {

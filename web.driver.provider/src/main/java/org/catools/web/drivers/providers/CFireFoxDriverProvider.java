@@ -57,20 +57,20 @@ public class CFireFoxDriverProvider implements CDriverProvider {
   @Override
   public RemoteWebDriver buildTestContainer() {
     BrowserWebDriverContainer<?> driverContainer = new BrowserWebDriverContainer<>("selenium/standalone-firefox:latest");
-    driverContainer.withCapabilities(options);
+    driverContainer.withCapabilities(getCapabilities());
     driverContainer.start();
-    return new RemoteWebDriver(driverContainer.getSeleniumAddress(), options);
+    return new RemoteWebDriver(driverContainer.getSeleniumAddress(), getCapabilities());
   }
 
   @Override
   public RemoteWebDriver buildLocalDriver() {
-    options.setCapability("webSocketUrl", true);
+    getCapabilities();
     return new FirefoxDriver(options.setProfile(profile));
   }
 
   @Override
   public RemoteWebDriver buildRemoteWebDrier() {
-    return new RemoteWebDriver(Objects.requireNonNull(getHubURL()), options);
+    return new RemoteWebDriver(Objects.requireNonNull(getHubURL()), getCapabilities());
   }
 
   @Override
