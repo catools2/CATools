@@ -7,6 +7,7 @@ public class CWebPageTest extends CWebTest<CDriver> {
 
   @Test(enabled = false)
   public void buildPageWithValidField() {
-    getDriver().open("https://google.com");
+    open("https://google.com");
+    getDriver().sendKeys("Selenium");
   }
 }
