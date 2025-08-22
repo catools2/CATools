@@ -164,7 +164,6 @@
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
-        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
 
@@ -172,6 +171,12 @@
         <argLine/>
 
         <!-- sonar -->
+        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>catools</sonar.organization>
+        <sonar.projectKey>catools_catools2</sonar.projectKey>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.coverage.exclusions>**src/test/**/*.*,**/tests/**/*.*</sonar.coverage.exclusions>
 
         <!-- TestNG -->
