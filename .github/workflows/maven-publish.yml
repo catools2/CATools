@@ -45,7 +45,7 @@ jobs:
           echo "$GPG_PRIVATE_KEY" | gpg --allow-secret-key-import --import
           echo "$GPG_PUBLIC_KEY" | gpg --import
           export MAVEN_OPTS="-DCATOOLS_WEB_GRID_USE_TEST_CONTAINER=true -DCATOOLS_LOGGER_CONSOLE_LOG_LEVEL=WARN"
-          ./mvnw -B verify -P release org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=catools2_catools $MAVEN_OPTS
+          ./mvnw -B verify -P release org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=catools2_CATools $MAVEN_OPTS
 
       - name: Deploying to GitHub
         env:
