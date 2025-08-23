@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
+import org.catools.common.utils.CStringUtil;
 import org.catools.web.collections.CWebElements;
 import org.catools.web.drivers.CDriver;
 
@@ -15,10 +16,10 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
 
   public CWebTableHeaderInfo(DR driver, String headersLocator) {
     new CWebElements<>("Headers", driver, headersLocator).forEach(h -> {
-      String headerText = StringUtils.normalizeSpace(h.getText(1));
+      String headerText = CStringUtil.normalizeSpace(h.getText(1));
       if (StringUtils.isBlank(headersLocator)) {
         h.moveTo();
-        headerText = StringUtils.normalizeSpace(h.getText(1));
+        headerText = CStringUtil.normalizeSpace(h.getText(1));
       }
       headers.add(new Header(headers.size() + 1, headerText, h.Visible.isTrue()));
     });
