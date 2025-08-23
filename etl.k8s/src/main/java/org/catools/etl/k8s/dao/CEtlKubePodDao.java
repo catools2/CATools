@@ -26,16 +26,19 @@ public class CEtlKubePodDao extends CEtlKubeBaseDao {
         CEtlKubePod pod = oPod.get();
 
         entityManager
-            .createNativeQuery("delete from " + K8S_SCHEMA + ".pod_metadata_mid where pod_name = '" + pod.getName() + "'")
+            .createNativeQuery("delete from " + K8S_SCHEMA + ".pod_metadata_mid where pod_name=:podName")
+            .setParameter("podName", pod.getName())
             .executeUpdate();
 
         entityManager
-            .createNativeQuery("delete from " + K8S_SCHEMA + ".pod_container_mid where pod_name = '" + pod.getName() + "'")
+            .createNativeQuery("delete from " + K8S_SCHEMA + ".pod_container_mid where pod_name=:podName")
+            .setParameter("podName", pod.getName())
             .executeUpdate();
 
         for (CEtlKubeContainer container : pod.getContainers()) {
           entityManager
-              .createNativeQuery("delete from " + K8S_SCHEMA + ".container_metadata_mid where container_id = " + container.getId())
+              .createNativeQuery("delete from " + K8S_SCHEMA + ".container_metadata_mid where container_id=:containerId")
+              .setParameter("containerId", container.getId())
               .executeUpdate();
 
           entityManager.remove(container);

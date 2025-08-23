@@ -227,7 +227,6 @@ public class CRandom {
         throw new CInvalidRangeException(
             "The length value should be greater than 0. length:" + length);
       }
-
       return RANDOM.nextInt(10) + RandomStringUtils.randomNumeric(length).substring(1);
     }
 

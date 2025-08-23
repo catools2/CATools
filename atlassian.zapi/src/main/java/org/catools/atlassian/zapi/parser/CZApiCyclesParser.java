@@ -1,13 +1,15 @@
 package org.catools.atlassian.zapi.parser;
 
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class CZApiCyclesParser extends CZApiBaseParser {
+@UtilityClass
+public class CZApiCyclesParser {
 
   public static CZApiCycles parse(CZApiProject project, Response response) {
     CZApiCycles output = new CZApiCycles();
@@ -63,8 +65,8 @@ public class CZApiCyclesParser extends CZApiBaseParser {
     cycle.setProject(project);
     cycle.setVersion(new CZApiVersion(json.optLong("versionId"), json.optString("versionName")));
     cycle.setDescription(json.optString("description"));
-    cycle.setStartDate(getDate(json, "startDate"));
-    cycle.setEndDate(getDate(json, "endDate"));
+    cycle.setStartDate(CZApiBaseParser.getDate(json, "startDate"));
+    cycle.setEndDate(CZApiBaseParser.getDate(json, "endDate"));
     cycle.setEnvironment(json.optString("environment"));
     cycle.setBuild(json.optString("build"));
     cycle.setName(json.optString("name"));

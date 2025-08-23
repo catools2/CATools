@@ -1,6 +1,7 @@
 package org.catools.atlassian.zapi.parser;
 
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
@@ -12,7 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 @Slf4j
-public class CZApiExecutionsParser extends CZApiBaseParser {
+@UtilityClass
+public class CZApiExecutionsParser {
 
   public static CZApiExecutions parse(Response response) {
     if (StringUtils.isBlank(response.body().asString())) {
@@ -39,7 +41,7 @@ public class CZApiExecutionsParser extends CZApiBaseParser {
           execution.setExecutionStatus(
               status.getJSONObject(json.getString("executionStatus")).getString("name"));
         }
-        execution.setExecutedOn(getDate(json, "executedOn"));
+        execution.setExecutedOn(CZApiBaseParser.getDate(json, "executedOn"));
         execution.setExecutedByUserName(json.optString("executedByUserName"));
         execution.setComment(json.optString("comment"));
         execution.setCycleId(json.optLong("cycleId"));
@@ -47,7 +49,7 @@ public class CZApiExecutionsParser extends CZApiBaseParser {
         execution.setVersionName(json.optString("versionName"));
         execution.setProjectKey(json.optString("projectKey"));
         execution.setProjectName(json.optString("project"));
-        execution.setCreatedOn(getDate(json, "creationDate"));
+        execution.setCreatedOn(CZApiBaseParser.getDate(json, "creationDate"));
         execution.setIssueId(json.optLong("issueId"));
         execution.setIssueKey(json.optString("issueKey"));
         execution.setExecutionDefectCount(json.optLong("executionDefectCount"));
