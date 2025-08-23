@@ -71,7 +71,7 @@ public class CFakerResourceManager {
         readResource("cities.txt", countryCode).stream()
             .map(l -> l.split("\t"))
             .filter(v -> v.length == 3)
-            .toList();
+            .collect(Collectors.toList());
 
     // remove header
     lines.remove(0);
