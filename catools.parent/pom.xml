@@ -392,14 +392,6 @@
                 <version>${spring.version}</version>
             </dependency>
 
-            <!-- ######################  CATS ######################### -->
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>common.extension</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <!-- ######################  /CATS ######################### -->
-
             <!-- ######################  HIBERNATE ######################### -->
             <dependency>
                 <groupId>org.hibernate</groupId>

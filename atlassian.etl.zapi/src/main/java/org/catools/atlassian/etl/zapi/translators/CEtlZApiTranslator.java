@@ -9,13 +9,27 @@ import org.catools.etl.tms.model.*;
 
 import java.util.Objects;
 
+/**
+ * Translator class for converting ZAPI cycles and executions into ETL-compatible objects.
+ * Provides methods to map cycle and execution data to ETL cycles and executions.
+ */
 @Slf4j
 public class CEtlZApiTranslator {
+
+  /**
+   * Translates a ZAPI cycle into an ETL cycle.
+   *
+   * @param zProject The ZAPI project associated with the cycle.
+   * @param zVersion The ZAPI version associated with the cycle.
+   * @param cycle The ZAPI cycle to be translated.
+   * @return The translated ETL cycle.
+   */
   public static CEtlCycle translateCycle(CZApiProject zProject, CZApiVersion zVersion, CZApiCycle cycle) {
     Objects.requireNonNull(zProject);
     Objects.requireNonNull(zVersion);
     Objects.requireNonNull(cycle);
 
+    // Find or create the ETL cycle
     CEtlCycle etlCycle = CEtlBaseDao.find(CEtlCycle.class, cycle.getId().toString());
     if (etlCycle == null) {
       etlCycle = new CEtlCycle();
@@ -23,9 +37,11 @@ public class CEtlZApiTranslator {
     }
 
     try {
+      // Retrieve the associated ETL project and version
       CEtlProject project = CEtlCacheManager.readProject(new CEtlProject(zProject.getName()));
       CEtlVersion version = CEtlCacheManager.readVersion(new CEtlVersion(zVersion.getName(), project));
 
+      // Set properties for the ETL cycle
       etlCycle.setVersion(version);
       etlCycle.setName(cycle.getName());
       etlCycle.setEndDate(cycle.getEndDate());
@@ -38,6 +54,15 @@ public class CEtlZApiTranslator {
     }
   }
 
+  /**
+   * Translates a ZAPI execution into an ETL execution.
+   *
+   * @param project The ZAPI project associated with the execution.
+   * @param version The ZAPI version associated with the execution.
+   * @param cycles The ZAPI cycles containing the execution.
+   * @param execution The ZAPI execution to be translated.
+   * @return The translated ETL execution.
+   */
   public static CEtlExecution translateExecution(CZApiProject project,
                                                  CZApiVersion version,
                                                  CZApiCycles cycles,
@@ -47,6 +72,7 @@ public class CEtlZApiTranslator {
     Objects.requireNonNull(cycles);
     Objects.requireNonNull(execution);
 
+    // Find or create the ETL execution
     CEtlExecution etlExecution = CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
     if (etlExecution == null) {
       etlExecution = new CEtlExecution();
@@ -54,6 +80,7 @@ public class CEtlZApiTranslator {
     }
 
     try {
+      // Set properties for the ETL execution
       etlExecution.setItem(CEtlCacheManager.readItem(execution.getIssueKey()));
       etlExecution.setStatus(getStatus(execution.getExecutionStatus()));
       etlExecution.setExecutor(getExecutor(execution));
@@ -68,12 +95,24 @@ public class CEtlZApiTranslator {
     }
   }
 
+  /**
+   * Retrieves the executor of a test execution.
+   *
+   * @param execution The ZAPI execution.
+   * @return The ETL user representing the executor.
+   */
   private static CEtlUser getExecutor(CZApiExecution execution) {
     return StringUtils.isBlank(execution.getExecutedByUserName()) ?
         CEtlUser.UNSET :
         CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedByUserName()));
   }
 
+  /**
+   * Retrieves the status of a test execution.
+   *
+   * @param statusName The name of the execution status.
+   * @return The corresponding ETL execution status.
+   */
   private static CEtlExecutionStatus getStatus(String statusName) {
     return StringUtils.isBlank(statusName) ?
         CEtlExecutionStatus.UNSET :

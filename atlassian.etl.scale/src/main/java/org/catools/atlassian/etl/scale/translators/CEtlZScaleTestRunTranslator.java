@@ -16,15 +16,28 @@ import org.catools.etl.tms.model.*;
 import java.security.InvalidParameterException;
 import java.util.Objects;
 
+/**
+ * Translator class for converting ZScale test runs and executions into ETL-compatible objects.
+ * Provides methods to map test run and execution data to ETL cycles and executions.
+ */
 @Slf4j
 @UtilityClass
 public class CEtlZScaleTestRunTranslator {
+
+  /**
+   * Translates a ZScale test run into an ETL cycle.
+   *
+   * @param version The ETL version associated with the test run.
+   * @param testRun The ZScale test run to be translated.
+   * @return The translated ETL cycle.
+   */
   public static CEtlCycle translateTestRun(CEtlVersion version, CZScaleTestRun testRun) {
     Objects.requireNonNull(testRun);
 
     try {
       String folder = "";
 
+      // Ensure the folder path ends with a slash
       if (StringUtils.isNotBlank(testRun.getFolder())) {
         folder = testRun.getFolder().trim();
         if (!folder.endsWith("/")) {
@@ -32,12 +45,14 @@ public class CEtlZScaleTestRunTranslator {
         }
       }
 
+      // Find or create the ETL cycle
       CEtlCycle etlCycle = CEtlBaseDao.find(CEtlCycle.class, testRun.getKey());
       if (etlCycle == null) {
         etlCycle = new CEtlCycle();
         etlCycle.setId(testRun.getKey());
       }
 
+      // Set properties for the ETL cycle
       etlCycle.setVersion(version);
       etlCycle.setName(folder + testRun.getName());
       etlCycle.setEndDate(testRun.getPlannedEndDate());
@@ -50,9 +65,18 @@ public class CEtlZScaleTestRunTranslator {
     }
   }
 
+  /**
+   * Translates a ZScale test execution into an ETL execution.
+   *
+   * @param testRun The ZScale test run associated with the execution.
+   * @param cycle The ETL cycle associated with the execution.
+   * @param execution The ZScale test execution to be translated.
+   * @return The translated ETL execution.
+   */
   public static CEtlExecution translateExecution(CZScaleTestRun testRun, CEtlCycle cycle, CZScaleTestExecution execution) {
     Objects.requireNonNull(execution);
 
+    // Find or create the ETL execution
     CEtlExecution etlExecution = CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
     if (etlExecution == null) {
       etlExecution = new CEtlExecution();
@@ -60,6 +84,7 @@ public class CEtlZScaleTestRunTranslator {
     }
 
     try {
+      // Retrieve or create the associated ETL item
       try {
         etlExecution.setItem(CEtlCacheManager.readItem(execution.getTestCaseKey()));
       } catch (InvalidParameterException e) {
@@ -71,6 +96,7 @@ public class CEtlZScaleTestRunTranslator {
         etlExecution.setItem(CEtlZScaleSyncHelper.addItem(testcase));
       }
 
+      // Set properties for the ETL execution
       etlExecution.setStatus(getStatus(execution.getStatus()));
       etlExecution.setExecutor(getExecutor(execution));
       etlExecution.setCycle(cycle);
@@ -84,12 +110,24 @@ public class CEtlZScaleTestRunTranslator {
     }
   }
 
+  /**
+   * Retrieves the executor of a test execution.
+   *
+   * @param execution The ZScale test execution.
+   * @return The ETL user representing the executor.
+   */
   private static CEtlUser getExecutor(CZScaleTestExecution execution) {
     return StringUtils.isBlank(execution.getExecutedBy()) ?
         CEtlUser.UNSET :
         CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedBy()));
   }
 
+  /**
+   * Retrieves the status of a test execution.
+   *
+   * @param status The ZScale execution status.
+   * @return The corresponding ETL execution status.
+   */
   private static CEtlExecutionStatus getStatus(CZScaleExecutionStatus status) {
     return status == null || StringUtils.isBlank(status.getScaleName()) ?
         CEtlExecutionStatus.UNSET :

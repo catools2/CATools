@@ -9,6 +9,11 @@ import org.catools.common.collections.CList;
 import java.util.Comparator;
 import java.util.function.Function;
 
+/**
+ * Utility class for parsing Jira issue fields using various field parsers.
+ * It maintains a list of parsers and applies the most suitable one to each field.
+ * Fields that cannot be parsed are logged and skipped.
+ */
 @Slf4j
 @UtilityClass
 public class CEtlJiraParser {
@@ -22,10 +27,20 @@ public class CEtlJiraParser {
     fieldParsers.add(CEtlJiraIssueFieldParser::new);
   }
 
+  /**
+   * Adds a new field parser to the list of available parsers.
+   * @param parserFunction a function that takes an IssueField and returns a CEtlJiraFieldParser
+   */
   public static void addFieldParser(Function<IssueField, CEtlJiraFieldParser> parserFunction) {
     fieldParsers.add(parserFunction);
   }
 
+  /**
+   * Parses a given Jira issue field using the most suitable parser from the list.
+   * If no suitable parser is found, the field is logged and skipped.
+   * @param field the Jira issue field to be parsed
+   * @return a map of name-value pairs extracted from the field, or an empty map if skipped
+   */
   public static CHashMap<String, String> parserJiraField(IssueField field) {
     CList<Function<IssueField, CEtlJiraFieldParser>> list =
         fieldParsers.getAll(p -> p.apply(field).isRightParser());

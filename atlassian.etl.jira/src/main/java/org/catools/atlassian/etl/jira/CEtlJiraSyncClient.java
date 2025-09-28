@@ -13,10 +13,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Utility class for synchronizing JIRA data into the ETL system.
+ * Provides methods to sync projects and issues based on specified criteria.
+ */
 @UtilityClass
 public class CEtlJiraSyncClient {
   private static final String JIRA = "JIRA";
 
+  /**
+   * Synchronizes JIRA projects and their issues based on the provided project names and issue types.
+   *
+   * @param projectNamesToSync  A set of project names to be synchronized.
+   * @param issueTypes          A list of issue types to be synchronized for each project.
+   * @param parallelInputCount  The number of parallel input threads to use during synchronization.
+   * @param parallelOutputCount The number of parallel output threads to use during synchronization.
+   * @throws NullPointerException if any of the parameters are null.
+   */
   public static void syncJira(
       CSet<String> projectNamesToSync,
       List<String> issueTypes,
@@ -35,6 +48,15 @@ public class CEtlJiraSyncClient {
     }
   }
 
+  /**
+   * Adds items from a specific JIRA project and issue type to the ETL system.
+   *
+   * @param project             The JIRA project from which to add items.
+   * @param issueType           The type of issues to be added from the project.
+   * @param parallelInputCount  The number of parallel input threads to use during the addition.
+   * @param parallelOutputCount The number of parallel output threads to use during the addition.
+   * @throws NullPointerException if any of the parameters are null.
+   */
   public static void addItems(
       BasicProject project,
       String issueType,

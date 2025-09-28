@@ -7,6 +7,11 @@ import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.utils.CAnsiUtil;
 
+/**
+ * Utility class for managing ANSI configurations used in the application.
+ * Provides methods to check if ANSI output and color printing are enabled.
+ */
+
 @UtilityClass
 public class CAnsiConfigs {
   /**
@@ -29,9 +34,17 @@ public class CAnsiConfigs {
     return CAnsiUtil.isOutputSupportAnsi() && isPrintInAnsiEnable();
   }
 
+  /**
+   * Enum representing configuration keys used in the `CAnsiConfigs` class.
+   * Each enum constant corresponds to a specific configuration path.
+   */
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
+    /**
+     * Configuration key for enabling ANSI output in the console.
+     * Path: `catools.console.print_in_ansi_enable`
+     */
     CATOOLS_CONSOLE_PRINT_IN_ANSI_ENABLE("catools.console.print_in_ansi_enable");
 
     private final String path;

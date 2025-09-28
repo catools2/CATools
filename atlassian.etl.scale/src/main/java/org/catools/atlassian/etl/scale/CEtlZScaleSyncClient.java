@@ -28,10 +28,22 @@ import static org.catools.atlassian.etl.scale.helpers.CEtlZScaleSyncHelper.getPr
 import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateExecution;
 import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateTestRun;
 
+/**
+ * Client class for synchronizing ZScale data with the ETL system.
+ * Provides methods to synchronize test cases, test runs, and their executions.
+ */
 @Slf4j
 @UtilityClass
 public class CEtlZScaleSyncClient {
 
+  /**
+   * Synchronizes ZScale data for a specific project.
+   *
+   * @param projectNameToSync The name of the project to synchronize.
+   * @param parallelInputCount The number of parallel threads for input operations.
+   * @param parallelOutputCount The number of parallel threads for output operations.
+   * @throws Throwable If an error occurs during synchronization.
+   */
   public static void syncScale(String projectNameToSync, int parallelInputCount, int parallelOutputCount) throws Throwable {
     BasicProject project = getProjectByName(projectNameToSync);
     CEtlProject etlProject = CEtlCacheManager.readProject(new CEtlProject(project.getName()));
@@ -42,10 +54,15 @@ public class CEtlZScaleSyncClient {
     updateTestRuns(project.getKey(), versions, parallelOutputCount);
   }
 
+  /**
+   * Updates test runs for a specific project.
+   *
+   * @param projectKey The key of the project.
+   * @param versions The versions associated with the project.
+   * @param parallelOutputCount The number of parallel threads for output operations.
+   * @throws Throwable If an error occurs during the update.
+   */
   private static void updateTestRuns(String projectKey, CEtlVersions versions, int parallelOutputCount) throws Throwable {
-    // Skip specific run which has not changed after its last sync
-    // we need to double filter in case if major project sync interrupted due to any reason
-    // So we can avoid wasting time on re-sync project which has been already synced
     for (String activeFolder : CEtlZScaleConfigs.Scale.getSyncTestRunsFolders()) {
       Date projectSyncStartTime = CDate.now();
       CZScaleTestRuns testRunsToSync = getTestRunsToSync(projectKey, activeFolder);
@@ -68,6 +85,13 @@ public class CEtlZScaleSyncClient {
     }
   }
 
+  /**
+   * Retrieves the version associated with a test run.
+   *
+   * @param versions The available versions for the project.
+   * @param testRun The test run to retrieve the version for.
+   * @return The corresponding ETL version, or null if not found.
+   */
   private static CEtlVersion getVersionForTestRun(CEtlVersions versions, CZScaleTestRun testRun) {
     if (testRun.getVersion() == null) {
       return null;
@@ -75,6 +99,16 @@ public class CEtlZScaleSyncClient {
     return versions.getFirst(v -> CStringUtil.equalsAnyIgnoreCase(v.getName(), testRun.getVersion()));
   }
 
+  /**
+   * Updates the executions for a specific test run.
+   *
+   * @param version The version associated with the test run.
+   * @param testRunInfoKey The key of the test run.
+   * @param runLastSync The last synchronization time for the test run.
+   * @param testRun The test run to update.
+   * @param parallelOutputCount The number of parallel threads for output operations.
+   * @throws Throwable If an error occurs during the update.
+   */
   private static void updateTestRunExecutions(CEtlVersion version, String testRunInfoKey, Date runLastSync, CZScaleTestRun testRun, int parallelOutputCount) throws Throwable {
     log.info("Start updating {} run execution with {} items.", testRun.getKey(), testRun.getItems().size());
     CEtlCycle cycle = translateTestRun(version, testRun);
@@ -107,6 +141,15 @@ public class CEtlZScaleSyncClient {
     log.info("Finish updating {} run execution with {} items.", testRun.getKey(), testRun.getItems().size());
   }
 
+  /**
+   * Updates test cases for a specific project.
+   *
+   * @param projectKey The key of the project.
+   * @param project The ETL project associated with the test cases.
+   * @param versions The versions associated with the project.
+   * @param parallelInputCount The number of parallel threads for input operations.
+   * @param parallelOutputCount The number of parallel threads for output operations.
+   */
   private static void updateTestCases(String projectKey, CEtlProject project, CEtlVersions versions, int parallelInputCount, int parallelOutputCount) {
     Date projectSyncStartTime = CDate.now();
     Date projectLastSync = CEtlLastSyncDao.getProjectLastSync("SCALE_TEST_CYCLES", projectKey);
@@ -123,14 +166,35 @@ public class CEtlZScaleSyncClient {
     CEtlLastSyncDao.updateProjectLastSync("SCALE_TEST_CYCLES", projectKey, projectSyncStartTime);
   }
 
+  /**
+   * Retrieves test runs to synchronize for a specific project and folder.
+   *
+   * @param projectKey The key of the project.
+   * @param activeFolder The folder containing the test runs.
+   * @return The test runs to synchronize.
+   */
   private static CZScaleTestRuns getTestRunsToSync(String projectKey, String activeFolder) {
     return CZScaleClient.TestRuns.getAllTestRuns(projectKey, activeFolder, "createdOn,updatedOn,key");
   }
 
+  /**
+   * Determines if a test execution item should be synchronized.
+   *
+   * @param runLastSync The last synchronization time for the test run.
+   * @param item The test execution item to check.
+   * @return True if the item should be synchronized, false otherwise.
+   */
   private static boolean itemShouldSync(Date runLastSync, CZScaleTestExecution item) {
     return item.getExecutionDate() == null || runLastSync == null || item.getExecutionDate().after(runLastSync);
   }
 
+  /**
+   * Determines if a test case is already synchronized.
+   *
+   * @param projectLastSync The last synchronization time for the project.
+   * @param testcase The test case to check.
+   * @return True if the test case is already synchronized, false otherwise.
+   */
   private static boolean testCaseIsSynced(Date projectLastSync, CZScaleTestCase testcase) {
     if (projectLastSync == null) return false;
     return testcase.getUpdatedOn() != null ? testcase.getUpdatedOn().before(projectLastSync) : testcase.getCreatedOn().before(projectLastSync);

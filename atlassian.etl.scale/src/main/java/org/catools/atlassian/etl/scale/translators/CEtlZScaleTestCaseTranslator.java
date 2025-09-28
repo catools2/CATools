@@ -14,10 +14,22 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Translator class for converting ZScale test cases into ETL items.
+ * Provides methods to map test case data to ETL-compatible objects.
+ */
 @Slf4j
 public class CEtlZScaleTestCaseTranslator {
   private static final String TEST_CASE_NAME = "Test";
 
+  /**
+   * Translates a ZScale test case into an ETL item.
+   *
+   * @param project The ETL project associated with the test case.
+   * @param versions The versions associated with the project.
+   * @param testCase The ZScale test case to be translated.
+   * @return The translated ETL item.
+   */
   public static CEtlItem translateTestCase(CEtlProject project, CEtlVersions versions, CZScaleTestCase testCase) {
     Objects.requireNonNull(project);
     Objects.requireNonNull(versions);
@@ -52,10 +64,21 @@ public class CEtlZScaleTestCaseTranslator {
     }
   }
 
+  /**
+   * Retrieves the item type for a test case.
+   *
+   * @return The ETL item type for test cases.
+   */
   private static CEtlItemType getItemType() {
     return CEtlCacheManager.readType(new CEtlItemType(TEST_CASE_NAME));
   }
 
+  /**
+   * Adds status transition information to an ETL item.
+   *
+   * @param issue The ZScale test case containing status history.
+   * @param item The ETL item to which status transitions will be added.
+   */
   private static void addStatusTransition(CZScaleTestCase issue, CEtlItem item) {
     if (issue.getHistories() != null) {
       CList<CEtlItemStatusTransition> statusTransitions = readStatusTransitionInfoFromResponse(issue, item);
@@ -67,6 +90,12 @@ public class CEtlZScaleTestCaseTranslator {
     }
   }
 
+  /**
+   * Sets the "from" status for each status transition based on the previous status.
+   *
+   * @param item The ETL item to which transitions belong.
+   * @param statusTransitions The list of status transitions.
+   */
   private static void setFromStatusToPreviousStatus(CEtlItem item, CList<CEtlItemStatusTransition> statusTransitions) {
     statusTransitions.sort(Comparator.comparing(CEtlItemStatusTransition::getOccurred));
     statusTransitions.get(0).setFrom(new CEtlStatus("Open"));
@@ -77,6 +106,13 @@ public class CEtlZScaleTestCaseTranslator {
     item.setStatusTransitions(statusTransitions.toSet());
   }
 
+  /**
+   * Reads status transition information from a ZScale test case.
+   *
+   * @param issue The ZScale test case containing change history.
+   * @param item The ETL item to which transitions will be added.
+   * @return A list of status transitions.
+   */
   private static CList<CEtlItemStatusTransition> readStatusTransitionInfoFromResponse(CZScaleTestCase issue, CEtlItem item) {
     CList<CEtlItemStatusTransition> statusTransitions = new CList<>();
     for (CZScaleChangeHistory changelog : issue.getHistories()) {
@@ -93,6 +129,12 @@ public class CEtlZScaleTestCaseTranslator {
     return statusTransitions;
   }
 
+  /**
+   * Adds metadata from a ZScale test case to an ETL item.
+   *
+   * @param testCase The ZScale test case containing metadata.
+   * @param item The ETL item to which metadata will be added.
+   */
   private static void addIssueMetaData(CZScaleTestCase testCase, CEtlItem item) {
     if (StringUtils.isNotEmpty(testCase.getComponent())) {
       item.addItemMetaData(getMetaData("Component", testCase.getComponent()));
@@ -132,23 +174,48 @@ public class CEtlZScaleTestCaseTranslator {
     }
   }
 
+  /**
+   * Retrieves metadata for a given name and value.
+   *
+   * @param name The name of the metadata.
+   * @param value The value of the metadata.
+   * @return The ETL item metadata.
+   */
   private static CEtlItemMetaData getMetaData(String name, String value) {
     return CEtlCacheManager.readMetaData(new CEtlItemMetaData(name, value));
   }
 
-
+  /**
+   * Retrieves the status for a given status name.
+   *
+   * @param statusName The name of the status.
+   * @return The corresponding ETL status.
+   */
   private static CEtlStatus getStatus(String statusName) {
     return StringUtils.isBlank(statusName) ?
         CEtlStatus.UNSET :
         CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
   }
 
+  /**
+   * Retrieves the priority for a given priority name.
+   *
+   * @param priorityName The name of the priority.
+   * @return The corresponding ETL priority.
+   */
   private static CEtlPriority getPriority(String priorityName) {
     return StringUtils.isBlank(priorityName) ?
         CEtlPriority.UNSET :
         CEtlCacheManager.readPriority(new CEtlPriority(priorityName.toUpperCase()));
   }
 
+  /**
+   * Retrieves the versions associated with a test case.
+   *
+   * @param versions The available versions for the project.
+   * @param testCase The ZScale test case containing version information.
+   * @return The ETL versions associated with the test case.
+   */
   private static CEtlVersions getIssueVersions(CEtlVersions versions, CZScaleTestCase testCase) {
     if (testCase == null || testCase.getCustomFields() == null || testCase.getCustomFields().isEmpty()) {
       return new CEtlVersions();

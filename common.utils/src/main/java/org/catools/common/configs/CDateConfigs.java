@@ -9,23 +9,37 @@ import org.catools.common.hocon.model.CHoconPath;
 
 import java.util.TimeZone;
 
+/**
+ * Utility class for managing date-related configurations.
+ * Provides methods to retrieve default timezone settings for the application.
+ */
 @UtilityClass
 public class CDateConfigs {
 
   /**
-   * get default timezone for CDate && CDateUtil default methods.
-   * You can control this behaviour by setting CATOOLS_DATE_TIME_ZONE value to valid {@link TimeZone} value
+   * Retrieves the default timezone for date-related operations.
+   * The default timezone can be controlled by setting the configuration value
+   * `CATOOLS_DATE_TIME_ZONE` to a valid {@link TimeZone} ID.
    *
-   * @return default timezone
+   * @return The default {@link TimeZone} for the application. If the configuration
+   *         value is not set or is invalid, the system's default timezone is returned.
    */
   public static TimeZone getDefaultTimeZone() {
     String val = CHocon.asString(Configs.CATOOLS_DATE_TIME_ZONE);
     return StringUtils.isBlank(val) ? TimeZone.getDefault() : TimeZone.getTimeZone(val);
   }
 
+  /**
+   * Enum representing configuration keys used in the `CDateConfigs` class.
+   * Each enum constant corresponds to a specific configuration path.
+   */
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
+    /**
+     * Configuration key for the default timezone.
+     * Path: `catools.date.time_zone`
+     */
     CATOOLS_DATE_TIME_ZONE("catools.date.time_zone");
 
     private final String path;
