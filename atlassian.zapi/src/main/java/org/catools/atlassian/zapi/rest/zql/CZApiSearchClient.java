@@ -16,28 +16,74 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+/**
+ * Client class for searching test executions in the ZAPI system using ZQL queries.
+ *
+ * <p>This class provides methods to execute ZQL queries and retrieve test executions with support for parallel processing.</p>
+ */
 @Slf4j
 public class CZApiSearchClient extends CZApiRestClient {
+
+  /**
+   * Default constructor for the CZApiSearchClient.
+   */
   public CZApiSearchClient() {
     super();
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query.
+   *
+   * @param zql the ZQL query string
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(String zql) {
     return getExecutions(zql, null, 1, 1, null);
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query and last synchronization date.
+   *
+   * @param zql the ZQL query string
+   * @param lastSyncDate the date to filter executions created or executed after this date
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(String zql, Date lastSyncDate) {
     return getExecutions(zql, lastSyncDate, 1, 1, null);
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query with parallel input processing.
+   *
+   * @param zql the ZQL query string
+   * @param parallelInputCount the number of parallel input threads
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(String zql, int parallelInputCount) {
     return getExecutions(zql, null, parallelInputCount, 1, null);
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query, last synchronization date, and parallel input processing.
+   *
+   * @param zql the ZQL query string
+   * @param lastSyncDate the date to filter executions created or executed after this date
+   * @param parallelInputCount the number of parallel input threads
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(String zql, Date lastSyncDate, int parallelInputCount) {
     return getExecutions(zql, lastSyncDate, parallelInputCount, 1, null);
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query with parallel input and output processing.
+   *
+   * @param zql the ZQL query string
+   * @param parallelInputCount the number of parallel input threads
+   * @param parallelOutputCount the number of parallel output threads
+   * @param supplier a consumer to process the retrieved executions
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(
       String zql,
       int parallelInputCount,
@@ -46,6 +92,16 @@ public class CZApiSearchClient extends CZApiRestClient {
     return getExecutions(zql, null, parallelInputCount, parallelOutputCount, supplier);
   }
 
+  /**
+   * Retrieves test executions based on the provided ZQL query, last synchronization date, and parallel processing.
+   *
+   * @param zql the ZQL query string
+   * @param lastSyncDate the date to filter executions created or executed after this date
+   * @param parallelInputCount the number of parallel input threads
+   * @param parallelOutputCount the number of parallel output threads
+   * @param supplier a consumer to process the retrieved executions
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   public CZApiExecutions getExecutions(
       String zql,
       Date lastSyncDate,
@@ -87,6 +143,15 @@ public class CZApiSearchClient extends CZApiRestClient {
     return executions;
   }
 
+  /**
+   * Executes the ZQL query and retrieves a subset of test executions based on the provided parameters.
+   *
+   * @param zql the ZQL query string
+   * @param lastSyncDate the date to filter executions created or executed after this date
+   * @param offset the starting index for the query results
+   * @param maxResults the maximum number of results to retrieve
+   * @return a {@link CZApiExecutions} object containing the test executions
+   */
   private CZApiExecutions _getExecutions(String zql, Date lastSyncDate, int offset, int maxResults) {
     if (lastSyncDate != null) {
       zql +=

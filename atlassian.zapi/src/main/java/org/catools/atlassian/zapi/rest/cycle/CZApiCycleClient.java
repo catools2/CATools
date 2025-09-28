@@ -13,12 +13,26 @@ import org.catools.atlassian.zapi.rest.CZApiRestClient;
 import org.catools.common.extensions.verify.CVerify;
 import org.codehaus.jettison.json.JSONObject;
 
+/**
+ * Client class for managing test cycles in the ZAPI system.
+ *
+ * <p>This class provides methods to retrieve, create, and clone test cycles using the ZAPI REST API.</p>
+ */
 public class CZApiCycleClient extends CZApiRestClient {
 
+  /**
+   * Default constructor for the CZApiCycleClient.
+   */
   public CZApiCycleClient() {
     super();
   }
 
+  /**
+   * Retrieves the executions associated with a specific test cycle.
+   *
+   * @param cycle the test cycle for which executions are being retrieved
+   * @return a {@link CZApiExecutions} object containing the executions for the specified cycle
+   */
   public CZApiExecutions getExecutions(CZApiCycle cycle) {
     return CZApiClient.Search.getExecutions(
         String.format(
@@ -26,6 +40,13 @@ public class CZApiCycleClient extends CZApiRestClient {
             cycle.getProject().getName(), cycle.getVersion().getName(), cycle.getName()));
   }
 
+  /**
+   * Retrieves all test cycles for a specific project and version.
+   *
+   * @param project the project for which cycles are being retrieved
+   * @param version the version for which cycles are being retrieved
+   * @return a {@link CZApiCycles} object containing all cycles for the specified project and version
+   */
   public CZApiCycles getAllCycle(CZApiProject project, CZApiVersion version) {
     RequestSpecification specification =
         RestAssured.given()
@@ -36,11 +57,30 @@ public class CZApiCycleClient extends CZApiRestClient {
     return CZApiCyclesParser.parse(project, get(specification));
   }
 
+  /**
+   * Retrieves a test cycle by its unique identifier.
+   *
+   * @param cycleId the unique identifier of the test cycle
+   * @return the {@link CZApiCycle} object corresponding to the specified ID
+   */
   public CZApiCycle getCycleById(long cycleId) {
     CZApiProjects projects = CZApiClient.Project.getProjects();
     return CZApiCycleParser.parse(projects, get(String.format("/cycle/%s", cycleId)));
   }
 
+  /**
+   * Creates a new test cycle with the specified details.
+   *
+   * @param name the name of the test cycle
+   * @param build the build associated with the test cycle
+   * @param environment the environment associated with the test cycle
+   * @param description a description of the test cycle
+   * @param startDate the start date of the test cycle
+   * @param endDate the end date of the test cycle
+   * @param projectId the ID of the project associated with the test cycle
+   * @param versionId the ID of the version associated with the test cycle
+   * @return the unique identifier of the created test cycle
+   */
   public long createCycle(
       String name,
       String build,
@@ -54,6 +94,21 @@ public class CZApiCycleClient extends CZApiRestClient {
         null, name, build, environment, description, startDate, endDate, projectId, versionId);
   }
 
+  /**
+   * Clones an existing test cycle or creates a new one with the specified details.
+   *
+   * @param clonedCycleId the ID of the cycle to be cloned (or {@code null} to create a new cycle)
+   * @param name the name of the new or cloned test cycle
+   * @param build the build associated with the test cycle
+   * @param environment the environment associated with the test cycle
+   * @param description a description of the test cycle
+   * @param startDate the start date of the test cycle
+   * @param endDate the end date of the test cycle
+   * @param projectId the ID of the project associated with the test cycle
+   * @param versionId the ID of the version associated with the test cycle
+   * @return the unique identifier of the created or cloned test cycle
+   * @throws CZApiException if an error occurs during the creation or cloning process
+   */
   public long cloneCycle(
       Long clonedCycleId,
       String name,

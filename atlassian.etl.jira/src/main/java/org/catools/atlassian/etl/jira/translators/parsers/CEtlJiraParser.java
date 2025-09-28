@@ -13,6 +13,13 @@ import java.util.function.Function;
  * Utility class for parsing Jira issue fields using various field parsers.
  * It maintains a list of parsers and applies the most suitable one to each field.
  * Fields that cannot be parsed are logged and skipped.
+ *
+ * <p>Example:
+ * <pre>{@code
+ * IssueField field = ...;
+ * CHashMap<String, String> parsedField = CEtlJiraParser.parserJiraField(field);
+ * }</pre>
+ * </p>
  */
 @Slf4j
 @UtilityClass
@@ -21,6 +28,7 @@ public class CEtlJiraParser {
   private static final CList<Function<IssueField, CEtlJiraFieldParser>> fieldParsers = new CList<>();
 
   static {
+    // Initialize the list of field parsers
     fieldParsers.add(CEtlJiraCustomFieldOptionParser::new);
     fieldParsers.add(field -> new CEtlJiraJsonFieldParser(field, "name"));
     fieldParsers.add(field -> new CEtlJiraJsonFieldParser(field, "value"));
@@ -29,6 +37,13 @@ public class CEtlJiraParser {
 
   /**
    * Adds a new field parser to the list of available parsers.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlJiraParser.addFieldParser(field -> new CustomFieldParser(field));
+   * }</pre>
+   * </p>
+   *
    * @param parserFunction a function that takes an IssueField and returns a CEtlJiraFieldParser
    */
   public static void addFieldParser(Function<IssueField, CEtlJiraFieldParser> parserFunction) {
@@ -38,14 +53,21 @@ public class CEtlJiraParser {
   /**
    * Parses a given Jira issue field using the most suitable parser from the list.
    * If no suitable parser is found, the field is logged and skipped.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * IssueField field = ...;
+   * CHashMap<String, String> parsedField = CEtlJiraParser.parserJiraField(field);
+   * }</pre>
+   * </p>
+   *
    * @param field the Jira issue field to be parsed
    * @return a map of name-value pairs extracted from the field, or an empty map if skipped
    */
   public static CHashMap<String, String> parserJiraField(IssueField field) {
     CList<Function<IssueField, CEtlJiraFieldParser>> list =
         fieldParsers.getAll(p -> p.apply(field).isRightParser());
-    // we skip any fields which does not have parser or if it is jira plug in at this point
-    // in future we should implement parser for all fields
+    // Skip fields without a parser or those related to Jira plugins
     if (list.isEmpty()
         || (field.getValue() != null
         && field.getValue().toString().contains("com.atlassian.jira.plugin"))) {
@@ -57,6 +79,7 @@ public class CEtlJiraParser {
       return new CHashMap<>();
     }
 
+    // Sort parsers by rank and apply the best match
     list.sort(Comparator.comparingInt(o -> o.apply(field).rank()));
     Function<IssueField, CEtlJiraFieldParser> bestMatch = list.getFirstOrNull();
     return bestMatch.apply(field).getNameValuePairs();

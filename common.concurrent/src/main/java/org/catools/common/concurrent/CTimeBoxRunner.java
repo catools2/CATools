@@ -9,12 +9,24 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 /**
- * There are many time in automation when you stock on some task due to application response time or
- * dead loop inside automation code. We do want to fix both but we do not want to limit our
- * execution due to such scenarios so we use a {@link CTimeBoxRunner} which is job is to wait for
- * task only in defined time frame and throw exception if the task execution timeout
+ * CTimeBoxRunner is a utility class that executes a task within a specified time frame.
+ * If the task exceeds the defined timeout, it either throws an exception or returns null,
+ * depending on the configuration.
  *
- * @param <R> type of result object
+ * <p>Example usage:
+ * <pre>{@code
+ * try {
+ *     String result = CTimeBoxRunner.get(() -> {
+ *         // Task logic here
+ *         return "Task Result";
+ *     }, 10, TimeUnit.SECONDS, true);
+ * } catch (CThreadTimeoutException e) {
+ *     System.err.println("Task timed out");
+ * }
+ * }</pre>
+ * </p>
+ *
+ * @param <R> the type of the result produced by the task
  */
 public class CTimeBoxRunner<R> implements Runnable {
   private final Supplier<R> job;
@@ -23,6 +35,13 @@ public class CTimeBoxRunner<R> implements Runnable {
   private Throwable ex;
   private R r;
 
+  /**
+   * Constructs a new CTimeBoxRunner instance.
+   *
+   * @param job the task to be executed
+   * @param timeoutInSeconds the maximum time allowed for the task to complete, in seconds
+   * @param throwExceptionIfTimeout whether to throw an exception if the task times out
+   */
   private CTimeBoxRunner(Supplier<R> job, int timeoutInSeconds, boolean throwExceptionIfTimeout) {
     this.job = job;
     this.timeoutInSeconds = timeoutInSeconds;
@@ -30,33 +49,28 @@ public class CTimeBoxRunner<R> implements Runnable {
   }
 
   /**
-   * Perform a task in separate concurrent and return the execution result. If the task not been
-   * finished in the defined time box then then return null without throwing any exception
+   * Executes a task and returns the result. If the task exceeds the timeout, it returns null.
    *
-   * @param job              task to be perform
-   * @param timeoutInSeconds execution timeout in seconds
-   * @param <R>              the type of return objects
-   * @return the result of task model
+   * @param job the task to be executed
+   * @param timeoutInSeconds the maximum time allowed for the task to complete, in seconds
+   * @param <R> the type of the result produced by the task
+   * @return the result of the task, or null if it times out
    */
   public static <R> R get(Supplier<R> job, int timeoutInSeconds) {
     return get(job, timeoutInSeconds, false);
   }
 
   /**
-   * Perform a task in separate concurrent and return the execution result. If the {@code
-   * throwExceptionIfTimeout} is set to be FALSE and the task not been finished in the defined time
-   * box then then return null without throwing any exception If the {@code throwExceptionIfTimeout}
-   * is set to be TRUE and the task not been finished in the defined time box then then throw any
-   * exception {@link CThreadTimeoutException}
+   * Executes a task and returns the result. If the task exceeds the timeout, it either throws
+   * an exception or returns null, based on the configuration.
    *
-   * @param job                     task to be perform
-   * @param timeout                 execution timeout amount
-   * @param unit                    execution timeout time unit
-   * @param throwExceptionIfTimeout whether should throw execution on timeout or not
-   * @param <R>                     the type of return objects
-   * @return the result of task model
-   * @throws CThreadTimeoutException throw execution on timeout if throwExceptionIfTimeout parameter
-   *                                 set to TRUE
+   * @param job the task to be executed
+   * @param timeout the maximum time allowed for the task to complete
+   * @param unit the time unit of the timeout
+   * @param throwExceptionIfTimeout whether to throw an exception if the task times out
+   * @param <R> the type of the result produced by the task
+   * @return the result of the task, or null if it times out
+   * @throws CThreadTimeoutException if the task times out and throwExceptionIfTimeout is true
    */
   public static <R> R get(
       Supplier<R> job, long timeout, TimeUnit unit, boolean throwExceptionIfTimeout) {
@@ -66,24 +80,23 @@ public class CTimeBoxRunner<R> implements Runnable {
   }
 
   /**
-   * Perform a task in separate concurrent and return the execution result. If the {@code
-   * throwExceptionIfTimeout} is set to be FALSE and the task not been finished in the defined time
-   * box then then return null without throwing any exception If the {@code throwExceptionIfTimeout}
-   * is set to be TRUE and the task not been finished in the defined time box then throw any
-   * exception {@link CThreadTimeoutException}
+   * Executes a task and returns the result. If the task exceeds the timeout, it either throws
+   * an exception or returns null, based on the configuration.
    *
-   * @param job                     task to be perform
-   * @param timeoutInSeconds        execution timeout in seconds
-   * @param throwExceptionIfTimeout whether should throw execution on timeout or not
-   * @param <R>                     the type of return objects
-   * @return the result of task model
-   * @throws CThreadTimeoutException throw execution on timeout if throwExceptionIfTimeout parameter
-   *                                 set to TRUE
+   * @param job the task to be executed
+   * @param timeoutInSeconds the maximum time allowed for the task to complete, in seconds
+   * @param throwExceptionIfTimeout whether to throw an exception if the task times out
+   * @param <R> the type of the result produced by the task
+   * @return the result of the task, or null if it times out
+   * @throws CThreadTimeoutException if the task times out and throwExceptionIfTimeout is true
    */
   public static <R> R get(Supplier<R> job, int timeoutInSeconds, boolean throwExceptionIfTimeout) {
     return new CTimeBoxRunner<>(job, timeoutInSeconds, throwExceptionIfTimeout).get();
   }
 
+  /**
+   * Executes the task in a separate thread and handles timeout logic.
+   */
   @Override
   public void run() {
     try {
@@ -100,6 +113,11 @@ public class CTimeBoxRunner<R> implements Runnable {
     }
   }
 
+  /**
+   * Executes the task and returns the result.
+   *
+   * @return the result of the task, or null if it times out
+   */
   private R get() {
     run();
     return r;

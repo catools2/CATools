@@ -11,8 +11,12 @@ import com.atlassian.jira.rest.client.internal.async.DisposableHttpClient;
 
 import java.net.URI;
 
-public class CAsynchronousJiraRestClientFactory extends AsynchronousJiraRestClientFactory
-    implements JiraRestClientFactory {
+/**
+ * Custom implementation of the AsynchronousJiraRestClientFactory.
+ * This class extends the default AsynchronousJiraRestClientFactory to provide
+ * a custom implementation for creating JiraRestClient instances.
+ */
+public class CAsynchronousJiraRestClientFactory extends AsynchronousJiraRestClientFactory implements JiraRestClientFactory {
 
   @Override
   public JiraRestClient create(

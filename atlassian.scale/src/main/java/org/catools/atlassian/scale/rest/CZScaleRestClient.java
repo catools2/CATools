@@ -17,10 +17,32 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+/**
+ * Base REST client for interacting with the Scale system.
+ *
+ * <p>This class provides common functionality for making HTTP requests, handling retries,
+ * and processing data in parallel. It is designed to be extended by other REST client
+ * classes to interact with specific endpoints in the Scale system.</p>
+ */
 public class CZScaleRestClient {
+
+  /**
+   * Default constructor.
+   */
   public CZScaleRestClient() {
   }
 
+  /**
+   * Reads all data in parallel using the specified input and output executors.
+   *
+   * @param actionName the name of the action being performed
+   * @param parallelInputCount the number of parallel input threads
+   * @param parallelOutputCount the number of parallel output threads
+   * @param requestProcessor a function to process requests and retrieve data
+   * @param onAction a consumer to process each retrieved item
+   * @param <T> the type of data being processed
+   * @return a set of all retrieved data
+   */
   protected static <T> Set<T> readAllInParallel(
       String actionName,
       int parallelInputCount,
@@ -63,26 +85,62 @@ public class CZScaleRestClient {
     return output;
   }
 
+  /**
+   * Sends a GET request without verifying the response.
+   *
+   * @param request the request specification
+   * @return the response from the server
+   */
   protected Response getWithoutVerification(RequestSpecification request) {
     return CRetry.retry(integer -> decorate(request).get(), 5, 1000);
   }
 
+  /**
+   * Sends a GET request and verifies the response.
+   *
+   * @param request the request specification
+   * @return the verified response from the server
+   */
   protected Response get(RequestSpecification request) {
     return CRetry.retry(integer -> verifyResponse(decorate(request).get()), 5, 1000);
   }
 
+  /**
+   * Sends a DELETE request and verifies the response.
+   *
+   * @param request the request specification
+   * @return the verified response from the server
+   */
   protected Response delete(RequestSpecification request) {
     return CRetry.retry(integer -> verifyResponse(decorate(request).delete()), 5, 1000);
   }
 
+  /**
+   * Sends a POST request and verifies the response.
+   *
+   * @param request the request specification
+   * @return the verified response from the server
+   */
   protected Response post(RequestSpecification request) {
     return CRetry.retry(integer -> verifyResponse(decorate(request).post()), 5, 1000);
   }
 
+  /**
+   * Sends a PUT request and verifies the response.
+   *
+   * @param request the request specification
+   * @return the verified response from the server
+   */
   protected Response put(RequestSpecification request) {
     return CRetry.retry(integer -> verifyResponse(decorate(request).put()), 5, 1000);
   }
 
+  /**
+   * Verifies the response status code and ensures it is within the acceptable range.
+   *
+   * @param response the response to verify
+   * @return the verified response
+   */
   private Response verifyResponse(Response response) {
     int statusCode = response.statusCode();
     if (statusCode < 200 || statusCode > 204) {
@@ -92,6 +150,12 @@ public class CZScaleRestClient {
     return response;
   }
 
+  /**
+   * Decorates the request specification with authentication and content type.
+   *
+   * @param request the request specification to decorate
+   * @return the decorated request specification
+   */
   protected RequestSpecification decorate(RequestSpecification request) {
     CSleeper.sleepTight(CZScaleConfigs.Scale.getDelayBetweenCallsInMilliseconds());
     return request

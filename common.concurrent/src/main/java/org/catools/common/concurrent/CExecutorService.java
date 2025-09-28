@@ -1,3 +1,4 @@
+// language: java
 package org.catools.common.concurrent;
 
 import org.catools.common.concurrent.exceptions.CInterruptedException;
@@ -15,10 +16,34 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
- * A simple implementation of {@link ExecutorService} to simplify interface for majority of
- * automation needs
+ * A simple implementation of {@link ExecutorService} to simplify the interface for most
+ * automation needs.
  *
- * @param <T>
+ * <p>Provides a lightweight wrapper around a fixed thread pool and a queue of {@link Callable}
+ * tasks. Exceptions from tasks are captured and can optionally stop all processing.</p>
+ *
+ * <p>Example usage:
+ * <pre>{@code
+ * // Create a service with 4 threads
+ * CExecutorService<Integer> svc = new CExecutorService<>("MyService", 4);
+ *
+ * // Add tasks
+ * svc.addCallable(() -> {
+ *   // perform work
+ *   return 1;
+ * });
+ * svc.addCallable(() -> 2);
+ *
+ * // Run all tasks and wait for completion
+ * try {
+ *   svc.invokeAll();
+ * } catch (Throwable t) {
+ *   // handle error
+ * }
+ * }</pre>
+ * </p>
+ *
+ * @param <T> the type of the result produced by the tasks in the executor service
  */
 public class CExecutorService<T> {
   private final AtomicReference<Throwable> throwableReference = new AtomicReference<>();
@@ -31,18 +56,68 @@ public class CExecutorService<T> {
   private final TimeUnit unit;
   private final boolean stopOnException;
 
+  /**
+   * Constructs a new CExecutorService with the specified name and thread count.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CExecutorService<String> svc = new CExecutorService<>("svc", 2);
+   * }</pre>
+   * </p>
+   *
+   * @param name the name of the executor service
+   * @param threadCount the number of threads in the thread pool
+   */
   public CExecutorService(String name, int threadCount) {
     this(name, threadCount, null, null, true);
   }
 
+  /**
+   * Constructs a new CExecutorService with the specified name, thread count, and exception handling behavior.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * // stopOnException = false allows other tasks to continue if one fails
+   * CExecutorService<String> svc = new CExecutorService<>("svc", 4, false);
+   * }</pre>
+   * </p>
+   *
+   * @param name the name of the executor service
+   * @param threadCount the number of threads in the thread pool
+   * @param stopOnException whether to stop execution on encountering an exception
+   */
   public CExecutorService(String name, int threadCount, boolean stopOnException) {
     this(name, threadCount, null, null, stopOnException);
   }
 
+  /**
+   * Constructs a new CExecutorService with the specified name, thread count, timeout, and time unit.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * // tasks will be invoked with the provided timeout if not overridden
+   * CExecutorService<Integer> svc = new CExecutorService<>("timed", 3, 30L, TimeUnit.SECONDS);
+   * }</pre>
+   * </p>
+   *
+   * @param name the name of the executor service
+   * @param threadCount the number of threads in the thread pool
+   * @param timeout the maximum time to wait for tasks to complete
+   * @param unit the time unit of the timeout argument
+   */
   public CExecutorService(String name, int threadCount, Long timeout, TimeUnit unit) {
     this(name, threadCount, timeout, unit, true);
   }
 
+  /**
+   * Constructs a new CExecutorService with the specified parameters.
+   *
+   * @param name the name of the executor service
+   * @param threadCount the number of threads in the thread pool
+   * @param timeout the maximum time to wait for tasks to complete
+   * @param unit the time unit of the timeout argument
+   * @param stopOnException whether to stop execution on encountering an exception
+   */
   public CExecutorService(
       String name, int threadCount, Long timeout, TimeUnit unit, boolean stopOnException) {
     this.executor = Executors.newFixedThreadPool(threadCount);
@@ -53,45 +128,54 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Define if the executor has been started or not
+   * Checks if the executor has been started.
    *
-   * @return true if executor has been started otherwise false
+   * @return true if the executor has been started, otherwise false
    */
   public boolean isStarted() {
     return started.get();
   }
 
   /**
-   * Define if the executor has been finished or not
+   * Checks if the executor has finished execution.
    *
-   * @return true if executor has been finished otherwise false
+   * @return true if the executor has finished, otherwise false
    */
   public boolean isFinished() {
     return finished.get();
   }
 
   /**
-   * Define if the executor has been shutdown or not
+   * Checks if the executor has been shut down.
    *
-   * @return true if executor has been shutdown otherwise false
+   * @return true if the executor has been shut down, otherwise false
    */
   public boolean isShutdown() {
     return executor.isShutdown();
   }
 
   /**
-   * Define if the executor has been terminated or not
+   * Checks if the executor has been terminated.
    *
-   * @return true if executor has been terminated otherwise false
+   * @return true if the executor has been terminated, otherwise false
    */
   public boolean isTerminated() {
     return executor.isTerminated();
   }
 
   /**
-   * Adding new task to the task queue.
+   * Adds a new task to the task queue.
    *
-   * @param callable a new task to be added to queue
+   * <p>Example:
+   * <pre>{@code
+   * svc.addCallable(() -> {
+   *   // compute and return result
+   *   return "result";
+   * });
+   * }</pre>
+   * </p>
+   *
+   * @param callable the task to be added to the queue
    */
   public void addCallable(Callable<T> callable) {
     this.queue.add(
@@ -109,8 +193,22 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Executes the given tasks, returning a list of Futures holding their status and results when all
-   * complete or the timeout expires, whichever happens first.
+   * Executes all tasks in the queue, waiting for their completion.
+   *
+   * <p>Blocks until tasks complete or an exception occurs. If a timeout was configured in the
+   * constructor it will delegate to {@link #invokeAll(long, TimeUnit)}.</p>
+   *
+   * <p>Example:
+   * <pre>{@code
+   * try {
+   *   svc.invokeAll();
+   * } catch (Throwable t) {
+   *   // handle task-level exception
+   * }
+   * }</pre>
+   * </p>
+   *
+   * @throws Throwable if an exception occurs during task execution
    */
   public void invokeAll() throws Throwable {
     if (timeout != null && unit != null) {
@@ -129,11 +227,21 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Executes the given tasks, returning a list of Futures holding their status and results when all
-   * complete or the timeout expires, whichever happens first.
+   * Executes all tasks in the queue, waiting for their completion or until the timeout expires.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * try {
+   *   svc.invokeAll(10, TimeUnit.SECONDS);
+   * } catch (Throwable t) {
+   *   // handle timeout or task exception
+   * }
+   * }</pre>
+   * </p>
    *
    * @param timeout the maximum time to wait
-   * @param unit    the time unit of the timeout argument
+   * @param unit the time unit of the timeout argument
+   * @throws Throwable if an exception occurs during task execution
    */
   public void invokeAll(long timeout, TimeUnit unit) throws Throwable {
     doInvoke(
@@ -148,47 +256,43 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Initiates an orderly shutdown in which previously submitted tasks are executed, but no new
-   * tasks will be accepted. Invocation has no additional effect if already shut down.
+   * Initiates an orderly shutdown of the executor service.
    *
-   * <p>This method does not wait for previously submitted tasks to complete execution. Use {@link
-   * ExecutorService#awaitTermination awaitTermination} to do that.
-   *
-   * @throws SecurityException if a security manager exists and shutting down this ExecutorService
-   *                           may manipulate threads that the caller is not permitted to modify because it does not hold
-   *                           {@link java.lang.RuntimePermission}{@code ("modifyThread")}, or the security manager's
-   *                           {@code checkAccess} method denies access.
+   * <p>Example:
+   * <pre>{@code
+   * svc.shutdown();
+   * }</pre>
+   * </p>
    */
   public void shutdown() {
     executor.shutdown();
   }
 
   /**
-   * Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and
-   * returns a list of the tasks that were awaiting execution.
+   * Attempts to stop all actively executing tasks and halts the processing of waiting tasks.
    *
-   * <p>This method does not wait for actively executing tasks to terminate. Use {@link
-   * ExecutorService#awaitTermination awaitTermination} to do that.
-   *
-   * <p>There are no guarantees beyond best-effort attempts to stop processing actively executing
-   * tasks. For example, typical implementations will cancel via {@link Thread#interrupt}, so any
-   * task that fails to respond to interrupts may never terminate.
-   *
-   * @throws SecurityException if a security manager exists and shutting down this ExecutorService
-   *                           may manipulate threads that the caller is not permitted to modify because it does not hold
-   *                           {@link java.lang.RuntimePermission}{@code ("modifyThread")}, or the security manager's
-   *                           {@code checkAccess} method denies access.
+   * <p>Example:
+   * <pre>{@code
+   * svc.shutdownNow();
+   * }</pre>
+   * </p>
    */
   public void shutdownNow() {
     executor.shutdownNow();
   }
 
+  /**
+   * Helper method to execute tasks and handle termination.
+   *
+   * @param supplier the supplier to execute tasks
+   * @throws Throwable if an exception occurs during task execution
+   */
   private void doInvoke(Supplier<?> supplier) throws Throwable {
     started.set(true);
     supplier.get();
 
     executor.shutdown();
-    //TODO: need to expand this to be configuration or parameter driven
+    // TODO: Expand this to be configuration or parameter driven
     int counter = 3000;
     while (!executor.isTerminated() && counter-- > 0) {
       CSleeper.sleepTight(100);

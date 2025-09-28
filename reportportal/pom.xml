@@ -42,6 +42,7 @@
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.extension</artifactId>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>

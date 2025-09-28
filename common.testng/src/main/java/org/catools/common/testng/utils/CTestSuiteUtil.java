@@ -15,9 +15,47 @@ import org.testng.ITestNGMethod;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
+/**
+ * Utility class for managing TestNG test suite execution and filtering.
+ * This class provides methods to filter test methods based on various criteria
+ * such as annotations, severity levels, regression depth, and configuration rules.
+ * 
+ * <p>The utility supports filtering tests based on:
+ * <ul>
+ *   <li>Custom annotations (@CSeverity, @CRegression, @CAwaiting, @CIgnored)</li>
+ *   <li>Severity levels and regression depths</li>
+ *   <li>Configuration-based annotation matching rules</li>
+ * </ul>
+ * 
+ * @author CATools Team
+ * @since 1.0
+ */
 @UtilityClass
 public class CTestSuiteUtil {
 
+  /**
+   * Filters a list of TestNG method instances to determine which ones should be executed
+   * based on various filtering criteria such as annotations, severity levels, and configuration rules.
+   * 
+   * <p>This method removes test methods that should be skipped according to the current
+   * test execution configuration and also updates the execution statistics listener
+   * by removing filtered methods from tracking.
+   * 
+   * <p><strong>Example usage:</strong>
+   * <pre>{@code
+   * List<IMethodInstance> allMethods = getTestMethods();
+   * List<IMethodInstance> methodsToExecute = CTestSuiteUtil.filterMethodInstanceToExecute(allMethods);
+   * 
+   * // Only methods that pass the filtering criteria will be in methodsToExecute
+   * for (IMethodInstance method : methodsToExecute) {
+   *     // Execute the test method
+   *     executeTest(method);
+   * }
+   * }</pre>
+   * 
+   * @param list the original list of method instances to filter
+   * @return a filtered list containing only the method instances that should be executed
+   */
   public static List<IMethodInstance> filterMethodInstanceToExecute(List<IMethodInstance> list) {
     CList<IMethodInstance> output = new CList<>(list);
     if (!output.isEmpty()) {
@@ -32,10 +70,74 @@ public class CTestSuiteUtil {
     return output;
   }
 
+  /**
+   * Determines whether a specific TestNG method should be skipped for the current test run
+   * based on its annotations and the current test configuration.
+   * 
+   * <p>This method extracts all annotations from the given method and evaluates them
+   * against the filtering rules to determine if the method should be executed or skipped.
+   * 
+   * <p><strong>Example usage:</strong>
+   * <pre>{@code
+   * @Test
+   * @CSeverity(level = 3)
+   * @CRegression(depth = 2)
+   * public void testHighSeverityMethod() {
+   *     // Test implementation
+   * }
+   * 
+   * // In your test runner
+   * ITestNGMethod method = getTestMethod("testHighSeverityMethod");
+   * boolean shouldSkip = CTestSuiteUtil.shouldSkipForThisRun(method);
+   * 
+   * if (shouldSkip) {
+   *     System.out.println("Skipping test due to filtering rules");
+   * } else {
+   *     executeTest(method);
+   * }
+   * }</pre>
+   * 
+   * @param method the TestNG method to evaluate for skipping
+   * @return {@code true} if the method should be skipped, {@code false} if it should be executed
+   */
   public static boolean shouldSkipForThisRun(ITestNGMethod method) {
     return shouldSkipByAnnotation(getAnnotations(method));
   }
 
+  /**
+   * Evaluates a collection of annotations to determine if a test method should be skipped
+   * based on annotation-specific filtering rules.
+   * 
+   * <p>This method applies two main categories of filtering rules:
+   * <ul>
+   *   <li><strong>Configuration rules:</strong> Based on annotation matching patterns configured in CTestNGConfigs</li>
+   *   <li><strong>Regression and severity rules:</strong> Based on @CRegression depth and @CSeverity level annotations</li>
+   * </ul>
+   * 
+   * <p><strong>Example usage:</strong>
+   * <pre>{@code
+   * // Collect annotations from a test method
+   * CList<Annotation> annotations = new CList<>();
+   * annotations.add(new CSeverity() { public int level() { return 2; } });
+   * annotations.add(new CRegression() { public int depth() { return 1; } });
+   * 
+   * // Check if method should be skipped based on these annotations
+   * boolean shouldSkip = CTestSuiteUtil.shouldSkipByAnnotation(annotations);
+   * 
+   * if (shouldSkip) {
+   *     System.out.println("Method will be skipped due to annotation rules");
+   * }
+   * 
+   * // Example with @CAwaiting annotation
+   * CList<Annotation> awaitingAnnotations = new CList<>();
+   * awaitingAnnotations.add(new CAwaiting() { });
+   * boolean skipAwaiting = CTestSuiteUtil.shouldSkipByAnnotation(awaitingAnnotations);
+   * // Returns true if CTestNGConfigs.skipClassWithAwaitingTest() is enabled
+   * }</pre>
+   * 
+   * @param annotations the list of annotations to evaluate against filtering rules
+   * @return {@code true} if the test should be skipped based on the annotations, {@code false} otherwise
+   */
   public static boolean shouldSkipByAnnotation(CList<Annotation> annotations) {
     return shouldSkipByAnnotationsConfigRules(annotations)
         || shouldSkipByRegressionAndSeverityRules(annotations);

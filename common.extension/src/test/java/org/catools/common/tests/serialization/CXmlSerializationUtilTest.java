@@ -21,7 +21,7 @@ public class CXmlSerializationUtilTest extends CBaseUnitTest {
   public void testWrite() {
     A a = new A();
     a.field1 = "FIELD1";
-    File file = CPathConfigs.getTempChildFile("CXmlSerializationUtilTest");
+    File file = CPathConfigs.fromTmp("CXmlSerializationUtilTest");
     CXmlSerializationUtil.write(a, file);
     CVerify.Object.equals(CXmlSerializationUtil.read(file, A.class), a, "Deserialization worked.");
   }
@@ -29,7 +29,7 @@ public class CXmlSerializationUtilTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class,
       expectedExceptions = CRuntimeException.class)
   public void testWrite_N() {
-    File file = CPathConfigs.getTempChildFile("CXmlSerializationUtilTest");
+    File file = CPathConfigs.fromTmp("CXmlSerializationUtilTest");
     CXmlSerializationUtil.write(null, file);
   }
 

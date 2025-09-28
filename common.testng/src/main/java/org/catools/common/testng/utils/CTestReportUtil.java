@@ -13,9 +13,90 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+/**
+ * Utility class for processing and cleaning TestNG test reports by removing duplicate test results.
+ * <p>
+ * This class provides functionality to handle duplicate test results that can occur when running
+ * TestNG suites multiple times or in parallel execution scenarios. It ensures that test results
+ * are properly deduplicated while maintaining the correct status hierarchy (passed > failed > skipped).
+ * </p>
+ * 
+ * @author CATools Team
+ * @since 1.0
+ */
 @UtilityClass
 public class CTestReportUtil {
 
+  /**
+   * Removes duplicate test results from TestNG suites while maintaining proper test status hierarchy.
+   * <p>
+   * This method processes a list of TestNG suites and eliminates duplicate test results that may
+   * occur when the same test method is executed multiple times. The deduplication follows a strict
+   * hierarchy where:
+   * <ul>
+   *   <li>Passed tests take precedence over failed and skipped tests</li>
+   *   <li>Failed tests take precedence over skipped tests</li>
+   *   <li>Configuration methods follow the same hierarchy as test methods</li>
+   * </ul>
+   * </p>
+   * 
+   * <p>
+   * The method is thread-safe and performs the following operations:
+   * <ol>
+   *   <li>Sorts suites by name for consistent processing order</li>
+   *   <li>Collects all test results from all suites</li>
+   *   <li>Removes duplicates within each result category</li>
+   *   <li>Applies hierarchy rules to remove lower-priority duplicates</li>
+   * </ol>
+   * </p>
+   *
+   * <h3>Example Usage:</h3>
+   * <pre>{@code
+   * // Scenario: You have multiple TestNG suites with potentially duplicate results
+   * CList<ISuite> suites = new CList<>();
+   * suites.add(suite1); // Contains: TestA (passed), TestB (failed)
+   * suites.add(suite2); // Contains: TestA (failed), TestB (skipped), TestC (passed)
+   * 
+   * // Before deduplication:
+   * // Suite1: TestA (passed), TestB (failed)
+   * // Suite2: TestA (failed), TestB (skipped), TestC (passed)
+   * 
+   * CTestReportUtil.removeDuplicateResults(suites);
+   * 
+   * // After deduplication:
+   * // Suite1: TestA (passed), TestB (failed), TestC (passed)
+   * // Suite2: (empty - duplicates removed)
+   * }</pre>
+   *
+   * <h3>Real-world Example:</h3>
+   * <pre>{@code
+   * // In a test listener or report generator
+   * public class CustomTestListener implements IReporter {
+   *     
+   *     @Override
+   *     public void generateReport(List<XmlSuite> xmlSuites, 
+   *                               List<ISuite> suites, 
+   *                               String outputDirectory) {
+   *         
+   *         CList<ISuite> cleanSuites = new CList<>(suites);
+   *         
+   *         // Remove duplicates before generating reports
+   *         CTestReportUtil.removeDuplicateResults(cleanSuites);
+   *         
+   *         // Now generate clean reports without duplicate results
+   *         generateCleanReport(cleanSuites, outputDirectory);
+   *     }
+   * }
+   * }</pre>
+   *
+   * @param suites the list of TestNG suites to process for duplicate removal.
+   *               Must not be null. The list will be modified in-place.
+   * @throws NullPointerException if suites parameter is null
+   * 
+   * @see ISuite
+   * @see ITestResult
+   * @see ITestContext
+   */
   public synchronized static void removeDuplicateResults(CList<ISuite> suites) {
     CList<Pair<ITestContext, CSet<ITestResult>>> totalPassed = new CList<>();
     CList<Pair<ITestContext, CSet<ITestResult>>> totalFailed = new CList<>();

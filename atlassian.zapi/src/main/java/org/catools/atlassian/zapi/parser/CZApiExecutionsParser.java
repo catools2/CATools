@@ -12,10 +12,22 @@ import org.catools.common.utils.CJsonUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Utility class for parsing execution data in the ZAPI system.
+ *
+ * <p>This class provides methods to parse {@link CZApiExecutions} objects from JSON responses.
+ * It supports parsing executions from both {@link Response} and {@link JSONObject} inputs.</p>
+ */
 @Slf4j
 @UtilityClass
 public class CZApiExecutionsParser {
 
+  /**
+   * Parses a {@link CZApiExecutions} object from the given HTTP response.
+   *
+   * @param response the HTTP response containing the execution data
+   * @return the parsed {@link CZApiExecutions} object
+   */
   public static CZApiExecutions parse(Response response) {
     if (StringUtils.isBlank(response.body().asString())) {
       return new CZApiExecutions();
@@ -23,6 +35,13 @@ public class CZApiExecutionsParser {
     return parse(new JSONObject(response.body().asString()));
   }
 
+  /**
+   * Parses a {@link CZApiExecutions} object from the given JSON object.
+   *
+   * @param input the JSON object containing the execution data
+   * @return the parsed {@link CZApiExecutions} object
+   * @throws CZApiClientException if the input cannot be parsed
+   */
   public static CZApiExecutions parse(JSONObject input) {
     CZApiExecutions output = new CZApiExecutions();
 

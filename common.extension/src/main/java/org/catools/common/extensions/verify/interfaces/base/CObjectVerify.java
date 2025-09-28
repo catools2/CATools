@@ -130,6 +130,7 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * @param message information about the purpose of this verification
    * @param params  parameters in case if message is a format {@link String#format}
    */
+  @SuppressWarnings("unchecked")
   default void verifyIsNull(final String message, final Object... params) {
     _verify(null, (o1, o2) -> _toState(o1).isEqual((O) o2), message, params);
   }

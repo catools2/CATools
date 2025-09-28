@@ -19,7 +19,7 @@ public class CObjectSerializationUtilTest extends CBaseUnitTest {
   public void testWrite() {
     A a = new A();
     a.field1 = "FIELD1";
-    File file = CPathConfigs.getTempChildFile("CObjectSerializationUtilTest");
+    File file = CPathConfigs.fromTmp("CObjectSerializationUtilTest");
     CObjectSerializationUtil.write(file, a);
 
     CVerify.Object.equals(CObjectSerializationUtil.read(file), a, "Deserialization worked.");
@@ -34,7 +34,7 @@ public class CObjectSerializationUtilTest extends CBaseUnitTest {
   public void testWrite_N() {
     B a = new B();
     a.field1 = "FIELD1";
-    File file = CPathConfigs.getTempChildFile("CObjectSerializationUtilTest.b");
+    File file = CPathConfigs.fromTmp("CObjectSerializationUtilTest.b");
     CObjectSerializationUtil.write(file, a);
   }
 

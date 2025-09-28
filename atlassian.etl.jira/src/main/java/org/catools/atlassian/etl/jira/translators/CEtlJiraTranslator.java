@@ -19,16 +19,29 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Translator class for converting Jira issues into CEtlItem objects.
- * It handles the mapping of various fields such as project, versions, status, priority, type, and metadata.
- * Also manages status transitions based on issue changelogs.
+ * Translator class for converting Jira issues into {@link CEtlItem} objects.
+ *
+ * <p>Example:
+ * <pre>{@code
+ * Issue issue = ...; // fetched from Jira REST client
+ * CEtlItem item = CEtlJiraTranslator.translateIssue(issue);
+ * }</pre>
+ * </p>
  */
 @Slf4j
 @UtilityClass
 public class CEtlJiraTranslator {
 
   /**
-   * Translates a set of Jira issues into a CEtlItems collection.
+   * Translates a set of Jira issues into a {@link CEtlItems} collection.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CSet<Issue> issues = ...;
+   * CEtlItems items = CEtlJiraTranslator.translateIssues(issues);
+   * }</pre>
+   * </p>
+   *
    * @param issues the set of Jira issues to be translated
    * @return a CEtlItems collection containing the translated items
    */
@@ -37,9 +50,16 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Translates a single Jira issue into a CEtlItem object.
-   * It maps various fields such as project, versions, status, priority, type, and metadata.
-   * Also manages status transitions based on the issue's changelog.
+   * Translates a single Jira issue into a {@link CEtlItem} object.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * Issue issue = ...;
+   * CEtlItem item = CEtlJiraTranslator.translateIssue(issue);
+   * System.out.println(item.getId());
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue to be translated
    * @return the translated CEtlItem object
    */
@@ -77,8 +97,15 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Adds status transitions to the CEtlItem based on the changelog of the Jira issue.
-   * It extracts status changes and their corresponding timestamps from the changelog.
+   * Adds status transitions to the {@link CEtlItem} based on the changelog of the Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * Issue issue = ...; CEtlItem item = new CEtlItem();
+   * CEtlJiraTranslator.addStatusTransition(issue, item);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the changelog
    * @param item the CEtlItem to which status transitions will be added
    */
@@ -105,8 +132,15 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Adds metadata to the CEtlItem based on various fields of the Jira issue.
-   * It extracts components, assignee, labels, and custom fields to create metadata entries.
+   * Adds metadata to the {@link CEtlItem} based on various fields of the Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * Issue issue = ...; CEtlItem item = new CEtlItem();
+   * CEtlJiraTranslator.addIssueMetaData(issue, item);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the fields
    * @param item the CEtlItem to which metadata will be added
    */
@@ -142,8 +176,15 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Translates a Jira version into a CEtlVersion object.
-   * It handles null or blank version names by returning a default UNSET version.
+   * Translates a Jira {@link Version} into a {@link CEtlVersion} object.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * Version v = ...;
+   * CEtlVersion cv = CEtlJiraTranslator.translateVersion(project, v);
+   * }</pre>
+   * </p>
+   *
    * @param project the CEtlProject associated with the version
    * @param version the Jira version to be translated
    * @return the translated CEtlVersion object
@@ -155,7 +196,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Extracts and translates the fix and affected versions from a Jira issue into a CEtlVersions collection.
+   * Extracts and translates the fix and affected versions from a Jira issue into a {@link CEtlVersions} collection.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlVersions versions = CEtlJiraTranslator.getIssueVersions(issue, project);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the versions
    * @param project the CEtlProject associated with the versions
    * @return a CEtlVersions collection containing the translated versions
@@ -179,8 +227,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlItemMetaData object based on the provided name and value.
-   * It uses the CEtlCacheManager to read existing metadata or create new entries.
+   * Retrieves or creates a {@link CEtlItemMetaData} object based on the provided name and value.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlItemMetaData meta = CEtlJiraTranslator.getMetaData("Priority", "High");
+   * }</pre>
+   * </p>
+   *
    * @param name the name of the metadata
    * @param value the value of the metadata
    * @return the CEtlItemMetaData object
@@ -190,8 +244,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlProject object based on the project information from a Jira issue.
-   * It handles null or blank project names by returning a default UNSET project.
+   * Retrieves or creates a {@link CEtlProject} object based on the project information from a Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlProject project = CEtlJiraTranslator.getProject(issue);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the project information
    * @return the CEtlProject object
    */
@@ -202,8 +262,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlItemType object based on the issue type from a Jira issue.
-   * It handles null or blank issue type names by returning a default UNSET type.
+   * Retrieves or creates a {@link CEtlItemType} object based on the issue type from a Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlItemType type = CEtlJiraTranslator.getItemType(issue);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the issue type information
    * @return the CEtlItemType object
    */
@@ -214,8 +280,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlPriority object based on the priority from a Jira issue.
-   * It handles null or blank priority names by returning a default UNSET priority.
+   * Retrieves or creates a {@link CEtlPriority} object based on the priority from a Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlPriority priority = CEtlJiraTranslator.getPriority(issue);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the priority information
    * @return the CEtlPriority object
    */
@@ -226,8 +298,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlStatus object based on the provided status name.
-   * It handles null or blank status names by returning a default UNSET status.
+   * Retrieves or creates a {@link CEtlStatus} object based on the provided status name.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlStatus status = CEtlJiraTranslator.getStatus("IN PROGRESS");
+   * }</pre>
+   * </p>
+   *
    * @param statusName the name of the status
    * @return the CEtlStatus object
    */
@@ -238,8 +316,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a CEtlStatus object based on the status from a Jira issue.
-   * It handles null or blank status names by returning a default UNSET status.
+   * Retrieves or creates a {@link CEtlStatus} object based on the status from a Jira issue.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * CEtlStatus status = CEtlJiraTranslator.getStatus(issue);
+   * }</pre>
+   * </p>
+   *
    * @param issue the Jira issue containing the status information
    * @return the CEtlStatus object
    */
@@ -250,7 +334,14 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Checks if the value of an IssueField is not null or a JSON null representation.
+   * Checks if the value of an {@link IssueField} is not null or a JSON null representation.
+   *
+   * <p>Example:
+   * <pre>{@code
+   * boolean ok = CEtlJiraTranslator.valueIsNotNull(issueField);
+   * }</pre>
+   * </p>
+   *
    * @param f the IssueField to be checked
    * @return true if the value is not null, false otherwise
    */
