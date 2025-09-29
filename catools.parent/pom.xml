@@ -142,8 +142,8 @@
         <!-- Hibernate -->
         <hibernate.version>6.4.3.Final</hibernate.version>
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
-        <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
-        <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
+        <hibernate-jcache.version>6.6.29.Final</hibernate-jcache.version>
+        <hibernate-c3p0.version>6.6.29.Final</hibernate-c3p0.version>
         <ehcache.version>3.10.8</ehcache.version>
         <postgresql.version>42.7.4</postgresql.version>
 
