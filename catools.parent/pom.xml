@@ -83,7 +83,7 @@
         <!-- testing -->
         <mockito-testng.version>0.5.2</mockito-testng.version>
         <mockito-core.version>5.14.1</mockito-core.version>
-        <byte-buddy.version>1.15.4</byte-buddy.version>
+        <byte-buddy.version>1.17.7</byte-buddy.version>
 
         <!-- influxdb -->
         <influxdb-client-java.version>6.6.0</influxdb-client-java.version>
