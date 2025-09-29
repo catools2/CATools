@@ -90,7 +90,7 @@
 
         <!-- tracing -->
         <opentelemetry.version>1.51.0</opentelemetry.version>
-        <opentelemetry-semconv.version>1.34.0</opentelemetry-semconv.version>
+        <opentelemetry-semconv.version>1.37.0</opentelemetry-semconv.version>
 
         <!-- log4j -->
         <slf4j-api.version>2.0.12</slf4j-api.version>
