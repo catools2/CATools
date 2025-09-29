@@ -82,7 +82,7 @@
 
         <!-- testing -->
         <mockito-testng.version>0.5.2</mockito-testng.version>
-        <mockito-core.version>5.14.1</mockito-core.version>
+        <mockito-core.version>5.20.0</mockito-core.version>
         <byte-buddy.version>1.15.4</byte-buddy.version>
 
         <!-- influxdb -->
