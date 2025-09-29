@@ -50,7 +50,7 @@
         <json-path.version>2.9.0</json-path.version>
         <json-smart.version>2.5.2</json-smart.version>
         <spring.version>6.1.13</spring.version>
-        <jira-rest-java-client-core.version>6.0.1</jira-rest-java-client-core.version>
+        <jira-rest-java-client-core.version>7.0.1</jira-rest-java-client-core.version>
         <fugue.version>6.1.0</fugue.version>
         <rest-assured.version>5.5.0</rest-assured.version>
         <json.version>20240303</json.version>
