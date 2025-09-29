@@ -52,7 +52,7 @@
         <spring.version>6.1.13</spring.version>
         <jira-rest-java-client-core.version>6.0.1</jira-rest-java-client-core.version>
         <fugue.version>6.1.0</fugue.version>
-        <rest-assured.version>5.5.0</rest-assured.version>
+        <rest-assured.version>5.5.6</rest-assured.version>
         <json.version>20240303</json.version>
         <generex.version>1.0.2</generex.version>
         <libphonenumber.version>8.13.47</libphonenumber.version>
