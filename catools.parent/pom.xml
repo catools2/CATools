@@ -73,7 +73,7 @@
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
         <jansi.version>2.4.1</jansi.version>
-        <jgit.version>6.6.0.202305301015-r</jgit.version>
+        <jgit.version>7.3.0.202506031305-r</jgit.version>
         <logger-java-log4j.version>5.2.2</logger-java-log4j.version>
         <concurrentlinkedhashmap-lru.version>1.4.2</concurrentlinkedhashmap-lru.version>
         <vault-java-driver.version>5.1.0</vault-java-driver.version>
