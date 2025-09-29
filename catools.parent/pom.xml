@@ -114,7 +114,7 @@
         <jacoco.version>0.8.10</jacoco.version>
 
         <!-- POI -->
-        <poi.version>5.3.0</poi.version>
+        <poi.version>5.4.1</poi.version>
 
         <!-- Extent Reports -->
         <extent.reports.version>5.1.2</extent.reports.version>
