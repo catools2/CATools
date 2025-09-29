@@ -102,10 +102,10 @@
         <feign.version>13.4</feign.version>
 
         <!-- Javax -->
-        <jaxb-core.version>4.0.5</jaxb-core.version>
-        <jaxb-impl.version>4.0.5</jaxb-impl.version>
+        <jaxb-core.version>4.0.6</jaxb-core.version>
+        <jaxb-impl.version>4.0.6</jaxb-impl.version>
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
-        <jaxb-runtime.version>4.0.5</jaxb-runtime.version>
+        <jaxb-runtime.version>4.0.6</jaxb-runtime.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
         <jaxws-api.version>2.3.1</jaxws-api.version>
         <javax-activation.version>1.2.0</javax-activation.version>
