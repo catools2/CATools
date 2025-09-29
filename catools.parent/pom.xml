@@ -68,7 +68,7 @@
         <apache-commons-lang3.version>3.17.0</apache-commons-lang3.version>
         <apache-commons-text.version>1.12.0</apache-commons-text.version>
         <commons-io.version>2.17.0</commons-io.version>
-        <assertj-core.version>3.26.3</assertj-core.version>
+        <assertj-core.version>3.27.6</assertj-core.version>
         <groovy.version>3.0.25</groovy.version>
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
