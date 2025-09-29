@@ -44,7 +44,7 @@
         <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
         <log4j.version>1.2.17-atlassian-18</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <apache-log4j.version>2.24.1</apache-log4j.version>
+        <apache-log4j.version>2.25.2</apache-log4j.version>
         <lombok.version>1.18.34</lombok.version>
         <typesafe.version>1.4.3</typesafe.version>
         <json-path.version>2.9.0</json-path.version>
@@ -94,7 +94,7 @@
 
         <!-- log4j -->
         <slf4j-api.version>2.0.12</slf4j-api.version>
-        <log4j-slf4j2-impl.version>2.24.1</log4j-slf4j2-impl.version>
+        <log4j-slf4j2-impl.version>2.25.2</log4j-slf4j2-impl.version>
 
         <!-- Athena -->
         <athena-core.version>1-20240501.1423</athena-core.version>
