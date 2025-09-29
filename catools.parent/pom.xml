@@ -99,7 +99,7 @@
         <!-- Athena -->
         <athena-core.version>1-20240501.1423</athena-core.version>
         <athena-feign.version>1-20250630.0553</athena-feign.version>
-        <feign.version>13.4</feign.version>
+        <feign.version>13.6</feign.version>
 
         <!-- Javax -->
         <jaxb-core.version>4.0.5</jaxb-core.version>
