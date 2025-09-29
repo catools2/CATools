@@ -145,7 +145,7 @@
         <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
         <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
         <ehcache.version>3.10.8</ehcache.version>
-        <postgresql.version>42.7.4</postgresql.version>
+        <postgresql.version>42.7.8</postgresql.version>
 
         <!-- Kubernetes -->
         <kubernetes.client-java.version>18.0.1</kubernetes.client-java.version>
