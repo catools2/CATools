@@ -53,7 +53,7 @@
         <jira-rest-java-client-core.version>6.0.1</jira-rest-java-client-core.version>
         <fugue.version>6.1.0</fugue.version>
         <rest-assured.version>5.5.0</rest-assured.version>
-        <json.version>20240303</json.version>
+        <json.version>20250517</json.version>
         <generex.version>1.0.2</generex.version>
         <libphonenumber.version>8.13.47</libphonenumber.version>
         <boofcv.version>1.1.6</boofcv.version>
