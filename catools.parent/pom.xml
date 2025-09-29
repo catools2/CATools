@@ -127,7 +127,7 @@
         <selenium.version>4.34.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
-        <selenium-axe.version>4.9.1</selenium-axe.version>
+        <selenium-axe.version>4.10.2</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
         <webdrivermanager.version>6.2.0</webdrivermanager.version>
 
