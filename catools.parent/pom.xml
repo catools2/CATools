@@ -152,7 +152,7 @@
         <!-- /Kubernetes -->
 
         <!-- Test Containers -->
-        <testcontainers.version>1.20.2</testcontainers.version>
+        <testcontainers.version>1.21.3</testcontainers.version>
 
         <!-- LOG LEVEL -->
         <logger.console.log.level>trace</logger.console.log.level>
