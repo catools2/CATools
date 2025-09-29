@@ -60,7 +60,7 @@
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
-        <guava.version>33.4.8-jre</guava.version>
+        <guava.version>33.5.0-jre</guava.version>
         <testng.version>7.10.2</testng.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <apache-commons-collections4.version>4.5.0-M2</apache-commons-collections4.version>
