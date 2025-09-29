@@ -78,7 +78,7 @@
         <concurrentlinkedhashmap-lru.version>1.4.2</concurrentlinkedhashmap-lru.version>
         <vault-java-driver.version>5.1.0</vault-java-driver.version>
         <diff-match-patch.version>1.2</diff-match-patch.version>
-        <cloning.version>1.10.3</cloning.version>
+        <cloning.version>1.12.0</cloning.version>
 
         <!-- testing -->
         <mockito-testng.version>0.5.2</mockito-testng.version>
