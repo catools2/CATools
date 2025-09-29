@@ -132,7 +132,7 @@
         <webdrivermanager.version>6.2.0</webdrivermanager.version>
 
         <!-- Report Portal -->
-        <reportportal.version>5.2.14</reportportal.version>
+        <reportportal.version>5.4.3</reportportal.version>
         <rp-java-testng.version>5.4.2</rp-java-testng.version>
         <rp.commons-model.version>5.3.3</rp.commons-model.version>
         <retrofit.version>2.11.0</retrofit.version>
