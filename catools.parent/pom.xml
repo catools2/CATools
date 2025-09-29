@@ -121,7 +121,7 @@
 
         <!-- Selenium Devtools -->
         <selenium-devtools.artifactId>selenium-devtools-v138</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.34.0</selenium.devtools.version>
+        <selenium.devtools.version>4.35.0</selenium.devtools.version>
 
         <!-- Selenium -->
         <selenium.version>4.34.0</selenium.version>
