@@ -41,6 +41,7 @@
 
         <!-- Versions -->
         <revision>2.0.0</revision>
+        <com.fasterxml.jackson-annotations.version>2.20</com.fasterxml.jackson-annotations.version>
         <com.fasterxml.jackson.version>2.20.0</com.fasterxml.jackson.version>
         <log4j.version>1.2.17-atlassian-18</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
@@ -140,11 +141,10 @@
         <okhttp.version>5.1.0</okhttp.version>
 
         <!-- Hibernate -->
-        <hibernate.version>6.4.3.Final</hibernate.version>
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
-        <hibernate-jcache.version>7.1.1.Final</hibernate-jcache.version>
-        <hibernate-c3p0.version>7.1.1.Final</hibernate-c3p0.version>
-        <ehcache.version>3.11.1</ehcache.version>
+        <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
+        <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
+        <ehcache.version>3.10.8</ehcache.version>
         <postgresql.version>42.7.8</postgresql.version>
 
         <!-- Kubernetes -->
@@ -651,7 +651,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>${com.fasterxml.jackson.version}</version>
+                <version>${com.fasterxml.jackson-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
@@ -768,6 +768,17 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>properties</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
@@ -807,6 +818,7 @@
                             --add-opens java.base/sun.util.calendar=ALL-UNNAMED
                             --add-opens java.base/java.time.zone=ALL-UNNAMED
                             -Xmx2g
+                            -XX:+EnableDynamicAgentLoading
                             -Djava.net.preferIPv4Stack=true
                             -Duser.timezone=America/New_York
                             @{argLine}

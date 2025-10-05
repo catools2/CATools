@@ -11,6 +11,7 @@
         <class>org.catools.etl.k8s.model.CEtlKubePod</class>
         <class>org.catools.etl.k8s.model.CEtlKubePodStatus</class>
         <class>org.catools.etl.k8s.model.CEtlKubeProject</class>
+        <class>org.catools.k8s.model.CKubePod</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="${CATOOLS_K8S_JDBC_DRIVER}"/>

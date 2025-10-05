@@ -4,13 +4,12 @@ import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.TestMethodType;
 import com.epam.reportportal.testng.TestNGService;
 import com.epam.ta.reportportal.ws.model.StartTestItemRQ;
+import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.config.CTestManagementConfigs;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.reportportal.configs.CRPConfigs;
 import org.testng.ITestResult;
-
-import javax.annotation.Nonnull;
 
 /**
  * 99% copied from com.epam.reportportal.testng.TestNGService We need to have it separated with

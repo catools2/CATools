@@ -26,8 +26,8 @@ public class CEtlKubeLoader {
   /**
    * Transfer KubePods from common.k8s package and load them to DB
    *
-   * @param projectName
-   * @param pods
+   * @param projectName Project name to assign to all pods
+   * @param pods        Pods to load
    */
   public static void loadPods(String projectName, CKubePods pods, int totalParallelProcessors) {
     Iterator<CKubePod> podsToLoad = pods.iterator();
@@ -59,9 +59,9 @@ public class CEtlKubeLoader {
   /**
    * Transfer KubePod to ETLKubePod and return the result
    *
-   * @param projectName
-   * @param pod
-   * @return
+   * @param projectName Project name to assign to the pod
+   * @param pod       Pod to translate
+   * @return Translated ETLKubePod
    */
   public static CEtlKubePod translatePod(String projectName, CKubePod pod, CDate loadTime) {
     Objects.requireNonNull(pod.getStatus(), "Pod status is required");
