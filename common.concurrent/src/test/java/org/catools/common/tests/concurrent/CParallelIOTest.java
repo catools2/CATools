@@ -144,7 +144,7 @@ public class CParallelIOTest {
     CParallelIO<String> parallelIO = new CParallelIO<>("CParallelIO", 10, 2, 1L, TimeUnit.SECONDS);
     parallelIO.setInputExecutor(
         atomicBoolean -> {
-          if (counter.getAndIncrement() > 20) {
+          if (counter.getAndIncrement() > 22) {
             atomicBoolean.set(true);
           }
           return "1";
