@@ -24,7 +24,7 @@ public class CKubeUtilTest {
     CoreV1Api api = mock(CoreV1Api.class);
     String podListData = CResourceUtil.getString("podList.json", CKubeUtilTest.class);
     V1PodList read = CJsonUtil.read(podListData, V1PodList.class);
-    when(api.listNamespacedPod(any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(read);
+    when(api.listNamespacedPod(any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(read);
     CKubePods pods = CKubeUtil.getNamespacePods(api, "default");
     return pods;
   }

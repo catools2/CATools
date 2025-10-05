@@ -48,7 +48,7 @@ public class CKubeUtil {
     CKubePods pods = new CKubePods();
 
     try {
-      V1PodList podList = api.listNamespacedPod(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, timeoutSeconds, watch);
+      V1PodList podList = api.listNamespacedPod(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, false, timeoutSeconds, watch);
       podList.getItems().forEach(pod -> pods.add(readPod(pod)));
       return pods;
     } catch (ApiException e) {

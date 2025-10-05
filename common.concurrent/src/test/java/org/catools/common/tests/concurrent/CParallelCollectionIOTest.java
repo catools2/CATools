@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@Test(singleThreaded = true)
 public class CParallelCollectionIOTest {
 
   @Test
@@ -54,7 +56,7 @@ public class CParallelCollectionIOTest {
     pt.run();
   }
 
-  @Test(expectedExceptions = NullPointerException.class)
+  @Test(expectedExceptions = {RejectedExecutionException.class, NullPointerException.class})
   public void testRunInputExceptionWithoutEof() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 1);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));

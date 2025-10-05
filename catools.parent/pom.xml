@@ -40,133 +40,133 @@
         <maven.compiler.target>21</maven.compiler.target>
 
         <!-- Versions -->
-        <revision>0.0.1</revision>
-        <com.fasterxml.jackson.version>2.18.0</com.fasterxml.jackson.version>
+        <revision>2.0.0</revision>
+        <com.fasterxml.jackson-annotations.version>2.20</com.fasterxml.jackson-annotations.version>
+        <com.fasterxml.jackson.version>2.20.0</com.fasterxml.jackson.version>
         <log4j.version>1.2.17-atlassian-18</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <apache-log4j.version>2.24.1</apache-log4j.version>
-        <lombok.version>1.18.34</lombok.version>
-        <typesafe.version>1.4.3</typesafe.version>
+        <apache-log4j.version>2.25.2</apache-log4j.version>
+        <lombok.version>1.18.42</lombok.version>
+        <typesafe.version>1.4.5</typesafe.version>
         <json-path.version>2.9.0</json-path.version>
-        <json-smart.version>2.5.2</json-smart.version>
-        <spring.version>6.1.13</spring.version>
-        <jira-rest-java-client-core.version>6.0.1</jira-rest-java-client-core.version>
-        <fugue.version>6.1.0</fugue.version>
-        <rest-assured.version>5.5.0</rest-assured.version>
-        <json.version>20240303</json.version>
+        <json-smart.version>2.6.0</json-smart.version>
+        <spring.version>6.2.11</spring.version>
+        <jira-rest-java-client-core.version>7.0.1</jira-rest-java-client-core.version>
+        <fugue.version>6.1.2</fugue.version>
+        <rest-assured.version>5.5.6</rest-assured.version>
+        <json.version>20250517</json.version>
         <generex.version>1.0.2</generex.version>
-        <libphonenumber.version>8.13.47</libphonenumber.version>
-        <boofcv.version>1.1.6</boofcv.version>
+        <libphonenumber.version>9.0.15</libphonenumber.version>
+        <boofcv.version>1.2.3</boofcv.version>
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
-        <guava.version>33.4.8-jre</guava.version>
-        <testng.version>7.10.2</testng.version>
+        <guava.version>33.5.0-jre</guava.version>
+        <testng.version>7.11.0</testng.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <apache-commons-collections4.version>4.5.0-M2</apache-commons-collections4.version>
-        <apache-commons-csv.version>1.12.0</apache-commons-csv.version>
-        <apache-commons-lang3.version>3.17.0</apache-commons-lang3.version>
-        <apache-commons-text.version>1.12.0</apache-commons-text.version>
-        <commons-io.version>2.17.0</commons-io.version>
-        <assertj-core.version>3.26.3</assertj-core.version>
+        <apache-commons-collections4.version>4.5.0</apache-commons-collections4.version>
+        <apache-commons-csv.version>1.14.1</apache-commons-csv.version>
+        <apache-commons-lang3.version>3.19.0</apache-commons-lang3.version>
+        <apache-commons-text.version>1.14.0</apache-commons-text.version>
+        <commons-io.version>2.20.0</commons-io.version>
+        <assertj-core.version>3.27.6</assertj-core.version>
         <groovy.version>3.0.25</groovy.version>
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
-        <jansi.version>2.4.1</jansi.version>
-        <jgit.version>6.6.0.202305301015-r</jgit.version>
-        <logger-java-log4j.version>5.2.2</logger-java-log4j.version>
+        <jansi.version>2.4.2</jansi.version>
+        <jgit.version>7.3.0.202506031305-r</jgit.version>
+        <logger-java-log4j.version>5.4.0</logger-java-log4j.version>
         <concurrentlinkedhashmap-lru.version>1.4.2</concurrentlinkedhashmap-lru.version>
         <vault-java-driver.version>5.1.0</vault-java-driver.version>
         <diff-match-patch.version>1.2</diff-match-patch.version>
-        <cloning.version>1.10.3</cloning.version>
+        <cloning.version>1.12.0</cloning.version>
 
         <!-- testing -->
-        <mockito-testng.version>0.5.2</mockito-testng.version>
-        <mockito-core.version>5.14.1</mockito-core.version>
-        <byte-buddy.version>1.15.4</byte-buddy.version>
+        <mockito-testng.version>0.5.4</mockito-testng.version>
+        <mockito-core.version>5.20.0</mockito-core.version>
+        <byte-buddy.version>1.17.7</byte-buddy.version>
 
         <!-- influxdb -->
         <influxdb-client-java.version>6.6.0</influxdb-client-java.version>
 
         <!-- tracing -->
-        <opentelemetry.version>1.51.0</opentelemetry.version>
-        <opentelemetry-semconv.version>1.34.0</opentelemetry-semconv.version>
+        <opentelemetry.version>1.54.1</opentelemetry.version>
+        <opentelemetry-semconv.version>1.37.0</opentelemetry-semconv.version>
 
         <!-- log4j -->
-        <slf4j-api.version>2.0.12</slf4j-api.version>
-        <log4j-slf4j2-impl.version>2.24.1</log4j-slf4j2-impl.version>
+        <slf4j-api.version>2.0.17</slf4j-api.version>
+        <log4j-slf4j2-impl.version>2.25.2</log4j-slf4j2-impl.version>
 
         <!-- Athena -->
         <athena-core.version>1-20240501.1423</athena-core.version>
         <athena-feign.version>1-20250630.0553</athena-feign.version>
-        <feign.version>13.4</feign.version>
+        <feign.version>13.6</feign.version>
 
         <!-- Javax -->
-        <jaxb-core.version>4.0.5</jaxb-core.version>
-        <jaxb-impl.version>4.0.5</jaxb-impl.version>
+        <jaxb-core.version>4.0.6</jaxb-core.version>
+        <jaxb-impl.version>4.0.6</jaxb-impl.version>
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
-        <jaxb-runtime.version>4.0.5</jaxb-runtime.version>
+        <jaxb-runtime.version>4.0.6</jaxb-runtime.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
         <jaxws-api.version>2.3.1</jaxws-api.version>
         <javax-activation.version>1.2.0</javax-activation.version>
 
         <!-- Unit Test -->
-        <jacoco.version>0.8.10</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
 
         <!-- POI -->
-        <poi.version>5.3.0</poi.version>
+        <poi.version>5.4.1</poi.version>
 
         <!-- Extent Reports -->
         <extent.reports.version>5.1.2</extent.reports.version>
 
         <!-- Selenium Devtools -->
         <selenium-devtools.artifactId>selenium-devtools-v138</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.34.0</selenium.devtools.version>
+        <selenium.devtools.version>4.36.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.34.0</selenium.version>
+        <selenium.version>4.36.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
-        <selenium-axe.version>4.9.1</selenium-axe.version>
+        <selenium-axe.version>4.10.2</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
-        <webdrivermanager.version>6.2.0</webdrivermanager.version>
+        <webdrivermanager.version>6.3.2</webdrivermanager.version>
 
         <!-- Report Portal -->
-        <reportportal.version>5.2.14</reportportal.version>
-        <rp-java-testng.version>5.4.2</rp-java-testng.version>
-        <rp.commons-model.version>5.3.3</rp.commons-model.version>
-        <retrofit.version>2.11.0</retrofit.version>
+        <reportportal.version>5.4.3</reportportal.version>
+        <rp-java-testng.version>5.6.2</rp-java-testng.version>
+        <rp.commons-model.version>5.12.0</rp.commons-model.version>
+        <retrofit.version>3.0.0</retrofit.version>
         <rxjava.version>2.2.21</rxjava.version>
-        <okhttp.version>4.12.0</okhttp.version>
+        <okhttp.version>5.1.0</okhttp.version>
 
         <!-- Hibernate -->
-        <hibernate.version>6.4.3.Final</hibernate.version>
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
         <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
         <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
         <ehcache.version>3.10.8</ehcache.version>
-        <postgresql.version>42.7.4</postgresql.version>
+        <postgresql.version>42.7.8</postgresql.version>
 
         <!-- Kubernetes -->
-        <kubernetes.client-java.version>18.0.1</kubernetes.client-java.version>
+        <kubernetes.client-java.version>24.0.0-legacy</kubernetes.client-java.version>
         <!-- /Kubernetes -->
 
         <!-- Test Containers -->
-        <testcontainers.version>1.20.2</testcontainers.version>
+        <testcontainers.version>1.21.3</testcontainers.version>
 
         <!-- LOG LEVEL -->
         <logger.console.log.level>trace</logger.console.log.level>
 
         <!-- maven plugins -->
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.10.1</maven-javadoc-plugin.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-clean-plugin.version>3.4.0</maven-clean-plugin.version>
-        <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
-        <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+        <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
 
         <!-- surefire -->
         <argLine/>
@@ -651,7 +651,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>${com.fasterxml.jackson.version}</version>
+                <version>${com.fasterxml.jackson-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
@@ -768,6 +768,17 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>properties</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
@@ -807,6 +818,7 @@
                             --add-opens java.base/sun.util.calendar=ALL-UNNAMED
                             --add-opens java.base/java.time.zone=ALL-UNNAMED
                             -Xmx2g
+                            -XX:+EnableDynamicAgentLoading
                             -Djava.net.preferIPv4Stack=true
                             -Duser.timezone=America/New_York
                             @{argLine}
