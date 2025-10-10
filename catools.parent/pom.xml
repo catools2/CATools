@@ -56,8 +56,8 @@
         <rest-assured.version>5.5.6</rest-assured.version>
         <json.version>20250517</json.version>
         <generex.version>1.0.2</generex.version>
-        <libphonenumber.version>9.0.15</libphonenumber.version>
-        <boofcv.version>1.2.3</boofcv.version>
+        <libphonenumber.version>9.0.16</libphonenumber.version>
+        <boofcv.version>1.2.4</boofcv.version>
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
@@ -74,7 +74,7 @@
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
         <jansi.version>2.4.2</jansi.version>
-        <jgit.version>7.3.0.202506031305-r</jgit.version>
+        <jgit.version>7.4.0.202509020913-r</jgit.version>
         <logger-java-log4j.version>5.4.0</logger-java-log4j.version>
         <concurrentlinkedhashmap-lru.version>1.4.2</concurrentlinkedhashmap-lru.version>
         <vault-java-driver.version>5.1.0</vault-java-driver.version>
@@ -84,7 +84,7 @@
         <!-- testing -->
         <mockito-testng.version>0.5.4</mockito-testng.version>
         <mockito-core.version>5.20.0</mockito-core.version>
-        <byte-buddy.version>1.17.7</byte-buddy.version>
+        <byte-buddy.version>1.17.8</byte-buddy.version>
 
         <!-- influxdb -->
         <influxdb-client-java.version>6.6.0</influxdb-client-java.version>
@@ -138,13 +138,13 @@
         <rp.commons-model.version>5.12.0</rp.commons-model.version>
         <retrofit.version>3.0.0</retrofit.version>
         <rxjava.version>2.2.21</rxjava.version>
-        <okhttp.version>5.1.0</okhttp.version>
+        <okhttp.version>5.2.1</okhttp.version>
 
         <!-- Hibernate -->
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
-        <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
-        <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
-        <ehcache.version>3.10.8</ehcache.version>
+        <hibernate-jcache.version>7.1.3.Final</hibernate-jcache.version>
+        <hibernate-c3p0.version>7.1.3.Final</hibernate-c3p0.version>
+        <ehcache.version>3.11.1</ehcache.version>
         <postgresql.version>42.7.8</postgresql.version>
 
         <!-- Kubernetes -->
