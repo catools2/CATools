@@ -1,4 +1,4 @@
-package org.catools.mcp.common;
+package org.catools.common.concurrent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * A thread factory that creates threads with a specified name prefix.
  */
 @Slf4j
-public final class CNamedThreadFactory implements ThreadFactory {
+public final class CNamedThread implements ThreadFactory {
 
   /**
    * The pool number counter for threads created by this factory.
@@ -31,7 +31,7 @@ public final class CNamedThreadFactory implements ThreadFactory {
    *
    * @param namePrefix the name prefix for threads created by this factory
    */
-  public CNamedThreadFactory(String namePrefix) {
+  public CNamedThread(String namePrefix) {
     this.namePrefix = namePrefix + "-" + poolNumber.getAndIncrement() + "-thread-";
   }
 

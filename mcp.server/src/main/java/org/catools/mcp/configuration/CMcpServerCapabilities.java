@@ -9,16 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * capabilities.
  */
 public record CMcpServerCapabilities(
-        @JsonProperty("resource") boolean resource,
-        @JsonProperty("prompt") boolean prompt,
-        @JsonProperty("tool") boolean tool) {
+    @JsonProperty("resource") boolean resource,
+    @JsonProperty("prompt") boolean prompt,
+    @JsonProperty("tool") boolean tool) {
 
-    /**
-     * Creates a new instance of {@code McpServerCapabilities} with default values.
-     *
-     * <p>By default, all capabilities are set to {@code true}.
-     */
-    public CMcpServerCapabilities() {
-        this(true, true, true);
-    }
+  /**
+   * Creates a new instance of {@code McpServerCapabilities} with default values.
+   *
+   * <p>By default, all capabilities are set to {@code true}.
+   */
+  public CMcpServerCapabilities() {
+    this(true, true, true);
+  }
 }

@@ -13,208 +13,208 @@ import java.time.Duration;
  */
 public class CMcpStreamableServerInfo extends CMcpServerInfo {
 
-    /**
-     * The port of the MCP HTTP server.
-     */
-    private final int port;
+  /**
+   * The port of the MCP HTTP server.
+   */
+  private final int port;
+
+  /**
+   * The endpoint of the MCP server to send messages.
+   */
+  private final String mcpEndpoint;
+
+  /**
+   * Whether to disallow http delete requests.
+   */
+  private final boolean disallowDelete;
+
+  /**
+   * The extractor to extract the transport context from the HTTP request.
+   */
+  private final McpTransportContextExtractor<HttpServletRequest> contextExtractor;
+
+  /**
+   * The interval to send keep-alive messages.
+   */
+  private final Duration keepAliveInterval;
+
+  /**
+   * Constructs a new {@code McpStreamableServerInfo} instance with the specified builder.
+   *
+   * @param builder the builder to construct the instance
+   */
+  private CMcpStreamableServerInfo(Builder builder) {
+    super(builder);
+    this.port = builder.port;
+    this.mcpEndpoint = builder.mcpEndpoint;
+    this.disallowDelete = builder.disallowDelete;
+    this.contextExtractor = builder.contextExtractor;
+    this.keepAliveInterval = builder.keepAliveInterval;
+  }
+
+  /**
+   * Returns a new builder instance to construct a {@code McpStreamableServerInfo} instance.
+   *
+   * @return a new builder instance
+   */
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  /**
+   * Returns the port of the MCP HTTP server.
+   *
+   * @return the port of the MCP HTTP server
+   */
+  public int port() {
+    return port;
+  }
+
+  /**
+   * Returns the endpoint of the MCP server to send messages.
+   *
+   * @return the endpoint of the MCP server to send messages
+   */
+  public String mcpEndpoint() {
+    return mcpEndpoint;
+  }
+
+  /**
+   * Returns whether to disallow http delete requests.
+   *
+   * @return whether to disallow http delete requests
+   */
+  public boolean disallowDelete() {
+    return disallowDelete;
+  }
+
+  /**
+   * Returns the extractor to extract the transport context from the HTTP request.
+   *
+   * @return the extractor to extract the transport context from the HTTP request
+   */
+  public McpTransportContextExtractor<HttpServletRequest> contextExtractor() {
+    return contextExtractor;
+  }
+
+  /**
+   * Returns the interval to send keep-alive messages.
+   *
+   * @return the interval to send keep-alive messages
+   */
+  public Duration keepAliveInterval() {
+    return keepAliveInterval;
+  }
+
+  /**
+   * The builder class for {@code McpStreamableServerInfo}.
+   *
+   * @see CMcpStreamableServerInfo
+   */
+  public static class Builder extends CMcpServerInfo.Builder<Builder> {
 
     /**
-     * The endpoint of the MCP server to send messages.
+     * The port of the MCP HTTP server. Default value is {@code 8080}.
      */
-    private final String mcpEndpoint;
+    private int port = 8080;
 
     /**
-     * Whether to disallow http delete requests.
+     * The endpoint of the MCP server to send messages. Default value is {@code /mcp}.
      */
-    private final boolean disallowDelete;
+    private String mcpEndpoint = "/mcp";
 
     /**
-     * The extractor to extract the transport context from the HTTP request.
+     * Whether to disallow http delete requests. Default value is {@code false}.
      */
-    private final McpTransportContextExtractor<HttpServletRequest> contextExtractor;
+    private boolean disallowDelete = false;
 
     /**
-     * The interval to send keep-alive messages.
+     * The extractor to extract the transport context from the HTTP request. Default value is {@code
+     * request -> McpTransportContext.EMPTY}.
      */
-    private final Duration keepAliveInterval;
+    private McpTransportContextExtractor<HttpServletRequest> contextExtractor =
+        request -> McpTransportContext.EMPTY;
 
     /**
-     * Constructs a new {@code McpStreamableServerInfo} instance with the specified builder.
+     * The interval to send keep-alive messages. Default value is {@code null}, which means no
+     * keep-alive messages will be sent.
+     */
+    private Duration keepAliveInterval;
+
+    /**
+     * Returns the self reference of the builder, which is used to chain the method calls.
      *
-     * @param builder the builder to construct the instance
+     * @return the self reference of the builder
      */
-    private CMcpStreamableServerInfo(Builder builder) {
-        super(builder);
-        this.port = builder.port;
-        this.mcpEndpoint = builder.mcpEndpoint;
-        this.disallowDelete = builder.disallowDelete;
-        this.contextExtractor = builder.contextExtractor;
-        this.keepAliveInterval = builder.keepAliveInterval;
+    @Override
+    protected Builder self() {
+      return this;
     }
 
     /**
-     * Returns a new builder instance to construct a {@code McpStreamableServerInfo} instance.
+     * Builds a new {@code McpStreamableServerInfo} instance with the specified builder.
      *
-     * @return a new builder instance
+     * @return a new {@code McpStreamableServerInfo} instance
      */
-    public static Builder builder() {
-        return new Builder();
+    @Override
+    public CMcpStreamableServerInfo build() {
+      return new CMcpStreamableServerInfo(this);
     }
 
     /**
-     * Returns the port of the MCP HTTP server.
+     * Sets the port of the MCP HTTP server.
      *
-     * @return the port of the MCP HTTP server
+     * @param port the port of the MCP HTTP server
+     * @return the self reference of the builder
      */
-    public int port() {
-        return port;
+    public Builder port(int port) {
+      this.port = port;
+      return self();
     }
 
     /**
-     * Returns the endpoint of the MCP server to send messages.
+     * Sets the endpoint of the MCP server to send messages.
      *
-     * @return the endpoint of the MCP server to send messages
+     * @param mcpEndpoint the endpoint of the MCP server to send messages
+     * @return the self reference of the builder
      */
-    public String mcpEndpoint() {
-        return mcpEndpoint;
+    public Builder mcpEndpoint(String mcpEndpoint) {
+      this.mcpEndpoint = mcpEndpoint;
+      return self();
     }
 
     /**
-     * Returns whether to disallow http delete requests.
+     * Sets whether to disallow http delete requests.
      *
-     * @return whether to disallow http delete requests
+     * @param disallowDelete whether to disallow http delete requests
+     * @return the self reference of the builder
      */
-    public boolean disallowDelete() {
-        return disallowDelete;
+    public Builder disallowDelete(boolean disallowDelete) {
+      this.disallowDelete = disallowDelete;
+      return self();
     }
 
     /**
-     * Returns the extractor to extract the transport context from the HTTP request.
+     * Sets the extractor to extract the transport context from the HTTP request.
      *
-     * @return the extractor to extract the transport context from the HTTP request
+     * @param contextExtractor the extractor to extract the transport context from the HTTP request
+     * @return the self reference of the builder
      */
-    public McpTransportContextExtractor<HttpServletRequest> contextExtractor() {
-        return contextExtractor;
+    public Builder contextExtractor(
+        McpTransportContextExtractor<HttpServletRequest> contextExtractor) {
+      this.contextExtractor = contextExtractor;
+      return self();
     }
 
     /**
-     * Returns the interval to send keep-alive messages.
+     * Sets the interval to send keep-alive messages.
      *
-     * @return the interval to send keep-alive messages
+     * @param keepAliveInterval the interval to send keep-alive messages
+     * @return the self reference of the builder
      */
-    public Duration keepAliveInterval() {
-        return keepAliveInterval;
+    public Builder keepAliveInterval(Duration keepAliveInterval) {
+      this.keepAliveInterval = keepAliveInterval;
+      return self();
     }
-
-    /**
-     * The builder class for {@code McpStreamableServerInfo}.
-     *
-     * @see CMcpStreamableServerInfo
-     */
-    public static class Builder extends CMcpServerInfo.Builder<Builder> {
-
-        /**
-         * The port of the MCP HTTP server. Default value is {@code 8080}.
-         */
-        private int port = 8080;
-
-        /**
-         * The endpoint of the MCP server to send messages. Default value is {@code /mcp}.
-         */
-        private String mcpEndpoint = "/mcp";
-
-        /**
-         * Whether to disallow http delete requests. Default value is {@code false}.
-         */
-        private boolean disallowDelete = false;
-
-        /**
-         * The extractor to extract the transport context from the HTTP request. Default value is {@code
-         * request -> McpTransportContext.EMPTY}.
-         */
-        private McpTransportContextExtractor<HttpServletRequest> contextExtractor =
-                request -> McpTransportContext.EMPTY;
-
-        /**
-         * The interval to send keep-alive messages. Default value is {@code null}, which means no
-         * keep-alive messages will be sent.
-         */
-        private Duration keepAliveInterval;
-
-        /**
-         * Returns the self reference of the builder, which is used to chain the method calls.
-         *
-         * @return the self reference of the builder
-         */
-        @Override
-        protected Builder self() {
-            return this;
-        }
-
-        /**
-         * Builds a new {@code McpStreamableServerInfo} instance with the specified builder.
-         *
-         * @return a new {@code McpStreamableServerInfo} instance
-         */
-        @Override
-        public CMcpStreamableServerInfo build() {
-            return new CMcpStreamableServerInfo(this);
-        }
-
-        /**
-         * Sets the port of the MCP HTTP server.
-         *
-         * @param port the port of the MCP HTTP server
-         * @return the self reference of the builder
-         */
-        public Builder port(int port) {
-            this.port = port;
-            return self();
-        }
-
-        /**
-         * Sets the endpoint of the MCP server to send messages.
-         *
-         * @param mcpEndpoint the endpoint of the MCP server to send messages
-         * @return the self reference of the builder
-         */
-        public Builder mcpEndpoint(String mcpEndpoint) {
-            this.mcpEndpoint = mcpEndpoint;
-            return self();
-        }
-
-        /**
-         * Sets whether to disallow http delete requests.
-         *
-         * @param disallowDelete whether to disallow http delete requests
-         * @return the self reference of the builder
-         */
-        public Builder disallowDelete(boolean disallowDelete) {
-            this.disallowDelete = disallowDelete;
-            return self();
-        }
-
-        /**
-         * Sets the extractor to extract the transport context from the HTTP request.
-         *
-         * @param contextExtractor the extractor to extract the transport context from the HTTP request
-         * @return the self reference of the builder
-         */
-        public Builder contextExtractor(
-                McpTransportContextExtractor<HttpServletRequest> contextExtractor) {
-            this.contextExtractor = contextExtractor;
-            return self();
-        }
-
-        /**
-         * Sets the interval to send keep-alive messages.
-         *
-         * @param keepAliveInterval the interval to send keep-alive messages
-         * @return the self reference of the builder
-         */
-        public Builder keepAliveInterval(Duration keepAliveInterval) {
-            this.keepAliveInterval = keepAliveInterval;
-            return self();
-        }
-    }
+  }
 }

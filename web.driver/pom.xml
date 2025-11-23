@@ -38,6 +38,11 @@
             <artifactId>media</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>mcp.core</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- ######################  /CATS ######################### -->
         <!-- ######################### Selenium ########################### -->
         <dependency>
@@ -89,7 +94,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>selenium</artifactId>
+            <artifactId>testcontainers-selenium</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- ###################### /Test Containers ######################### -->

@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>selenium</artifactId>
+            <artifactId>testcontainers-selenium</artifactId>
         </dependency>
         <!-- ###################### /Test Containers ######################### -->
     </dependencies>

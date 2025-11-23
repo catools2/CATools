@@ -23,7 +23,7 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  */
-public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtension<O>, CObjectVerifier<O, CImageComparisonState<O>> {
+public interface CImageComparisonVerifier extends CBaseImageComparisonExtension, CObjectVerifier<BufferedImage, CImageComparisonState> {
 
   /**
    * Verify if actual is null
@@ -40,7 +40,7 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * @param verifier CVerificationQueue instance
    */
   default void verifyIsNull(final CVerificationQueue verifier, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNull(), message, params);
+    _verify(verifier, (BufferedImage) null, (a, b) -> _toState(a).isNull(), message, params);
   }
 
   /**
@@ -56,7 +56,7 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * Verify if actual is NOT null
    */
   default void verifyIsNotNull(final CVerificationQueue verifier, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNotNull(), message, params);
+    _verify(verifier, (BufferedImage) null, (a, b) -> _toState(a).isNotNull(), message, params);
   }
 
   /**
@@ -82,7 +82,7 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * @param params       parameters in case if message is a format {@link String#format}
    */
   default void verifyEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
-    _verify(verifier,
+    _verify_with_failure_handler(verifier,
         expected,
         (a, b) -> _toState(a).isEqual(b),
         (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32),
@@ -157,7 +157,8 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * @param params       parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
-    _verify(verifier, expected,
+    _verify_with_failure_handler(verifier,
+        expected,
         (a, b) -> _toState(a).isNotEqual(b),
         (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32),
         message,
@@ -233,7 +234,7 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsAny(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
   }
 
   /**
@@ -261,7 +262,7 @@ public interface CImageComparisonVerifier<O> extends CBaseImageComparisonExtensi
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsNone(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
   }
 
 

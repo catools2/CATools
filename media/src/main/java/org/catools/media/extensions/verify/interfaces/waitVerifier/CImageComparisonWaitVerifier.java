@@ -21,7 +21,7 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  */
-public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<O> {
+public interface CImageComparisonWaitVerifier extends CImageComparisonVerify {
 
   /**
    * Verify if actual is null
@@ -51,7 +51,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param waitInSeconds maximum wait time
    */
   default void verifyIsNull(final CVerificationQueue verifier, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNull(), waitInSeconds, message, params);
+    _verify(verifier, null, (a, b) -> _toState(a).isNull(), waitInSeconds, message, params);
   }
 
   /**
@@ -62,7 +62,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyIsNull(final CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNull(), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify(verifier, null, (a, b) -> _toState(a).isNull(), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
@@ -93,7 +93,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param waitInSeconds maximum wait time
    */
   default void verifyIsNotNull(final CVerificationQueue verifier, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNotNull(), waitInSeconds, message, params);
+    _verify(verifier, null, (a, b) -> _toState(a).isNotNull(), waitInSeconds, message, params);
   }
 
   /**
@@ -104,7 +104,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyIsNotNull(final CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, (O) null, (a, b) -> _toState(a).isNotNull(), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify(verifier, null, (a, b) -> _toState(a).isNotNull(), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
@@ -146,7 +146,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params        parameters in case if message is a format {@link String#format}
    */
   default void verifyEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, b) -> _toState(a).isEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, b) -> _toState(a).isEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, message, params);
   }
 
   /**
@@ -162,7 +162,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, b) -> _toState(a).isEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, b) -> _toState(a).isEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
@@ -304,7 +304,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params        parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, b) -> _toState(a).isNotEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, b) -> _toState(a).isNotEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, message, params);
   }
 
   /**
@@ -320,7 +320,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEquals(final CVerificationQueue verifier, final BufferedImage expected, final String diffFileName, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, b) -> _toState(a).isNotEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, b) -> _toState(a).isNotEqual(b), (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
@@ -465,7 +465,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsAny(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, message, params);
   }
 
   /**
@@ -482,7 +482,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsAny(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
@@ -527,7 +527,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsNone(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final int waitInSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, message, params);
   }
 
   /**
@@ -544,7 +544,7 @@ public interface CImageComparisonWaitVerifier<O> extends CImageComparisonVerify<
    * @param params                 parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsNone(final CVerificationQueue verifier, final Iterable<?> expected, final String diffFileNamePrefix, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify_with_failure_handler(verifier, expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**

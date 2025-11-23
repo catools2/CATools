@@ -14,14 +14,14 @@ import java.io.File;
  * Image verification class contains all verification method which is related to Image
  */
 @Slf4j
-public class CImageComparisonVerification<O> extends CBaseVerification {
+public class CImageComparisonVerification extends CBaseVerification {
 
   /**
    * Verify actual is null
    *
    * @return execution result
    */
-  public void isNull(final O actual) {
+  public void isNull(final BufferedImage actual) {
     toVerifier(actual).verifyIsNull();
   }
 
@@ -30,7 +30,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @return execution result
    */
-  public void isNull(final O actual, final String message, final Object... params) {
+  public void isNull(final BufferedImage actual, final String message, final Object... params) {
     toVerifier(actual).verifyIsNull(message, params);
   }
 
@@ -39,7 +39,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @return execution result
    */
-  public void isNotNull(final O actual) {
+  public void isNotNull(final BufferedImage actual) {
     toVerifier(actual).verifyIsNotNull();
   }
 
@@ -48,7 +48,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @return execution result
    */
-  public void isNotNull(final O actual, final String message, final Object... params) {
+  public void isNotNull(final BufferedImage actual, final String message, final Object... params) {
     toVerifier(actual).verifyIsNotNull(message, params);
   }
 
@@ -59,7 +59,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param diffFileName the file name for diff image which should be generated in case if images
    *                     did not match
    */
-  public void equals(final O actual, final BufferedImage expected, final String diffFileName) {
+  public void equals(final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
     toVerifier(actual).verifyEquals(expected, diffFileName);
   }
 
@@ -72,7 +72,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void equals(final O actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
+  public void equals(final BufferedImage actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
     toVerifier(actual).verifyEquals(expected, diffFileName, message, params);
   }
 
@@ -81,7 +81,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @param expected value to compare
    */
-  public void equals(final O actual, final CFile expected) {
+  public void equals(final BufferedImage actual, final CFile expected) {
     toVerifier(actual).verifyEquals(expected);
   }
 
@@ -92,7 +92,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equals(final O actual, final CFile expected, final String message, final Object... params) {
+  public void equals(final BufferedImage actual, final CFile expected, final String message, final Object... params) {
     toVerifier(actual).verifyEquals(expected, message, params);
   }
 
@@ -101,7 +101,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @param expected value to compare
    */
-  public void equals(final O actual, final CResource expected) {
+  public void equals(final BufferedImage actual, final CResource expected) {
     toVerifier(actual).verifyEquals(expected);
   }
 
@@ -112,7 +112,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void equals(final O actual, final CResource expected, final String message, final Object... params) {
+  public void equals(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
     toVerifier(actual).verifyEquals(expected, message, params);
   }
 
@@ -123,7 +123,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param diffFileName the file name for diff image which should be generated in case if images
    *                     did not match
    */
-  public void notEquals(final O actual, final BufferedImage expected, final String diffFileName) {
+  public void notEquals(final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
     toVerifier(actual).verifyNotEquals(expected, diffFileName);
   }
 
@@ -136,7 +136,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message      information about the purpose of this verification
    * @param params       parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final O actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
+  public void notEquals(final BufferedImage actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, diffFileName, message, params);
   }
 
@@ -145,7 +145,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @param expected value to compare
    */
-  public void notEquals(final O actual, final CFile expected) {
+  public void notEquals(final BufferedImage actual, final CFile expected) {
     toVerifier(actual).verifyNotEquals(expected);
   }
 
@@ -156,7 +156,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final O actual, final CFile expected, final String message, final Object... params) {
+  public void notEquals(final BufferedImage actual, final CFile expected, final String message, final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
@@ -165,7 +165,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *
    * @param expected value to compare
    */
-  public void notEquals(final O actual, final CResource expected) {
+  public void notEquals(final BufferedImage actual, final CResource expected) {
     toVerifier(actual).verifyNotEquals(expected);
   }
 
@@ -176,7 +176,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message  information about the purpose of this verification
    * @param params   parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final O actual, final CResource expected, final String message, final Object... params) {
+  public void notEquals(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
@@ -188,7 +188,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *                           name.
    * @param expected           value to compare
    */
-  public void equalsAny(final O actual, final Iterable<?> expected, final String diffFileNamePrefix) {
+  public void equalsAny(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
     toVerifier(actual).verifyEqualsAny(expected, diffFileNamePrefix);
   }
 
@@ -202,7 +202,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message            information about the purpose of this verification
    * @param params             parameters in case if message is a format {@link String#format}
    */
-  public void equalsAny(final O actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
+  public void equalsAny(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
     toVerifier(actual).verifyEqualsAny(expected, diffFileNamePrefix, message, params);
   }
 
@@ -214,7 +214,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *                           name.
    * @param expected           value to compare
    */
-  public void equalsNone(final O actual, final Iterable<?> expected, final String diffFileNamePrefix) {
+  public void equalsNone(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
     toVerifier(actual).verifyEqualsNone(expected, diffFileNamePrefix);
   }
 
@@ -228,7 +228,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param message            information about the purpose of this verification
    * @param params             parameters in case if message is a format {@link String#format}
    */
-  public void equalsNone(final O actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
+  public void equalsNone(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
     toVerifier(actual).verifyEqualsNone(expected, diffFileNamePrefix, message, params);
   }
 
@@ -239,7 +239,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected) {
+  public void contains(final BufferedImage actual, final BufferedImage expected) {
     toVerifier(actual).verifyContains(expected);
   }
 
@@ -251,7 +251,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
@@ -261,7 +261,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void contains(final O actual, final File expected) {
+  public void contains(final BufferedImage actual, final File expected) {
     toVerifier(actual).verifyContains(expected);
   }
 
@@ -273,7 +273,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
@@ -283,7 +283,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected) {
+  public void contains(final BufferedImage actual, final CResource expected) {
     toVerifier(actual).verifyContains(expected);
   }
 
@@ -295,7 +295,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
@@ -306,7 +306,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
@@ -319,7 +319,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
@@ -330,7 +330,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
@@ -343,7 +343,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
@@ -354,7 +354,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
@@ -367,7 +367,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
@@ -379,7 +379,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
@@ -393,7 +393,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -405,7 +405,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
@@ -419,7 +419,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -431,7 +431,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
@@ -445,7 +445,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -458,7 +458,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -473,7 +473,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -486,7 +486,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -501,7 +501,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -514,7 +514,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -529,7 +529,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -542,7 +542,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -557,7 +557,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -570,7 +570,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -585,7 +585,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -598,7 +598,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -613,7 +613,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -626,7 +626,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -641,7 +641,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -654,7 +654,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -669,7 +669,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -682,7 +682,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -697,7 +697,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final O actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -707,7 +707,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected) {
     toVerifier(actual).verifyNotContains(expected);
   }
 
@@ -719,7 +719,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
@@ -729,7 +729,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void notContains(final O actual, final File expected) {
+  public void notContains(final BufferedImage actual, final File expected) {
     toVerifier(actual).verifyNotContains(expected);
   }
 
@@ -741,7 +741,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
@@ -751,7 +751,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param expected value to compare
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected) {
+  public void notContains(final BufferedImage actual, final CResource expected) {
     toVerifier(actual).verifyNotContains(expected);
   }
 
@@ -763,7 +763,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
@@ -774,7 +774,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
@@ -787,7 +787,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
@@ -798,7 +798,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
@@ -811,7 +811,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
@@ -822,7 +822,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
@@ -835,7 +835,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
@@ -847,7 +847,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
@@ -861,7 +861,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -873,7 +873,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
@@ -887,7 +887,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -899,7 +899,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
@@ -913,7 +913,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -926,7 +926,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -941,7 +941,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -954,7 +954,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -969,7 +969,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -982,7 +982,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -997,7 +997,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1010,7 +1010,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1025,7 +1025,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1038,7 +1038,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1053,7 +1053,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1066,7 +1066,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1081,7 +1081,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1094,7 +1094,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1109,7 +1109,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1122,7 +1122,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1137,7 +1137,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1150,7 +1150,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1165,7 +1165,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final O actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1178,7 +1178,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *                 expected list ignores.
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected) {
     toVerifier(actual).verifyContainsAny(expected);
   }
 
@@ -1192,7 +1192,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, message, params);
   }
 
@@ -1205,7 +1205,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContainsAny(expected, scoreType);
   }
 
@@ -1220,7 +1220,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, message, params);
   }
 
@@ -1233,7 +1233,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, matchPrecision);
   }
 
@@ -1248,7 +1248,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -1262,7 +1262,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1278,7 +1278,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1292,7 +1292,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1308,7 +1308,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1322,7 +1322,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1338,7 +1338,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
@@ -1350,7 +1350,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    *                 expected list ignores.
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected) {
     toVerifier(actual).verifyContainsNone(expected);
   }
 
@@ -1364,7 +1364,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params   parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, final String message, final Object... params) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, final String message, final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, message, params);
   }
 
@@ -1377,7 +1377,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContainsNone(expected, scoreType);
   }
 
@@ -1392,7 +1392,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params    parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, message, params);
   }
 
@@ -1405,7 +1405,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, matchPrecision);
   }
 
@@ -1420,7 +1420,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, matchPrecision, message, params);
   }
 
@@ -1434,7 +1434,7 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, mask, matchPrecision);
   }
 
@@ -1450,11 +1450,11 @@ public class CImageComparisonVerification<O> extends CBaseVerification {
    * @param params         parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final O actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, mask, matchPrecision, message, params);
   }
 
-  protected CImageComparisonVerify toVerifier(O actual) {
+  protected CImageComparisonVerify toVerifier(BufferedImage actual) {
     return () -> actual;
   }
 }

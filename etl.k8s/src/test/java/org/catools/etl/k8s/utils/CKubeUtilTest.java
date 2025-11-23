@@ -12,6 +12,9 @@ import org.catools.etl.k8s.model.CEtlKubeContainer;
 import org.catools.etl.k8s.model.CEtlKubePod;
 import org.catools.k8s.model.CKubePods;
 import org.catools.k8s.utils.CKubeUtil;
+import org.testcontainers.postgresql.PostgreSQLContainer;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -19,6 +22,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CKubeUtilTest {
+  private final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:17");
+
+  @BeforeClass
+  public void beforeClass() {
+    postgres.start();
+  }
+
+  @AfterClass(alwaysRun = true)
+  public void afterClass() {
+    postgres.stop();
+  }
 
   private static CKubePods getKubePods() throws ApiException {
     CoreV1Api api = mock(CoreV1Api.class);

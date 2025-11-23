@@ -24,10 +24,10 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * CImageComparisonState is an interface to define state of BufferedImage (from one of supported sources) in relation to one or
  * more File, Resource or BufferedImage.
  */
-public interface CImageComparisonState<O> extends CObjectState<O> {
+public interface CImageComparisonState extends CObjectState<BufferedImage> {
 
 
-  default boolean test(Predicate<O> predicate) {
+  default boolean test(Predicate<BufferedImage> predicate) {
     return predicate.test(_get());
   }
 

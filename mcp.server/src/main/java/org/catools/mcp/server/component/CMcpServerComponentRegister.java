@@ -2,10 +2,10 @@ package org.catools.mcp.server.component;
 
 import io.modelcontextprotocol.server.McpSyncServer;
 import lombok.Getter;
+import org.catools.common.struct.CImmutable;
 import org.catools.mcp.annotation.CMcpPrompt;
 import org.catools.mcp.annotation.CMcpResource;
 import org.catools.mcp.annotation.CMcpTool;
-import org.catools.common.struct.CImmutable;
 import org.catools.mcp.di.CDependencyInjector;
 import org.catools.mcp.di.CDependencyInjectorProvider;
 import org.reflections.Reflections;

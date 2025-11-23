@@ -148,7 +148,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see CDriverConfigs
  */
 public class CDriverOTelNetworkListener {
-  private final Map<String, Span> inflightSpans = new ConcurrentHashMap<>();
+  private final Map<String, Span> inFlightSpans = new ConcurrentHashMap<>();
   private final Map<String, Instant> startTimes = new ConcurrentHashMap<>();
   private final Tracer tracer;
   private final Span parent;
@@ -271,7 +271,7 @@ public class CDriverOTelNetworkListener {
             .setSpanKind(SpanKind.CLIENT)
             .startSpan();
 
-        inflightSpans.put(event.getRequestId().toString(), span);
+        inFlightSpans.put(event.getRequestId().toString(), span);
         startTimes.put(event.getRequestId().toString(), Instant.now());
 
         addUriAttributes(span, uri);
@@ -282,7 +282,7 @@ public class CDriverOTelNetworkListener {
 
     devTools.addListener(Network.responseReceived(), event -> {
       String id = event.getRequestId().toString();
-      Span span = inflightSpans.remove(id);
+      Span span = inFlightSpans.remove(id);
       Instant start = startTimes.remove(id);
 
       if (span != null) {
@@ -319,7 +319,7 @@ public class CDriverOTelNetworkListener {
     // Cleanup in a case when request failed
     devTools.addListener(Network.loadingFailed(), fail -> {
       String id = fail.getRequestId().toString();
-      Span span = inflightSpans.remove(id);
+      Span span = inFlightSpans.remove(id);
       startTimes.remove(id);
 
       if (span != null) {

@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>server</artifactId>
+    <artifactId>mcp.server</artifactId>
     <packaging>jar</packaging>
 
-    <name>Core Automation Toolset - Web MCP</name>
-    <description>The Web MCP to be used in CATs projects</description>
+    <name>Core Automation Toolset - MCP Server</name>
+    <description>The MCP Server to be used in CATs projects</description>
 
     <parent>
         <groupId>org.catools</groupId>
@@ -45,6 +45,11 @@
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.concurrent</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>mcp.core</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

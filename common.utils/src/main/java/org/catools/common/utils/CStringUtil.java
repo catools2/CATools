@@ -19,6 +19,11 @@ import org.apache.commons.lang3.StringUtils;
 public class CStringUtil extends StringUtils {
 
   /**
+   * Dot character constant commonly used in property paths and qualified names.
+   */
+  public static final String DOT = ".";
+
+  /**
    * Retrun substring with max length of maxLength. If string length is less than maxLength then return full string.
    *
    * @param input

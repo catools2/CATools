@@ -2,6 +2,7 @@ package org.catools.mcp.test;
 
 import org.catools.mcp.CMcpServers;
 import org.catools.mcp.server.CMcpServerInfo;
+
 import java.time.Duration;
 
 public class TestSimpleMcpStdioServer {
@@ -14,6 +15,6 @@ public class TestSimpleMcpStdioServer {
             .instructions("test")
             .requestTimeout(Duration.ofSeconds(10))
             .build();
-    CMcpServers.run(TestSimpleMcpStdioServer.class, args).startStdioServer(info);
+    CMcpServers.run(TestSimpleMcpStdioServer.class).startStdioServer(info);
   }
 }

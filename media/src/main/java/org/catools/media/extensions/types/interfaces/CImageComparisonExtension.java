@@ -27,7 +27,7 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * }
  * </code> </strong>
  */
-public interface CImageComparisonExtension<O> extends CImageComparisonWaiter<O>, CImageComparisonWaitVerify<O>, CImageComparisonState<O> {
+public interface CImageComparisonExtension extends CImageComparisonWaiter, CImageComparisonWaitVerify, CImageComparisonState {
 
   /**
    * Save screenshot using specific format to the specified file

@@ -28,11 +28,12 @@ import java.util.Random;
 
 import static org.testng.Assert.*;
 
+@Test(singleThreaded = true)
 public class McpServersTest {
 
-  CMcpServers servers = CMcpServers.run(McpServersTest.class, new String[] {});
+  private final CMcpServers servers = CMcpServers.run(McpServersTest.class);
 
-  @Test
+  @Test(priority = 1)
   void testStartStdioServer_shouldSucceed() {
     String classpath = System.getProperty("java.class.path");
 
@@ -49,7 +50,7 @@ public class McpServersTest {
     }
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartSseServer_shouldSucceed() {
     final int port = new Random().nextInt(8000, 9000);
 
@@ -77,7 +78,7 @@ public class McpServersTest {
     }
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartStreamableServer_shouldSucceed() {
     final int port = new Random().nextInt(8000, 9000);
 
@@ -103,74 +104,74 @@ public class McpServersTest {
     }
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartServer_disabledMCP_shouldSucceed() {
     String configFileName = "test-mcp-server-disabled.yml";
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader(configFileName);
     CMcpServerConfiguration configuration = configLoader.loadConfig();
     try {
-        servers.startServer(configFileName);
+      servers.startServer(configFileName);
     } catch (Exception e) {
-        fail("Exception thrown while starting server: " + e.getMessage());
+      fail("Exception thrown while starting server: " + e.getMessage());
     }
     assertFalse(configuration.enabled());
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartServer_enableStdioMode_shouldSucceed() {
     String configFileName = "test-mcp-server-enable-stdio-mode.yml";
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader(configFileName);
     CMcpServerConfiguration configuration = configLoader.loadConfig();
     try {
-        servers.startServer(configFileName);
+      servers.startServer(configFileName);
     } catch (Exception e) {
-        fail("Exception thrown while starting server: " + e.getMessage());
+      fail("Exception thrown while starting server: " + e.getMessage());
     }
     assertEquals(configuration.mode(), CServerMode.STDIO);
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartServer_enableHttpSseMode_shouldSucceed() {
     String configFileName = "test-mcp-server-enable-http-sse-mode.yml";
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader(configFileName);
     CMcpServerConfiguration configuration = configLoader.loadConfig();
     try {
-        servers.startServer(configFileName);
+      servers.startServer(configFileName);
     } catch (Exception e) {
-        fail("Exception thrown while starting server: " + e.getMessage());
+      fail("Exception thrown while starting server: " + e.getMessage());
     }
     assertEquals(configuration.mode(), CServerMode.SSE);
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartServer_enableStreamableHttpMode_shouldSucceed() {
     String configFileName = "test-mcp-server-enable-streamable-http-mode.yml";
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader(configFileName);
     CMcpServerConfiguration configuration = configLoader.loadConfig();
     try {
-        servers.startServer(configFileName);
+      servers.startServer(configFileName);
     } catch (Exception e) {
-        fail("Exception thrown while starting server: " + e.getMessage());
+      fail("Exception thrown while starting server: " + e.getMessage());
     }
     assertEquals(configuration.mode(), CServerMode.STREAMABLE);
   }
 
-  @Test(expectedExceptions = CInvalidYamlFileFormatException.class)
+  @Test(priority = 2, expectedExceptions = CInvalidYamlFileFormatException.class)
   void testStartServer_enableUnknownMode_shouldThrowException() {
     String configFileName = "test-mcp-server-enable-unknown-mode.yml";
     servers.startServer(configFileName);
   }
 
-  @Test
+  @Test(priority = 2)
   void testStartServer_useDefaultConfigFileName_shouldSucceed() {
     String configFileName = "mcp-server.yml";
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader(configFileName);
     CMcpServerConfiguration configuration = configLoader.loadConfig();
     assertEquals(configuration.mode(), CServerMode.STREAMABLE);
     try {
-        servers.startServer();
+      servers.startServer();
     } catch (Exception e) {
-        fail("Exception thrown while starting server: " + e.getMessage());
+      fail("Exception thrown while starting server: " + e.getMessage());
     }
   }
 

@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * <p>It contains properties such as the message endpoint, endpoint, base URL, and port.
  */
 public record CMcpServerSSE(
-        @JsonProperty("message-endpoint") String messageEndpoint,
-        @JsonProperty("endpoint") String endpoint,
-        @JsonProperty("base-url") String baseUrl,
-        @JsonProperty("port") int port) {
+    @JsonProperty("message-endpoint") String messageEndpoint,
+    @JsonProperty("endpoint") String endpoint,
+    @JsonProperty("base-url") String baseUrl,
+    @JsonProperty("port") int port) {
 }

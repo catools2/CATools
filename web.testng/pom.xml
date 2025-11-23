@@ -54,6 +54,12 @@
             <artifactId>metrics</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!-- ######################  MCP ######################### -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>mcp.core</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- ######################  /CATS ######################### -->
     </dependencies>
 </project>

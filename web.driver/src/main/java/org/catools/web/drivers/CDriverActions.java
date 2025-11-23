@@ -2,6 +2,8 @@ package org.catools.web.drivers;
 
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
+import org.catools.mcp.annotation.CMcpTool;
+import org.catools.mcp.annotation.CMcpToolParam;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -12,7 +14,7 @@ import java.util.function.Predicate;
  * CDriverActions provides a comprehensive set of web driver action methods for interacting with web elements.
  * This interface extends CDriverWaiter and offers a fluent API for performing various user actions such as
  * clicking, typing, scrolling, and managing cookies. All methods support method chaining for improved readability.
- * 
+ *
  * <p>Example usage:</p>
  * <pre>{@code
  * CDriverActions driver = new MyDriverImplementation();
@@ -27,7 +29,7 @@ import java.util.function.Predicate;
 public interface CDriverActions extends CDriverWaiter {
   /**
    * Presses the ENTER key on the current page.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEnter();
@@ -47,13 +49,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the ENTER key and waits for the specified number of seconds.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEnter(2); // Press ENTER and wait 2 seconds
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>                 the type of the implementing class for method chaining
    * @param waitAfterPressEnter number of seconds to wait after pressing ENTER
    * @return this instance for method chaining
    */
@@ -66,13 +68,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Presses the ENTER key and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEnter(d -> d.isElementVisible(By.id("success-message")));
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>           the type of the implementing class for method chaining
    * @param postCondition condition to check after pressing ENTER
    * @return this instance for method chaining
    */
@@ -82,7 +84,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the ENTER key and retries until the post-condition is met with custom retry settings.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEnter(
@@ -92,9 +94,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param postCondition condition to check after pressing ENTER
-   * @param retryTimes number of retry attempts
+   * @param <T>               the type of the implementing class for method chaining
+   * @param postCondition     condition to check after pressing ENTER
+   * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
@@ -106,7 +108,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the ESCAPE key on the current page.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEscape(); // Close modal or cancel operation
@@ -126,13 +128,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the ESCAPE key and waits for the specified number of seconds.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEscape(1); // Press ESCAPE and wait 1 second
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>                  the type of the implementing class for method chaining
    * @param waitAfterPressEscape number of seconds to wait after pressing ESCAPE
    * @return this instance for method chaining
    */
@@ -145,13 +147,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Presses the ESCAPE key and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEscape(d -> !d.isElementVisible(By.className("modal")));
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>           the type of the implementing class for method chaining
    * @param postCondition condition to check after pressing ESCAPE
    * @return this instance for method chaining
    */
@@ -161,7 +163,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the ESCAPE key and retries until the post-condition is met with custom retry settings.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressEscape(
@@ -171,9 +173,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param postCondition condition to check after pressing ESCAPE
-   * @param retryTimes number of retry attempts
+   * @param <T>               the type of the implementing class for method chaining
+   * @param postCondition     condition to check after pressing ESCAPE
+   * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
@@ -185,7 +187,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the TAB key on the current page to navigate to the next focusable element.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressTab(); // Move focus to next form field
@@ -205,13 +207,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the TAB key and waits for the specified number of seconds.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressTab(1); // Press TAB and wait 1 second for focus change
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>               the type of the implementing class for method chaining
    * @param waitAfterPressTab number of seconds to wait after pressing TAB
    * @return this instance for method chaining
    */
@@ -224,13 +226,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Presses the TAB key and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressTab(d -> d.isElementFocused(By.id("next-field")));
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>           the type of the implementing class for method chaining
    * @param postCondition condition to check after pressing TAB
    * @return this instance for method chaining
    */
@@ -240,7 +242,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Presses the TAB key and retries until the post-condition is met with custom retry settings.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.pressTab(
@@ -250,9 +252,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param postCondition condition to check after pressing TAB
-   * @param retryTimes number of retry attempts
+   * @param <T>               the type of the implementing class for method chaining
+   * @param postCondition     condition to check after pressing TAB
+   * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
@@ -265,13 +267,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Clicks an element using JavaScript execution, bypassing standard click restrictions.
    * This method is useful for clicking elements that may be covered by other elements.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.clickJS(By.id("hidden-button"), 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -293,13 +295,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Clicks an element after scrolling it into view. This is the standard click method
    * that handles most common clicking scenarios.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.click(By.xpath("//button[@type='submit']"), 10);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -325,7 +327,7 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Clicks an element and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.click(
@@ -335,9 +337,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param <T>           the type of the implementing class for method chaining
+   * @param locator       the locator to find the element to click
+   * @param waitSec       maximum time in seconds to wait for the element
    * @param postCondition condition to check after clicking
    * @return this instance for method chaining
    */
@@ -348,7 +350,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Clicks an element and retries until the post-condition is met with custom retry settings.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.click(
@@ -360,11 +362,11 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
-   * @param postCondition condition to check after clicking
-   * @param retryTimes number of retry attempts
+   * @param <T>               the type of the implementing class for method chaining
+   * @param locator           the locator to find the element to click
+   * @param waitSec           maximum time in seconds to wait for the element
+   * @param postCondition     condition to check after clicking
+   * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
@@ -382,13 +384,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Performs a mouse click on an element using the default timeout.
    * This method moves to the element and then performs a mouse click action.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.mouseClick(By.id("menu-item"));
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to click
    * @return this instance for method chaining
    */
@@ -399,13 +401,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Performs a mouse click on an element with a specified wait time.
    * This method moves to the element and then performs a mouse click action.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.mouseClick(By.className("dropdown-toggle"), 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -422,13 +424,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Performs a mouse double-click on an element using the default timeout.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.mouseDoubleClick(By.id("file-item")); // Double-click to open file
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to double-click
    * @return this instance for method chaining
    */
@@ -438,13 +440,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Performs a mouse double-click on an element with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.mouseDoubleClick(By.xpath("//div[@class='selectable-item']"), 3);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to double-click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -461,13 +463,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Moves the mouse cursor to the center of an element using the default timeout.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.moveTo(By.id("hover-menu")); // Show hover menu
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to move to
    * @return this instance for method chaining
    */
@@ -477,13 +479,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Moves the mouse cursor to an element with specified offset from its center.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.moveTo(By.id("canvas"), 50, -20); // Move 50px right, 20px up from center
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to move to
    * @param xOffset horizontal offset from the element's center
    * @param yOffset vertical offset from the element's center
@@ -495,13 +497,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Moves the mouse cursor to the center of an element with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.moveTo(By.className("tooltip-trigger"), 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to move to
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -512,13 +514,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Moves the mouse cursor to an element with specified offset and wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.moveTo(By.id("slider"), 100, 0, 3); // Move to slider handle position
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to move to
    * @param xOffset horizontal offset from the element's center
    * @param yOffset vertical offset from the element's center
@@ -532,14 +534,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element into view using the default timeout.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollIntoView(By.id("footer"), true); // Scroll to footer
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to scroll into view
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the element to scroll into view
    * @param scrollDown true to scroll down to element, false to scroll up
    * @return this instance for method chaining
    */
@@ -549,16 +551,16 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element into view with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollIntoView(By.xpath("//section[@id='contact']"), false, 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to scroll into view
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the element to scroll into view
    * @param scrollDown true to scroll down to element, false to scroll up
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollIntoView(By locator, boolean scrollDown, int waitSec) {
@@ -568,14 +570,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element horizontally to the left by the specified amount.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollLeft(By.id("horizontal-scroll-container"), 100);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the scrollable element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the scrollable element
    * @param scrollSize the number of pixels to scroll left
    * @return this instance for method chaining
    */
@@ -585,16 +587,16 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element horizontally to the left by the specified amount with a wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollLeft(By.className("carousel"), 200, 3);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the scrollable element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the scrollable element
    * @param scrollSize the number of pixels to scroll left
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollLeft(By locator, int scrollSize, int waitSec) {
@@ -604,14 +606,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element horizontally to the right by the specified amount.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollRight(By.id("table-container"), 150);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the scrollable element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the scrollable element
    * @param scrollSize the number of pixels to scroll right
    * @return this instance for method chaining
    */
@@ -621,16 +623,16 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element horizontally to the right by the specified amount with a wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollRight(By.id("timeline"), 300, 2);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the scrollable element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the scrollable element
    * @param scrollSize the number of pixels to scroll right
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollRight(By locator, int scrollSize, int waitSec) {
@@ -640,14 +642,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element into view and then clicks it.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollIntoViewAndClick(By.id("submit-button"), true);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the element
    * @param scrollDown true to scroll down to element, false to scroll up
    * @return this instance for method chaining
    */
@@ -657,16 +659,16 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls an element into view and then clicks it with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollIntoViewAndClick(By.linkText("Terms of Service"), false, 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the element
    * @param scrollDown true to scroll down to element, false to scroll up
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollIntoViewAndClick(
@@ -678,13 +680,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Clicks an invisible or hidden element using JavaScript execution.
    * This method is useful for clicking elements that are not visible but are enabled.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.clickInvisible(By.id("hidden-trigger"), 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -707,7 +709,7 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Clicks an invisible element and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.clickInvisible(
@@ -717,9 +719,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param <T>           the type of the implementing class for method chaining
+   * @param locator       the locator to find the element to click
+   * @param waitSec       maximum time in seconds to wait for the element
    * @param postCondition condition to check after clicking
    * @return this instance for method chaining
    */
@@ -730,7 +732,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Clicks an invisible element and retries until the post-condition is met with custom retry settings.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.clickInvisible(
@@ -742,11 +744,11 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
-   * @param postCondition condition to check after clicking
-   * @param retryTimes number of retry attempts
+   * @param <T>               the type of the implementing class for method chaining
+   * @param locator           the locator to find the element to click
+   * @param waitSec           maximum time in seconds to wait for the element
+   * @param postCondition     condition to check after clicking
+   * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
@@ -763,14 +765,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sends keys to the currently focused element repeatedly.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.sendKeys(3, Keys.ARROW_DOWN); // Press down arrow 3 times
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param loopCount number of times to repeat the key sequence
+   * @param <T>        the type of the implementing class for method chaining
+   * @param loopCount  number of times to repeat the key sequence
    * @param keysToSend the keys to send
    * @return this instance for method chaining
    */
@@ -791,15 +793,15 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sends keys to a specific element after waiting for it to be ready.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.sendKeys(By.id("username"), 5, "john.doe@example.com");
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
-   * @param locator the locator to find the element
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param <T>        the type of the implementing class for method chaining
+   * @param locator    the locator to find the element
+   * @param waitSec    maximum time in seconds to wait for the element
    * @param keysToSend the keys to send to the element
    * @return this instance for method chaining
    */
@@ -820,13 +822,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sends keys to the currently focused element.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.sendKeys("Hello", Keys.TAB, "World");
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>        the type of the implementing class for method chaining
    * @param keysToSend the keys to send
    * @return this instance for method chaining
    */
@@ -841,7 +843,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Deletes all cookies from the current domain.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.deleteAllCookies(); // Clear all cookies for current domain
@@ -861,7 +863,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Retrieves a cookie by name from the current domain.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * Cookie sessionCookie = driver.getCookie("JSESSIONID");
@@ -880,11 +882,11 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Retrieves all cookies from the current domain.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * Set<Cookie> allCookies = driver.getCookies();
-   * allCookies.forEach(cookie -> 
+   * allCookies.forEach(cookie ->
    *     System.out.println(cookie.getName() + "=" + cookie.getValue())
    * );
    * }</pre>
@@ -897,13 +899,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Adds a simple cookie with name and value to the current domain.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.addCookie("user_preference", "dark_theme");
    * }</pre>
    *
-   * @param name the name of the cookie
+   * @param name  the name of the cookie
    * @param value the value of the cookie
    * @return the Cookie object that was added
    */
@@ -913,7 +915,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Adds a cookie object to the current domain.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * Cookie customCookie = new Cookie.Builder("session_id", "abc123")
@@ -939,13 +941,13 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Sets the caret color for all input elements on the page.
    * This is useful for improving visibility during automated testing.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.setCaretColorForAllInputs("red"); // Make cursor red in all inputs
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>   the type of the implementing class for method chaining
    * @param color the CSS color value for the caret
    * @return this instance for method chaining
    */
@@ -955,14 +957,14 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sets a CSS style property for all elements matching the given selector.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.setStyleForAll("button", "border", "2px solid red");
    * driver.setStyleForAll(".highlight", "background-color", "yellow");
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>   the type of the implementing class for method chaining
    * @param xpath the CSS selector for elements to modify
    * @param style the CSS property name
    * @param value the CSS property value
@@ -980,23 +982,32 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Executes JavaScript code in the browser context.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * String title = driver.executeScript("return document.title;");
    * driver.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-   * 
+   *
    * // With arguments
    * WebElement element = driver.getElement(By.id("myElement"));
    * driver.executeScript("arguments[0].style.backgroundColor = 'red';", element);
    * }</pre>
    *
-   * @param <R> the return type of the script execution
+   * @param <R>    the return type of the script execution
    * @param script the JavaScript code to execute
-   * @param args optional arguments to pass to the script
+   * @param args   optional arguments to pass to the script
    * @return the result of the script execution
    */
-  default <R> R executeScript(String script, Object... args) {
+  @CMcpTool(
+      name = "driver_execute_script",
+      title = "Execute JavaScript",
+      description = "Executes JavaScript code in the browser context"
+  )
+  default <R> R executeScript(
+      @CMcpToolParam(name = "script", description = "The JavaScript code to execute", required = true)
+      String script,
+      @CMcpToolParam(name = "args", description = "Optional arguments to pass to the script", required = false)
+      Object... args) {
     return performActionOnDriver(
         "Execute Script",
         webDriver -> {
@@ -1006,31 +1017,41 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Executes JavaScript code on a specific element after waiting for it.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * String innerHTML = driver.executeScript(
-   *     By.id("content"), 
-   *     5, 
+   *     By.id("content"),
+   *     5,
    *     "return arguments[0].innerHTML;"
    * );
    * }</pre>
    *
-   * @param <R> the return type of the script execution
+   * @param <R>     the return type of the script execution
    * @param locator the locator to find the element
    * @param waitSec maximum time in seconds to wait for the element
-   * @param script the JavaScript code to execute (element will be passed as arguments[0])
+   * @param script  the JavaScript code to execute (element will be passed as arguments[0])
    * @return the result of the script execution
    */
-  default <R> R executeScript(By locator, int waitSec, String script) {
+  @CMcpTool(
+      name = "driver_execute_script_on_element",
+      title = "Execute JavaScript on Element",
+      description = "Executes JavaScript code on a specific element after waiting for it"
+  )
+  default <R> R executeScript(
+      @CMcpToolParam(name = "locator", description = "The locator to find the element", required = true)
+      By locator,
+      @CMcpToolParam(name = "waitSec", description = "Maximum time in seconds to wait for the element", required = true)
+      int waitSec,
+      @CMcpToolParam(name = "script", description = "The JavaScript code to execute (element will be passed as arguments[0])", required = true)
+      String script) {
     WebElement elem = waitUntil("Execute Script", waitSec, webDriver -> webDriver.findElement(locator));
     return executeScript(script, elem);
-
   }
 
   /**
    * Executes asynchronous JavaScript code in the browser context.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * String result = driver.executeAsyncScript(
@@ -1039,9 +1060,9 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <R> the return type of the script execution
+   * @param <R>    the return type of the script execution
    * @param script the asynchronous JavaScript code to execute
-   * @param args optional arguments to pass to the script
+   * @param args   optional arguments to pass to the script
    * @return the result of the async script execution
    */
   default <R> R executeAsyncScript(String script, Object... args) {
@@ -1052,7 +1073,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Executes asynchronous JavaScript code on a specific element after waiting for it.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * String result = driver.executeAsyncScript(
@@ -1065,10 +1086,10 @@ public interface CDriverActions extends CDriverWaiter {
    * );
    * }</pre>
    *
-   * @param <R> the return type of the script execution
+   * @param <R>     the return type of the script execution
    * @param locator the locator to find the element
    * @param waitSec maximum time in seconds to wait for the element
-   * @param script the asynchronous JavaScript code to execute
+   * @param script  the asynchronous JavaScript code to execute
    * @return the result of the async script execution
    */
   default <R> R executeAsyncScript(By locator, int waitSec, String script) {
@@ -1086,7 +1107,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Scrolls the window by the specified offset.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.scrollBy(0, 500);   // Scroll down 500 pixels
@@ -1094,8 +1115,8 @@ public interface CDriverActions extends CDriverWaiter {
    * }</pre>
    *
    * @param <T> the type of the implementing class for method chaining
-   * @param x horizontal scroll offset in pixels
-   * @param y vertical scroll offset in pixels
+   * @param x   horizontal scroll offset in pixels
+   * @param y   vertical scroll offset in pixels
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollBy(int x, int y) {
@@ -1105,13 +1126,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sets focus on an element using the default timeout.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.focus(By.id("username-field"));
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to focus
    * @return this instance for method chaining
    */
@@ -1121,13 +1142,13 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Sets focus on an element with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * driver.focus(By.name("email"), 5);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>     the type of the implementing class for method chaining
    * @param locator the locator to find the element to focus
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
@@ -1150,14 +1171,14 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Sets focus on a specific WebElement.
    * Falls back to JavaScript focus if mouse movement fails.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * WebElement inputField = driver.getElement(By.id("search"));
    * driver.focus(inputField);
    * }</pre>
    *
-   * @param <T> the type of the implementing class for method chaining
+   * @param <T>        the type of the implementing class for method chaining
    * @param webElement the WebElement to focus
    * @return this instance for method chaining
    */
@@ -1177,7 +1198,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Retrieves a WebElement using the default timeout.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * WebElement button = driver.getElement(By.id("submit-btn"));
@@ -1193,7 +1214,7 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Retrieves a WebElement with a specified wait time.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * WebElement dynamicContent = driver.getElement(By.className("loaded-content"), 10);
@@ -1211,9 +1232,9 @@ public interface CDriverActions extends CDriverWaiter {
   }
 
   /**
-   * Performs a drag and drop operation by clicking and holding on an element, 
+   * Performs a drag and drop operation by clicking and holding on an element,
    * then moving by the specified offset and releasing.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * // Drag a slider handle 100 pixels to the right
@@ -1251,19 +1272,19 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Performs a drag and drop operation from a specific point on an element to another point.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * // Drag from top-left corner of element (10, 10) and move 200 pixels right, 50 down
    * driver.dragAndDropTo(By.id("draggable"), 10, 10, 200, 50, 5);
    * }</pre>
    *
-   * @param locator the locator to find the element to drag
+   * @param locator  the locator to find the element to drag
    * @param xOffset1 horizontal offset from element center for the start point
    * @param yOffset1 vertical offset from element center for the start point
    * @param xOffset2 horizontal offset to move from the start point
    * @param yOffset2 vertical offset to move from the start point
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param waitSec  maximum time in seconds to wait for the element
    * @return the WebElement that was dragged
    */
   default WebElement dragAndDropTo(final By locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2, int waitSec) {
@@ -1291,23 +1312,23 @@ public interface CDriverActions extends CDriverWaiter {
 
   /**
    * Performs a drag and drop operation from one element to another element.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * // Drag from specific point on source element to target element
    * driver.dragAndDropTo(
-   *     By.id("draggable-item"), 
-   *     By.id("drop-zone"), 
+   *     By.id("draggable-item"),
+   *     By.id("drop-zone"),
    *     5, 5,  // Start from 5px right, 5px down from center of source
    *     3      // Wait up to 3 seconds
    * );
    * }</pre>
    *
    * @param fromLocator the locator to find the source element
-   * @param toLocator the locator to find the target element
-   * @param xOffset1 horizontal offset from source element center
-   * @param yOffset1 vertical offset from source element center
-   * @param waitSec maximum time in seconds to wait for elements
+   * @param toLocator   the locator to find the target element
+   * @param xOffset1    horizontal offset from source element center
+   * @param yOffset1    vertical offset from source element center
+   * @param waitSec     maximum time in seconds to wait for elements
    * @return the source WebElement that was dragged
    */
   default WebElement dragAndDropTo(final By fromLocator, final By toLocator, int xOffset1, int yOffset1, int waitSec) {
@@ -1330,7 +1351,7 @@ public interface CDriverActions extends CDriverWaiter {
   /**
    * Moves the mouse to an element with specified offset and waits for the element to be available.
    * This is a lower-level method used by other mouse operations.
-   * 
+   *
    * <p>Example:</p>
    * <pre>{@code
    * // Move to 20 pixels right and 10 pixels down from element center

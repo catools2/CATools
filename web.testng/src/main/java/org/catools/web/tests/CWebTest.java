@@ -7,6 +7,8 @@ import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
 import org.catools.common.tests.CTest;
 import org.catools.common.utils.CRetry;
+import org.catools.mcp.annotation.CMcpTool;
+import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.media.utils.CImageUtil;
 import org.catools.reportportal.utils.CReportPortalUtil;
 import org.catools.web.config.CBrowserConfigs;
@@ -117,17 +119,25 @@ public class CWebTest<DR extends CDriver> extends CTest {
     }
   }
 
+  @CMcpTool(
+      name = "driver_close",
+      title = "Close WebDriver",
+      description = "Close active driver using by CATools"
+  )
   public void quitAll() {
     drivers.values().getAll(dr -> dr != null).forEach(dr -> {
       try {
-        dr.quit();
+        quit(dr);
       } catch (Exception e) {
       }
     });
   }
 
   public void quit() {
-    CDriver driver = getDriver();
+    quit(getDriver());
+  }
+
+  public void quit(CDriver driver) {
     if (driver != null) {
       try {
         tryLogOut();
@@ -142,12 +152,17 @@ public class CWebTest<DR extends CDriver> extends CTest {
           }
         }
       }
-      drivers.remove(currentSession.get());
-      logger.trace("Quit driver.");
     }
+    drivers.remove(currentSession.get());
+    logger.trace("Quit driver.");
   }
 
-  public void open(String url) {
+  @CMcpTool(
+      name = "driver_open_url",
+      title = "Open URL",
+      description = "Open URL using CATools WebDriver"
+  )
+  public void open(@CMcpToolParam(name = "url", description = "The URL to navigate to", required = true) String url) {
     open(url, !isCurrentSessionActive());
   }
 
@@ -252,5 +267,4 @@ public class CWebTest<DR extends CDriver> extends CTest {
       return !BLANK_PAGE.equals(tmpPage) && !session.getCurrentPage().equals(tmpPage);
     };
   }
-
 }

@@ -20,50 +20,50 @@ import java.nio.file.Paths;
 @Slf4j
 public record CYamlConfigurationLoader(String configFileName) {
 
-    /**
-     * The default file name for the MCP server configuration file.
-     */
-    private static final String DEFAULT_CONFIG_FILE_NAME = "mcp-server.yml";
+  /**
+   * The default file name for the MCP server configuration file.
+   */
+  private static final String DEFAULT_CONFIG_FILE_NAME = "mcp-server.yml";
 
-    /**
-     * Constructs a YAMLConfigurationLoader with the default configuration file name.
-     */
-    public CYamlConfigurationLoader() {
-        this(DEFAULT_CONFIG_FILE_NAME);
-    }
+  /**
+   * Constructs a YAMLConfigurationLoader with the default configuration file name.
+   */
+  public CYamlConfigurationLoader() {
+    this(DEFAULT_CONFIG_FILE_NAME);
+  }
 
-    /**
-     * Loads the MCP server configuration from the specified YAML file.
-     *
-     * @return the loaded MCP server configuration
-     * @throws CMcpServerConfigurationException if the configuration file cannot be loaded
-     */
-    public CMcpServerConfiguration loadConfig() {
-        Path configFilePath = getConfigFilePath(configFileName);
-        File file = configFilePath.toFile();
-        CMcpServerConfiguration config = CYamlUtil.readFromFile(file, CMcpServerConfiguration.class);
-        log.info("Configuration loaded successfully from file: {}", configFileName);
-        return config;
-    }
+  /**
+   * Loads the MCP server configuration from the specified YAML file.
+   *
+   * @return the loaded MCP server configuration
+   * @throws CMcpServerConfigurationException if the configuration file cannot be loaded
+   */
+  public CMcpServerConfiguration loadConfig() {
+    Path configFilePath = getConfigFilePath(configFileName);
+    File file = configFilePath.toFile();
+    CMcpServerConfiguration config = CYamlUtil.readFromFile(file, CMcpServerConfiguration.class);
+    log.info("Configuration loaded successfully from file: {}", configFileName);
+    return config;
+  }
 
-    /**
-     * Returns the file path of the configuration file.
-     *
-     * @param fileName the name of the configuration file
-     * @return the file path of the configuration file
-     * @throws CMcpServerConfigurationException if the configuration file cannot be found
-     */
-    private Path getConfigFilePath(String fileName) {
-        try {
-            ClassLoader classLoader = CYamlConfigurationLoader.class.getClassLoader();
-            URL configFileUrl = classLoader.getResource(fileName);
-            if (configFileUrl == null) {
-                throw new CMcpServerConfigurationException("Configuration file not found: " + fileName);
-            }
-            return Paths.get(configFileUrl.toURI());
-        } catch (URISyntaxException e) {
-            // should never happen
-            throw new CMcpServerConfigurationException("Invalid configuration file: " + fileName, e);
-        }
+  /**
+   * Returns the file path of the configuration file.
+   *
+   * @param fileName the name of the configuration file
+   * @return the file path of the configuration file
+   * @throws CMcpServerConfigurationException if the configuration file cannot be found
+   */
+  private Path getConfigFilePath(String fileName) {
+    try {
+      ClassLoader classLoader = CYamlConfigurationLoader.class.getClassLoader();
+      URL configFileUrl = classLoader.getResource(fileName);
+      if (configFileUrl == null) {
+        throw new CMcpServerConfigurationException("Configuration file not found: " + fileName);
+      }
+      return Paths.get(configFileUrl.toURI());
+    } catch (URISyntaxException e) {
+      // should never happen
+      throw new CMcpServerConfigurationException("Invalid configuration file: " + fileName, e);
     }
+  }
 }

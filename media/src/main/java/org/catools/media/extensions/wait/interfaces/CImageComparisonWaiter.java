@@ -15,7 +15,7 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
 /**
  * CImageFileWaiter is an interface for O waiter related methods.
  */
-public interface CImageComparisonWaiter<O> extends CBaseWaiter<O> {
+public interface CImageComparisonWaiter extends CBaseWaiter<BufferedImage> {
 
   /**
    * Wait that actual and expected are equal
@@ -1399,7 +1399,7 @@ public interface CImageComparisonWaiter<O> extends CBaseWaiter<O> {
     return _waiter(a -> toState(a).containsNone(expected, scoreType, mask, matchPrecision), waitInSeconds, intervalInMilliSeconds);
   }
 
-  private CImageComparisonState<O> toState(O e) {
+  private CImageComparisonState toState(BufferedImage e) {
     return () -> e;
   }
 }

@@ -44,7 +44,6 @@ public class CMcpServerTool implements CMcpServerComponent<McpServerFeatures.Syn
   public McpServerFeatures.SyncToolSpecification create(Method method) {
     // Use reflection cache for performance optimization
     CMethodCache methodCache = CReflectionUtil.INSTANCE.getOrCache(method);
-    Object instance = getInjector().getInstance(methodCache.getDeclaringClass());
 
     CMcpTool toolMethod = methodCache.getMcpToolAnnotation();
     final String name = CStringUtil.defaultIfBlank(toolMethod.name(), methodCache.getMethodName());
@@ -66,7 +65,11 @@ public class CMcpServerTool implements CMcpServerComponent<McpServerFeatures.Syn
 
     return McpServerFeatures.SyncToolSpecification.builder()
         .tool(tool)
-        .callHandler((exchange, request) -> invoke(instance, methodCache, request))
+        .callHandler((exchange, request) -> {
+          // Get a fresh instance on each invocation to support Provider bindings
+          Object instance = getInjector().getInstance(methodCache.getDeclaringClass());
+          return invoke(instance, methodCache, request);
+        })
         .build();
   }
 

@@ -81,6 +81,14 @@
         <diff-match-patch.version>1.2</diff-match-patch.version>
         <cloning.version>1.12.0</cloning.version>
 
+        <!-- mcp -->
+        <mcp-sdk.version>0.15.0</mcp-sdk.version>
+
+        <!-- dependency injection -->
+        <guice.version>7.0.0</guice.version>
+        <jetty.version>12.1.1</jetty.version>
+        <reflections.version>0.10.2</reflections.version>
+
         <!-- testing -->
         <mockito-testng.version>0.5.4</mockito-testng.version>
         <mockito-core.version>5.20.0</mockito-core.version>
@@ -96,10 +104,9 @@
         <!-- log4j -->
         <slf4j-api.version>2.0.17</slf4j-api.version>
         <log4j-slf4j2-impl.version>2.25.2</log4j-slf4j2-impl.version>
+        <jboss-logging.version>3.5.0.Final</jboss-logging.version>
 
-        <!-- Athena -->
-        <athena-core.version>1-20240501.1423</athena-core.version>
-        <athena-feign.version>1-20250630.0553</athena-feign.version>
+        <!-- Feign -->
         <feign.version>13.6</feign.version>
 
         <!-- Javax -->
@@ -142,8 +149,8 @@
 
         <!-- Hibernate -->
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
-        <hibernate-jcache.version>7.1.10.Final</hibernate-jcache.version>
-        <hibernate-c3p0.version>7.1.10.Final</hibernate-c3p0.version>
+        <hibernate-jcache.version>5.6.15.Final</hibernate-jcache.version>
+        <hibernate-c3p0.version>5.6.15.Final</hibernate-c3p0.version>
         <ehcache.version>3.11.1</ehcache.version>
         <postgresql.version>42.7.8</postgresql.version>
 
@@ -158,6 +165,7 @@
         <logger.console.log.level>trace</logger.console.log.level>
 
         <!-- maven plugins -->
+        <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
@@ -229,6 +237,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>io.modelcontextprotocol.sdk</groupId>
+                <artifactId>mcp-bom</artifactId>
+                <version>${mcp-sdk.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
                 <version>${testcontainers.version}</version>
@@ -274,13 +289,6 @@
                 <artifactId>feign-slf4j</artifactId>
                 <version>${feign.version}</version>
             </dependency>
-            <!-- ###################### ATHENA ######################### -->
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>athena-core</artifactId>
-                <version>${athena-core.version}</version>
-            </dependency>
-            <!-- ###################### /ATHENA ######################### -->
             <!-- ###################### ATLASSIAN ######################### -->
             <dependency>
                 <groupId>com.atlassian.jira</groupId>
@@ -298,6 +306,12 @@
                 <groupId>io.kubernetes</groupId>
                 <artifactId>client-java</artifactId>
                 <version>${kubernetes.client-java.version}</version>
+            </dependency>
+            <!-- Force a modern jboss-logging to avoid NoSuchMethodError (MethodHandles Lookup overload) -->
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${jboss-logging.version}</version>
             </dependency>
             <!-- ##################### /k8s       ######################### -->
             <!-- ######################  REPORTS  ######################### -->
@@ -399,12 +413,12 @@
                 <version>${hibernate-entitymanager.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate.orm</groupId>
+                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-jcache</artifactId>
                 <version>${hibernate-jcache.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate.orm</groupId>
+                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-c3p0</artifactId>
                 <version>${hibernate-c3p0.version}</version>
             </dependency>
@@ -667,6 +681,22 @@
                 <groupId>io.github.kostaskougios</groupId>
                 <artifactId>cloning</artifactId>
                 <version>${cloning.version}</version>
+            </dependency>
+            <!-- ######################### Dependency Injection ########################### -->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty.ee10</groupId>
+                <artifactId>jetty-ee10-servlet</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

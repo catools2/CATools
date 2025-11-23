@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public abstract class CBaseImageComparisonWaiterTest<O> {
+public abstract class CBaseImageComparisonWaiterTest {
   protected static final CResource FROG_RESOURCE = new CResource("testData/frog.jpg");
   protected static final CResource FROG2_RESOURCE = new CResource("testData/frog2.jpg");
   protected static final CResource FROG_EYE_RESOURCE = new CResource("testData/frog_eye.jpg");
@@ -110,6 +110,6 @@ public abstract class CBaseImageComparisonWaiterTest<O> {
     CVerify.Bool.isTrue(toWaiter().waitContainsNone(CList.of(FROG2_BUFFERED_IMAGE, FROG2_FILE), 1, 100));
   }
 
-  protected abstract CImageComparisonWaiter<O> toWaiter();
+  protected abstract CImageComparisonWaiter toWaiter();
 
 }

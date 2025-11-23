@@ -7,6 +7,8 @@ import org.catools.etl.git.model.CGitCommit;
 import org.catools.etl.git.utils.CGitLoader;
 import org.catools.sql.CSqlDataSource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.testcontainers.postgresql.PostgreSQLContainer;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 public class CBaseTest {
@@ -23,11 +25,20 @@ public class CBaseTest {
     setCommitTime(CDate.of("2022-08-10 19:20:00.000", DATE_FORMAT));
   }};
 
+  private final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:17");
+
+  @AfterSuite(alwaysRun = true)
+  public void afterClass() {
+    postgres.stop();
+  }
+
+
   @BeforeSuite
   public void beforeSuite() {
+    postgres.start();
     SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
     dataSource.setDriverClass(org.testcontainers.jdbc.ContainerDatabaseDriver.class);
-    dataSource.setUrl("jdbc:tc:postgresql:13:///test");
+    dataSource.setUrl("jdbc:tc:postgresql:17:///test");
     dataSource.setUsername("test");
     dataSource.setPassword("test");
     CSqlDataSource.addDataSource(PRIMARY, dataSource);

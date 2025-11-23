@@ -16,26 +16,6 @@
         <relativePath>../catools.parent/pom.xml</relativePath>
     </parent>
 
-    <properties>
-        <!--==================== dependency versions ======================-->
-        <mcp-sdk.version>0.15.0</mcp-sdk.version>
-        <guice.version>7.0.0</guice.version>
-        <jetty.version>12.1.1</jetty.version>
-        <reflections.version>0.10.2</reflections.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.modelcontextprotocol.sdk</groupId>
-                <artifactId>mcp-bom</artifactId>
-                <version>${mcp-sdk.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.catools</groupId>
@@ -54,17 +34,14 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.ee10</groupId>
             <artifactId>jetty-ee10-servlet</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>${reflections.version}</version>
         </dependency>
     </dependencies>
 </project>

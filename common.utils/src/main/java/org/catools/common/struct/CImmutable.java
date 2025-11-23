@@ -1,4 +1,4 @@
-package org.catools.mcp.common;
+package org.catools.common.struct;
 
 /**
  * A simple immutable wrapper class for a single value. Instances of this class are immutable,

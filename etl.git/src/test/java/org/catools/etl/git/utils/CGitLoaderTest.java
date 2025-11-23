@@ -6,10 +6,25 @@ import org.catools.etl.git.configs.CGitConfigRepo;
 import org.catools.etl.git.configs.CGitConfigs;
 import org.catools.etl.git.dao.CGitCommitDao;
 import org.catools.etl.git.model.CGitCommit;
+import org.testcontainers.postgresql.PostgreSQLContainer;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Test(singleThreaded = true)
 public class CGitLoaderTest {
+  private final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:17");
+
+  @BeforeClass
+  public void beforeClass() {
+    postgres.start();
+  }
+
+  @AfterClass(alwaysRun = true)
+  public void afterClass() {
+    postgres.stop();
+  }
+
   @Test
   public void testLoadRepo() {
     CGitConfigRepo repository = CGitConfigs.getRepositories().get(0);

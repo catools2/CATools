@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CJsonUtil;
+import org.catools.common.vault.CVault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,7 +269,6 @@ public class CHoconConfig implements CConfig {
     // 3- If the value is not defined in configuration then try to read value
     // from Environmental Variables or System Properties, considering that value should parse as yaml
     // property so we try to read value as is and if conversion failed, then try quoted value
-
     if (isDefined()) {
       return getDefinedValue(fuc);
     }
@@ -277,17 +277,40 @@ public class CHoconConfig implements CConfig {
       return getDefinedPropertyValue(fuc);
     }
 
+    // Try to read from environment variable or system property
     String value = readPropertyOrEnv(valuePath);
-
-    if (StringUtils.isBlank(value)) {
-      return defaultValue;
+    if (StringUtils.isNotBlank(value)) {
+      try {
+        // Try to parse value as is in a case of complex structure like list or object
+        return printPathValue(path, Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+      } catch (ConfigException ignored) {
+        // build valid json format for string value to read it properly
+        return printPathValue(path, Optional.of(parseString(String.format("\"%s\"", value))).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+      }
     }
 
-    try {
-      return printPathValue(path, Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
-    } catch (ConfigException ignored) {
-      return printPathValue(path, Optional.of(parseString(String.format("\"%s\"", value))).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+    // If value from property is blank try to read from vault using path as is
+    // If not found try to read using converted to env variable format
+    // This is to support both key formats in vault
+    String vaultValueByPath = CVault.getValue(valuePath);
+    if (StringUtils.isNotBlank(vaultValueByPath)) {
+      value = vaultValueByPath;
+    } else {
+      String vaultValueByProperty = CVault.getValue(convertToEnvVariable(valuePath));
+      if (StringUtils.isNotBlank(vaultValueByProperty)) {
+        value = vaultValueByProperty;
+      }
+
+
+      // If value is still blank return default value
+      if (StringUtils.isBlank(value)) {
+        return defaultValue;
+      }
     }
+
+    // set the value in config to avoid re-reading from env or vault next time
+    config = config.withValue(valuePath, ConfigValueFactory.fromAnyRef(value));
+    return getDefinedValue(fuc);
   }
 
   private <T> T getDefinedValue(BiFunction<Config, String, T> fuc) {

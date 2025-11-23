@@ -25,7 +25,7 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * <p>Please Note that we should extend manually {@link CImageComparisonVerification} for each new
  * added verification here
  */
-public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparisonState<O>> {
+public interface CImageComparisonVerify extends CBaseVerify<BufferedImage, CImageComparisonState> {
 
   /**
    * Verify if actual is null
@@ -76,7 +76,7 @@ public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparis
    * @param params       parameters in case if message is a format {@link String#format}
    */
   default void verifyEquals(final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
-    _verify(expected,
+    _verify_with_failure_handler(expected,
         (a, b) -> _toState(a).isEqual(b),
         (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32),
         message,
@@ -144,7 +144,7 @@ public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparis
    * @param params       parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEquals(final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
-    _verify(expected,
+    _verify_with_failure_handler(expected,
         (a, b) -> _toState(a).isNotEqual(b),
         (a, b) -> CImageUtil.generateDiffFile(toBufferedImage(a), b, diffFileName, GRAY_FLOAT_32),
         message,
@@ -214,7 +214,7 @@ public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparis
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsAny(final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
-    _verify(expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
+    _verify_with_failure_handler(expected, (a, e) -> _toState(a).equalsAny(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
   }
 
   /**
@@ -240,7 +240,7 @@ public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparis
    * @param params             parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsNone(final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
-    _verify(expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
+    _verify_with_failure_handler(expected, (a, e) -> _toState(a).equalsNone(e), (a, e) -> _toState(a).generateDiffForAllExpected(diffFileNamePrefix, e), message, params);
   }
 
 
@@ -1385,7 +1385,7 @@ public interface CImageComparisonVerify<O> extends CBaseVerify<O, CImageComparis
         params);
   }
 
-  default CImageComparisonState<O> _toState(O o) {
+  default CImageComparisonState _toState(BufferedImage o) {
     return () -> o;
   }
 }

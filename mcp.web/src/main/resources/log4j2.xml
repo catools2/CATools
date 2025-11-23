@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Use SYSTEM_ERR for stdio MCP servers - stdout is reserved for JSON-RPC -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%magenta{%d{yy-MM-dd HH:mm:ss:SSS}} [%highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}] %msg%n"
+                    disableAnsi="false"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <logger name="org.openqa.selenium.devtools.Connection" level="OFF"/>
+        <logger name="org.openqa.selenium.devtools" level="OFF"/>
+        <logger name="org.openqa.selenium" level="OFF"/>
+        <logger name="io.opentelemetry.sdk.internal" level="OFF"/>
+        <logger name="okhttp3.internal.connection" level="OFF"/>
+        <logger name="org.testng" level="OFF"/>
+        <logger name="sun.nio.ch" level="OFF"/>
+        <logger name="io.github.bonigarcia" level="OFF"/>
+        <logger name="org.eclipse.jetty" level="OFF"/>
+        <logger name="org.reflections" level="OFF"/>
+        <logger name="io.modelcontextprotocol" level="OFF"/>
+        <Root level="${sys:CATOOLS_LOGGER_CONSOLE_LOG_LEVEL:-trace}">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

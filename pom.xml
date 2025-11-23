@@ -71,7 +71,9 @@
         <module>etl.git</module>
         <module>etl.k8s</module>
         <module>pipeline.testng</module>
-        <module>vault</module>
+        <module>mcp.core</module>
+        <module>mcp.server</module>
+        <module>mcp.web</module>
         <module>catools.bom</module>
     </modules>
 </project>

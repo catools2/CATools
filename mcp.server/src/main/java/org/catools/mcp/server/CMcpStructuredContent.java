@@ -88,35 +88,35 @@ import org.catools.mcp.server.component.CMcpServerTool;
  * @see McpSchema.CallToolResult MCP tool call result specification
  */
 public interface CMcpStructuredContent {
-    /**
-     * Returns the text representation of this structured content.
-     *
-     * <p>The text representation should provide a concise summary of the content, suitable for direct
-     * consumption by AI models. The result of this method will be used as the text content in the MCP
-     * response's {@code content} field.
-     *
-     * <p>Implementation Guidelines
-     *
-     * <ul>
-     *   <li><strong>Conciseness</strong>: Text should be brief, avoiding excessive details
-     *   <li><strong>Readability</strong>: Use natural language that's easy for AI to understand
-     *   <li><strong>Completeness</strong>: Include key information, but not necessarily all details
-     *   <li><strong>Consistency</strong>: Text content should be consistent with structured data
-     * </ul>
-     *
-     * <p>Examples For weather query results:
-     *
-     * <ul>
-     *   <li><strong>Good implementation</strong>: "City: New York, Temperature: 25°C, Condition:
-     *       Sunny"
-     *   <li><strong>Poor implementation</strong>: Returning full JSON strings or overly simplified
-     *       information
-     * </ul>
-     *
-     * @return the text representation of the structured content, should not return {@code null}
-     * @see Object#toString() default implementation uses this method
-     */
-    default String asTextContent() {
-        return toString();
-    }
+  /**
+   * Returns the text representation of this structured content.
+   *
+   * <p>The text representation should provide a concise summary of the content, suitable for direct
+   * consumption by AI models. The result of this method will be used as the text content in the MCP
+   * response's {@code content} field.
+   *
+   * <p>Implementation Guidelines
+   *
+   * <ul>
+   *   <li><strong>Conciseness</strong>: Text should be brief, avoiding excessive details
+   *   <li><strong>Readability</strong>: Use natural language that's easy for AI to understand
+   *   <li><strong>Completeness</strong>: Include key information, but not necessarily all details
+   *   <li><strong>Consistency</strong>: Text content should be consistent with structured data
+   * </ul>
+   *
+   * <p>Examples For weather query results:
+   *
+   * <ul>
+   *   <li><strong>Good implementation</strong>: "City: New York, Temperature: 25°C, Condition:
+   *       Sunny"
+   *   <li><strong>Poor implementation</strong>: Returning full JSON strings or overly simplified
+   *       information
+   * </ul>
+   *
+   * @return the text representation of the structured content, should not return {@code null}
+   * @see Object#toString() default implementation uses this method
+   */
+  default String asTextContent() {
+    return toString();
+  }
 }
