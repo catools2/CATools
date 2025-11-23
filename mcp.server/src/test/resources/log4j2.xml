@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Use SYSTEM_ERR for stdio MCP servers - stdout is reserved for JSON-RPC -->
+        <Console name="Console" target="SYSTEM_ERR">
+            <PatternLayout
+                    pattern="%d{yy-MM-dd HH:mm:ss:SSS} [%level] %msg%n"
+                    disableAnsi="true"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="${sys:CATOOLS_LOGGER_CONSOLE_LOG_LEVEL:-trace}">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

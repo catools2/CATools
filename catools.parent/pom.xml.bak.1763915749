@@ -41,19 +41,19 @@
 
         <!-- Versions -->
         <revision>2.0.0</revision>
-        <com.fasterxml.jackson-annotations.version>2.20.4</com.fasterxml.jackson-annotations.version>
-        <com.fasterxml.jackson.version>2.20.4</com.fasterxml.jackson.version>
+        <com.fasterxml.jackson-annotations.version>2.20</com.fasterxml.jackson-annotations.version>
+        <com.fasterxml.jackson.version>2.20.1</com.fasterxml.jackson.version>
         <log4j.version>1.2.17-atlassian-18</log4j.version>
-        <slf4j.version>2.0.17</slf4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <apache-log4j.version>2.25.2</apache-log4j.version>
-        <lombok.version>1.18.44</lombok.version>
+        <lombok.version>1.18.42</lombok.version>
         <typesafe.version>1.4.5</typesafe.version>
         <json-path.version>2.10.0</json-path.version>
         <json-smart.version>2.6.0</json-smart.version>
         <spring.version>6.2.11</spring.version>
         <jira-rest-java-client-core.version>7.0.1</jira-rest-java-client-core.version>
         <fugue.version>6.1.2</fugue.version>
-        <rest-assured.version>5.6.0</rest-assured.version>
+        <rest-assured.version>5.5.6</rest-assured.version>
         <json.version>20250517</json.version>
         <generex.version>1.0.2</generex.version>
         <libphonenumber.version>9.0.18</libphonenumber.version>
@@ -61,12 +61,12 @@
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
-        <guava.version>34.1.1-jre</guava.version>
+        <guava.version>33.5.0-jre</guava.version>
         <testng.version>7.11.0</testng.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <apache-commons-collections4.version>4.5.0</apache-commons-collections4.version>
         <apache-commons-csv.version>1.14.1</apache-commons-csv.version>
-        <apache-commons-lang3.version>3.21.0</apache-commons-lang3.version>
+        <apache-commons-lang3.version>3.20.0</apache-commons-lang3.version>
         <apache-commons-text.version>1.14.0</apache-commons-text.version>
         <commons-io.version>2.21.0</commons-io.version>
         <assertj-core.version>3.27.6</assertj-core.version>
@@ -107,7 +107,7 @@
         <javax-activation.version>1.2.0</javax-activation.version>
 
         <!-- Unit Test -->
-        <jacoco.version>0.8.15</jacoco.version>
+        <jacoco.version>0.8.13</jacoco.version>
 
         <!-- POI -->
         <poi.version>5.5.0</poi.version>
@@ -117,15 +117,15 @@
 
         <!-- Selenium Devtools -->
         <selenium-devtools.artifactId>selenium-devtools-v142</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.45.0</selenium.devtools.version>
+        <selenium.devtools.version>4.38.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.45.0</selenium.version>
+        <selenium.version>4.38.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
         <selenium-axe.version>4.11.0</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
-        <webdrivermanager.version>6.4.1</webdrivermanager.version>
+        <webdrivermanager.version>6.3.3</webdrivermanager.version>
 
         <!-- Report Portal -->
         <reportportal.version>5.4.7</reportportal.version>
@@ -133,10 +133,10 @@
         <rp.commons-model.version>5.12.0</rp.commons-model.version>
         <retrofit.version>3.0.0</retrofit.version>
         <rxjava.version>2.2.21</rxjava.version>
-        <okhttp.version>5.4.0</okhttp.version>
+        <okhttp.version>5.3.1</okhttp.version>
 
         <!-- Hibernate -->
-        <hibernate-entitymanager.version>5.6.20.Final</hibernate-entitymanager.version>
+        <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
         <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
         <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
         <ehcache.version>3.11.1</ehcache.version>
@@ -147,7 +147,7 @@
         <!-- /Kubernetes -->
 
         <!-- Test Containers -->
-        <testcontainers.version>1.21.4</testcontainers.version>
+        <testcontainers.version>1.21.3</testcontainers.version>
 
         <!-- LOG LEVEL -->
         <logger.console.log.level>trace</logger.console.log.level>
