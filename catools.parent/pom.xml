@@ -42,22 +42,22 @@
         <!-- Versions -->
         <revision>2.0.0</revision>
         <com.fasterxml.jackson-annotations.version>2.20</com.fasterxml.jackson-annotations.version>
-        <com.fasterxml.jackson.version>2.20.0</com.fasterxml.jackson.version>
+        <com.fasterxml.jackson.version>2.20.1</com.fasterxml.jackson.version>
         <log4j.version>1.2.17-atlassian-18</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
         <apache-log4j.version>2.25.2</apache-log4j.version>
         <lombok.version>1.18.42</lombok.version>
         <typesafe.version>1.4.5</typesafe.version>
-        <json-path.version>2.9.0</json-path.version>
+        <json-path.version>2.10.0</json-path.version>
         <json-smart.version>2.6.0</json-smart.version>
-        <spring.version>6.2.11</spring.version>
+        <spring.version>7.0.1</spring.version>
         <jira-rest-java-client-core.version>7.0.1</jira-rest-java-client-core.version>
         <fugue.version>6.1.2</fugue.version>
         <rest-assured.version>5.5.6</rest-assured.version>
         <json.version>20250517</json.version>
         <generex.version>1.0.2</generex.version>
-        <libphonenumber.version>9.0.15</libphonenumber.version>
-        <boofcv.version>1.2.3</boofcv.version>
+        <libphonenumber.version>9.0.19</libphonenumber.version>
+        <boofcv.version>1.2.4</boofcv.version>
         <jettison.version>1.5.4</jettison.version>
         <javax.xml.soap-api.version>1.4.0</javax.xml.soap-api.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
@@ -66,15 +66,15 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <apache-commons-collections4.version>4.5.0</apache-commons-collections4.version>
         <apache-commons-csv.version>1.14.1</apache-commons-csv.version>
-        <apache-commons-lang3.version>3.19.0</apache-commons-lang3.version>
+        <apache-commons-lang3.version>3.20.0</apache-commons-lang3.version>
         <apache-commons-text.version>1.14.0</apache-commons-text.version>
-        <commons-io.version>2.20.0</commons-io.version>
+        <commons-io.version>2.21.0</commons-io.version>
         <assertj-core.version>3.27.6</assertj-core.version>
         <groovy.version>3.0.25</groovy.version>
         <jfiglet.version>0.0.9</jfiglet.version>
         <JCDP.version>4.0.2</JCDP.version>
         <jansi.version>2.4.2</jansi.version>
-        <jgit.version>7.3.0.202506031305-r</jgit.version>
+        <jgit.version>7.4.0.202509020913-r</jgit.version>
         <logger-java-log4j.version>5.4.0</logger-java-log4j.version>
         <concurrentlinkedhashmap-lru.version>1.4.2</concurrentlinkedhashmap-lru.version>
         <vault-java-driver.version>5.1.0</vault-java-driver.version>
@@ -84,13 +84,13 @@
         <!-- testing -->
         <mockito-testng.version>0.5.4</mockito-testng.version>
         <mockito-core.version>5.20.0</mockito-core.version>
-        <byte-buddy.version>1.17.7</byte-buddy.version>
+        <byte-buddy.version>1.18.1</byte-buddy.version>
 
         <!-- influxdb -->
         <influxdb-client-java.version>6.6.0</influxdb-client-java.version>
 
         <!-- tracing -->
-        <opentelemetry.version>1.54.1</opentelemetry.version>
+        <opentelemetry.version>1.56.0</opentelemetry.version>
         <opentelemetry-semconv.version>1.37.0</opentelemetry-semconv.version>
 
         <!-- log4j -->
@@ -112,10 +112,10 @@
         <javax-activation.version>1.2.0</javax-activation.version>
 
         <!-- Unit Test -->
-        <jacoco.version>0.8.13</jacoco.version>
+        <jacoco.version>0.8.14</jacoco.version>
 
         <!-- POI -->
-        <poi.version>5.4.1</poi.version>
+        <poi.version>5.5.0</poi.version>
 
         <!-- Extent Reports -->
         <extent.reports.version>5.1.2</extent.reports.version>
@@ -125,26 +125,26 @@
         <selenium.devtools.version>4.36.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.36.0</selenium.version>
+        <selenium.version>4.38.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
-        <selenium-axe.version>4.10.2</selenium-axe.version>
+        <selenium-axe.version>4.11.0</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
-        <webdrivermanager.version>6.3.2</webdrivermanager.version>
+        <webdrivermanager.version>6.3.3</webdrivermanager.version>
 
         <!-- Report Portal -->
-        <reportportal.version>5.4.3</reportportal.version>
-        <rp-java-testng.version>5.6.2</rp-java-testng.version>
+        <reportportal.version>5.4.8</reportportal.version>
+        <rp-java-testng.version>5.6.5</rp-java-testng.version>
         <rp.commons-model.version>5.12.0</rp.commons-model.version>
         <retrofit.version>3.0.0</retrofit.version>
         <rxjava.version>2.2.21</rxjava.version>
-        <okhttp.version>5.1.0</okhttp.version>
+        <okhttp.version>5.3.2</okhttp.version>
 
         <!-- Hibernate -->
         <hibernate-entitymanager.version>5.6.15.Final</hibernate-entitymanager.version>
-        <hibernate-jcache.version>6.2.4.Final</hibernate-jcache.version>
-        <hibernate-c3p0.version>6.2.4.Final</hibernate-c3p0.version>
-        <ehcache.version>3.10.8</ehcache.version>
+        <hibernate-jcache.version>7.1.10.Final</hibernate-jcache.version>
+        <hibernate-c3p0.version>7.1.10.Final</hibernate-c3p0.version>
+        <ehcache.version>3.11.1</ehcache.version>
         <postgresql.version>42.7.8</postgresql.version>
 
         <!-- Kubernetes -->
@@ -152,7 +152,7 @@
         <!-- /Kubernetes -->
 
         <!-- Test Containers -->
-        <testcontainers.version>1.21.3</testcontainers.version>
+        <testcontainers.version>2.0.2</testcontainers.version>
 
         <!-- LOG LEVEL -->
         <logger.console.log.level>trace</logger.console.log.level>
@@ -164,7 +164,7 @@
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-        <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.3.0.6276</sonar-maven-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
 
