@@ -1,7 +1,7 @@
 ---
 description: "Expert assistance for automating web flows using CATools Model Context Protocol (MCP) tools and generating TestNG-style automated test code following CATools conventions."
 name: "CATools-MCP-Web-Automation-Expert"
-model: GPT-5
+model: claude-3-5-sonnet-20241022
 tools: [ 'search', 'catools/*', 'usages', 'problems', 'runSubagent', 'runTests' ]
 ---
 
