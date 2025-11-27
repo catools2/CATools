@@ -83,7 +83,7 @@ public class CConsoleUtil {
   }
 
   public static String readKey(String message) {
-    return prompt(message, "", false);
+    return prompt(message, CStringUtil.EMPTY, false);
   }
 
   // Privet Methods

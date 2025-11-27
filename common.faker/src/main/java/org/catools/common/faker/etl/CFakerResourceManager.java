@@ -121,11 +121,11 @@ public class CFakerResourceManager {
                 vals[1], // ISO
                 vals[0], // ISO3
                 vals[2], // Country
-                vals.length > 3 ? vals[3] : "", // CurrencyCode
-                vals.length > 4 ? vals[4] : "", // CurrencyName
-                vals.length > 5 ? vals[5] : "", // Phone
-                vals.length > 6 ? vals[6] : "", // Postal Code Format
-                vals.length > 7 ? vals[7] : ""), // Postal Code Regex
+                vals.length > 3 ? vals[3] : CStringUtil.EMPTY, // CurrencyCode
+                vals.length > 4 ? vals[4] : CStringUtil.EMPTY, // CurrencyName
+                vals.length > 5 ? vals[5] : CStringUtil.EMPTY, // Phone
+                vals.length > 6 ? vals[6] : CStringUtil.EMPTY, // Postal Code Format
+                vals.length > 7 ? vals[7] : CStringUtil.EMPTY), // Postal Code Regex
             getStateProviders(vals[0]),
             getNameProvider(vals[0]),
             getCompanyProvider(vals[0]),

@@ -8,10 +8,10 @@ import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.catools.common.hocon.exception.CHoconPathNotFoundException;
 import org.catools.common.hocon.exception.CHoconPathOperationException;
 import org.catools.common.utils.CJsonUtil;
-import org.catools.common.utils.CStringUtil;
 
 /**
  * A class to work safe with Type Safe Configuration
@@ -144,7 +144,7 @@ public class CHoconUtils {
    * @return environment variable name
    */
   public static String pathToEnvVariableName(String path) {
-    path = path.endsWith(VALUE_PATH) ? CStringUtil.removeEnd(path, VALUE_PATH) : path;
+    path = path.endsWith(VALUE_PATH) ? Strings.CS.removeEnd(path, VALUE_PATH) : path;
     return path.toUpperCase().replaceAll("[^a-zA-Z0-9]+", "_");
   }
 

@@ -3,6 +3,7 @@ package org.catools.mcp.di;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import lombok.Getter;
 import org.catools.mcp.annotation.CMcpPrompt;
 import org.catools.mcp.annotation.CMcpResource;
 import org.catools.mcp.annotation.CMcpServerApplication;
@@ -19,6 +20,8 @@ import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.inject.Scopes.SINGLETON;
@@ -36,6 +39,12 @@ public final class CGuiceInjectorModule extends AbstractModule {
    * The main class to use for configuration.
    */
   private final Class<?> mainClass;
+
+  /**
+   * The groups to use for mcp capabilities selection.
+   */
+  @Getter
+  private final Set<String> groups = new HashSet<>();
 
   /**
    * Constructs a new {@link CGuiceInjectorModule} with the specified main class.
@@ -77,6 +86,7 @@ public final class CGuiceInjectorModule extends AbstractModule {
   @Singleton
   public Reflections provideReflections() {
     CMcpServerApplication application = mainClass.getAnnotation(CMcpServerApplication.class);
+    setGroupFilters(application);
     final String basePackage = determineBasePackage(application);
     return new Reflections(basePackage, MethodsAnnotated, FieldsAnnotated);
   }
@@ -97,6 +107,17 @@ public final class CGuiceInjectorModule extends AbstractModule {
       }
     }
     return mainClass.getPackageName();
+  }
+
+  /**
+   * Add groups to filter application capabilities.
+   *
+   * @param application the {@link CMcpServerApplication} annotation
+   */
+  private void setGroupFilters(CMcpServerApplication application) {
+    if (application != null && application.groups() != null) {
+      groups.addAll(Arrays.asList(application.groups()));
+    }
   }
 
   /**

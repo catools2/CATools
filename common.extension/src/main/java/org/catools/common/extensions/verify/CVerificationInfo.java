@@ -194,7 +194,7 @@ public class CVerificationInfo<A, B> {
     if (obj == null) {
       return "<NULL>";
     }
-    return obj.getClass().isArray() ? new CList<>((String[]) obj).toString() : (obj + "");
+    return obj.getClass().isArray() ? new CList<>((String[]) obj).toString() : (obj + CStringUtil.EMPTY);
   }
 
   record CVerificationResult<O>(O actual, O expected, boolean computedResult) {

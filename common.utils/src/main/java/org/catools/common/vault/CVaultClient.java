@@ -8,6 +8,7 @@ import org.catools.common.configs.CVaultConfigs;
 import org.catools.common.exception.CVaultOperationException;
 import org.catools.common.exception.CVaultSecretNotFoundException;
 import org.catools.common.security.CSensitiveDataMaskingManager;
+import org.catools.common.utils.CStringUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -60,6 +61,6 @@ public class CVaultClient {
    * User CATOOLS_VAULT_KEY_PREFIX to differentiate group of keys on the same path
    */
   private static String getFullKey(String key) {
-    return StringUtils.isBlank(key) ? "" : CVaultConfigs.getKeyPrefix() + key;
+    return StringUtils.isBlank(key) ? CStringUtil.EMPTY : CVaultConfigs.getKeyPrefix() + key;
   }
 }

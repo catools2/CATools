@@ -5,6 +5,7 @@ import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.text.match.CStringDiff;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
@@ -37,7 +38,7 @@ public class CStringDiffTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testColoredDiff_NoDiff() {
-    String diff = CStringDiff.coloredDiff("", "");
-    CVerify.String.equals(diff, "", "Diff string matched");
+    String diff = CStringDiff.coloredDiff(CStringUtil.EMPTY, CStringUtil.EMPTY);
+    CVerify.String.equals(diff, CStringUtil.EMPTY, "Diff string matched");
   }
 }

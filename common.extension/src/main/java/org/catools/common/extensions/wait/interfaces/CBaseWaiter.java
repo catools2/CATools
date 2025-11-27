@@ -6,6 +6,7 @@ import org.catools.common.date.CDate;
 import org.catools.common.extensions.CTypeExtensionConfigs;
 import org.catools.common.extensions.states.interfaces.CBaseState;
 import org.catools.common.utils.CSleeper;
+import org.catools.common.utils.CStringUtil;
 
 import java.util.function.Predicate;
 
@@ -69,7 +70,7 @@ public interface CBaseWaiter<O> extends CBaseState<O> {
    */
   @JsonIgnore
   default String getVerifyMessagePrefix() {
-    return "";
+    return CStringUtil.EMPTY;
   }
 
 

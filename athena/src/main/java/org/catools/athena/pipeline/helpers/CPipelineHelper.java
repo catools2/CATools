@@ -154,7 +154,7 @@ public class CPipelineHelper {
                 }
                 Annotation annot = (Annotation) annotation;
                 Class<? extends Annotation> annotationType = annot.annotationType();
-                executionMetaData.add(new MetadataDto(annotationType.getSimpleName(), annot.toString().replace("@" + annotationType.getName(), "")));
+                executionMetaData.add(new MetadataDto(annotationType.getSimpleName(), annot.toString().replace("@" + annotationType.getName(), CStringUtil.EMPTY)));
             }
         }
 

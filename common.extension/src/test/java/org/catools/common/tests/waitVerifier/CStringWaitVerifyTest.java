@@ -3,6 +3,7 @@ package org.catools.common.tests.waitVerifier;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CStringWaitVerifier;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   private static final String CSTRING1 = "This is the first String with some 1209op31mk2w9@# values.";
   private String NULL = null;
-  private String EMPTY = "";
+  private String EMPTY = CStringUtil.EMPTY;
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCenterPadEquals() {
@@ -103,16 +104,16 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAny() {
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>("", "  some string    "), 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>("", "  some string    "), 1));
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>("", "  some string    ")));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>(CStringUtil.EMPTY, "  some string    "), 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>(CStringUtil.EMPTY, "  some string    "), 1));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>(CStringUtil.EMPTY, "  some string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAnyIgnoreCase() {
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>("", "  SOME string    "), 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>("", "  SOME string    "), 1));
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>("", "  SOME string    ")));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  SOME string    "), 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  SOME string    "), 1));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  SOME string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -131,16 +132,16 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNone() {
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>("", "  some String    "), 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>("", "  some String    "), 1));
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>("", null)));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>(CStringUtil.EMPTY, "  some String    "), 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>(CStringUtil.EMPTY, "  some String    "), 1));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNone(verifier, new CList<>(CStringUtil.EMPTY, null)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNoneIgnoreCase() {
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>("", "  $ome string    "), 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>("", "  $ome string    "), 1));
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>("", null)));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  $ome string    "), 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  $ome string    "), 1));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsNoneIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, null)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -154,7 +155,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testIsEmptyOrAlpha() {
     verify(verifier -> toWaitVerifier("aiulajksn").verifyIsEmptyOrAlpha(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("aiulajksn").verifyIsEmptyOrAlpha(verifier, 1));
-    verify(verifier -> toWaitVerifier("").verifyIsEmptyOrAlpha(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsEmptyOrAlpha(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -175,7 +176,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testIsEmptyOrAlphanumeric() {
     verify(verifier -> toWaitVerifier("aiulaj6265opksn").verifyIsEmptyOrAlphanumeric(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("aiulaj6265opksn").verifyIsEmptyOrAlphanumeric(verifier, 1));
-    verify(verifier -> toWaitVerifier("").verifyIsEmptyOrAlphanumeric(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsEmptyOrAlphanumeric(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -220,14 +221,14 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testIsNotAlpha() {
     verify(verifier -> toWaitVerifier("123aasf2").verifyIsNotAlpha(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("123aasf2").verifyIsNotAlpha(verifier, 1));
-    verify(verifier -> toWaitVerifier("").verifyIsNotAlpha(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsNotAlpha(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrNotAlpha() {
     verify(verifier -> toWaitVerifier("aiulaj626").verifyIsEmptyOrNotAlpha(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("aiulaj626").verifyIsEmptyOrNotAlpha(verifier, 1));
-    verify(verifier -> toWaitVerifier("").verifyIsEmptyOrNotAlpha(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsEmptyOrNotAlpha(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -249,7 +250,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toWaitVerifier("aiulaj626 5opksn").verifyIsEmptyOrNotAlphanumeric(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("aiulaj626 5opksn").verifyIsEmptyOrNotAlphanumeric(verifier, 1));
     verify(verifier -> toWaitVerifier("@#.*").verifyIsEmptyOrNotAlphanumeric(verifier));
-    verify(verifier -> toWaitVerifier("").verifyIsEmptyOrNotAlphanumeric(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsEmptyOrNotAlphanumeric(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -318,7 +319,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testIsEmptyOrNumeric() {
     verify(verifier -> toWaitVerifier("1234567").verifyIsEmptyOrNumeric(verifier, 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("1234567").verifyIsEmptyOrNumeric(verifier));
-    verify(verifier -> toWaitVerifier("").verifyIsEmptyOrNumeric(verifier, 1));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsEmptyOrNumeric(verifier, 1));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -333,7 +334,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadEquals(verifier, 30, "@", "@@@@@@@@@@@@@  some string    ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadEquals(verifier, 10, "@", "  some string    ", 1));
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadEquals(verifier, 10, NULL, "  some string    "));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadEquals(verifier, 30, "", "              some string   s "));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadEquals(verifier, 30, CStringUtil.EMPTY, "              some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -341,7 +342,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadNotEquals(verifier, 30, "@", "@@@@@@@@@@@@  some string    ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadNotEquals(verifier, 10, "@", " some string    ", 1));
     verify(verifier -> toWaitVerifier("  some string    ").verifyLeftPadNotEquals(verifier, 10, NULL, " some string    "));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadNotEquals(verifier, 30, "", "             some string   s "));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadNotEquals(verifier, 30, CStringUtil.EMPTY, "             some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -417,7 +418,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testNotEqualsIgnoreCase() {
     verify(verifier -> toWaitVerifier("  some string    ").verifyNotEqualsIgnoreCase(verifier, "  $OME string    ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string    ").verifyNotEqualsIgnoreCase(verifier, "  $OME string    ", 1));
-    verify(verifier -> toWaitVerifier(NULL).verifyNotEqualsIgnoreCase(verifier, ""));
+    verify(verifier -> toWaitVerifier(NULL).verifyNotEqualsIgnoreCase(verifier, CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -459,7 +460,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testRemoveEndEquals() {
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndEquals(verifier, "  some ", "  some string   s ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndEquals(verifier, "some string   s ", "  ", 1));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndEquals(verifier, "  some string   s ", ""));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndEquals(verifier, "  some string   s ", CStringUtil.EMPTY));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveEndEquals(verifier, null, "  some String   s "));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveEndEquals(verifier, "tring   s ", "  some S"));
     verify(verifier -> toWaitVerifier("  some $tring   s ").verifyRemoveEndEquals(verifier, "tring   s ", "  some $"));
@@ -469,7 +470,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testRemoveEndIgnoreCaseEquals() {
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "  Some ", "  some string   s ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "some String   s ", "  ", 1));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "  sOME string   s ", ""));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "  sOME string   s ", CStringUtil.EMPTY));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveEndIgnoreCaseEquals(verifier, null, "  some String   s "));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "tring   S ", "  some S"));
     verify(verifier -> toWaitVerifier("  some $tring   s ").verifyRemoveEndIgnoreCaseEquals(verifier, "TRING   s ", "  some $"));
@@ -521,7 +522,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testRemoveStartEquals() {
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartEquals(verifier, "  some ", "string   s ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartEquals(verifier, "some string   s ", "  some string   s ", 1));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartEquals(verifier, "  some string   s ", ""));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartEquals(verifier, "  some string   s ", CStringUtil.EMPTY));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveStartEquals(verifier, null, "  some String   s "));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveStartEquals(verifier, "  some S", "tring   s "));
     verify(verifier -> toWaitVerifier("  some $tring   s ").verifyRemoveStartEquals(verifier, "  some $", "tring   s "));
@@ -532,7 +533,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  some ", "string   s ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  Some ", "string   s ", 1));
     verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "Some string   s ", "  some string   s "));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  Some string   s ", ""));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  Some string   s ", CStringUtil.EMPTY));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveStartIgnoreCaseEquals(verifier, null, "  some String   s "));
     verify(verifier -> toWaitVerifier("  some String   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  some s", "tring   s "));
     verify(verifier -> toWaitVerifier("  some $tring   s ").verifyRemoveStartIgnoreCaseEquals(verifier, "  some $", "tring   s "));
@@ -554,8 +555,8 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceEquals() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceEquals(verifier, "s", "", "  ome tring    ", 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceEquals(verifier, "s", "", "  ome tring    ", 1));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceEquals(verifier, "s", CStringUtil.EMPTY, "  ome tring    ", 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceEquals(verifier, "s", CStringUtil.EMPTY, "  ome tring    ", 1));
     verify(verifier -> toWaitVerifier("  some String   so ").verifyReplaceEquals(verifier, "so", "XX", "  XXme String   XX "));
   }
 
@@ -582,8 +583,8 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceEquals() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceOnceEquals(verifier, "s", "", "  ome string   s ", 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceOnceEquals(verifier, "s", "", "  ome string   s ", 1));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceOnceEquals(verifier, "s", CStringUtil.EMPTY, "  ome string   s ", 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyReplaceOnceEquals(verifier, "s", CStringUtil.EMPTY, "  ome string   s ", 1));
     verify(verifier -> toWaitVerifier("  some String   so ").verifyReplaceOnceEquals(verifier, "so", "XX", "  XXme String   so "));
   }
 
@@ -730,14 +731,14 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testSubstringAfterEquals() {
     verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterEquals(verifier, " s", "ome string    ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterEquals(verifier, " s", "ome string    ", 1));
-    verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterEquals(verifier, null, ""));
+    verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterEquals(verifier, null, CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterLastEquals() {
     verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterLastEquals(verifier, " s", "tring    ", 1, "%s#%s", getParams()));
     verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterLastEquals(verifier, " s", "tring    ", 1));
-    verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterLastEquals(verifier, null, ""));
+    verify(verifier -> toWaitVerifier("  some string    ").verifySubstringAfterLastEquals(verifier, null, CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -819,9 +820,9 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenEquals() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", "", "  "), 1, "%s#%s", getParams()));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", "", "  "), 1));
-    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", "", "  ")));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), 1, "%s#%s", getParams()));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), 1));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenEquals(verifier, " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -924,12 +925,12 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAny_Negative() {
-    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>("", "  sxme string    ")));
+    verify(verifier -> toWaitVerifier("  some string    ").verifyEqualsAny(verifier, new CList<>(CStringUtil.EMPTY, "  sxme string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAnyIgnoreCase_Negative() {
-    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>("", "  SXME string    ")));
+    verify(verifier -> toWaitVerifier("  some STRING    ").verifyEqualsAnyIgnoreCase(verifier, new CList<>(CStringUtil.EMPTY, "  SXME string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1033,7 +1034,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotBlank_Negative() {
-    verify(verifier -> toWaitVerifier("").verifyIsNotBlank(verifier, 1));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsNotBlank(verifier, 1));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1053,7 +1054,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotNumericSpace_Negative() {
-    verify(verifier -> toWaitVerifier("").verifyIsNotNumericSpace(verifier, 1));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsNotNumericSpace(verifier, 1));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1073,12 +1074,12 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadEquals_Negative() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadEquals(verifier, 30, "", "            some string   s ", 0));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadEquals(verifier, 30, CStringUtil.EMPTY, "            some string   s ", 0));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadNotEquals_Negative() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadNotEquals(verifier, 30, "", "              some string   s ", 0));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifyLeftPadNotEquals(verifier, 30, CStringUtil.EMPTY, "              some string   s ", 0));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1458,7 +1459,7 @@ public class CStringWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenNotEquals_Negative() {
-    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenNotEquals(verifier, " ", "s", new CList<>(" ", "", "  "), 0));
+    verify(verifier -> toWaitVerifier("  some string   s ").verifySubstringsBetweenNotEquals(verifier, " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), 0));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

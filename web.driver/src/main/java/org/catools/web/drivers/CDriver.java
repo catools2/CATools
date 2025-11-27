@@ -7,6 +7,7 @@ import org.catools.common.date.CDate;
 import org.catools.common.enums.CPlatform;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.utils.CRetry;
+import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.media.model.CScreenShot;
 import org.catools.web.controls.CWebElement;
@@ -665,6 +666,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #Title
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_get_title",
       title = "Get Page Title",
       description = "Retrieves the current page title from the browser"
@@ -673,7 +675,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
     return performActionOnDriver(
         "Get Title",
         webDriver -> {
-          return webDriver != null ? webDriver.getTitle() : "";
+          return webDriver != null ? webDriver.getTitle() : CStringUtil.EMPTY;
         });
   }
 
@@ -712,6 +714,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #Url
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_get_url",
       title = "Get Current URL",
       description = "Retrieves the current page URL from the browser"
@@ -720,7 +723,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
     return performActionOnDriver(
         "Get URL",
         webDriver -> {
-          return webDriver != null ? webDriver.getCurrentUrl() : "";
+          return webDriver != null ? webDriver.getCurrentUrl() : CStringUtil.EMPTY;
         });
   }
 

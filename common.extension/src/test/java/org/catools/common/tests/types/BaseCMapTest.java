@@ -8,6 +8,7 @@ import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -221,7 +222,7 @@ public abstract class BaseCMapTest<T extends CMap<String, String>> extends CBase
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testToString() {
     CVerifier verifier = new CVerifier();
-    verifier.String.equals(getStringLinkedMap1().toString().replaceAll(System.lineSeparator(), ""), "{  \"A\" : \"1\",  \"B\" : \"2\",  \"C\" : \"3\"}", "CMapTest ::> testToString ");
+    verifier.String.equals(getStringLinkedMap1().toString().replaceAll(System.lineSeparator(), CStringUtil.EMPTY), "{  \"A\" : \"1\",  \"B\" : \"2\",  \"C\" : \"3\"}", "CMapTest ::> testToString ");
     verifier.verify();
   }
 

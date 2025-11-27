@@ -28,20 +28,27 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpServerApplication {
-    /**
-     * The base package for component scanning. Defaults to the package of the annotated class.
-     *
-     * @return the base package for component scanning
-     */
-    String basePackage() default CStringUtil.EMPTY;
+  /**
+   * The name of the tool. Defaults to the name of the annotated method.
+   *
+   * @return the name of the tool
+   */
+  String[] groups() default CStringUtil.EMPTY;
 
-    /**
-     * The base package class for component scanning. Defaults to {@code Object.class}.
-     *
-     * <p>Note: This attribute is intended to be used when the base package cannot be determined
-     * statically. In most cases, {@link #basePackage()} should be used instead.
-     *
-     * @return the base package class for component scanning
-     */
-    Class<?> basePackageClass() default Object.class;
+  /**
+   * The base package for component scanning. Defaults to the package of the annotated class.
+   *
+   * @return the base package for component scanning
+   */
+  String basePackage() default CStringUtil.EMPTY;
+
+  /**
+   * The base package class for component scanning. Defaults to {@code Object.class}.
+   *
+   * <p>Note: This attribute is intended to be used when the base package cannot be determined
+   * statically. In most cases, {@link #basePackage()} should be used instead.
+   *
+   * @return the base package class for component scanning
+   */
+  Class<?> basePackageClass() default Object.class;
 }

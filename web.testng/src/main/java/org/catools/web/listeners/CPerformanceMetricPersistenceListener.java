@@ -2,6 +2,7 @@ package org.catools.web.listeners;
 
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
+import org.catools.common.utils.CStringUtil;
 import org.catools.metrics.configs.CMetricsConfigs;
 import org.catools.metrics.model.CMetric;
 import org.catools.metrics.utils.CMetricsUtils;
@@ -18,7 +19,7 @@ public class CPerformanceMetricPersistenceListener implements CDriverListener {
         "Page Transition",
         driverMetricInfo.getActionTime(),
         durationInNano,
-        CList.of(driverMetricInfo.getMetrics().entrySet()).mapToList(e -> new CMetric(e.getKey(), "", e.getValue()))
+        CList.of(driverMetricInfo.getMetrics().entrySet()).mapToList(e -> new CMetric(e.getKey(), CStringUtil.EMPTY, e.getValue()))
     );
   }
 }

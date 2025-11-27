@@ -4,6 +4,7 @@ import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.hard.CStringVerification;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.regex.Pattern;
 public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   private static final String CSTRING1 = "This is the first String with some 1209op31mk2w9@# values.";
   private String NULL = null;
-  private String EMPTY = "";
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCenterPadEquals() {
@@ -127,14 +127,14 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAny() {
-    verify(string -> string.equalsAny("  some string    ", new CList<>("", "  some string    ")));
-    verify(string -> string.equalsAny("  some string    ", new CList<>("", "  some string    "), "testEqualsAny"));
+    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  some string    ")));
+    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  some string    "), "testEqualsAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAnyIgnoreCase() {
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>("", "  SOME string    ")));
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>("", "  SOME string    "), "testEqualsAnyIgnoreCase"));
+    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SOME string    ")));
+    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SOME string    "), "testEqualsAnyIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -155,18 +155,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNone() {
-    verify(string -> string.equalsNone("  some string    ", new CList<>("", "  some String    ")));
-    verify(string -> string.equalsNone("  some string    ", new CList<>("", "  some String    "), "testNone"));
-    verify(string -> string.equalsNone("  some string    ", new CList<>("", null)));
-    verify(string -> string.equalsNone("  some string    ", new CList<>("", null), "testNone_ExpectedNull"));
+    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, "  some String    ")));
+    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, "  some String    "), "testNone"));
+    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, null)));
+    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, null), "testNone_ExpectedNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNoneIgnoreCase() {
-    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>("", "  $ome string    ")));
-    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>("", "  $ome string    "), "testNoneIgnoreCase"));
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>("", null)));
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>("", null), "testNoneIgnoreCase_ExpectedNull"));
+    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  $ome string    ")));
+    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  $ome string    "), "testNoneIgnoreCase"));
+    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>(CStringUtil.EMPTY, null)));
+    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>(CStringUtil.EMPTY, null), "testNoneIgnoreCase_ExpectedNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -179,8 +179,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testIsEmptyOrAlpha() {
     verify(string -> string.isEmptyOrAlpha("aiulajksn"));
     verify(string -> string.isEmptyOrAlpha("aiulajksn", "testIsEmptyOrAlpha"));
-    verify(string -> string.isEmptyOrAlpha(""));
-    verify(string -> string.isEmptyOrAlpha("", "testIsEmptyOrAlpha"));
+    verify(string -> string.isEmptyOrAlpha(CStringUtil.EMPTY));
+    verify(string -> string.isEmptyOrAlpha(CStringUtil.EMPTY, "testIsEmptyOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -189,8 +189,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.isBlankOrAlpha("aiulajksn", "testIsBlankOrAlpha"));
     verify(string -> string.isBlankOrAlpha(null));
     verify(string -> string.isBlankOrAlpha(null, "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrAlpha(""));
-    verify(string -> string.isBlankOrAlpha("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrAlpha(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrAlpha(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -199,8 +199,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.isBlankOrNotAlpha("aiu12lajksn", "testIsBlankOrAlpha"));
     verify(string -> string.isBlankOrNotAlpha(null));
     verify(string -> string.isBlankOrNotAlpha(null, "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrNotAlpha(""));
-    verify(string -> string.isBlankOrNotAlpha("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrNotAlpha(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrNotAlpha(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -209,32 +209,32 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.isBlankOrAlphanumeric("aiula12jksn", "testIsBlankOrAlpha"));
     verify(string -> string.isBlankOrAlphanumeric(null));
     verify(string -> string.isBlankOrAlphanumeric(null, "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrAlphanumeric(""));
-    verify(string -> string.isBlankOrAlphanumeric("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrAlphanumeric(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrAlphanumeric(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsBlankOrNotAlphanumeric() {
     verify(string -> string.isBlankOrNotAlphanumeric("aiul 12ajksn"));
     verify(string -> string.isBlankOrNotAlphanumeric("aiul a12jksn", "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrNotAlphanumeric(""));
-    verify(string -> string.isBlankOrNotAlphanumeric("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrNotAlphanumeric(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrNotAlphanumeric(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsBlankOrNumeric() {
     verify(string -> string.isBlankOrNumeric("123456"));
     verify(string -> string.isBlankOrNumeric("123456", "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrNumeric(""));
-    verify(string -> string.isBlankOrNumeric("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrNumeric(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrNumeric(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsBlankOrNotNumeric() {
     verify(string -> string.isBlankOrNotNumeric("123a456"));
     verify(string -> string.isBlankOrNotNumeric("123a456", "testIsBlankOrAlpha"));
-    verify(string -> string.isBlankOrNotNumeric(""));
-    verify(string -> string.isBlankOrNotNumeric("", "testIsBlankOrAlpha"));
+    verify(string -> string.isBlankOrNotNumeric(CStringUtil.EMPTY));
+    verify(string -> string.isBlankOrNotNumeric(CStringUtil.EMPTY, "testIsBlankOrAlpha"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -257,8 +257,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testIsEmptyOrAlphanumeric() {
     verify(string -> string.isEmptyOrAlphanumeric("aiulaj6265opksn"));
     verify(string -> string.isEmptyOrAlphanumeric("aiulaj6265opksn", "testIsEmptyOrAlphanumeric"));
-    verify(string -> string.isEmptyOrAlphanumeric(""));
-    verify(string -> string.isEmptyOrAlphanumeric("", "testIsEmptyOrAlphanumeric"));
+    verify(string -> string.isEmptyOrAlphanumeric(CStringUtil.EMPTY));
+    verify(string -> string.isEmptyOrAlphanumeric(CStringUtil.EMPTY, "testIsEmptyOrAlphanumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -298,30 +298,30 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testIsBlank() {
     verify(string -> string.isBlank(NULL));
     verify(string -> string.isBlank(NULL, "testIsBlank"));
-    verify(string -> string.isBlank(EMPTY));
-    verify(string -> string.isBlank(EMPTY, "testIsBlank"));
+    verify(string -> string.isBlank(CStringUtil.EMPTY));
+    verify(string -> string.isBlank(CStringUtil.EMPTY, "testIsBlank"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmpty() {
-    verify(string -> string.isEmpty(EMPTY));
-    verify(string -> string.isEmpty(EMPTY, "testIsEmpty"));
+    verify(string -> string.isEmpty(CStringUtil.EMPTY));
+    verify(string -> string.isEmpty(CStringUtil.EMPTY, "testIsEmpty"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotAlpha() {
     verify(string -> string.isNotAlpha("123aasf2"));
     verify(string -> string.isNotAlpha("123aasf2", "testIsNotAlphanumericSpace"));
-    verify(string -> string.isNotAlpha(""));
-    verify(string -> string.isNotAlpha("", "testIsNotAlphanumericSpace"));
+    verify(string -> string.isNotAlpha(CStringUtil.EMPTY));
+    verify(string -> string.isNotAlpha(CStringUtil.EMPTY, "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrNotAlpha() {
     verify(string -> string.isEmptyOrNotAlpha("aiulaj626"));
     verify(string -> string.isEmptyOrNotAlpha("aiulaj626", "testIsNotAlphanumericSpace"));
-    verify(string -> string.isEmptyOrNotAlpha(""));
-    verify(string -> string.isEmptyOrNotAlpha("", "testIsNotAlphanumericSpace"));
+    verify(string -> string.isEmptyOrNotAlpha(CStringUtil.EMPTY));
+    verify(string -> string.isEmptyOrNotAlpha(CStringUtil.EMPTY, "testIsNotAlphanumericSpace"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -346,8 +346,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.isEmptyOrNotAlphanumeric("aiulaj626 5opksn", "testIsEmptyOrNotAlphanumeric"));
     verify(string -> string.isEmptyOrNotAlphanumeric("@#.*"));
     verify(string -> string.isEmptyOrNotAlphanumeric("@#.*", "testIsEmptyOrNotAlphanumeric"));
-    verify(string -> string.isEmptyOrNotAlphanumeric(""));
-    verify(string -> string.isEmptyOrNotAlphanumeric("", "testIsEmptyOrNotAlphanumeric"));
+    verify(string -> string.isEmptyOrNotAlphanumeric(CStringUtil.EMPTY));
+    verify(string -> string.isEmptyOrNotAlphanumeric(CStringUtil.EMPTY, "testIsEmptyOrNotAlphanumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -420,8 +420,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testIsEmptyOrNumeric() {
     verify(string -> string.isEmptyOrNumeric("1234567"));
     verify(string -> string.isEmptyOrNumeric("1234567", "testIsEmptyOrNumeric"));
-    verify(string -> string.isEmptyOrNumeric(""));
-    verify(string -> string.isEmptyOrNumeric("", "testIsEmptyOrNumeric"));
+    verify(string -> string.isEmptyOrNumeric(CStringUtil.EMPTY));
+    verify(string -> string.isEmptyOrNumeric(CStringUtil.EMPTY, "testIsEmptyOrNumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -440,8 +440,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.leftPadEquals("  some string    ", 30, "@", "@@@@@@@@@@@@@  some string    ", "testLeftPad"));
     verify(string -> string.leftPadEquals("  some string    ", 10, NULL, "  some string    "));
     verify(string -> string.leftPadEquals("  some string    ", 10, NULL, "  some string    ", "testLeftPad_PadNull"));
-    verify(string -> string.leftPadEquals("  some string   s ", 30, "", "              some string   s "));
-    verify(string -> string.leftPadEquals("  some string   s ", 30, "", "              some string   s ", "testLeftPad"));
+    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
+    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s ", "testLeftPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -452,8 +452,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.leftPadNotEquals("  some string    ", 30, "@", "@@@@@@@@@@@@  some string    ", "testLeftPadNotEquals"));
     verify(string -> string.leftPadNotEquals("  some string    ", 10, NULL, " some string    "));
     verify(string -> string.leftPadNotEquals("  some string    ", 10, NULL, " some string    ", "testLeftPadNotEquals"));
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, "", "             some string   s "));
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, "", "             some string   s ", "testLeftPadNotEquals"));
+    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "             some string   s "));
+    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "             some string   s ", "testLeftPadNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -524,8 +524,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testNotEqualsIgnoreCase() {
     verify(string -> string.notEqualsIgnoreCase("  some string    ", "  $OME string    "));
     verify(string -> string.notEqualsIgnoreCase("  some string    ", "  $OME string    ", "testEqualsIgnoreCase"));
-    verify(string -> string.notEqualsIgnoreCase(NULL, ""));
-    verify(string -> string.notEqualsIgnoreCase(NULL, "", "testStripedEndValue"));
+    verify(string -> string.notEqualsIgnoreCase(NULL, CStringUtil.EMPTY));
+    verify(string -> string.notEqualsIgnoreCase(NULL, CStringUtil.EMPTY, "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -568,8 +568,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.removeEndEquals("  some string   s ", "  some ", "  some string   s ", "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some string   s ", "some string   s ", "  "));
     verify(string -> string.removeEndEquals("  some string   s ", "some string   s ", "  ", "testRemoveEnd"));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", ""));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", "", "testRemoveEnd"));
+    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY));
+    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY, "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some String   s ", null, "  some String   s "));
     verify(string -> string.removeEndEquals("  some String   s ", null, "  some String   s ", "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some String   s ", "tring   s ", "  some S"));
@@ -584,8 +584,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  Some ", "  some string   s ", "testRemoveEndIgnoreCase"));
     verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "some String   s ", "  "));
     verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "some String   s ", "  ", "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", ""));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", "", "testRemoveEndIgnoreCase"));
+    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", CStringUtil.EMPTY));
+    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", CStringUtil.EMPTY, "testRemoveEndIgnoreCase"));
     verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
     verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", null, "  some String   s ", "testRemoveEndIgnoreCase"));
     verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", "tring   S ", "  some S"));
@@ -640,8 +640,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.removeStartEquals("  some string   s ", "  some ", "string   s ", "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some string   s ", "some string   s ", "  some string   s "));
     verify(string -> string.removeStartEquals("  some string   s ", "some string   s ", "  some string   s ", "testRemoveStartEquals"));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", ""));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", "", "testRemoveStartEquals"));
+    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY));
+    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY, "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some String   s ", null, "  some String   s "));
     verify(string -> string.removeStartEquals("  some String   s ", null, "  some String   s ", "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some String   s ", "  some S", "tring   s "));
@@ -658,8 +658,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some ", "string   s ", "testRemoveStartIgnoreCase"));
     verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "Some string   s ", "  some string   s "));
     verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "Some string   s ", "  some string   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", ""));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", "", "testRemoveStartIgnoreCase"));
+    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", CStringUtil.EMPTY));
+    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", CStringUtil.EMPTY, "testRemoveStartIgnoreCase"));
     verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
     verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", null, "  some String   s ", "testRemoveStartIgnoreCase"));
     verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", "  some s", "tring   s "));
@@ -682,8 +682,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceEquals() {
-    verify(string -> string.replaceEquals("  some string   s ", "s", "", "  ome tring    "));
-    verify(string -> string.replaceEquals("  some string   s ", "s", "", "  ome tring    ", "testReplaceEquals"));
+    verify(string -> string.replaceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome tring    "));
+    verify(string -> string.replaceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome tring    ", "testReplaceEquals"));
     verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX "));
     verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX ", "testReplaceEquals"));
   }
@@ -710,8 +710,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceEquals() {
-    verify(string -> string.replaceOnceEquals("  some string   s ", "s", "", "  ome string   s "));
-    verify(string -> string.replaceOnceEquals("  some string   s ", "s", "", "  ome string   s ", "testReplaceOnceEquals"));
+    verify(string -> string.replaceOnceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome string   s "));
+    verify(string -> string.replaceOnceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome string   s ", "testReplaceOnceEquals"));
     verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  XXme String   so "));
     verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  XXme String   so ", "testReplaceOnceEquals"));
   }
@@ -882,16 +882,16 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   public void testSubstringAfterEquals() {
     verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string    "));
     verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string    ", "testSubstringAfter"));
-    verify(string -> string.substringAfterEquals("  some string    ", null, ""));
-    verify(string -> string.substringAfterEquals("  some string    ", null, "", "testSubstringAfter"));
+    verify(string -> string.substringAfterEquals("  some string    ", null, CStringUtil.EMPTY));
+    verify(string -> string.substringAfterEquals("  some string    ", null, CStringUtil.EMPTY, "testSubstringAfter"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterLastEquals() {
     verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring    "));
     verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring    ", "testSubstringAfterLast"));
-    verify(string -> string.substringAfterLastEquals("  some string    ", null, ""));
-    verify(string -> string.substringAfterLastEquals("  some string    ", null, "", "testSubstringAfterLast"));
+    verify(string -> string.substringAfterLastEquals("  some string    ", null, CStringUtil.EMPTY));
+    verify(string -> string.substringAfterLastEquals("  some string    ", null, CStringUtil.EMPTY, "testSubstringAfterLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -974,8 +974,8 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenEquals() {
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", "", "  ")));
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", "", "  "), "testSubstringsBetween"));
+    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")));
+    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "testSubstringsBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -1076,12 +1076,12 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAny_Negative() {
-    verify(string -> string.equalsAny("  some string    ", new CList<>("", "  sxme string    ")));
+    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  sxme string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAnyIgnoreCase_Negative() {
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>("", "  SXME string    ")));
+    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SXME string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1185,12 +1185,12 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotBlank_Negative() {
-    verify(string -> string.isNotBlank(""));
+    verify(string -> string.isNotBlank(CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotEmpty_Negative() {
-    verify(string -> string.isNotEmpty(EMPTY));
+    verify(string -> string.isNotEmpty(CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1205,7 +1205,7 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotNumericSpace_Negative() {
-    verify(string -> string.isNotNumericSpace(""));
+    verify(string -> string.isNotNumericSpace(CStringUtil.EMPTY));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1225,12 +1225,12 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadEquals_Negative() {
-    verify(string -> string.leftPadEquals("  some string   s ", 30, "", "            some string   s "));
+    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "            some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadNotEquals_Negative() {
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, "", "              some string   s "));
+    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1610,7 +1610,7 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenNotEquals_Negative() {
-    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", "", "  "), "some string"));
+    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "some string"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

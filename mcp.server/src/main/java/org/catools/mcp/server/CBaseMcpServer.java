@@ -24,7 +24,7 @@ public abstract class CBaseMcpServer<S extends CMcpServerInfo> implements CMcpSe
             .instructions(serverInfo.instructions())
             .requestTimeout(serverInfo.requestTimeout())
             .build();
-    CMcpServerComponentRegister.of(server).registerComponents();
+    CMcpServerComponentRegister.of(server).registerComponents(serverInfo.groups());
   }
 
   /**

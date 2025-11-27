@@ -3,6 +3,7 @@ package org.catools.ws.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
+import org.catools.common.utils.CStringUtil;
 
 import java.util.stream.Stream;
 
@@ -27,7 +28,7 @@ public class CResponseHeaders extends CSet<CResponseHeader> {
     CResponseHeader firstOrNull =
         getFirstOrNull(h -> StringUtils.equalsIgnoreCase(name, h.getName()));
     if (firstOrNull == null) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return firstOrNull.getValue();
   }

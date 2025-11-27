@@ -7,6 +7,7 @@ import org.catools.common.logger.CLoggerConfigs;
 import org.catools.common.testng.model.CExecutionStatus;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.common.testng.utils.CTestClassUtil;
+import org.catools.common.utils.CStringUtil;
 import org.fusesource.jansi.AnsiConsole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -479,21 +480,21 @@ public class CTest {
 
   private String getMethodName(ITestResult result) {
     if (result == null || result.getMethod() == null) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return result.getMethod().getMethodName();
   }
 
   private String getSuiteName(ITestContext context) {
     if (context == null || context.getSuite() == null) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return context.getSuite().getName();
   }
 
   private String getContextName(ITestContext context) {
     if (context == null || context.getCurrentXmlTest() == null) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return context.getCurrentXmlTest().getName();
   }

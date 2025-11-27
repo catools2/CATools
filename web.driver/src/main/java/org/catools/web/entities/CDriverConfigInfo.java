@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.catools.common.utils.CStringUtil;
 
 /**
  * Configuration information for a web driver instance.
@@ -63,10 +64,9 @@ public class CDriverConfigInfo {
    * config.setUrl("http://localhost:8080/app/dashboard");
    * config.setUrl("file:///path/to/local/file.html");
    * }</pre>
-   * 
-   * @return the current URL of the web page
+   *
    */
-  private String url = "";
+  private String url = CStringUtil.EMPTY;
   
   /**
    * The title of the web page as displayed in the browser tab or window title bar.
@@ -80,10 +80,9 @@ public class CDriverConfigInfo {
    * config.setTitle("Dashboard - My Application");
    * config.setTitle("Page Not Found - 404 Error");
    * }</pre>
-   * 
-   * @return the title of the web page
+   *
    */
-  private String title = "";
+  private String title = CStringUtil.EMPTY;
   
   /**
    * The unique window handler identifier for the browser window or tab.
@@ -101,8 +100,7 @@ public class CDriverConfigInfo {
    * // Typically used with WebDriver operations:
    * driver.switchTo().window(config.getWindowHandler());
    * }</pre>
-   * 
-   * @return the window handler identifier
+   *
    */
-  private String windowHandler = "";
+  private String windowHandler = CStringUtil.EMPTY;
 }

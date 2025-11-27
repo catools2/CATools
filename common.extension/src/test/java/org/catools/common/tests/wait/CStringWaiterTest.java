@@ -5,6 +5,7 @@ import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.extensions.wait.interfaces.CStringWaiter;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   private static final String CSTRING1 =
       "This is the first String with some 1209op31mk2w9@# values.";
   private String NULL = null;
-  private String EMPTY = "";
+  private String EMPTY = CStringUtil.EMPTY;
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCenterPadEquals() {
@@ -141,7 +142,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAny() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitEqualsAny(new CList<>("", "  some string    ")),
+        toWaiter("  some string    ").waitEqualsAny(new CList<>(CStringUtil.EMPTY, "  some string    ")),
         "%s#%s",
         getParams());
   }
@@ -149,7 +150,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAnyIgnoreCase() {
     CVerify.Bool.isTrue(
-        toWaiter("  some STRING    ").waitEqualsAnyIgnoreCase(new CList<>("", "  SOME string    ")),
+        toWaiter("  some STRING    ").waitEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  SOME string    ")),
         "%s#%s",
         getParams());
   }
@@ -178,22 +179,22 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNone() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitEqualsNone(new CList<>("", "  some String    ")),
+        toWaiter("  some string    ").waitEqualsNone(new CList<>(CStringUtil.EMPTY, "  some String    ")),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitEqualsNone(new CList<>("", null)), "%s#%s", getParams());
+        toWaiter("  some string    ").waitEqualsNone(new CList<>(CStringUtil.EMPTY, null)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNoneIgnoreCase() {
     CVerify.Bool.isTrue(
         toWaiter("  some STRING    ")
-            .waitEqualsNoneIgnoreCase(new CList<>("", "  $ome string    ")),
+            .waitEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  $ome string    ")),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitEqualsNoneIgnoreCase(new CList<>("", null)),
+        toWaiter("  some string    ").waitEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, null)),
         "%s#%s",
         getParams());
   }
@@ -206,7 +207,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrAlpha() {
     CVerify.Bool.isTrue(toWaiter("aiulajksn").waitIsEmptyOrAlpha(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlpha(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsEmptyOrAlpha(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -224,7 +225,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public void testIsEmptyOrAlphanumeric() {
     CVerify.Bool.isTrue(
         toWaiter("aiulaj6265opksn").waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsEmptyOrAlphanumeric(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -279,13 +280,13 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotAlpha() {
     CVerify.Bool.isTrue(toWaiter("123aasf2").waitIsNotAlpha(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsNotAlpha(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsNotAlpha(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrNotAlpha() {
     CVerify.Bool.isTrue(toWaiter("aiulaj626").waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsEmptyOrNotAlpha(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -305,7 +306,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
     CVerify.Bool.isTrue(
         toWaiter("aiulaj626 5opksn").waitIsEmptyOrNotAlphanumeric(1), "%s#%s", getParams());
     CVerify.Bool.isTrue(toWaiter("@#.*").waitIsEmptyOrNotAlphanumeric(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrNotAlphanumeric(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsEmptyOrNotAlphanumeric(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -365,7 +366,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrNumeric() {
     CVerify.Bool.isTrue(toWaiter("1234567").waitIsEmptyOrNumeric(1), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter("").waitIsEmptyOrNumeric(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsEmptyOrNumeric(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -389,7 +390,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitLeftPadEquals(30, "", "              some string   s "),
+        toWaiter("  some string   s ").waitLeftPadEquals(30, CStringUtil.EMPTY, "              some string   s "),
         "%s#%s",
         getParams());
   }
@@ -411,7 +412,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         getParams());
     CVerify.Bool.isTrue(
         toWaiter("  some string   s ")
-            .waitLeftPadNotEquals(30, "", "             some string   s "),
+            .waitLeftPadNotEquals(30, CStringUtil.EMPTY, "             some string   s "),
         "%s#%s",
         getParams());
   }
@@ -481,7 +482,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         toWaiter("  some string    ").waitNotEqualsIgnoreCase("  $OME string    "),
         "%s#%s",
         getParams());
-    CVerify.Bool.isTrue(toWaiter(NULL).waitNotEqualsIgnoreCase(""), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(NULL).waitNotEqualsIgnoreCase(CStringUtil.EMPTY), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -531,7 +532,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitRemoveEndEquals("  some string   s ", ""),
+        toWaiter("  some string   s ").waitRemoveEndEquals("  some string   s ", CStringUtil.EMPTY),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -560,7 +561,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitRemoveEndIgnoreCaseEquals("  sOME string   s ", ""),
+        toWaiter("  some string   s ").waitRemoveEndIgnoreCaseEquals("  sOME string   s ", CStringUtil.EMPTY),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -645,7 +646,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitRemoveStartEquals("  some string   s ", ""),
+        toWaiter("  some string   s ").waitRemoveStartEquals("  some string   s ", CStringUtil.EMPTY),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -678,7 +679,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitRemoveStartIgnoreCaseEquals("  Some string   s ", ""),
+        toWaiter("  some string   s ").waitRemoveStartIgnoreCaseEquals("  Some string   s ", CStringUtil.EMPTY),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -715,7 +716,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceEquals() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitReplaceEquals("s", "", "  ome tring    "),
+        toWaiter("  some string   s ").waitReplaceEquals("s", CStringUtil.EMPTY, "  ome tring    "),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -755,7 +756,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceEquals() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitReplaceOnceEquals("s", "", "  ome string   s "),
+        toWaiter("  some string   s ").waitReplaceOnceEquals("s", CStringUtil.EMPTY, "  ome string   s "),
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
@@ -1007,7 +1008,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitSubstringAfterEquals(null, ""), "%s#%s", getParams());
+        toWaiter("  some string    ").waitSubstringAfterEquals(null, CStringUtil.EMPTY), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -1017,7 +1018,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
         "%s#%s",
         getParams());
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitSubstringAfterLastEquals(null, ""), "%s#%s", getParams());
+        toWaiter("  some string    ").waitSubstringAfterLastEquals(null, CStringUtil.EMPTY), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -1128,7 +1129,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public void testSubstringsBetweenEquals() {
     CVerify.Bool.isTrue(
         toWaiter("  some string   s ")
-            .waitSubstringsBetweenEquals(" ", "s", new CList<>(" ", "", "  ")),
+            .waitSubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")),
         "%s#%s",
         getParams());
   }
@@ -1264,7 +1265,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAny_Negative() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string    ").waitEqualsAny(new CList<>("", "  sxme string    ")),
+        toWaiter("  some string    ").waitEqualsAny(new CList<>(CStringUtil.EMPTY, "  sxme string    ")),
         "%s#%s",
         getParams());
   }
@@ -1272,7 +1273,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAnyIgnoreCase_Negative() {
     CVerify.Bool.isTrue(
-        toWaiter("  some STRING    ").waitEqualsAnyIgnoreCase(new CList<>("", "  SXME string    ")),
+        toWaiter("  some STRING    ").waitEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  SXME string    ")),
         "%s#%s",
         getParams());
   }
@@ -1397,7 +1398,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotBlank_Negative() {
-    CVerify.Bool.isTrue(toWaiter("").waitIsNotBlank(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsNotBlank(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1417,7 +1418,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNotNumericSpace_Negative() {
-    CVerify.Bool.isTrue(toWaiter("").waitIsNotNumericSpace(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(CStringUtil.EMPTY).waitIsNotNumericSpace(1), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1438,7 +1439,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadEquals_Negative() {
     CVerify.Bool.isTrue(
-        toWaiter("  some string   s ").waitLeftPadEquals(30, "", "            some string   s "),
+        toWaiter("  some string   s ").waitLeftPadEquals(30, CStringUtil.EMPTY, "            some string   s "),
         "%s#%s",
         getParams());
   }
@@ -1447,7 +1448,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public void testLeftPadNotEquals_Negative() {
     CVerify.Bool.isTrue(
         toWaiter("  some string   s ")
-            .waitLeftPadNotEquals(30, "", "              some string   s "),
+            .waitLeftPadNotEquals(30, CStringUtil.EMPTY, "              some string   s "),
         "%s#%s",
         getParams());
   }
@@ -2009,7 +2010,7 @@ public class CStringWaiterTest extends CBaseUnitTest {
   public void testSubstringsBetweenNotEquals_Negative() {
     CVerify.Bool.isTrue(
         toWaiter("  some string   s ")
-            .waitSubstringsBetweenNotEquals(" ", "s", new CList<>(" ", "", "  ")),
+            .waitSubstringsBetweenNotEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")),
         "%s#%s",
         getParams());
   }

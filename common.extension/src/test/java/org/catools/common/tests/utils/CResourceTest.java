@@ -8,6 +8,7 @@ import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 public class CResourceTest extends CBaseUnitTest {
@@ -38,7 +39,7 @@ public class CResourceTest extends CBaseUnitTest {
     CList<String> lines = VALID_RESOURCE.readLines();
     CVerify.Int.equals(lines.size(), 3, "getLines() works fine");
     CVerify.String.equals(
-        lines.join("|").replaceAll("\r", ""),
+        lines.join("|").replaceAll("\r", CStringUtil.EMPTY),
         "1-Some text;|2-Some text;|3-Some text;",
         "getLines works fine");
   }

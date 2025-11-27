@@ -6,6 +6,7 @@ import org.catools.common.extensions.types.interfaces.CDynamicMapExtension;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.Map;
@@ -267,7 +268,7 @@ public class CMapWaiterTest extends CBaseUnitTest {
   }
 
   public Map.Entry<String, Integer> toEntity(Integer item) {
-    return Map.entry(item + "", item);
+    return Map.entry(item + CStringUtil.EMPTY, item);
   }
 
   public CMap<String, Integer> toMap(Integer... list) {

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CJsonUtil;
+import org.catools.common.utils.CStringUtil;
 import org.catools.common.vault.CVault;
 
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class CHoconConfig implements CConfig {
 
   @Override
   public String asString() {
-    return asString("");
+    return asString(CStringUtil.EMPTY);
   }
 
   @Override

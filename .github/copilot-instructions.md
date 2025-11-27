@@ -168,7 +168,7 @@ public class CStringUtil extends StringUtils {
      * @return substring of at most maxLength characters
      */
     public static String trySubstring(String input, int maxLength) {
-        if (StringUtils.isBlank(input)) return "";
+        if (StringUtils.isBlank(input)) return CStringUtil.EMPTY;
         return input.substring(0, Math.min(input.length(), maxLength));
     }
 }
@@ -412,6 +412,7 @@ When adding CMcpTool, CMcpResource, CMcpPrompt annotations to any methods:
 
 ```java
 @CMcpTool(
+    groups = {"web", "driver"},
     name = "driver_open_url",
     title = "Open URL",
     description = "Open URL using CATools WebDriver"

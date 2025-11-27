@@ -1,5 +1,7 @@
 package org.catools.web.factory;
 
+import org.catools.common.utils.CStringUtil;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -61,7 +63,7 @@ public @interface CFindBys {
    * 
    * @return the name identifier as a String, empty string by default
    */
-  String name() default "";
+  String name() default CStringUtil.EMPTY;
 
   /**
    * Specifies the maximum time in seconds to wait for the first element to appear.

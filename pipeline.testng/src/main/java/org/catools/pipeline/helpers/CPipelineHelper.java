@@ -5,6 +5,7 @@ import org.catools.common.annotations.*;
 import org.catools.common.date.CDate;
 import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CJsonUtil;
+import org.catools.common.utils.CStringUtil;
 import org.catools.pipeline.configs.CPipelineConfigs;
 import org.catools.pipeline.configs.CPipelineTestNGConfigs;
 import org.catools.pipeline.dao.CPipelineBaseDao;
@@ -245,7 +246,7 @@ public class CPipelineHelper {
         Class<? extends Annotation> annotationType = annot.annotationType();
         executionMetaData.add(readExecutionMetaData(
             annotationType.getSimpleName(),
-            annot.toString().replace("@" + annotationType.getName(), "")
+            annot.toString().replace("@" + annotationType.getName(), CStringUtil.EMPTY)
         ));
       }
     }
