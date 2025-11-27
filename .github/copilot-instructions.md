@@ -453,7 +453,7 @@ public class CExternalLibWrapper {
 ```bash
 # To start a code review, use:
 review [source-branch] to [target-branch]
-# Example: review feature/PX-156493-dg to release/4.13.0
+# Example: review feature/XX-12345-dg to release/1.1.0
 ```
 
 **Output:** The review will generate two documents:
@@ -511,7 +511,7 @@ review [source-branch] to [target-branch]
 When running a review, the system will automatically:
 
 1. **Extract Information:**
-    - JIRA ticket number from branch name (e.g., `feature/PX-156493-dg` → `PX-156493`)
+    - JIRA ticket number from branch name (e.g., `feature/XX-12345` → `XX-12345`)
     - Change statistics (files changed, lines added/removed)
     - Change types (new files, modified files, deleted files)
 

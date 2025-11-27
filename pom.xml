@@ -46,6 +46,7 @@
         <module>common.poi</module>
         <module>common.k8s</module>
         <module>common</module>
+        <module>athena</module>
         <module>atlassian.zapi</module>
         <module>atlassian.scale</module>
         <module>atlassian.jira</module>
@@ -71,6 +72,7 @@
         <module>etl.git</module>
         <module>etl.k8s</module>
         <module>pipeline.testng</module>
+        <module>mcp</module>
         <module>mcp.core</module>
         <module>mcp.server</module>
         <module>mcp.web</module>

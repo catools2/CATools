@@ -1,8 +1,8 @@
 ---
 description: "Expert assistance for automating web flows using CATools Model Context Protocol (MCP) tools and generating TestNG-style automated test code following CATools conventions."
 name: "CATools-MCP-Web-Automation-Expert"
-model: claude-3-5-sonnet-20241022
-tools: [ 'search', 'catools/*', 'usages', 'problems', 'runSubagent', 'runTests' ]
+model: gpt-5-mini
+tools: ['search', 'catools/*', 'usages', 'problems', 'runSubagent', 'runTests']
 ---
 
 # CATools Web MCP Agent Instructions
@@ -97,32 +97,86 @@ Use this template when converting intent into MCP tool calls and generating Test
 **Generated TestNG Code** (example):
 
 ```java
+package org.catools.web.test;
+
+import lombok.extern.slf4j.Slf4j;
+import org.catools.web.driver.CWebTest;
+import org.catools.web.driver.CWebElement;
+import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
- * Login flow test generated from MCP automation.
+ * Exploratory testing on Google homepage and search functionality.
+ * Tests various elements, navigation, and search capabilities.
  */
 @Slf4j
-public class CLoginTest extends CWebTest {
+public class CGooogleExploratoryTest extends CWebTest {
 
-  @Test(description = "Verify successful login with valid credentials")
-  public void testLoginSuccess() {
-    // Step 1: Navigate to login page
-    driver.open("https://example.com/login");
+  @Test(description = "Exploratory testing of Google homepage and search")
+  public void testGoogleExploratory() {
+    log.info("Starting Google exploratory test");
 
-    // Step 2: Enter username
-    CWebElement usernameField = driver.findElementById("username", 10);
-    usernameField.type("testuser");
+    // Step 1: Close existing driver and open Google
+    driver.close();
+    driver.open("https://www.google.com");
 
-    // Step 3: Enter password
-    CWebElement passwordField = driver.findElementByName("password", 10);
-    passwordField.type("password123");
+    // Step 2: Verify page loaded
+    String pageTitle = driver.getTitle();
+    String currentUrl = driver.getUrl();
+    assertThat(pageTitle).contains("Google");
+    assertThat(currentUrl).contains("google.com");
 
-    // Step 4: Click submit button
-    CWebElement submitButton = driver.findElementByXpath("//button[@type='submit']", 10);
-    submitButton.click();
+    // Step 3: Find and verify search box
+    CWebElement searchBox = driver.findElementByName("q", 10);
+    assertThat(searchBox.isVisible()).isTrue();
+    assertThat(searchBox.isPresent()).isTrue();
 
-    // Step 5: Verify successful login
-    CWebElement welcomeMessage = driver.findElementByXpath("//div[contains(text(),'Welcome')]", 15);
-    assertThat(welcomeMessage.isVisible()).isTrue();
+    // Step 4: Test Gmail link
+    CWebElement gmailLink = driver.findElementByLinkText("Gmail", 5);
+    assertThat(gmailLink.isVisible()).isTrue();
+    String gmailText = gmailLink.getText();
+    assertThat(gmailText).isEqualTo("Gmail");
+
+    // Step 5: Test Images link
+    CWebElement imagesLink = driver.findElementByLinkText("Images", 5);
+    assertThat(imagesLink.isVisible()).isTrue();
+    String imagesText = imagesLink.getText();
+    assertThat(imagesText).isEqualTo("Images");
+
+    // Step 6: Verify search button (initially not visible until typing)
+    CWebElement searchButton = driver.findElementByName("btnK", 5);
+    // Note: Search button may not be visible until user starts typing
+
+    // Step 7: Verify I'm Feeling Lucky button
+    CWebElement luckyButton = driver.findElementByName("btnI", 5);
+    assertThat(luckyButton.isPresent()).isTrue();
+
+    // Step 8: Test search with text input
+    searchBox = driver.findElementByName("q", 5);
+    searchBox.type("Java programming");
+
+    // Step 9: Click search button
+    searchButton = driver.findElementByName("btnK", 5);
+    searchButton.click();
+
+    // Step 10: Verify search results page
+    pageTitle = driver.getTitle();
+    currentUrl = driver.getUrl();
+    assertThat(pageTitle).contains("Java programming");
+    assertThat(currentUrl).contains("google.com/search");
+
+    // Step 11: Verify search results displayed
+    CWebElement searchResults = driver.findElementById("search", 10);
+    assertThat(searchResults.isVisible()).isTrue();
+
+    // Step 12: Scroll down page
+    driver.executeScript("window.scrollBy(0, 500)");
+
+    // Step 13: Count search result headings
+    Object resultCount = driver.executeScript("return document.querySelectorAll('h3').length");
+    log.info("Number of result headings: {}", resultCount);
+
+    log.info("Google exploratory test completed successfully");
   }
 }
 ```
@@ -212,7 +266,7 @@ public class C[PageName]
 PageObject {
   private final CDriver driver;
 
-  public C[PageName]PageObject(CDriver driver) {
+  public C[PageName]Page(CDriver driver) {
     this.driver = driver;
   }
 
