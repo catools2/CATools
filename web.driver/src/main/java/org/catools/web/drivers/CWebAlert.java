@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.types.CDynamicBooleanExtension;
 import org.catools.common.extensions.types.CDynamicStringExtension;
+import org.catools.common.utils.CStringUtil;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class CWebAlert<DR extends CDriver> {
         @Override
         public String _get() {
           Alert alert = getAlert();
-          return alert == null ? "" : alert.getText();
+          return alert == null ? CStringUtil.EMPTY : alert.getText();
         }
 
         @Override

@@ -31,53 +31,60 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpResource {
-    /**
-     * The URI of the resource.
-     *
-     * @return the URI of the resource
-     */
-    String uri();
+  /**
+   * The name of the tool. Defaults to the name of the annotated method.
+   *
+   * @return the name of the tool
+   */
+  String[] groups() default CStringUtil.EMPTY;
 
-    /**
-     * The name of the resource. Defaults to the name of the annotated method.
-     *
-     * @return the name of the resource
-     */
-    String name() default CStringUtil.EMPTY;
+  /**
+   * The URI of the resource.
+   *
+   * @return the URI of the resource
+   */
+  String uri();
 
-    /**
-     * The title of the resource. Defaults to the literal string "Not specified".
-     *
-     * @return the title of the resource
-     */
-    String title() default CStringUtil.EMPTY;
+  /**
+   * The name of the resource. Defaults to the name of the annotated method.
+   *
+   * @return the name of the resource
+   */
+  String name() default CStringUtil.EMPTY;
 
-    /**
-     * The description of the resource. Defaults to the literal string "Not specified".
-     *
-     * @return the description of the resource
-     */
-    String description() default CStringUtil.EMPTY;
+  /**
+   * The title of the resource. Defaults to the literal string "Not specified".
+   *
+   * @return the title of the resource
+   */
+  String title() default CStringUtil.EMPTY;
 
-    /**
-     * The MIME type of the resource. Defaults to "text/plain".
-     *
-     * @return the MIME type of the resource
-     */
-    String mimeType() default "text/plain";
+  /**
+   * The description of the resource. Defaults to the literal string "Not specified".
+   *
+   * @return the description of the resource
+   */
+  String description() default CStringUtil.EMPTY;
 
-    /**
-     * The roles required to access the resource. Defaults to {@link McpSchema.Role#ASSISTANT} and
-     * {@link McpSchema.Role#USER}.
-     *
-     * @return the roles required to access the resource
-     */
-    McpSchema.Role[] roles() default {McpSchema.Role.ASSISTANT, McpSchema.Role.USER};
+  /**
+   * The MIME type of the resource. Defaults to "text/plain".
+   *
+   * @return the MIME type of the resource
+   */
+  String mimeType() default "text/plain";
 
-    /**
-     * The priority of the resource. Defaults to 1.0.
-     *
-     * @return the priority of the resource
-     */
-    double priority() default 1.0;
+  /**
+   * The roles required to access the resource. Defaults to {@link McpSchema.Role#ASSISTANT} and
+   * {@link McpSchema.Role#USER}.
+   *
+   * @return the roles required to access the resource
+   */
+  McpSchema.Role[] roles() default {McpSchema.Role.ASSISTANT, McpSchema.Role.USER};
+
+  /**
+   * The priority of the resource. Defaults to 1.0.
+   *
+   * @return the priority of the resource
+   */
+  double priority() default 1.0;
 }

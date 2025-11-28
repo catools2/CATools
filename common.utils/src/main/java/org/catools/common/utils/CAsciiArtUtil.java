@@ -20,9 +20,9 @@ public class CAsciiArtUtil {
     } catch (IOException e) {
       throw new CConvertFigletFontException(e);
     }
-    lines.removeIf(l -> l == null || l.replaceAll("\\s+", "").isEmpty());
-    int length = lines.stream().findFirst().orElse("").length();
-    lines.add("".repeat(length));
+    lines.removeIf(l -> l == null || l.replaceAll("\\s+", CStringUtil.EMPTY).isEmpty());
+    int length = lines.stream().findFirst().orElse(CStringUtil.EMPTY).length();
+    lines.add(CStringUtil.EMPTY.repeat(length));
     return lines;
   }
 

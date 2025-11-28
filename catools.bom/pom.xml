@@ -89,6 +89,16 @@
                 <artifactId>etl.k8s</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>mcp</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>athena</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

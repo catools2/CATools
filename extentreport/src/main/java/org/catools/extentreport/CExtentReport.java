@@ -69,7 +69,7 @@ public class CExtentReport extends ExtentReports {
               + "</i>");
     }
 
-    return list.isEmpty() ? exec.getMethodName() : list.join("");
+    return list.isEmpty() ? exec.getMethodName() : list.join(CStringUtil.EMPTY);
   }
 
   private static String getTestMethodDescription(CTestResult exec) {
@@ -83,7 +83,7 @@ public class CExtentReport extends ExtentReports {
 
   protected ExtentSparkReporter buildExtentHtmlReporter(
       String reportDir, String reportName, String reportFileName) {
-    File file = new File(reportDir, reportFileName.replaceAll(".html", "") + ".html");
+    File file = new File(reportDir, reportFileName.replaceAll(".html", CStringUtil.EMPTY) + ".html");
     if (file.exists()) {
       if (!file.delete()) {
         throw new CFileOperationException(file, "filed to delete file!");

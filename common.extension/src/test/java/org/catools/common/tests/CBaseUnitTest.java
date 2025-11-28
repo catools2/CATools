@@ -1,5 +1,7 @@
 package org.catools.common.tests;
 
+import org.catools.common.utils.CStringUtil;
+
 public class CBaseUnitTest {
 
   protected static Object[] getParams() {
@@ -7,8 +9,8 @@ public class CBaseUnitTest {
     return new String[]{
         stackTrace
             .getClassName()
-            .replace("org.catools.common.tests.verify.noretry.interfaces", "")
-            .replace("org.catools.common.tests.wait.noretry.interfaces", ""),
+            .replace("org.catools.common.tests.verify.noretry.interfaces", CStringUtil.EMPTY)
+            .replace("org.catools.common.tests.wait.noretry.interfaces", CStringUtil.EMPTY),
         stackTrace.getMethodName()
     };
   }

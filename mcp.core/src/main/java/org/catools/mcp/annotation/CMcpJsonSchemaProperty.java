@@ -19,26 +19,26 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpJsonSchemaProperty {
-    /**
-     * Specifies the JSON schema property name. When not provided, the field name is used as default.
-     *
-     * @return the property name in the JSON schema
-     */
-    String name() default CStringUtil.EMPTY;
+  /**
+   * Specifies the JSON schema property name. When not provided, the field name is used as default.
+   *
+   * @return the property name in the JSON schema
+   */
+  String name() default CStringUtil.EMPTY;
 
-    /**
-     * Provides a description of the JSON schema property for documentation purposes.
-     * Defaults to empty string when not specified.
-     *
-     * @return the property description
-     */
-    String description() default CStringUtil.EMPTY;
+  /**
+   * Provides a description of the JSON schema property for documentation purposes.
+   * Defaults to empty string when not specified.
+   *
+   * @return the property description
+   */
+  String description() default CStringUtil.EMPTY;
 
-    /**
-     * Indicates whether this JSON schema property is mandatory.
-     * Defaults to {@code false} if not explicitly set.
-     *
-     * @return {@code true} if the property is required, {@code false} otherwise
-     */
-    boolean required() default false;
+  /**
+   * Indicates whether this JSON schema property is mandatory.
+   * Defaults to {@code false} if not explicitly set.
+   *
+   * @return {@code true} if the property is required, {@code false} otherwise
+   */
+  boolean required() default false;
 }

@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigValueFactory;
 import org.catools.common.hocon.model.CHoconConfig;
+import org.catools.common.utils.CStringUtil;
 import org.catools.common.vault.CVault;
 import org.catools.common.vault.CVaultClient;
 import org.testng.Assert;
@@ -121,7 +122,7 @@ public class CHoconConfigTest {
 
     CHoconConfig cfg = new CHoconConfig(ConfigFactory.empty(), path);
     String value = cfg.asString();
-    Assert.assertEquals(value, "", "Expected e,pty string when vault does not contain the path");
+    Assert.assertEquals(value, CStringUtil.EMPTY, "Expected e,pty string when vault does not contain the path");
   }
 
   @Test
@@ -143,14 +144,14 @@ public class CHoconConfigTest {
       @Override
       public String getValue(String key, String defaultTo) {
         if (key == null) return defaultTo;
-        if (key.equals(path)) return ""; // path exists but value is empty
+        if (key.equals(path)) return CStringUtil.EMPTY; // path exists but value is empty
         return defaultTo;
       }
 
       @Override
       public String getValue(String key) {
         if (key == null) return null;
-        if (key.equals(path)) return ""; // path exists but value is empty
+        if (key.equals(path)) return CStringUtil.EMPTY; // path exists but value is empty
         return null;
       }
     };
@@ -159,7 +160,7 @@ public class CHoconConfigTest {
 
     CHoconConfig cfg = new CHoconConfig(ConfigFactory.empty(), path);
     String value = cfg.asString();
-    Assert.assertEquals(value, "", "Expected empty string when vault path exists but value is empty");
+    Assert.assertEquals(value, CStringUtil.EMPTY, "Expected empty string when vault path exists but value is empty");
   }
 
 }

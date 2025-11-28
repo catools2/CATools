@@ -8,6 +8,7 @@ import jakarta.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.config.CTestManagementConfigs;
 import org.catools.common.testng.model.CTestResult;
+import org.catools.common.utils.CStringUtil;
 import org.catools.reportportal.configs.CRPConfigs;
 import org.testng.ITestResult;
 
@@ -28,7 +29,7 @@ public class CReportPortalService extends TestNGService {
     CTestResult result = new CTestResult(testResult);
 
     if (result.getTestIds() != null)
-      rq.setTestCaseId(String.join("", result.getTestIds()));
+      rq.setTestCaseId(String.join(CStringUtil.EMPTY, result.getTestIds()));
 
     rq.setName(getMethodName(testResult));
     if (rq.getAttributes() == null) {
@@ -132,7 +133,7 @@ public class CReportPortalService extends TestNGService {
   // It seems that if you have a method with same name in other point then it was in RP
   // disrespecting the Package and Class Name
   private String getMethodName(ITestResult testResult) {
-    String name = "";
+    String name = CStringUtil.EMPTY;
     if (CRPConfigs.addPackageNameToMethodDescription()) {
       name += testResult.getTestClass().getRealClass().getPackageName();
     }

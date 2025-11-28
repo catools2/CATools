@@ -3,6 +3,7 @@ package org.catools.common.text.match;
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 import org.catools.common.text.CStringDiffConfigs;
 import org.catools.common.utils.CAnsiUtil;
+import org.catools.common.utils.CStringUtil;
 import org.fusesource.jansi.Ansi;
 
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ public class CStringDiff {
   public static String prettyDiff(String original, String text2, int diffEditCost) {
     LinkedList<DiffMatchPatch.Diff> diff = diff(original, text2, diffEditCost);
     if (diff.isEmpty()) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return diffPrettyFormat(diff, CStringDiffConfigs.getEqualFormat(), CStringDiffConfigs.getDeleteFormat(), CStringDiffConfigs.getInsertFormat());
   }
@@ -30,7 +31,7 @@ public class CStringDiff {
   public static String coloredDiff(String original, String text2, int diffEditCost) {
     LinkedList<DiffMatchPatch.Diff> diffs = diff(original, text2, diffEditCost);
     if (diffs.isEmpty()) {
-      return "";
+      return CStringUtil.EMPTY;
     }
     return coloredDiff(diffs, CStringDiffConfigs.getEqualColor(), CStringDiffConfigs.getDeleteColor(), CStringDiffConfigs.getInsertColor());
   }

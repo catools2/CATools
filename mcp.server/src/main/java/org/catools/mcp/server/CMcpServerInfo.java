@@ -5,6 +5,8 @@ import org.catools.mcp.configuration.CMcpServerCapabilities;
 import org.catools.mcp.configuration.CMcpServerChangeNotification;
 
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class is used to define the common configuration for the MCP server.
@@ -15,6 +17,11 @@ public class CMcpServerInfo {
    * The name of the MCP server.
    */
   private final String name;
+
+  /**
+   * The groups list that the MCP server belong to.
+   */
+  private final Set<String> groups;
 
   /**
    * The version of the MCP server.
@@ -48,6 +55,7 @@ public class CMcpServerInfo {
    */
   protected CMcpServerInfo(Builder<?> builder) {
     this.name = builder.name;
+    this.groups = builder.groups;
     this.version = builder.version;
     this.instructions = builder.instructions;
     this.requestTimeout = builder.requestTimeout;
@@ -71,6 +79,15 @@ public class CMcpServerInfo {
    */
   public String name() {
     return name;
+  }
+
+  /**
+   * Returns the groups list that the MCP server belong to.
+   *
+   * @return the groups list that the MCP server belong to
+   */
+  public Set<String> groups() {
+    return groups;
   }
 
   /**
@@ -132,6 +149,11 @@ public class CMcpServerInfo {
     protected String name = "mcp-server";
 
     /**
+     * The groups list that the MCP server belong to.
+     */
+    private Set<String> groups = new HashSet<>();
+
+    /**
      * The version of the MCP server. Default value is {@code "1.0.0"}.
      */
     protected String version = "1.0.0";
@@ -185,6 +207,17 @@ public class CMcpServerInfo {
      */
     public T name(String name) {
       this.name = name;
+      return self();
+    }
+
+    /**
+     * Sets the groups of the MCP server.
+     *
+     * @param groups the set of the MCP server group filter
+     * @return the self reference of the builder
+     */
+    public T groups(Set<String> groups) {
+      this.groups = groups;
       return self();
     }
 

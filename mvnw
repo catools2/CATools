@@ -257,7 +257,7 @@ else
 fi
 
 # Find the actual extracted directory name (handles snapshots where filename != directory name)
-actualDistributionDir=""
+actualDistributionDir=CStringUtil.EMPTY
 
 # First try the expected directory name (for regular distributions)
 if [ -d "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" ]; then

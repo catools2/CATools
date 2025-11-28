@@ -2,6 +2,7 @@ package org.catools.common.extensions.states.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CRegExUtil;
 
@@ -31,7 +32,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean centerPadEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.center(_get(), size, padStr), expected);
+        && Strings.CS.equals(StringUtils.center(_get(), size, padStr), expected);
   }
 
   /**
@@ -46,7 +47,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean centerPadNotEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.center(_get(), size, padStr), expected);
+        && !Strings.CS.equals(StringUtils.center(_get(), size, padStr), expected);
   }
 
   /**
@@ -173,7 +174,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean isEqual(String expected) {
-    return StringUtils.equals(_get(), expected);
+    return Strings.CS.equals(_get(), expected);
   }
 
   /**
@@ -219,7 +220,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean equalsIgnoreWhiteSpaces(String expected) {
-    return StringUtils.equals(removePattern(_get(), "\\s"), removePattern(expected, "\\s"));
+    return Strings.CS.equals(removePattern(_get(), "\\s"), removePattern(expected, "\\s"));
   }
 
   /**
@@ -665,7 +666,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean leftPadEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.leftPad(_get(), size, padStr), expected);
+        && Strings.CS.equals(StringUtils.leftPad(_get(), size, padStr), expected);
   }
 
   /**
@@ -680,7 +681,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean leftPadNotEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.leftPad(_get(), size, padStr), expected);
+        && !Strings.CS.equals(StringUtils.leftPad(_get(), size, padStr), expected);
   }
 
   /**
@@ -693,7 +694,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean leftValueEquals(int len, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.left(_get(), len), expected);
+        && Strings.CS.equals(StringUtils.left(_get(), len), expected);
   }
 
   /**
@@ -706,7 +707,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean leftValueNotEquals(int len, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.left(_get(), len), expected);
+        && !Strings.CS.equals(StringUtils.left(_get(), len), expected);
   }
 
   /**
@@ -772,7 +773,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean midValueEquals(int pos, int len, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.mid(_get(), pos, len), expected);
+        && Strings.CS.equals(StringUtils.mid(_get(), pos, len), expected);
   }
 
   /**
@@ -786,7 +787,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean midValueNotEquals(int pos, int len, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.mid(_get(), pos, len), expected);
+        && !Strings.CS.equals(StringUtils.mid(_get(), pos, len), expected);
   }
 
   /**
@@ -839,7 +840,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean isNotEqual(String expected) {
-    return !StringUtils.equals(_get(), expected);
+    return !Strings.CS.equals(_get(), expected);
   }
 
   /**
@@ -860,7 +861,7 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean notEqualsIgnoreWhiteSpaces(String expected) {
-    return !StringUtils.equals(removePattern(_get(), "\\s"), removePattern(expected, "\\s"));
+    return !Strings.CS.equals(removePattern(_get(), "\\s"), removePattern(expected, "\\s"));
   }
 
   /**
@@ -950,7 +951,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.removeEnd(_get(), remove), expected);
+        && Strings.CS.equals(Strings.CS.removeEnd(_get(), remove), expected);
   }
 
   /**
@@ -964,7 +965,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndIgnoreCaseEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.removeEndIgnoreCase(_get(), remove), expected);
+        && Strings.CS.equals(StringUtils.removeEndIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -978,7 +979,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndIgnoreCaseNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.removeEndIgnoreCase(_get(), remove), expected);
+        && !Strings.CS.equals(StringUtils.removeEndIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -992,7 +993,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.removeEnd(_get(), remove), expected);
+        && !Strings.CS.equals(Strings.CS.removeEnd(_get(), remove), expected);
   }
 
   /**
@@ -1005,7 +1006,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.remove(_get(), remove), expected);
+        && Strings.CS.equals(StringUtils.remove(_get(), remove), expected);
   }
 
   /**
@@ -1019,7 +1020,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeIgnoreCaseEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.removeIgnoreCase(_get(), remove), expected);
+        && Strings.CS.equals(StringUtils.removeIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -1033,7 +1034,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeIgnoreCaseNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.removeIgnoreCase(_get(), remove), expected);
+        && !Strings.CS.equals(StringUtils.removeIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -1046,7 +1047,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.remove(_get(), remove), expected);
+        && !Strings.CS.equals(StringUtils.remove(_get(), remove), expected);
   }
 
   /**
@@ -1060,7 +1061,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeStartEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.removeStart(_get(), remove), expected);
+        && Strings.CS.equals(StringUtils.removeStart(_get(), remove), expected);
   }
 
   /**
@@ -1074,7 +1075,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeStartIgnoreCaseEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.removeStartIgnoreCase(_get(), remove), expected);
+        && Strings.CS.equals(StringUtils.removeStartIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -1088,7 +1089,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeStartIgnoreCaseNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.removeStartIgnoreCase(_get(), remove), expected);
+        && !Strings.CS.equals(StringUtils.removeStartIgnoreCase(_get(), remove), expected);
   }
 
   /**
@@ -1102,7 +1103,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeStartNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.removeStart(_get(), remove), expected);
+        && !Strings.CS.equals(StringUtils.removeStart(_get(), remove), expected);
   }
 
   /**
@@ -1117,7 +1118,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean replaceEquals(String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.replace(_get(), searchString, replacement), expected);
+        && Strings.CS.equals(StringUtils.replace(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1133,7 +1134,7 @@ public interface CStringState extends CObjectState<String> {
       String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(
+        && Strings.CS.equals(
         StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
@@ -1150,7 +1151,7 @@ public interface CStringState extends CObjectState<String> {
       String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(
+        && !Strings.CS.equals(
         StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
@@ -1166,7 +1167,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean replaceNotEquals(String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.replace(_get(), searchString, replacement), expected);
+        && !Strings.CS.equals(StringUtils.replace(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1181,7 +1182,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean replaceOnceEquals(String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.replaceOnce(_get(), searchString, replacement), expected);
+        && Strings.CS.equals(StringUtils.replaceOnce(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1197,7 +1198,7 @@ public interface CStringState extends CObjectState<String> {
       String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(
+        && Strings.CS.equals(
         StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
@@ -1214,7 +1215,7 @@ public interface CStringState extends CObjectState<String> {
       String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(
+        && !Strings.CS.equals(
         StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
@@ -1230,7 +1231,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean replaceOnceNotEquals(String searchString, String replacement, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.replaceOnce(_get(), searchString, replacement), expected);
+        && !Strings.CS.equals(StringUtils.replaceOnce(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1241,7 +1242,7 @@ public interface CStringState extends CObjectState<String> {
    */
   default boolean reverseEquals(String expected) {
     String a = _get();
-    return a != null && expected != null && StringUtils.equals(StringUtils.reverse(a), expected);
+    return a != null && expected != null && Strings.CS.equals(StringUtils.reverse(a), expected);
   }
 
   /**
@@ -1252,7 +1253,7 @@ public interface CStringState extends CObjectState<String> {
    */
   default boolean reverseNotEquals(String expected) {
     String a = _get();
-    return a != null && expected != null && !StringUtils.equals(StringUtils.reverse(a), expected);
+    return a != null && expected != null && !Strings.CS.equals(StringUtils.reverse(a), expected);
   }
 
   /**
@@ -1267,7 +1268,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean rightPadEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.rightPad(_get(), size, padStr), expected);
+        && Strings.CS.equals(StringUtils.rightPad(_get(), size, padStr), expected);
   }
 
   /**
@@ -1282,7 +1283,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean rightPadNotEquals(int size, String padStr, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.rightPad(_get(), size, padStr), expected);
+        && !Strings.CS.equals(StringUtils.rightPad(_get(), size, padStr), expected);
   }
 
   /**
@@ -1295,7 +1296,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean rightValueEquals(int len, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.right(_get(), len), expected);
+        && Strings.CS.equals(StringUtils.right(_get(), len), expected);
   }
 
   /**
@@ -1308,7 +1309,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean rightValueNotEquals(int len, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.right(_get(), len), expected);
+        && !Strings.CS.equals(StringUtils.right(_get(), len), expected);
   }
 
   /**
@@ -1368,7 +1369,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedEndValue(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.stripEnd(_get(), stripChars), expected);
+        && Strings.CS.equals(StringUtils.stripEnd(_get(), stripChars), expected);
   }
 
   /**
@@ -1381,7 +1382,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedEndValueNot(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.stripEnd(_get(), stripChars), expected);
+        && !Strings.CS.equals(StringUtils.stripEnd(_get(), stripChars), expected);
   }
 
   /**
@@ -1394,7 +1395,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedStartValue(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.stripStart(_get(), stripChars), expected);
+        && Strings.CS.equals(StringUtils.stripStart(_get(), stripChars), expected);
   }
 
   /**
@@ -1407,7 +1408,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedStartValueNot(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.stripStart(_get(), stripChars), expected);
+        && !Strings.CS.equals(StringUtils.stripStart(_get(), stripChars), expected);
   }
 
   /**
@@ -1420,7 +1421,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedValue(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.strip(_get(), stripChars), expected);
+        && Strings.CS.equals(StringUtils.strip(_get(), stripChars), expected);
   }
 
   /**
@@ -1433,7 +1434,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean stripedValueNot(String stripChars, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.strip(_get(), stripChars), expected);
+        && !Strings.CS.equals(StringUtils.strip(_get(), stripChars), expected);
   }
 
   /**
@@ -1447,7 +1448,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringAfterEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substringAfter(_get(), separator), expected);
+        && Strings.CS.equals(StringUtils.substringAfter(_get(), separator), expected);
   }
 
   /**
@@ -1461,7 +1462,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringAfterLastEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substringAfterLast(_get(), separator), expected);
+        && Strings.CS.equals(StringUtils.substringAfterLast(_get(), separator), expected);
   }
 
   /**
@@ -1475,7 +1476,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringAfterLastNotEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substringAfterLast(_get(), separator), expected);
+        && !Strings.CS.equals(StringUtils.substringAfterLast(_get(), separator), expected);
   }
 
   /**
@@ -1489,7 +1490,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringAfterNotEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substringAfter(_get(), separator), expected);
+        && !Strings.CS.equals(StringUtils.substringAfter(_get(), separator), expected);
   }
 
   /**
@@ -1503,7 +1504,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBeforeEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substringBefore(_get(), separator), expected);
+        && Strings.CS.equals(StringUtils.substringBefore(_get(), separator), expected);
   }
 
   /**
@@ -1517,7 +1518,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBeforeLastEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substringBeforeLast(_get(), separator), expected);
+        && Strings.CS.equals(StringUtils.substringBeforeLast(_get(), separator), expected);
   }
 
   /**
@@ -1531,7 +1532,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBeforeLastNotEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substringBeforeLast(_get(), separator), expected);
+        && !Strings.CS.equals(StringUtils.substringBeforeLast(_get(), separator), expected);
   }
 
   /**
@@ -1545,7 +1546,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBeforeNotEquals(String separator, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substringBefore(_get(), separator), expected);
+        && !Strings.CS.equals(StringUtils.substringBefore(_get(), separator), expected);
   }
 
   /**
@@ -1560,7 +1561,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBetweenEquals(String open, String close, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substringBetween(_get(), open, close), expected);
+        && Strings.CS.equals(StringUtils.substringBetween(_get(), open, close), expected);
   }
 
   /**
@@ -1575,7 +1576,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringBetweenNotEquals(String open, String close, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substringBetween(_get(), open, close), expected);
+        && !Strings.CS.equals(StringUtils.substringBetween(_get(), open, close), expected);
   }
 
   /**
@@ -1588,7 +1589,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringEquals(int start, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substring(_get(), start), expected);
+        && Strings.CS.equals(StringUtils.substring(_get(), start), expected);
   }
 
   /**
@@ -1603,7 +1604,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringEquals(int start, int end, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.substring(_get(), start, end), expected);
+        && Strings.CS.equals(StringUtils.substring(_get(), start, end), expected);
   }
 
   /**
@@ -1616,7 +1617,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringNotEquals(int start, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substring(_get(), start), expected);
+        && !Strings.CS.equals(StringUtils.substring(_get(), start), expected);
   }
 
   /**
@@ -1632,7 +1633,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean substringNotEquals(int start, int end, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.substring(_get(), start, end), expected);
+        && !Strings.CS.equals(StringUtils.substring(_get(), start, end), expected);
   }
 
   /**
@@ -1710,7 +1711,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean trimmedValueEquals(String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.trim(_get()), expected);
+        && Strings.CS.equals(StringUtils.trim(_get()), expected);
   }
 
   /**
@@ -1722,7 +1723,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean trimmedValueNotEquals(String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.trim(_get()), expected);
+        && !Strings.CS.equals(StringUtils.trim(_get()), expected);
   }
 
   /**
@@ -1735,7 +1736,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean truncatedValueEquals(int maxWidth, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.truncate(_get(), maxWidth), expected);
+        && Strings.CS.equals(StringUtils.truncate(_get(), maxWidth), expected);
   }
 
   /**
@@ -1749,7 +1750,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean truncatedValueEquals(int offset, int maxWidth, String expected) {
     return _get() != null
         && expected != null
-        && StringUtils.equals(StringUtils.truncate(_get(), offset, maxWidth), expected);
+        && Strings.CS.equals(StringUtils.truncate(_get(), offset, maxWidth), expected);
   }
 
   /**
@@ -1762,7 +1763,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean truncatedValueNotEquals(int maxWidth, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.truncate(_get(), maxWidth), expected);
+        && !Strings.CS.equals(StringUtils.truncate(_get(), maxWidth), expected);
   }
 
   /**
@@ -1776,7 +1777,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean truncatedValueNotEquals(int offset, int maxWidth, String expected) {
     return _get() != null
         && expected != null
-        && !StringUtils.equals(StringUtils.truncate(_get(), offset, maxWidth), expected);
+        && !Strings.CS.equals(StringUtils.truncate(_get(), offset, maxWidth), expected);
   }
 
   private String[] toStringArray(Iterable<String> input) {

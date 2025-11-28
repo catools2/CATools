@@ -31,31 +31,31 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpPromptParam {
-    /**
-     * The name of the prompt parameter.
-     *
-     * @return the name of the prompt parameter
-     */
-    String name();
+  /**
+   * The name of the prompt parameter.
+   *
+   * @return the name of the prompt parameter
+   */
+  String name();
 
-    /**
-     * The title of the prompt parameter. Defaults to the literal string "Not specified".
-     *
-     * @return the title of the prompt parameter
-     */
-    String title() default CStringUtil.EMPTY;
+  /**
+   * The title of the prompt parameter. Defaults to the literal string "Not specified".
+   *
+   * @return the title of the prompt parameter
+   */
+  String title() default CStringUtil.EMPTY;
 
-    /**
-     * The description of the prompt parameter. Defaults to the literal string "Not specified".
-     *
-     * @return the description of the prompt parameter
-     */
-    String description() default CStringUtil.EMPTY;
+  /**
+   * The description of the prompt parameter. Defaults to the literal string "Not specified".
+   *
+   * @return the description of the prompt parameter
+   */
+  String description() default CStringUtil.EMPTY;
 
-    /**
-     * Whether the prompt parameter is required. Defaults to {@code false}.
-     *
-     * @return whether the prompt parameter is required
-     */
-    boolean required() default false;
+  /**
+   * Whether the prompt parameter is required. Defaults to {@code false}.
+   *
+   * @return whether the prompt parameter is required
+   */
+  boolean required() default false;
 }

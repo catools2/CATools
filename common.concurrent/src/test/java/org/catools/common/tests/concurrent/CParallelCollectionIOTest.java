@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.catools.common.concurrent.CParallelCollectionIO;
 import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
 import org.catools.common.utils.CSleeper;
+import org.catools.common.utils.CStringUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,7 +27,7 @@ public class CParallelCollectionIOTest {
       eof.set(true);
       return List.of(integers.remove(0));
     });
-    pt.setOutputExecutor((eof, idx) -> log.trace(idx + ""));
+    pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 2, "Only 2 records has been read from main list");
   }
@@ -52,7 +53,7 @@ public class CParallelCollectionIOTest {
       Objects.requireNonNull(null);
       return List.of(integers.remove(0));
     });
-    pt.setOutputExecutor((eof, idx) -> log.trace(idx + ""));
+    pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
   }
 
@@ -64,7 +65,7 @@ public class CParallelCollectionIOTest {
       Objects.requireNonNull(null);
       return List.of(integers.remove(0));
     });
-    pt.setOutputExecutor((eof, idx) -> log.trace(idx + ""));
+    pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
   }
 
@@ -89,7 +90,7 @@ public class CParallelCollectionIOTest {
       eof.set(integers.isEmpty());
       return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
     });
-    pt.setOutputExecutor((eof, idx) -> log.trace(idx + ""));
+    pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 0, "All records has been read from main list");
   }
@@ -103,7 +104,7 @@ public class CParallelCollectionIOTest {
       eof.set(integers.isEmpty());
       return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
     });
-    pt.setOutputExecutor((eof, idx) -> log.trace(idx + ""));
+    pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 0, "All records has been read from main list");
   }

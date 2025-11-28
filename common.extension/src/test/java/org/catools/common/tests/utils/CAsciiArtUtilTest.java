@@ -1,6 +1,7 @@
 package org.catools.common.tests.utils;
 
 import org.catools.common.utils.CAsciiArtUtil;
+import org.catools.common.utils.CStringUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -10,7 +11,7 @@ public class CAsciiArtUtilTest {
   public void testConvertWithDoh() {
     Assert.assertEquals(
         String.join("\n", CAsciiArtUtil.convertWithDoh("CAT")),
-        ""
+        CStringUtil.EMPTY
             + "        CCCCCCCCCCCCC               AAA         TTTTTTTTTTTTTTTTTTTTTTT\n"
             + "     CCC::::::::::::C              A:::A        T:::::::::::::::::::::T\n"
             + "   CC:::::::::::::::C             A:::::A       T:::::::::::::::::::::T\n"

@@ -3,35 +3,36 @@ package org.catools.mcp.test;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.exception.CMcpServerException;
 
 @Slf4j
 public class TestMcpTools {
 
-  @CMcpTool(title = "title", description = "description")
+  @CMcpTool(groups = "test", title = "title", description = "description")
   public String toolWithDefaultName() {
     log.debug("calling toolWithDefaultName");
     return "toolWithDefaultName is called";
   }
 
-  @CMcpTool(name = "toolWithDefaultTitle", description = "description")
+  @CMcpTool(groups = "test", name = "toolWithDefaultTitle", description = "description")
   public String toolWithDefaultTitle() {
     log.debug("calling toolWithDefaultTitle");
     return "toolWithDefaultTitle is called";
   }
 
-  @CMcpTool(name = "toolWithDefaultDescription", title = "title")
+  @CMcpTool(groups = "test", name = "toolWithDefaultDescription", title = "title")
   public String toolWithDefaultDescription() {
     log.debug("calling toolWithDefaultDescription");
     return "toolWithDefaultDescription is called";
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public String toolWithAllDefault() {
     log.debug("calling toolWithAllDefault");
     return "toolWithAllDefault is called";
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public String toolWithOptionalParam(
       @CMcpToolParam(name = "param", description = "param") String param) {
 
@@ -39,7 +40,7 @@ public class TestMcpTools {
     return "toolWithOptionalParam is called with optional param: " + param;
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public String toolWithRequiredParam(
       @CMcpToolParam(name = "param", description = "param", required = true) String param) {
 
@@ -47,7 +48,7 @@ public class TestMcpTools {
     return "toolWithRequiredParam is called with required param: " + param;
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public String toolWithMultiParams(
       @CMcpToolParam(name = "param1", description = "param1") String param1,
       @CMcpToolParam(name = "param2", description = "param2", required = true) String param2) {
@@ -56,7 +57,7 @@ public class TestMcpTools {
     return String.format("toolWithMultiParams is called with params: %s, %s", param1, param2);
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public String toolWithMixedParams(
       @CMcpToolParam(name = "mcpParam", description = "mcpParam") String mcpParam,
       String nonMcpParam) {
@@ -64,5 +65,10 @@ public class TestMcpTools {
     log.debug("calling toolWithMixedParams with params: {}, {}", mcpParam, nonMcpParam);
     return String.format(
         "toolWithMixedParams is called with params: %s, %s", mcpParam, nonMcpParam);
+  }
+
+  @CMcpTool
+  public void toolWithoutGroupShouldSkip() {
+    throw new CMcpServerException("This tool should be skipped because it has no group");
   }
 }

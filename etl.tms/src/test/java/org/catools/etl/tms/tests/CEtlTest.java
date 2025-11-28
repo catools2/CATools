@@ -1,6 +1,7 @@
 package org.catools.etl.tms.tests;
 
 import org.catools.common.date.CDate;
+import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.dao.CEtlExecutionDao;
 import org.catools.etl.tms.model.*;
 import org.testcontainers.postgresql.PostgreSQLContainer;
@@ -51,7 +52,7 @@ public class CEtlTest {
       int max2 = 2;
       while (max2-- > 0) {
         CEtlExecutionDao.mergeExecution(new CEtlExecution(
-            max + "" + max2,
+            max + CStringUtil.EMPTY + max2,
             item,
             cycle,
             CDate.now().addMonths(-2),

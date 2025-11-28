@@ -999,6 +999,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @return the result of the script execution
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_execute_script",
       title = "Execute JavaScript",
       description = "Executes JavaScript code in the browser context"
@@ -1034,6 +1035,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @return the result of the script execution
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_execute_script_on_element",
       title = "Execute JavaScript on Element",
       description = "Executes JavaScript code on a specific element after waiting for it"

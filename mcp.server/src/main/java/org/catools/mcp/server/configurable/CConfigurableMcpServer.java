@@ -45,7 +45,7 @@ public interface CConfigurableMcpServer {
             .instructions(configuration.instructions())
             .requestTimeout(Duration.ofMillis(configuration.requestTimeout()))
             .build();
-    CMcpServerComponentRegister.of(server).registerComponents();
+    CMcpServerComponentRegister.of(server).registerComponents(configuration.groups());
   }
 
   /**

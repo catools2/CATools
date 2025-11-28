@@ -208,7 +208,7 @@ public abstract class CWebTableRow<DR extends CDriver, P extends CWebTable<DR, ?
    * }</pre>
    */
   protected CWebElement<DR> getCell(String header, int index) {
-    return getCell(header, index, "");
+    return getCell(header, index, CStringUtil.EMPTY);
   }
 
   /**
@@ -237,7 +237,7 @@ public abstract class CWebTableRow<DR extends CDriver, P extends CWebTable<DR, ?
    * }</pre>
    */
   protected <C> C getCell(String header, Function<By, C> controlBuilder) {
-    return getCell(header, 0, "", controlBuilder);
+    return getCell(header, 0, CStringUtil.EMPTY, controlBuilder);
   }
 
   /**
@@ -267,7 +267,7 @@ public abstract class CWebTableRow<DR extends CDriver, P extends CWebTable<DR, ?
    * }</pre>
    */
   protected <C> C getCell(String header, int index, Function<By, C> controlBuilder) {
-    return getCell(header, index, "", controlBuilder);
+    return getCell(header, index, CStringUtil.EMPTY, controlBuilder);
   }
 
   /**

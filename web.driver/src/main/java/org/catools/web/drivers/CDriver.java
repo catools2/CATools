@@ -7,6 +7,7 @@ import org.catools.common.date.CDate;
 import org.catools.common.enums.CPlatform;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.utils.CRetry;
+import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.media.model.CScreenShot;
 import org.catools.web.controls.CWebElement;
@@ -665,6 +666,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #Title
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_get_title",
       title = "Get Page Title",
       description = "Retrieves the current page title from the browser"
@@ -673,7 +675,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
     return performActionOnDriver(
         "Get Title",
         webDriver -> {
-          return webDriver != null ? webDriver.getTitle() : "";
+          return webDriver != null ? webDriver.getTitle() : CStringUtil.EMPTY;
         });
   }
 
@@ -712,6 +714,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #Url
    */
   @CMcpTool(
+      groups = {"web", "driver"},
       name = "driver_get_url",
       title = "Get Current URL",
       description = "Retrieves the current page URL from the browser"
@@ -720,7 +723,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
     return performActionOnDriver(
         "Get URL",
         webDriver -> {
-          return webDriver != null ? webDriver.getCurrentUrl() : "";
+          return webDriver != null ? webDriver.getCurrentUrl() : CStringUtil.EMPTY;
         });
   }
 
@@ -814,6 +817,103 @@ public class CDriver implements CDriverActions, CDriverNavigation {
         CPlatform.fromName(webDriver.getCapabilities().getCapability("platformName").toString()));
   }
 
+
+  /**
+   * Creates a CWebElement wrapper for the specified ID locator with custom timeout.
+   *
+   * @param name    the element name
+   * @param id      the ID of the element to locate
+   * @param waitSec custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byId(String name, String id, int waitSec) {
+    return new CWebElement<>(name, this, By.id(id), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified name locator with custom timeout.
+   *
+   * @param name        the element name
+   * @param elementName the name of the element to locate
+   * @param waitSec     custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byName(String name, String elementName, int waitSec) {
+    return new CWebElement<>(name, this, By.name(elementName), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified class name with custom timeout.
+   *
+   * @param name      the element name
+   * @param className the class name of the element to locate
+   * @param waitSec   custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byClassName(String name, String className, int waitSec) {
+    return new CWebElement<>(name, this, By.className(className), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified tag name with custom timeout.
+   *
+   * @param name    the element name
+   * @param tagName the tag name of the element to locate
+   * @param waitSec custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byTagName(String name, String tagName, int waitSec) {
+    return new CWebElement<>(name, this, By.tagName(tagName), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified link text with custom timeout.
+   *
+   * @param name     the element name
+   * @param linkText the link text of the element to locate
+   * @param waitSec  custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byLinkText(String name, String linkText, int waitSec) {
+    return new CWebElement<>(name, this, By.linkText(linkText), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified partial link text with custom timeout.
+   *
+   * @param name            the element name
+   * @param partialLinkText the partial Link text of the element to locate
+   * @param waitSec         custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byPartialLinkText(String name, String partialLinkText, int waitSec) {
+    return new CWebElement<>(name, this, By.partialLinkText(partialLinkText), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified xpath with custom timeout.
+   *
+   * @param name    the element name
+   * @param xpath   the xpath of the element to locate
+   * @param waitSec custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byXPath(String name, String xpath, int waitSec) {
+    return new CWebElement<>(name, this, By.xpath(xpath), waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified cssSelector locator with custom timeout.
+   *
+   * @param name        the element name
+   * @param cssSelector the cssSelector of the element to locate
+   * @param waitSec     custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public CWebElement<CDriver> byCssSelector(String name, String cssSelector, int waitSec) {
+    return new CWebElement<>(name, this, By.cssSelector(cssSelector), waitSec);
+  }
+
   /**
    * Creates a CWebElement wrapper for the specified locator with default timeout.
    * This method is the primary way to interact with web elements on the page,
@@ -846,7 +946,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see CWebElement
    * @see By
    */
-  public CWebElement<?> $(By locator) {
+  public CWebElement<CDriver> $(By locator) {
     return new CWebElement<>("Get Element", this, locator);
   }
 
@@ -881,7 +981,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see CWebElement
    * @see By
    */
-  public CWebElement<?> $(By locator, int waitSec) {
+  public CWebElement<CDriver> $(By locator, int waitSec) {
     return new CWebElement<>("Get Element", this, locator, waitSec);
   }
 
@@ -915,7 +1015,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #$(By)
    * @see By#xpath(String)
    */
-  public CWebElement<?> $(String xpath) {
+  public CWebElement<CDriver> $(String xpath) {
     return $(By.xpath(xpath));
   }
 
@@ -951,7 +1051,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #$(By, int)
    * @see By#xpath(String)
    */
-  public CWebElement<?> $(String xpath, int waitSec) {
+  public CWebElement<CDriver> $(String xpath, int waitSec) {
     return $(By.xpath(xpath), waitSec);
   }
 
@@ -986,7 +1086,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #$(By)
    * @see By#cssSelector(String)
    */
-  public CWebElement<?> $$(String cssSelector) {
+  public CWebElement<CDriver> $$(String cssSelector) {
     return $(By.cssSelector(cssSelector));
   }
 
@@ -1024,7 +1124,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #$(By, int)
    * @see By#cssSelector(String)
    */
-  public CWebElement<?> $$(String cssSelector, int waitSec) {
+  public CWebElement<CDriver> $$(String cssSelector, int waitSec) {
     return $(By.cssSelector(cssSelector), waitSec);
   }
 }

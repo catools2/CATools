@@ -1,0 +1,43 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>athena</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Core Automation Toolset - Athena Plugin</name>
+    <description>The plugin to interact with the Athena pipeline.</description>
+
+    <parent>
+        <groupId>org.catools</groupId>
+        <artifactId>catools.parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../catools.parent/pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <!-- ###################### ATHENA ######################### -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>athena-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>athena-pipeline-feign-client</artifactId>
+        </dependency>
+        <!-- ###################### /ATHENA ######################### -->
+        <!-- ######################  CATS ######################### -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.utils</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.testng</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- ######################  /CATS ######################### -->
+    </dependencies>
+</project>

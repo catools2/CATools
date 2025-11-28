@@ -27,24 +27,24 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpToolParam {
-    /**
-     * The name of the tool parameter.
-     *
-     * @return the name of the tool parameter
-     */
-    String name();
+  /**
+   * The name of the tool parameter.
+   *
+   * @return the name of the tool parameter
+   */
+  String name();
 
-    /**
-     * The description of the tool parameter. Defaults to the literal string "Not specified".
-     *
-     * @return the description of the tool parameter
-     */
-    String description() default CStringUtil.EMPTY;
+  /**
+   * The description of the tool parameter. Defaults to the literal string "Not specified".
+   *
+   * @return the description of the tool parameter
+   */
+  String description() default CStringUtil.EMPTY;
 
-    /**
-     * Whether the tool parameter is required. Defaults to {@code false}.
-     *
-     * @return whether the tool parameter is required
-     */
-    boolean required() default false;
+  /**
+   * Whether the tool parameter is required. Defaults to {@code false}.
+   *
+   * @return whether the tool parameter is required
+   */
+  boolean required() default false;
 }

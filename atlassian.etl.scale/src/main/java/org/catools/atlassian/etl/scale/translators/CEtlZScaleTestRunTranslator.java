@@ -9,6 +9,7 @@ import org.catools.atlassian.scale.model.CZScaleTestCase;
 import org.catools.atlassian.scale.model.CZScaleTestExecution;
 import org.catools.atlassian.scale.model.CZScaleTestRun;
 import org.catools.atlassian.scale.rest.cycle.CZScaleExecutionStatus;
+import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
@@ -35,7 +36,7 @@ public class CEtlZScaleTestRunTranslator {
     Objects.requireNonNull(testRun);
 
     try {
-      String folder = "";
+      String folder = CStringUtil.EMPTY;
 
       // Ensure the folder path ends with a slash
       if (StringUtils.isNotBlank(testRun.getFolder())) {

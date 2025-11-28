@@ -10,6 +10,7 @@ import org.catools.common.io.CResource;
 import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
+import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.web.config.CBrowserConfigs;
@@ -322,6 +323,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_send_keys",
       title = "Send Keys to Element",
       description = "Sends keys to the web element (types text or special keys)"
@@ -341,6 +343,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_mouse_click",
       title = "Mouse Click Element",
       description = "Performs a mouse click on the web element"
@@ -405,6 +408,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_scroll_into_view",
       title = "Scroll Element Into View",
       description = "Scrolls the element into view within the browser window"
@@ -754,6 +758,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_click",
       title = "Click Element",
       description = "Clicks on the web element with fallback to JavaScript click if needed"
@@ -1585,6 +1590,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_type",
       title = "Type Text in Element",
       description = "Types text character by character in the web element input field"
@@ -1642,9 +1648,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       el.sendKeys(getClearKeys());
 
       if (intervalInMilliSeconds < 10) {
-        el.sendKeys(StringUtils.defaultString(text).split(""));
+        el.sendKeys(StringUtils.defaultString(text).split(CStringUtil.EMPTY));
       } else {
-        for (String c : StringUtils.defaultString(text).split("")) {
+        for (String c : StringUtils.defaultString(text).split(CStringUtil.EMPTY)) {
           el.sendKeys(c);
           CSleeper.sleepTight(intervalInMilliSeconds);
         }

@@ -3,6 +3,7 @@ package org.catools.common.tests.waitVerifier;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CObjectWaitVerifier;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 public class CObjectWaitVerifyTest extends CBaseWaitVerifyTest {
@@ -15,7 +16,7 @@ public class CObjectWaitVerifyTest extends CBaseWaitVerifyTest {
   // Negative
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testIsNull_N() {
-    verify(verifier -> toWaitVerifier("").verifyIsNull(verifier));
+    verify(verifier -> toWaitVerifier(CStringUtil.EMPTY).verifyIsNull(verifier));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

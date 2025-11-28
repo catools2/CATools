@@ -106,7 +106,9 @@
         <log4j-slf4j2-impl.version>2.25.2</log4j-slf4j2-impl.version>
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
 
-        <!-- Feign -->
+        <!-- Athena -->
+        <athena-core.version>0.0.6</athena-core.version>
+        <athena-feign.version>0.0.3</athena-feign.version>
         <feign.version>13.6</feign.version>
 
         <!-- Javax -->
@@ -214,6 +216,20 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>athena-core</id>
+            <url>https://maven.pkg.github.com/catools2/athena-core</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>athena-feign</id>
+            <url>https://maven.pkg.github.com/catools2/athena-feign</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -289,6 +305,18 @@
                 <artifactId>feign-slf4j</artifactId>
                 <version>${feign.version}</version>
             </dependency>
+            <!-- ###################### ATHENA ######################### -->
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>athena-core</artifactId>
+                <version>${athena-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>athena-pipeline-feign-client</artifactId>
+                <version>${athena-feign.version}</version>
+            </dependency>
+            <!-- ###################### /ATHENA ######################### -->
             <!-- ###################### ATLASSIAN ######################### -->
             <dependency>
                 <groupId>com.atlassian.jira</groupId>

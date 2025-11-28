@@ -1,6 +1,7 @@
 enabled: true
 mode: UNKNOWN
 name: mcp-server
+groups: []
 version: 1.0.0
 type: SYNC
 request-timeout: 20000

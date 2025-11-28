@@ -2,6 +2,7 @@ package org.catools.web.drivers;
 
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.utils.CRetry;
+import org.catools.common.utils.CStringUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -262,7 +263,7 @@ public interface CDriverNavigation extends CDriverWaiter {
         "Switch To Last Page",
         webDriver -> {
           Iterator<String> iterator = webDriver.getWindowHandles().iterator();
-          String lastHandle = "";
+          String lastHandle = CStringUtil.EMPTY;
           while (iterator.hasNext()) {
             lastHandle = iterator.next();
           }

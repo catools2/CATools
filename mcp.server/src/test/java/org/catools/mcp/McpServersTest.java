@@ -25,6 +25,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import static org.testng.Assert.*;
 
@@ -59,6 +60,7 @@ public class McpServersTest {
             .name("mcp-server")
             .version("1.0.0")
             .instructions("test")
+            .groups(Set.of("test"))
             .requestTimeout(Duration.ofSeconds(10))
             .baseUrl("http://localhost:" + port)
             .port(port)
@@ -87,6 +89,7 @@ public class McpServersTest {
             .name("mcp-server")
             .version("1.0.0")
             .instructions("test")
+            .groups(Set.of("test"))
             .requestTimeout(Duration.ofSeconds(10))
             .port(port)
             .mcpEndpoint("/mcp/message")
@@ -249,15 +252,15 @@ public class McpServersTest {
     assertEquals(prompts.size(), 10);
 
     verifyPromptRegistered(prompts, "promptWithDefaultName", "title", "description", 0);
-    verifyPromptRegistered(prompts, "promptWithDefaultTitle", "", "description", 0);
-    verifyPromptRegistered(prompts, "promptWithDefaultDescription", "title", "", 0);
-    verifyPromptRegistered(prompts, "promptWithAllDefault", "", "", 0);
-    verifyPromptRegistered(prompts, "promptWithOptionalParam", "", "", 1);
-    verifyPromptRegistered(prompts, "promptWithRequiredParam", "", "", 1);
-    verifyPromptRegistered(prompts, "promptWithMultiParams", "", "", 2);
-    verifyPromptRegistered(prompts, "promptWithMixedParams", "", "", 1);
-    verifyPromptRegistered(prompts, "promptWithVoidReturn", "", "", 0);
-    verifyPromptRegistered(prompts, "promptWithReturnNull", "", "", 0);
+    verifyPromptRegistered(prompts, "promptWithDefaultTitle", CStringUtil.EMPTY, "description", 0);
+    verifyPromptRegistered(prompts, "promptWithDefaultDescription", "title", CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(prompts, "promptWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(prompts, "promptWithOptionalParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(prompts, "promptWithRequiredParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(prompts, "promptWithMultiParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 2);
+    verifyPromptRegistered(prompts, "promptWithMixedParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(prompts, "promptWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(prompts, "promptWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
   }
 
   private void verifyPromptRegistered(
@@ -330,95 +333,95 @@ public class McpServersTest {
     assertEquals(tools.size(), 22);
 
     verifyToolRegistered(tools, "toolWithDefaultName", "title", "description", Map.of());
-    verifyToolRegistered(tools, "toolWithDefaultTitle", "", "description", Map.of());
-    verifyToolRegistered(tools, "toolWithDefaultDescription", "title", "", Map.of());
-    verifyToolRegistered(tools, "toolWithAllDefault", "", "", Map.of());
+    verifyToolRegistered(tools, "toolWithDefaultTitle", CStringUtil.EMPTY, "description", Map.of());
+    verifyToolRegistered(tools, "toolWithDefaultDescription", "title", CStringUtil.EMPTY, Map.of());
+    verifyToolRegistered(tools, "toolWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
     verifyToolRegistered(
         tools,
         "toolWithOptionalParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", String.class));
     verifyToolRegistered(
         tools,
         "toolWithRequiredParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", String.class));
     verifyToolRegistered(
         tools,
         "toolWithMultiParams",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param1", String.class, "param2", String.class));
     verifyToolRegistered(
         tools,
         "toolWithMixedParams",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("mcpParam", String.class));
-    verifyToolRegistered(tools, "toolWithVoidReturn", "", "", Map.of());
-    verifyToolRegistered(tools, "toolWithReturnNull", "", "", Map.of());
+    verifyToolRegistered(tools, "toolWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
+    verifyToolRegistered(tools, "toolWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
     verifyToolRegistered(
-        tools, "toolWithIntParam", "", "", Map.of("param", int.class));
+        tools, "toolWithIntParam", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of("param", int.class));
     verifyToolRegistered(
         tools,
         "toolWithIntegerParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Integer.class));
     verifyToolRegistered(
-        tools, "toolWithLongParam", "", "", Map.of("param", long.class));
+        tools, "toolWithLongParam", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of("param", long.class));
     verifyToolRegistered(
         tools,
         "toolWithLongClassParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Long.class));
     verifyToolRegistered(
         tools,
         "toolWithFloatParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", float.class));
     verifyToolRegistered(
         tools,
         "toolWithFloatClassParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Float.class));
     verifyToolRegistered(
         tools,
         "toolWithDoubleParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", double.class));
     verifyToolRegistered(
         tools,
         "toolWithDoubleClassParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Double.class));
     verifyToolRegistered(
         tools,
         "toolWithNumberParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Number.class));
     verifyToolRegistered(
         tools,
         "toolWithBooleanParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", boolean.class));
     verifyToolRegistered(
         tools,
         "toolWithBooleanClassParam",
-        "",
-        "",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
         Map.of("param", Boolean.class));
     verifyToolRegistered(
-        tools, "toolWithReturnStructuredContent", "", "", Map.of());
+        tools, "toolWithReturnStructuredContent", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
   }
 
   @SuppressWarnings("unchecked")

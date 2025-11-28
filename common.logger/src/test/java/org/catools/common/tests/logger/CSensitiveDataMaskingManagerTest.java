@@ -5,6 +5,7 @@ import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.security.CSecurityConfigs;
 import org.catools.common.security.CSensitiveDataMaskingManager;
 import org.catools.common.tests.CBaseUnitTest;
+import org.catools.common.utils.CStringUtil;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -172,6 +173,6 @@ public class CSensitiveDataMaskingManagerTest extends CBaseUnitTest {
     String mask1 = RandomStringUtils.randomAlphabetic(10);
     CSensitiveDataMaskingManager.addMask(mask1, ignore1);
 
-    CVerify.String.equals(CSensitiveDataMaskingManager.mask(null), "", "String masked correctly");
+    CVerify.String.equals(CSensitiveDataMaskingManager.mask(null), CStringUtil.EMPTY, "String masked correctly");
   }
 }

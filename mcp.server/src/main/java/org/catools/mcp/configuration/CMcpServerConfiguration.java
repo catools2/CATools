@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.catools.mcp.enums.CServerMode;
 import org.catools.mcp.enums.CServerType;
 
+import java.util.Set;
+
 /**
  * This record represents the configuration of an MCP (Model Context Protocol) server.
  *
@@ -15,6 +17,7 @@ public record CMcpServerConfiguration(
     @JsonProperty("enabled") boolean enabled,
     @JsonProperty("mode") CServerMode mode,
     @JsonProperty("name") String name,
+    @JsonProperty("groups") Set<String> groups,
     @JsonProperty("version") String version,
     @JsonProperty("type") CServerType type,
     @JsonProperty("instructions") String instructions,

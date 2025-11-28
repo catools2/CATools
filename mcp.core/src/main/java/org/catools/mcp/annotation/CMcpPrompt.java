@@ -30,24 +30,31 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpPrompt {
-    /**
-     * The name of the prompt. Defaults to the name of the annotated method.
-     *
-     * @return the name of the prompt
-     */
-    String name() default CStringUtil.EMPTY;
+  /**
+   * The name of the tool. Defaults to the name of the annotated method.
+   *
+   * @return the name of the tool
+   */
+  String[] groups() default CStringUtil.EMPTY;
 
-    /**
-     * The title of the prompt. Defaults to the literal string "Not specified".
-     *
-     * @return the title of the prompt
-     */
-    String title() default CStringUtil.EMPTY;
+  /**
+   * The name of the prompt. Defaults to the name of the annotated method.
+   *
+   * @return the name of the prompt
+   */
+  String name() default CStringUtil.EMPTY;
 
-    /**
-     * The description of the prompt. Defaults to the literal string "Not specified".
-     *
-     * @return the description of the prompt
-     */
-    String description() default CStringUtil.EMPTY;
+  /**
+   * The title of the prompt. Defaults to the literal string "Not specified".
+   *
+   * @return the title of the prompt
+   */
+  String title() default CStringUtil.EMPTY;
+
+  /**
+   * The description of the prompt. Defaults to the literal string "Not specified".
+   *
+   * @return the description of the prompt
+   */
+  String description() default CStringUtil.EMPTY;
 }

@@ -9,6 +9,7 @@ import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.common.utils.CRegExUtil;
 import org.catools.common.utils.CRetry;
+import org.catools.common.utils.CStringUtil;
 import org.catools.metrics.configs.CMetricsConfigs;
 import org.catools.metrics.model.CMetric;
 import org.catools.metrics.utils.CMetricsUtils;
@@ -608,7 +609,7 @@ public class CSqlDataSource {
 
   public static class QueryBlob {
     public static String queryAsString(String sql, String dbSource) {
-      return doAction("", dbSource, sql, "", jdbcTemplate -> {
+      return doAction(CStringUtil.EMPTY, dbSource, sql, CStringUtil.EMPTY, jdbcTemplate -> {
         try {
           Object result = QueryObject.query(sql, dbSource);
           return result == null ? null : new String((byte[]) result);
@@ -663,7 +664,7 @@ public class CSqlDataSource {
     }
 
     public static CList<Integer> update(List<String> batches, int partitionSize, String dbSource) {
-      return doAction("batchUpdate", dbSource, StringUtils.join(batches, "\n"), "", jdbcTemplate -> {
+      return doAction("batchUpdate", dbSource, StringUtils.join(batches, "\n"), CStringUtil.EMPTY, jdbcTemplate -> {
         CList<Integer> output = new CList<>();
         for (CList<String> partition : new CList<>(batches).partition(partitionSize)) {
           output.addAll(List.of(ArrayUtils.toObject(jdbcTemplate.getJdbcOperations().batchUpdate(partition.toArray(new String[0])))));
@@ -731,7 +732,7 @@ public class CSqlDataSource {
                                 String sql,
                                 MapSqlParameterSource parameters,
                                 Function<NamedParameterJdbcTemplate, R> action) {
-    return doAction(actionName, dbSource, sql, parameters == null ? "" : parameters.getValues().toString(), action);
+    return doAction(actionName, dbSource, sql, parameters == null ? CStringUtil.EMPTY : parameters.getValues().toString(), action);
   }
 
   private static <R> R doAction(String actionName, String dbSource, String sql, String parameters, Function<NamedParameterJdbcTemplate, R> action) {

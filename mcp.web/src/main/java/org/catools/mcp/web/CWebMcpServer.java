@@ -13,7 +13,7 @@ import org.catools.mcp.di.CGuiceInjectorModule;
  *
  */
 @Slf4j
-@CMcpServerApplication(basePackage = "org.catools")
+@CMcpServerApplication(basePackage = "org.catools", groups = {"web"})
 public class CWebMcpServer {
 
   public static void main(String[] args) {

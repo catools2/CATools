@@ -2,6 +2,7 @@ package org.catools.web.controls;
 
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.date.CDate;
+import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.config.CDriverConfigs;
@@ -180,6 +181,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_is_present",
       title = "Check if Element is Present",
       description = "Checks if the web element is present in the DOM"
@@ -266,6 +268,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_is_visible",
       title = "Check if Element is Visible",
       description = "Checks if the web element is visible (displayed)"
@@ -608,6 +611,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   @CMcpTool(
+      groups = {"web", "web_element"},
       name = "element_get_text",
       title = "Get Element Text",
       description = "Gets the visible text content of the web element"
@@ -632,7 +636,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getText(int waitSec) {
-    return waitUntil("Get Text", waitSec, "", WebElement::getText);
+    return waitUntil("Get Text", waitSec, CStringUtil.EMPTY, WebElement::getText);
   }
 
   /**
@@ -707,7 +711,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getValue(int waitSec) {
-    return waitUntil("Get Value", waitSec, "", el -> el.getAttribute("value"));
+    return waitUntil("Get Value", waitSec, CStringUtil.EMPTY, el -> el.getAttribute("value"));
   }
 
   /**
@@ -745,7 +749,7 @@ public interface CWebElementStates<DR extends CDriver> {
     return waitUntil(
         "Get Inner HTML",
         waitSec,
-        "",
+        CStringUtil.EMPTY,
         el -> getDriver().executeScript("return arguments[0].innerHTML", el));
   }
 
@@ -787,7 +791,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getTagName(int waitSec) {
-    return waitUntil("Get Tag", waitSec, "", WebElement::getTagName);
+    return waitUntil("Get Tag", waitSec, CStringUtil.EMPTY, WebElement::getTagName);
   }
 
   /**
@@ -825,7 +829,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getCss(final String cssKey, int waitSec) {
-    return waitUntil("Get Css", waitSec, "", el -> el.getCssValue(cssKey));
+    return waitUntil("Get Css", waitSec, CStringUtil.EMPTY, el -> el.getCssValue(cssKey));
   }
 
   /**
@@ -869,7 +873,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getAttribute(final String attribute, int waitSec) {
-    return waitUntil("Get Attribute", waitSec, "", el -> el.getAttribute(attribute));
+    return waitUntil("Get Attribute", waitSec, CStringUtil.EMPTY, el -> el.getAttribute(attribute));
   }
 
   /**
@@ -905,7 +909,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getAriaRole(int waitSec) {
-    return waitUntil("Get AriaRole", waitSec, "", WebElement::getAriaRole);
+    return waitUntil("Get AriaRole", waitSec, CStringUtil.EMPTY, WebElement::getAriaRole);
   }
 
   /**

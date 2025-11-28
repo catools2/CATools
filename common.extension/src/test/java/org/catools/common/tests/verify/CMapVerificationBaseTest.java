@@ -5,6 +5,7 @@ import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.verify.hard.CMapVerification;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
+import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
 import java.util.Map;
@@ -276,7 +277,7 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   }
 
   public Map.Entry<String, Integer> toEntity(Integer item) {
-    return Map.entry(item + "", item);
+    return Map.entry(item + CStringUtil.EMPTY, item);
   }
 
   public CMap<String, Integer> toMap(Integer... list) {

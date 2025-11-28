@@ -1,5 +1,6 @@
 package org.catools.web.factory;
 
+import org.catools.common.utils.CStringUtil;
 import org.openqa.selenium.support.FindBy;
 
 import java.lang.annotation.ElementType;
@@ -96,7 +97,7 @@ public @interface CFindBy {
    * 
    * @return the custom name for the element, or empty string if not specified
    */
-  String name() default "";
+  String name() default CStringUtil.EMPTY;
 
   /**
    * Optional wait timeout in seconds for the element to become available.
