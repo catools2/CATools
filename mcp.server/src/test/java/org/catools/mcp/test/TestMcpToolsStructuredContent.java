@@ -32,7 +32,7 @@ public class TestMcpToolsStructuredContent {
     }
   }
 
-  @CMcpTool
+  @CMcpTool(groups = "test")
   public TestStructuredContentC toolWithReturnStructuredContent() {
     return new TestStructuredContentC(1, 2, 3L, 4L, 5.0F, 6.0F, 7.0, 8.0);
   }

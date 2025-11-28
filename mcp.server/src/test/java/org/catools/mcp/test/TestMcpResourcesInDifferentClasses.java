@@ -7,6 +7,7 @@ import org.catools.mcp.annotation.CMcpResource;
 public class TestMcpResourcesInDifferentClasses {
 
   @CMcpResource(
+      groups = "test",
       uri = "test://resource2",
       name = "resource2_name",
       title = "resource2_title",

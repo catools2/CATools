@@ -55,7 +55,7 @@ public class CMcpServerInfo {
    */
   protected CMcpServerInfo(Builder<?> builder) {
     this.name = builder.name;
-    this.groups = builder.build().groups;
+    this.groups = builder.groups;
     this.version = builder.version;
     this.instructions = builder.instructions;
     this.requestTimeout = builder.requestTimeout;

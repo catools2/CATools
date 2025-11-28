@@ -6,12 +6,12 @@ import org.catools.mcp.annotation.CMcpPrompt;
 @Slf4j
 public class TestMcpPromptsInDifferentClasses {
 
-  @CMcpPrompt
+  @CMcpPrompt(groups = "test")
   public void promptWithVoidReturn() {
     log.debug("calling promptWithVoidReturn");
   }
 
-  @CMcpPrompt
+  @CMcpPrompt(groups = "test")
   public String promptWithReturnNull() {
     log.debug("calling promptWithReturnNull");
     return null;
