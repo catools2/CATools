@@ -951,7 +951,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && Strings.CS.equals(StringUtils.removeEnd(_get(), remove), expected);
+        && Strings.CS.equals(Strings.CS.removeEnd(_get(), remove), expected);
   }
 
   /**
@@ -965,7 +965,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndIgnoreCaseEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && Strings.CS.equals(StringUtils.removeEndIgnoreCase(_get(), remove), expected);
+        && Strings.CS.equals(Strings.CS.removeEnd(_get(), remove), expected);
   }
 
   /**
@@ -993,7 +993,7 @@ public interface CStringState extends CObjectState<String> {
   default boolean removeEndNotEquals(String remove, String expected) {
     return _get() != null
         && expected != null
-        && !Strings.CS.equals(StringUtils.removeEnd(_get(), remove), expected);
+        && !Strings.CS.equals(Strings.CS.removeEnd(_get(), remove), expected);
   }
 
   /**

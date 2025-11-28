@@ -3,6 +3,7 @@ package org.catools.atlassian.zapi.parser;
 import io.restassured.response.Response;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
 import org.catools.atlassian.zapi.model.*;
 import org.json.JSONArray;
@@ -106,7 +107,7 @@ public class CZApiCyclesParser {
     cycle.setEnvironment(json.optString("environment"));
     cycle.setBuild(json.optString("build"));
     cycle.setName(json.optString("name"));
-    cycle.setModifiedBy(StringUtils.removeEnd(json.optString("modifiedBy"), "(Inactive)"));
+    cycle.setModifiedBy(Strings.CS.removeEnd(json.optString("modifiedBy"), "(Inactive)"));
     return cycle;
   }
 }

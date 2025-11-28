@@ -1,7 +1,7 @@
 package org.catools.common.testng;
 
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.catools.common.collections.CList;
 import org.catools.common.io.CFile;
 import org.catools.common.security.CSensitiveDataMaskingManager;
@@ -158,7 +158,7 @@ public class CTestNGResultGenerator {
     new File(config.getOutputDirectory()).mkdirs();
     Utils.writeUtf8File(
         config.getOutputDirectory(),
-        StringUtils.removeEnd(FILE_NAME, XML_EXTENSION)
+        Strings.CS.removeEnd(FILE_NAME, XML_EXTENSION)
             + XML_EXTENSION,
         rootBuffer,
         null);
