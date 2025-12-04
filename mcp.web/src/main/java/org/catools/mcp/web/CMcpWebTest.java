@@ -21,9 +21,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by its ID attribute with custom name and timeout"
   )
   public void byId(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "id", description = "The ID attribute value", required = true) String id,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "id", description = "The ID attribute value") String id,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byId(name, id, waitSec);
   }
 
@@ -34,9 +34,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by its name attribute with custom name and timeout"
   )
   public void byName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "elementName", description = "The name attribute value", required = true) String elementName,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "elementName", description = "The name attribute value") String elementName,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byName(name, elementName, waitSec);
   }
 
@@ -47,9 +47,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by its CSS class name with custom name and timeout"
   )
   public void byClassName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "className", description = "The CSS class name", required = true) String className,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "className", description = "The CSS class name") String className,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byClassName(name, className, waitSec);
   }
 
@@ -60,9 +60,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by its HTML tag name with custom name and timeout"
   )
   public void byTagName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "tagName", description = "The HTML tag name", required = true) String tagName,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "tagName", description = "The HTML tag name") String tagName,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byTagName(name, tagName, waitSec);
   }
 
@@ -73,9 +73,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by its exact link text with custom name and timeout"
   )
   public void byLinkText(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "linkText", description = "The exact link text", required = true) String linkText,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "linkText", description = "The exact link text") String linkText,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byLinkText(name, linkText, waitSec);
   }
 
@@ -86,9 +86,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by partial link text with custom name and timeout"
   )
   public void byPartialLinkText(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "partialLinkText", description = "The partial link text", required = true) String partialLinkText,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "partialLinkText", description = "The partial link text") String partialLinkText,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byPartialLinkText(name, partialLinkText, waitSec);
   }
 
@@ -99,9 +99,9 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by XPath expression with custom name and timeout"
   )
   public void byXPath(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "xpath", description = "The XPath expression", required = true) String xpath,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "xpath", description = "The XPath expression") String xpath,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byXPath(name, xpath, waitSec);
   }
 
@@ -112,10 +112,11 @@ public class CMcpWebTest extends CWebTest<CDriver> {
       description = "Finds a web element by CSS selector with custom name and timeout"
   )
   public void byCssSelector(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element", required = true) String name,
-      @CMcpToolParam(name = "cssSelector", description = "The CSS selector expression", required = true) String cssSelector,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds", required = true) int waitSec) {
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "cssSelector", description = "The CSS selector expression") String cssSelector,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     webElement = getDriver().byCssSelector(name, cssSelector, waitSec);
   }
 
 }
+

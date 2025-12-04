@@ -1,9 +1,6 @@
 package org.catools.mcp.di;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import lombok.Getter;
 import org.catools.mcp.annotation.CMcpPrompt;
 import org.catools.mcp.annotation.CMcpResource;
 import org.catools.mcp.annotation.CMcpServerApplication;
@@ -11,6 +8,7 @@ import org.catools.mcp.annotation.CMcpTool;
 import org.catools.mcp.server.CBaseMcpSseServer;
 import org.catools.mcp.server.CBaseMcpStdioServer;
 import org.catools.mcp.server.CBaseMcpStreamableServer;
+import org.catools.mcp.server.component.CMcpReflections;
 import org.catools.mcp.server.component.CMcpServerPrompt;
 import org.catools.mcp.server.component.CMcpServerResource;
 import org.catools.mcp.server.component.CMcpServerTool;
@@ -20,14 +18,10 @@ import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.inject.Scopes.SINGLETON;
 import static java.util.stream.Collectors.toSet;
-import static org.reflections.scanners.Scanners.FieldsAnnotated;
-import static org.reflections.scanners.Scanners.MethodsAnnotated;
 
 /**
  * This class is a Guice module that configures bindings for classes annotated with {@link
@@ -36,23 +30,12 @@ import static org.reflections.scanners.Scanners.MethodsAnnotated;
 public final class CGuiceInjectorModule extends AbstractModule {
 
   /**
-   * The main class to use for configuration.
-   */
-  private final Class<?> mainClass;
-
-  /**
-   * The groups to use for mcp capabilities selection.
-   */
-  @Getter
-  private final Set<String> groups = new HashSet<>();
-
-  /**
    * Constructs a new {@link CGuiceInjectorModule} with the specified main class.
    *
    * @param mainClass the main class to use for configuration
    */
   public CGuiceInjectorModule(Class<?> mainClass) {
-    this.mainClass = mainClass;
+    CMcpReflections.registerReflections(mainClass);
   }
 
   @Override
@@ -78,57 +61,16 @@ public final class CGuiceInjectorModule extends AbstractModule {
   }
 
   /**
-   * Provides a {@link Reflections} instance for the main class.
-   *
-   * @return a {@link Reflections} instance for the main class
-   */
-  @Provides
-  @Singleton
-  public Reflections provideReflections() {
-    CMcpServerApplication application = mainClass.getAnnotation(CMcpServerApplication.class);
-    setGroupFilters(application);
-    final String basePackage = determineBasePackage(application);
-    return new Reflections(basePackage, MethodsAnnotated, FieldsAnnotated);
-  }
-
-  /**
-   * Determines the base package for the {@link Reflections} instance to scan.
-   *
-   * @param application the {@link CMcpServerApplication} annotation
-   * @return the base package for the {@link Reflections} instance to scan
-   */
-  private String determineBasePackage(CMcpServerApplication application) {
-    if (application != null) {
-      if (!application.basePackage().trim().isBlank()) {
-        return application.basePackage();
-      }
-      if (application.basePackageClass() != Object.class) {
-        return application.basePackageClass().getPackageName();
-      }
-    }
-    return mainClass.getPackageName();
-  }
-
-  /**
-   * Add groups to filter application capabilities.
-   *
-   * @param application the {@link CMcpServerApplication} annotation
-   */
-  private void setGroupFilters(CMcpServerApplication application) {
-    if (application != null && application.groups() != null) {
-      groups.addAll(Arrays.asList(application.groups()));
-    }
-  }
-
-  /**
    * Binds all classes of methods annotated with the specified annotation.
    *
    * @param annotation the annotation to scan for methods
    */
   private void bindClassesOfMethodsAnnotatedWith(Class<? extends Annotation> annotation) {
-    Reflections reflections = provideReflections();
-    Set<Method> methods = reflections.getMethodsAnnotatedWith(annotation);
-    Set<Class<?>> classes = methods.stream().map(Method::getDeclaringClass).collect(toSet());
-    classes.forEach(clazz -> bind(clazz).in(SINGLETON));
+    Set<Reflections> reflections = CMcpReflections.getReflections();
+    for (Reflections reflection : reflections) {
+      Set<Method> methods = reflection.getMethodsAnnotatedWith(annotation);
+      Set<Class<?>> classes = methods.stream().map(Method::getDeclaringClass).collect(toSet());
+      classes.forEach(clazz -> bind(clazz).in(SINGLETON));
+    }
   }
 }

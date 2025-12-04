@@ -33,11 +33,6 @@ public final class CMcpServerComponentRegister {
   private final CDependencyInjector injector;
 
   /**
-   * The reflections instance for MCP server components.
-   */
-  private final Reflections reflections;
-
-  /**
    * The MCP sync server to register components with.
    */
   private final CImmutable<McpSyncServer> server;
@@ -50,7 +45,6 @@ public final class CMcpServerComponentRegister {
    */
   public CMcpServerComponentRegister(McpSyncServer server) {
     this.injector = CDependencyInjectorProvider.INSTANCE.getInjector();
-    this.reflections = injector.getInstance(Reflections.class);
     this.server = CImmutable.of(server);
   }
 
@@ -87,24 +81,26 @@ public final class CMcpServerComponentRegister {
       Class<? extends CMcpServerComponent<T>> componentClass,
       BiConsumer<McpSyncServer, T> serverAddComponent) {
 
-    Set<Method> methods = reflections.getMethodsAnnotatedWith(annotationClass);
-    CMcpServerComponent<T> component = injector.getInstance(componentClass);
-    for (Method method : methods) {
-      if (groupsFilter != null && !groupsFilter.isEmpty()) {
-        // changed to Set<String> to match updated helper return type
-        Set<String> methodGroups = getGroupsFiledFromAnnotation(method, annotationClass);
-        if (methodGroups.isEmpty()) {
-          log.debug("Skipping registration of method {} due to missing/empty groups", method);
-          continue;
-        }
+    for (Reflections reflections : CMcpReflections.getReflections()) {
+      Set<Method> methods = reflections.getMethodsAnnotatedWith(annotationClass);
+      CMcpServerComponent<T> component = injector.getInstance(componentClass);
+      for (Method method : methods) {
+        if (groupsFilter != null && !groupsFilter.isEmpty()) {
+          // changed to Set<String> to match updated helper return type
+          Set<String> methodGroups = getGroupsFiledFromAnnotation(method, annotationClass);
+          if (methodGroups.isEmpty()) {
+            log.debug("Skipping registration of method {} due to missing/empty groups", method);
+            continue;
+          }
 
-        boolean hasIntersection = groupsFilter.stream().anyMatch(methodGroups::contains);
-        if (!hasIntersection) {
-          log.debug("Skipping registration of method {} due to group filter", method);
-          continue;
+          boolean hasIntersection = groupsFilter.stream().anyMatch(methodGroups::contains);
+          if (!hasIntersection) {
+            log.debug("Skipping registration of method {} due to group filter", method);
+            continue;
+          }
         }
+        serverAddComponent.accept(server.get(), component.create(method));
       }
-      serverAddComponent.accept(server.get(), component.create(method));
     }
   }
 

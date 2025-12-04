@@ -69,38 +69,26 @@ tools: ['search', 'catools/*', 'usages', 'problems', 'runSubagent', 'runTests']
 - Include proper annotations: `@Test`, `@BeforeMethod`, `@AfterMethod`
 - Add JavaDoc with step descriptions from MCP execution
 
-# Agent Prompt Template (MCP-based automation + code generation)
+# MCP Automation Execution Pattern
 
-Use this template when converting intent into MCP tool calls and generating TestNG code.
+When executing MCP-based automation, follow this pattern:
 
-**Goal**: <short description>
+1. **Quit existing session** - Ensure clean state
+2. **Open URL** - Navigate to target page
+3. **Find elements** - Use appropriate locator strategy (ID > name > CSS > XPath)
+4. **Verify visibility** - Check element state before interaction
+5. **Perform actions** - Type, click, select, etc.
+6. **Verify results** - Confirm expected outcomes
 
-**Automation Method**: Model Context Protocol (MCP) tools
+**See complete example below for detailed implementation.**
 
-**Code Output**: TestNG test class following CATools conventions
+---
 
-**Preconditions**:
+## Complete Example: MCP Execution to TestNG Code
 
-- URL: <initial URL>
-- Login required: <yes/no>
+This example demonstrates the complete flow from MCP tool execution to generated TestNG test class.
 
-**MCP Tool Execution Sequence**:
-
-1. `mcp_catools_driver_quit_if_exists`()
-2. `mcp_catools_driver_open_url`("<url>")
-3. `mcp_catools_driver_find_element_by_id`("username", waitSec=10)
-4. `mcp_catools_element_is_visible`()
-5. `mcp_catools_element_type`("<username>")
-6. `mcp_catools_driver_find_element_by_name`("password", waitSec=10)
-7. `mcp_catools_element_type`("<password>")
-8. `mcp_catools_driver_find_element_by_xpath`("//button[@type='submit']", waitSec=10)
-9. `mcp_catools_element_click`()
-
-**Postconditions/Checks**:
-
-- `mcp_catools_driver_find_element_by_xpath`("//div[contains(text(),'Welcome')]", waitSec=15)
-
-**Generated TestNG Code** (example):
+**Generated TestNG Code:**
 
 ```java
 package org.catools.web.test;
@@ -181,49 +169,62 @@ public class CGoogleExploratoryTest extends CWebTest<CDriver> {
   }
 }
 ```
-## Rules for test generation
 
-## Rules for outputs
+---
 
-- Always return only valid `mcp_catools_*` tool calls for automation execution
-- Include `waitSec` for every find call
-- **Record each MCP step to enable generation of runnable TestNG test class**
-- Generated Java code must follow CATools conventions (C-prefix, proper packages, JavaDoc)
-- Generated code must be complete and runnable as a TestNG test class
+## Critical Code Generation Rules
 
-**Agent generation rule — Do NOT extract CATools Common Extension Classes values**
+**NEVER Extract-Then-Assert Pattern:**
 
-- Never generate code that assigns value of properties with CATools Common Extension Classes type to a local variable, for example:
+This is the most common mistake - DO NOT generate code like this:
 
 ```java
+// ❌ WRONG - Extract then assert
 String gmailText = gmailLink.getText();
 assertThat(gmailText).isEqualTo("Gmail");
+
+// ❌ WRONG - Extract from extension property then assert  
+String pageTitle = getDriver().Title.get();
+assertThat(pageTitle).contains("Google");
 ```
 
-or 
+**Always use extension framework verification directly:**
 
 ```java
-  String pageTitle = driver.getTitle();
-  assertThat(pageTitle).contains("Google");
+// ✅ CORRECT - Use extension property verification
+gmailLink.Text.verifyEquals("Gmail", "Gmail link text should match");
+getDriver().Title.verifyContains("Google", "Page title should contain 'Google'");
 ```
 
-- Why: this pattern bypasses the extension framework's verification and waiting facilities, can produce flaky tests, and prevents soft assertion collection.
+**Why This Is Critical:**
+1. Bypasses extension framework's verification and waiting capabilities
+2. Produces flaky tests - value extracted at single point in time
+3. Prevents soft assertion collection
+4. Worse error messages
 
-- Avoid the extract-then-assert pattern abd preferred patterns:
-  - Use extension property verification directly: 
-    - `gmailLink.Text.verifyEquals("Gmail", "Gmail link text should match");`
-    - `driver.Title.verifyContains("Google", "Page title should contain 'Google'");`
+**Agent Checklist Before Code Generation:**
+- Scan for regex pattern: `String\s+\w+\s*=\s*.*\.get(Text|Value|Title|Url)\(\);` followed by `assertThat\(`
+- Replace with extension framework `.verify*()` method
 
-- Agent checklist: Before emitting Java code, scan generated test class for the regex patterns `String\s+\w+\s*=\s*.*\.get(Text|Value)\(\);` followed within the next 1-3 lines by an `assertThat\(` call — if found, replace with the preferred extension-framework verification or refactor as described above.
+**Code Generation Requirements:**
 
-## Element Interaction Workflow (MCP-driven)
+- Always return valid `mcp_catools_*` tool calls for automation execution
+- Include `waitSec` for every find call
+- Record each MCP step to enable generation of runnable TestNG test class
+- Generated code must follow CATools conventions (C-prefix, proper packages, JavaDoc)
+- Generated code must be complete and runnable
 
-1. **Resolve locator** (id, name, css, xpath) through MCP tool selection
-2. **Populate element context** via `mcp_catools_driver_find_element_*` tools
-3. **Find element** with appropriate wait (5–10s standard) using MCP
-4. **Verify visibility** via `mcp_catools_element_is_visible`
-5. **Perform action** using MCP element tools (`mcp_catools_element_click`, `mcp_catools_element_type`, etc.)
-6. **Verify result** and capture screenshot on failures via MCP tools
+---
+
+## MCP Element Interaction Workflow
+
+1. **Resolve locator** - Choose locator strategy (ID > name > CSS > XPath)
+2. **Find element** - Use `mcp_catools_driver_find_element_*` with appropriate wait (5-10s)
+3. **Verify state** - Check visibility/clickability before action
+4. **Perform action** - Execute `mcp_catools_element_click`, `mcp_catools_element_type`, etc.
+5. **Verify result** - Confirm expected outcome
+
+---
 
 ## CWebElement and CDriver Extension Properties
 
@@ -268,6 +269,10 @@ getDriver().Url.verifyContains("/dashboard", "URL should reflect dashboard");
 
 **For complete documentation see:**
 - **`webelement-classes-guide.prompts.md`** - Complete CWebElement properties, methods, and usage examples
+- **`webform-guide.prompts.md`** - CWebForm guide for form-based page objects (user interactions)
+- **`webpage-guide.prompts.md`** - CWebPage guide for page object pattern (contains forms and tables, business methods)
+- **`webtable-guide.prompts.md`** - CWebTable guide for table components (data display and queries)
+- **`webtablerow-guide.prompts.md`** - CWebTableRow guide for row interactions (cell access and actions)
 - **`extension-classes-guide.prompts.md`** - Extension framework (Verification, Wait, State groups) comprehensive guide
 
 ## TestNG Code Generation Guidelines
@@ -293,63 +298,45 @@ getDriver().Url.verifyContains("/dashboard", "URL should reflect dashboard");
 
 **For complete test class structure, see the example in "Generated TestNG Code" section above.**
 
+---
+
 ## Error Handling & Debugging
 
-- If element not found: increase wait, try alternative locator, or ask the user.
-- If not clickable: scroll into view, check overlays, or use `execute_script` click via
-  `mcp_catools_driver_execute_script`.
-- For stale elements: re-find immediately before action.
-- To debug: `mcp_catools_driver_get_screenshot`, `mcp_catools_driver_get_title`, `mcp_catools_driver_get_url`.
+**Common Issues and Solutions:**
 
-## Recording & Output
+| Issue | Solution |
+|-------|----------|
+| Element not found | Increase wait time, try alternative locator, or ask user |
+| Not clickable | Scroll into view, check for overlays, use JavaScript click via `executeScript` |
+| Stale element | Re-find element immediately before action |
+| Debugging | Use screenshots, check title/URL, verify element state |
 
-- **MCP Execution Record**: Save each tool call (tool name + params + expected post-condition)
-- **Code Generation from MCP Recording**: On request, produce:
-    - Complete TestNG test class following CATools conventions (derived from MCP tool execution sequence)
-    - Page objects for reusable workflows
-    - Supporting utility methods if needed
-- **Artifacts**: Screenshots, page title, URL from MCP tool execution
-- **Documentation**: JavaDoc comments derived from MCP step descriptions
+---
 
-## Workflow Summary
+## Compliance & Output Requirements
 
-1. **User provides automation goal** → Agent designs MCP tool sequence
-2. **Execute MCP tools** → Automate browser interactions via MCP protocol (`mcp_catools_*` tools)
-3. **Validate each step** → Ensure postconditions met
-4. **Record execution** → Capture all MCP tool calls and results
-5. **Generate TestNG code** → Convert recorded MCP automation to Java test code
-6. **Output deliverables** → TestNG classes + page objects + documentation
+### MCP Protocol Compliance
 
-## Examples (short)
+- **MCP-Only**: All automation strictly uses CATools MCP tools (`mcp_catools_*` family)
+- **No Direct WebDriver**: Never call WebDriver methods directly
+- **Stop on Errors**: Halt execution and ask user for guidance on errors
 
-- **Login flow**: Execute MCP tools (`mcp_catools_*`) → Record execution → Generate `CLoginTest` with TestNG annotations
-- **Form submission**: Execute MCP automation → Record steps → Generate `CFormSubmissionTest` with step-by-step code
-- **Multi-page workflow**: Execute MCP navigation → Record flow → Generate test class + page objects
+### TestNG Code Generation (MANDATORY)
 
-## Compliance
+After **EVERY** MCP automation execution, generate complete Java TestNG test class:
 
-- **MCP Protocol**: All automation strictly uses CATools MCP tools (`mcp_catools_*` family)
-- **TestNG Framework**: Generated code uses TestNG annotations and patterns
-- **CATools Standards**: All code follows CATools naming (C-prefix), packaging, and architectural guidelines
-- **Documentation**: Include comprehensive JavaDoc and comments in generated code
-- **Java Code Output**: After every MCP automation execution, MUST generate and display complete Java TestNG code
+**Required Elements:**
+1. ✅ Complete Java Test Class - Full, runnable TestNG code
+2. ✅ Code Formatting - Proper indentation, package, imports
+3. ✅ Annotations - `@Slf4j`, `@Test` with description
+4. ✅ Comments - Step-by-step linking MCP calls to code
+5. ✅ Extension Framework - Use `.verify*()` methods, NOT extract-then-assert
+6. ✅ JavaDoc - Class documentation with automation purpose
+7. ✅ CWebTest Pattern - Extend `CWebTest<CDriver>`, use `open()` and `getDriver()`
 
-## Java Code Output Requirements
-
-**MANDATORY after each execution:**
-
-1. **Complete Java Test Class** - Full, runnable TestNG test class code block
-2. **Code Formatting** - Proper indentation, package declarations, imports
-3. **Annotations** - @Slf4j, @Test with description, proper method naming
-4. **Comments** - Step-by-step comments linking MCP tool calls to Java code lines
-5. **Assertions** - Proper AssertJ assertions for element visibility, text, URL validation
-6. **JavaDoc** - Class-level JavaDoc documenting the automation purpose and execution source
-7. **Display Location** - Code block shown immediately after execution summary, before finishing
-
-**Code Block Format:**
+**Code Block Template:**
 
 ```java
-// [GENERATED JAVA TEST CLASS FROM MCP EXECUTION]
 package org.catools.web.test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -357,38 +344,76 @@ import org.catools.web.tests.CWebTest;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
 import org.testng.annotations.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * [Description]
+ * [Description of test purpose]
  * Generated from MCP automation execution.
  */
 @Slf4j
 public class C[TestName]Test extends CWebTest<CDriver> {
     
-    @Test(description = "[Description]")
-    public void test[Method]() {
-        // Implementation from MCP tool sequence
+    @Test(description = "[Test description]")
+    public void test[MethodName]() {
+        log.info("Starting test: [description]");
+        
+        // Step 1: [MCP step description]
+        // [Generated code from MCP tool call]
+        
+        // Step 2: [MCP step description]  
+        // [Generated code from MCP tool call]
+        
+        log.info("Test completed successfully");
     }
 }
 ```
 
-## Compliance
+### CATools Standards
 
-- **MCP Protocol**: All automation strictly uses CATools MCP tools (`mcp_catools_*` family)
-- **TestNG Framework**: Generated code uses TestNG annotations and patterns
-- **CATools Standards**: All code follows CATools naming (C-prefix), packaging, and architectural guidelines
-- **Documentation**: Include comprehensive JavaDoc and comments in generated code
-- **Java Code Output**: After every MCP automation execution, MUST generate and display complete Java TestNG code
+- **Naming**: All classes use C-prefix (`CLoginTest`, `CWebPage`, etc.)
+- **Packaging**: Follow `org.catools.web.*` structure
+- **Documentation**: Comprehensive JavaDoc on all public classes/methods
+- **Extension Framework**: Always use `.verify*()` methods for assertions
 
-## Finish
+---
+
+## Output Deliverables
 
 On successful automation and code generation, return (IN THIS ORDER):
 
-1. **Numbered list** of executed MCP tool calls (`mcp_catools_*`) with brief descriptions
-2. **✅ Complete Java TestNG test class(es)** derived from MCP execution (MANDATORY CODE BLOCK)
-3. Generated page object(s) if applicable
-4. Collected artifacts (screenshots, page details, URLs)
-5. Instructions for running the generated tests
+1. **Execution Summary** - Numbered list of MCP tool calls with descriptions
+2. **✅ Java TestNG Test Class** - Complete, runnable code (MANDATORY)
+3. **Page Objects** - If applicable for reusable workflows
+4. **Artifacts** - Screenshots, page details, collected data
+5. **Run Instructions** - How to execute the generated tests
 
-**CRITICAL**: Always include the full Java code block - this is not optional.
+**CRITICAL**: The Java code block is NOT optional - it MUST be generated after every execution.
+
+---
+
+## Quick Reference
+
+**MCP Tools Priority:**
+- `mcp_catools_driver_open_url` - Navigate to page
+- `mcp_catools_driver_find_element_by_id` - Find by ID (preferred)
+- `mcp_catools_driver_find_element_by_name` - Find by name
+- `mcp_catools_driver_find_element_by_xpath` - Find by XPath (when needed)
+- `mcp_catools_element_click` - Click element
+- `mcp_catools_element_type` - Type text
+- `mcp_catools_element_is_visible` - Check visibility
+
+**Generated Code Patterns:**
+- Navigation: `open(url)` (NOT `driver.open()`)
+- Find: `getDriver().findElementBy*(locator, timeout)`
+- Verify: `element.Property.verifyMethod(expected, message)`
+- Wait: `element.Property.waitUntilMethod(expected, timeout)`
+
+**Documentation References:**
+- See complete guides in `.github/prompts/*.prompts.md`
+- All guides follow the same comprehensive structure
+- Cross-referenced for easy navigation
+
+---
+
+**Version:** 2.0.0  
+**Last Updated:** November 28, 2025  
+**Framework:** CATools Web Automation with MCP

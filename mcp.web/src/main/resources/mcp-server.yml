@@ -1,7 +1,7 @@
 enabled: true
 mode: STREAMABLE
 name: catools-web
-groups: ["web"]
+groups: [ "web" ]
 version: 1.0.0
 type: SYNC
 request-timeout: 20000
@@ -14,7 +14,7 @@ change-notification:
   prompt: true
   tool: true
 streamable:
-  mcp-endpoint: /mcp/message
+  mcp-endpoint: /mcp/catools
   disallow-delete: true
   keep-alive-interval: 30000
   port: 9000

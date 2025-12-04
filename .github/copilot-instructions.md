@@ -418,7 +418,7 @@ When adding CMcpTool, CMcpResource, CMcpPrompt annotations to any methods:
     description = "Open URL using CATools WebDriver"
 )
 public void open(
-    @CMcpToolParam(name = "url", description = "The URL to navigate to", required = true) String url
+    @CMcpToolParam(name = "url", description = "The URL to navigate to") String url
 ) {
   open(url, !isCurrentSessionActive());
 }
