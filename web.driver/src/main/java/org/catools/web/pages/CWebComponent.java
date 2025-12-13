@@ -39,15 +39,15 @@ import org.catools.web.drivers.CDriver;
  * 
  * <h2>Another Example with Page Object Pattern:</h2>
  * <pre>{@code
- * public abstract class BasePage implements CWebComponent<WebDriver> {
- *     protected WebDriver driver;
+ * public abstract class BasePage implements CWebComponent<Page> {
+ *     protected Page driver;
  *     
- *     public BasePage(WebDriver driver) {
+ *     public BasePage(Page driver) {
  *         this.driver = driver;
  *     }
  *     
  *     @Override
- *     public WebDriver getDriver() {
+ *     public Page getDriver() {
  *         return driver;
  *     }
  *     
@@ -61,7 +61,7 @@ import org.catools.web.drivers.CDriver;
  *     private static final By SEARCH_INPUT = By.id("search");
  *     private static final By SEARCH_BUTTON = By.id("searchBtn");
  *     
- *     public SearchPage(WebDriver driver) {
+ *     public SearchPage(Page driver) {
  *         super(driver);
  *     }
  *     
@@ -90,15 +90,15 @@ public interface CWebComponent<DR extends CDriver> {
      * 
      * <h3>Example Usage:</h3>
      * <pre>{@code
-     * public class NavigationComponent implements CWebComponent<WebDriver> {
-     *     private WebDriver driver;
+     * public class NavigationComponent implements CWebComponent<Page> {
+     *     private Page driver;
      *     
-     *     public NavigationComponent(WebDriver driver) {
+     *     public NavigationComponent(Page driver) {
      *         this.driver = driver;
      *     }
      *     
      *     @Override
-     *     public WebDriver getDriver() {
+     *     public Page getDriver() {
      *         return driver;
      *     }
      *     
@@ -116,23 +116,23 @@ public interface CWebComponent<DR extends CDriver> {
      * }
      * 
      * // Usage
-     * WebDriver webDriver = new ChromeDriver();
-     * NavigationComponent nav = new NavigationComponent(webDriver);
+     * Page page = new ChromeDriver();
+     * NavigationComponent nav = new NavigationComponent(page);
      * nav.navigateToHome();
      * System.out.println("Current URL: " + nav.getCurrentUrl());
      * }</pre>
      * 
      * <h3>Advanced Example with Element Interaction:</h3>
      * <pre>{@code
-     * public class FormComponent implements CWebComponent<RemoteWebDriver> {
-     *     private RemoteWebDriver driver;
+     * public class FormComponent implements CWebComponent<Page> {
+     *     private Page driver;
      *     
-     *     public FormComponent(RemoteWebDriver driver) {
+     *     public FormComponent(Page driver) {
      *         this.driver = driver;
      *     }
      *     
      *     @Override
-     *     public RemoteWebDriver getDriver() {
+     *     public Page getDriver() {
      *         return driver;
      *     }
      *     
@@ -158,7 +158,7 @@ public interface CWebComponent<DR extends CDriver> {
      * @throws IllegalStateException if the driver has not been properly initialized
      * 
      * @see CDriver
-     * @see org.openqa.selenium.WebDriver
+     * @see org.openqa.selenium.Page
      */
     DR getDriver();
 }

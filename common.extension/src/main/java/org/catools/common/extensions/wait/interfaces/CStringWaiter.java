@@ -284,7 +284,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -296,7 +296,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link CStringUtil#endsWithAny(CharSequence,
-   * CharSequence...)} is true.
+   * String)} is true.
    *
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
    *                      null}
@@ -309,7 +309,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link CStringUtil#endsWithAny(CharSequence,
-   * CharSequence...)} is true.
+   * String)} is true.
    *
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
    *                               null}
@@ -359,7 +359,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -371,7 +371,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link CStringUtil#endsWithAny(CharSequence,
-   * CharSequence...)} is false.
+   * String)} is false.
    *
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
    *                      null}
@@ -384,7 +384,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link CStringUtil#endsWithAny(CharSequence,
-   * CharSequence...)} is false.
+   * String)} is false.
    *
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
    *                               null}
@@ -398,7 +398,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} equals to the
+   * result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} equals to the
    * expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -410,7 +410,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} equals to the expected value,
+   * CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} equals to the expected value,
    * ignoring case.
    *
    * @param expectedList  a list of strings, may be {@code null}.
@@ -423,7 +423,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} equals to the expected value,
+   * CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} equals to the expected value,
    * ignoring case.
    *
    * @param expectedList           a list of strings, may be {@code null}.
@@ -510,7 +510,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is false,
+   * result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is false,
    * ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -522,7 +522,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is false, ignoring case.
+   * CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is false, ignoring case.
    *
    * @param expectedList  a list of strings, may be {@code null}.
    * @param waitInSeconds maximum wait time.
@@ -534,7 +534,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is false, ignoring case.
+   * CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is false, ignoring case.
    *
    * @param expectedList           a list of strings, may be {@code null}.
    * @param waitInSeconds          maximum wait time.
@@ -3321,7 +3321,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -3333,7 +3333,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                      null}
@@ -3346,7 +3346,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                               null}
@@ -3396,7 +3396,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -3408,7 +3408,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                      null}
@@ -3421,7 +3421,7 @@ public interface CStringWaiter extends CObjectWaiter<String> {
 
   /**
    * Wait for defined number of seconds until result of {@link
-   * CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                               null}

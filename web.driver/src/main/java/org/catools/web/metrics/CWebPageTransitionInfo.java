@@ -2,13 +2,10 @@ package org.catools.web.metrics;
 
 import lombok.Data;
 import org.catools.common.collections.CHashMap;
-import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.web.entities.CWebPageInfo;
-import org.openqa.selenium.devtools.v138.performance.model.Metric;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 
 /**
  * Represents information about a web page transition, capturing the state before and after an action
@@ -123,11 +120,11 @@ public class CWebPageTransitionInfo {
    * @param actionName the descriptive name of the action performed
    * @param pageBeforeAction the page information before the action
    * @param pageAfterAction the page information after the action
-   * @param metricList the list of performance metrics collected during the transition
+   * @param metadata the list of performance metrics collected during the transition
    * @param actionTime the timestamp when the action was performed
    * 
    * @throws IllegalArgumentException if actionName is null or empty
-   * @throws NullPointerException if metricList is null
+   * @throws NullPointerException if metadata is null
    * 
    * @example
    * <pre>{@code
@@ -159,17 +156,17 @@ public class CWebPageTransitionInfo {
    * System.out.println("DOM Content Loaded: " + loadTime + "ms");
    * }</pre>
    */
-  public CWebPageTransitionInfo(String actionName, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CList<Metric> metricList, Date actionTime) {
+  public CWebPageTransitionInfo(String actionName, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CMap<String, String> metadata, Date actionTime) {
     this.actionName = actionName;
     this.pageBeforeAction = pageBeforeAction;
     this.pageAfterAction = pageAfterAction;
 
-    for (Object metric : metricList) {
-      if (metric instanceof Metric m)
-        metrics.put(m.getName(), m.getValue());
-      else if (metric instanceof LinkedHashMap l)
-        metrics.put(l.get("name").toString(), Double.valueOf(l.get("value").toString()));
-    }
+    metadata.forEach((key, value) -> {
+      try {
+        metrics.put(key, Double.valueOf(value));
+      } catch (NumberFormatException ignored) {
+      }
+    });
 
     this.actionTime = actionTime;
   }

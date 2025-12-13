@@ -42,7 +42,7 @@ public class TestMcpTools {
 
   @CMcpTool(groups = "test")
   public String toolWithRequiredParam(
-      @CMcpToolParam(name = "param", description = "param", required = true) String param) {
+      @CMcpToolParam(name = "param", description = "param") String param) {
 
     log.debug("calling toolWithRequiredParam with param: {}", param);
     return "toolWithRequiredParam is called with required param: " + param;
@@ -51,7 +51,7 @@ public class TestMcpTools {
   @CMcpTool(groups = "test")
   public String toolWithMultiParams(
       @CMcpToolParam(name = "param1", description = "param1") String param1,
-      @CMcpToolParam(name = "param2", description = "param2", required = true) String param2) {
+      @CMcpToolParam(name = "param2", description = "param2") String param2) {
 
     log.debug("calling toolWithMultiParams with params: {}, {}", param1, param2);
     return String.format("toolWithMultiParams is called with params: %s, %s", param1, param2);

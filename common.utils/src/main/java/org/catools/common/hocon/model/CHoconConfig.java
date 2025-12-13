@@ -12,6 +12,7 @@ import org.catools.common.vault.CVault;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -341,10 +342,12 @@ public class CHoconConfig implements CConfig {
 
   private static <T> T getModelFromConfig(Class<T> clazz, Config val) {
     try {
-      return ConfigBeanFactory.create(val, clazz);
-    } catch (Exception ex) {
       String jsonFormatString = val.resolve().root().render(ConfigRenderOptions.concise());
-      return CJsonUtil.read(jsonFormatString, clazz);
+      T model = CJsonUtil.read(jsonFormatString, clazz);
+      Objects.requireNonNull(model);
+      return model;
+    } catch (Exception ex) {
+      return ConfigBeanFactory.create(val, clazz);
     }
   }
 

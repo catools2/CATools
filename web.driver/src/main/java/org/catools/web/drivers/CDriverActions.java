@@ -1,13 +1,13 @@
 package org.catools.web.drivers;
 
+import com.microsoft.playwright.ElementHandle;
+import com.microsoft.playwright.options.Cookie;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.mcp.annotation.CMcpToolParam;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -18,15 +18,17 @@ import java.util.function.Predicate;
  * <p>Example usage:</p>
  * <pre>{@code
  * CDriverActions driver = new MyDriverImplementation();
- * driver.click(By.id("button"), 5)
- *       .sendKeys(By.id("input"), 3, "Hello World")
+ * driver.click("#button", 5)
+ *       .sendKeys("#input", 3, "Hello World")
  *       .pressEnter()
- *       .scrollIntoView(By.id("footer"), true);
+ *       .scrollIntoView("#footer", true);
  * }</pre>
  *
  * @since 1.0
  */
+@SuppressWarnings({"unchecked"})
 public interface CDriverActions extends CDriverWaiter {
+
   /**
    * Presses the ENTER key on the current page.
    *
@@ -39,10 +41,10 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T pressEnter() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Press ENTER",
-        webDriver -> {
-          new Actions(webDriver).sendKeys(Keys.ENTER).perform();
+        engine -> {
+          engine.pressEnter();
           return (T) this;
         });
   }
@@ -107,7 +109,7 @@ public interface CDriverActions extends CDriverWaiter {
   }
 
   /**
-   * Presses the ESCAPE key on the current page.
+   * Presses the ESCAPE key on the current engine.
    *
    * <p>Example:</p>
    * <pre>{@code
@@ -118,10 +120,10 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T pressEscape() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Press Scape",
-        webDriver -> {
-          new Actions(webDriver).sendKeys(Keys.ESCAPE).perform();
+        engine -> {
+          engine.pressEscape();
           return (T) this;
         });
   }
@@ -186,7 +188,7 @@ public interface CDriverActions extends CDriverWaiter {
   }
 
   /**
-   * Presses the TAB key on the current page to navigate to the next focusable element.
+   * Presses the TAB key on the current engine to navigate to the next focusable element.
    *
    * <p>Example:</p>
    * <pre>{@code
@@ -197,10 +199,10 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T pressTab() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Press Tab",
-        webDriver -> {
-          new Actions(webDriver).sendKeys(Keys.TAB).perform();
+        engine -> {
+          engine.sendKeys("Tab");
           return (T) this;
         });
   }
@@ -265,61 +267,26 @@ public interface CDriverActions extends CDriverWaiter {
   }
 
   /**
-   * Clicks an element using JavaScript execution, bypassing standard click restrictions.
-   * This method is useful for clicking elements that may be covered by other elements.
-   *
-   * <p>Example:</p>
-   * <pre>{@code
-   * driver.clickJS(By.id("hidden-button"), 5);
-   * }</pre>
-   *
-   * @param <T>     the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
-   * @return this instance for method chaining
-   */
-  default <T extends CDriverActions> T clickJS(By locator, int waitSec) {
-    waitUntil(
-        "Click",
-        waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el == null) return el;
-          JavascriptExecutor executor = (JavascriptExecutor) webDriver;
-          executor.executeScript("arguments[0].click();", el);
-          return el;
-        });
-    return (T) this;
-  }
-
-  /**
    * Clicks an element after scrolling it into view. This is the standard click method
    * that handles most common clicking scenarios.
    *
    * <p>Example:</p>
    * <pre>{@code
-   * driver.click(By.xpath("//button[@type='submit']"), 10);
+   * driver.click("xpath=//button[@type='submit']", 10);
    * }</pre>
    *
    * @param <T>     the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
+   * @param locator the locator (Playwright selector) to find the element to click
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T click(By locator, int waitSec) {
+  default <T extends CDriverActions> T click(String locator, int waitSec) {
     waitUntil(
         "Click",
         waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el == null) return el;
-          JavascriptExecutor executor = (JavascriptExecutor) webDriver;
-          try {
-            executor.executeScript("arguments[0].scrollIntoView(true);", el);
-          } catch (Exception e) {
-          }
-          el.click();
-          return el;
+        engine -> {
+          engine.click(locator);
+          return true;
         });
     return (T) this;
   }
@@ -331,9 +298,9 @@ public interface CDriverActions extends CDriverWaiter {
    * <p>Example:</p>
    * <pre>{@code
    * driver.click(
-   *     By.id("next-page"),
+   *     By.id("next-engine"),
    *     5,
-   *     d -> d.isElementVisible(By.id("page-2-content"))
+   *     d -> d.isElementVisible(By.id("engine-2-content"))
    * );
    * }</pre>
    *
@@ -344,7 +311,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T click(
-      By locator, int waitSec, Predicate<CDriverActions> postCondition) {
+      String locator, int waitSec, Predicate<CDriverActions> postCondition) {
     return click(locator, waitSec, postCondition, 3, 1000);
   }
 
@@ -371,7 +338,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T click(
-      By locator,
+      String locator,
       int waitSec,
       Predicate<CDriverActions> postCondition,
       int retryTimes,
@@ -394,7 +361,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param locator the locator to find the element to click
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T mouseClick(By locator) {
+  default <T extends CDriverActions> T mouseClick(String locator) {
     return mouseClick(locator, DEFAULT_TIMEOUT);
   }
 
@@ -412,12 +379,12 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T mouseClick(By locator, int waitSec) {
-    return performActionOnDriver(
+  default <T extends CDriverActions> T mouseClick(String locator, int waitSec) {
+    return waitUntil(
         "Mouse Click",
-        webDriver -> {
-          moveTo(locator, waitSec);
-          new Actions(webDriver).click();
+        waitSec,
+        engine -> {
+          engine.mouseClick(locator);
           return (T) this;
         });
   }
@@ -434,7 +401,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param locator the locator to find the element to double-click
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T mouseDoubleClick(By locator) {
+  default <T extends CDriverActions> T mouseDoubleClick(String locator) {
     return mouseDoubleClick(locator, DEFAULT_TIMEOUT);
   }
 
@@ -451,12 +418,12 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T mouseDoubleClick(By locator, int waitSec) {
-    return performActionOnDriver(
+  default <T extends CDriverActions> T mouseDoubleClick(String locator, int waitSec) {
+    return waitUntil(
         "Double Mouse Click",
-        webDriver -> {
-          moveTo(locator, waitSec);
-          new Actions(webDriver).doubleClick();
+        waitSec,
+        engine -> {
+          engine.mouseDoubleClick(locator);
           return (T) this;
         });
   }
@@ -473,7 +440,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param locator the locator to find the element to move to
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T moveTo(By locator) {
+  default <T extends CDriverActions> T moveTo(String locator) {
     return moveTo(locator, 0, 0, DEFAULT_TIMEOUT);
   }
 
@@ -491,7 +458,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param yOffset vertical offset from the element's center
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T moveTo(By locator, int xOffset, int yOffset) {
+  default <T extends CDriverActions> T moveTo(String locator, int xOffset, int yOffset) {
     return moveTo(locator, xOffset, yOffset, DEFAULT_TIMEOUT);
   }
 
@@ -508,7 +475,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T moveTo(By locator, int waitSec) {
+  default <T extends CDriverActions> T moveTo(String locator, int waitSec) {
     return moveTo(locator, 0, 0, waitSec);
   }
 
@@ -527,7 +494,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T moveTo(By locator, int xOffset, int yOffset, int waitSec) {
+  default <T extends CDriverActions> T moveTo(String locator, int xOffset, int yOffset, int waitSec) {
     moveToElement(locator, xOffset, yOffset, waitSec);
     return (T) this;
   }
@@ -540,13 +507,12 @@ public interface CDriverActions extends CDriverWaiter {
    * driver.scrollIntoView(By.id("footer"), true); // Scroll to footer
    * }</pre>
    *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param locator    the locator to find the element to scroll into view
-   * @param scrollDown true to scroll down to element, false to scroll up
+   * @param <T>     the type of the implementing class for method chaining
+   * @param locator the locator to find the element to scroll into view
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollIntoView(By locator, boolean scrollDown) {
-    return scrollIntoView(locator, scrollDown, DEFAULT_TIMEOUT);
+  default <T extends CDriverActions> T scrollIntoView(String locator) {
+    return scrollIntoView(locator, DEFAULT_TIMEOUT);
   }
 
   /**
@@ -557,14 +523,19 @@ public interface CDriverActions extends CDriverWaiter {
    * driver.scrollIntoView(By.xpath("//section[@id='contact']"), false, 5);
    * }</pre>
    *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param locator    the locator to find the element to scroll into view
-   * @param scrollDown true to scroll down to element, false to scroll up
-   * @param waitSec    maximum time in seconds to wait for the element
+   * @param <T>     the type of the implementing class for method chaining
+   * @param locator the locator to find the element to scroll into view
+   * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollIntoView(By locator, boolean scrollDown, int waitSec) {
-    executeScript("arguments[0].scrollIntoView(" + scrollDown + ");", getElement(locator, waitSec));
+  default <T extends CDriverActions> T scrollIntoView(String locator, int waitSec) {
+    waitUntil(
+        "Scroll Into View",
+        waitSec,
+        engine -> {
+          engine.scrollIntoView(locator);
+          return null;
+        });
     return (T) this;
   }
 
@@ -581,7 +552,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param scrollSize the number of pixels to scroll left
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollLeft(By locator, int scrollSize) {
+  default <T extends CDriverActions> T scrollLeft(String locator, int scrollSize) {
     return scrollLeft(locator, scrollSize, DEFAULT_TIMEOUT);
   }
 
@@ -599,8 +570,8 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollLeft(By locator, int scrollSize, int waitSec) {
-    executeScript("arguments[0].scrollLeft-=arguments[1];", getElement(locator, waitSec), scrollSize);
+  default <T extends CDriverActions> T scrollLeft(String locator, int scrollSize, int waitSec) {
+    executeScript(String.format("document.querySelector('%s').scrollLeft-=arguments[0];", locator), scrollSize);
     return (T) this;
   }
 
@@ -617,7 +588,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param scrollSize the number of pixels to scroll right
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollRight(By locator, int scrollSize) {
+  default <T extends CDriverActions> T scrollRight(String locator, int scrollSize) {
     return scrollRight(locator, scrollSize, DEFAULT_TIMEOUT);
   }
 
@@ -635,8 +606,8 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec    maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T scrollRight(By locator, int scrollSize, int waitSec) {
-    executeScript("arguments[0].scrollLeft+=arguments[1];", getElement(locator, waitSec), scrollSize);
+  default <T extends CDriverActions> T scrollRight(String locator, int scrollSize, int waitSec) {
+    executeScript(String.format("document.querySelector('%s').scrollLeft+=arguments[0];", locator), scrollSize);
     return (T) this;
   }
 
@@ -648,147 +619,101 @@ public interface CDriverActions extends CDriverWaiter {
    * driver.scrollIntoViewAndClick(By.id("submit-button"), true);
    * }</pre>
    *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param locator    the locator to find the element
-   * @param scrollDown true to scroll down to element, false to scroll up
-   * @return this instance for method chaining
-   */
-  default <T extends CDriverActions> T scrollIntoViewAndClick(By locator, boolean scrollDown) {
-    return scrollIntoViewAndClick(locator, scrollDown, DEFAULT_TIMEOUT);
-  }
-
-  /**
-   * Scrolls an element into view and then clicks it with a specified wait time.
-   *
-   * <p>Example:</p>
-   * <pre>{@code
-   * driver.scrollIntoViewAndClick(By.linkText("Terms of Service"), false, 5);
-   * }</pre>
-   *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param locator    the locator to find the element
-   * @param scrollDown true to scroll down to element, false to scroll up
-   * @param waitSec    maximum time in seconds to wait for the element
+   * @param <T>     the type of the implementing class for method chaining
+   * @param locator the locator to find the element
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T scrollIntoViewAndClick(
-      By locator, boolean scrollDown, int waitSec) {
-    scrollIntoView(locator, scrollDown, waitSec);
+      String locator, int waitSec) {
+    scrollIntoView(locator, waitSec);
     return click(locator, waitSec);
   }
 
   /**
-   * Clicks an invisible or hidden element using JavaScript execution.
-   * This method is useful for clicking elements that are not visible but are enabled.
+   * Presses the key on the current page.
    *
    * <p>Example:</p>
    * <pre>{@code
-   * driver.clickInvisible(By.id("hidden-trigger"), 5);
+   * driver.pressKey();
    * }</pre>
    *
    * @param <T>     the type of the implementing class for method chaining
-   * @param locator the locator to find the element to click
-   * @param waitSec maximum time in seconds to wait for the element
+   * @param locator the locator of the element to send the key to
+   * @param key     the key to press
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T clickInvisible(By locator, int waitSec) {
-    waitUntil(
-        "Click Invisible",
-        waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el != null && el.isEnabled()) {
-            ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", el);
-            return el;
-          }
-          return null;
+  default <T extends CDriverActions> T pressKey(String locator, String key) {
+    return performActionOnEngine(
+        "Press ENTER",
+        engine -> {
+          engine.press(locator, key);
+          return (T) this;
         });
+  }
+
+  /**
+   * Presses the key and waits for the specified number of seconds.
+   *
+   * <p>Example:</p>
+   * <pre>{@code
+   * driver.pressKey(2); // Press and wait 2 seconds
+   * }</pre>
+   *
+   * @param <T>               the type of the implementing class for method chaining
+   * @param locator           the locator of the element to send the key to
+   * @param key               the key to press
+   * @param waitAfterPressKey of seconds to wait after pressing ENTER
+   * @return this instance for method chaining
+   */
+  default <T extends CDriverActions> T pressKey(String locator, String key, int waitAfterPressKey) {
+    pressKey(locator, key);
+    CSleeper.sleepTightInSeconds(waitAfterPressKey);
     return (T) this;
   }
 
   /**
-   * Clicks an invisible element and retries until the post-condition is met.
+   * Presses the key and retries until the post-condition is met.
    * Uses default retry settings (3 retries, 1000ms interval).
    *
    * <p>Example:</p>
    * <pre>{@code
-   * driver.clickInvisible(
-   *     By.id("hidden-submit"),
-   *     5,
-   *     d -> d.isElementVisible(By.id("confirmation"))
-   * );
+   * driver.pressKey(d -> d.isElementVisible(By.id("success-message")));
    * }</pre>
    *
    * @param <T>           the type of the implementing class for method chaining
-   * @param locator       the locator to find the element to click
-   * @param waitSec       maximum time in seconds to wait for the element
-   * @param postCondition condition to check after clicking
+   * @param locator       the locator of the element to send the key to
+   * @param key           the key to press
+   * @param postCondition condition to check after pressing ENTER
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T clickInvisible(
-      By locator, int waitSec, Predicate<CDriverActions> postCondition) {
-    return clickInvisible(locator, waitSec, postCondition, 3, 1000);
+  default <T extends CDriverActions> T pressKey(String locator, String key, Predicate<CDriverActions> postCondition) {
+    return pressKey(locator, key, postCondition, 3, 1000);
   }
 
   /**
-   * Clicks an invisible element and retries until the post-condition is met with custom retry settings.
+   * Presses the key and retries until the post-condition is met with custom retry settings.
    *
    * <p>Example:</p>
    * <pre>{@code
-   * driver.clickInvisible(
-   *     By.xpath("//input[@type='hidden'][@name='action']"),
-   *     3,
-   *     d -> d.getCurrentUrl().contains("success"),
+   * driver.pressKey(
+   *     d -> d.isElementVisible(By.id("loading")),
    *     5,    // retry 5 times
    *     2000  // wait 2 seconds between retries
    * );
    * }</pre>
    *
    * @param <T>               the type of the implementing class for method chaining
-   * @param locator           the locator to find the element to click
-   * @param waitSec           maximum time in seconds to wait for the element
-   * @param postCondition     condition to check after clicking
+   * @param locator           the locator of the element to send the key to
+   * @param key               the key to press
+   * @param postCondition     condition to check after pressing ENTER
    * @param retryTimes        number of retry attempts
    * @param intervalInSeconds interval between retries in seconds
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T clickInvisible(
-      By locator,
-      int waitSec,
-      Predicate<CDriverActions> postCondition,
-      int retryTimes,
-      int intervalInSeconds) {
-    CRetry.retryIfNot(
-        integer -> clickInvisible(locator, waitSec), postCondition, retryTimes, intervalInSeconds);
+  default <T extends CDriverActions> T pressKey(String locator, String key,
+                                                Predicate<CDriverActions> postCondition, int retryTimes, int intervalInSeconds) {
+    CRetry.retryIfNot(integer -> pressKey(locator, key), postCondition, retryTimes, intervalInSeconds);
     return (T) this;
-  }
-
-  /**
-   * Sends keys to the currently focused element repeatedly.
-   *
-   * <p>Example:</p>
-   * <pre>{@code
-   * driver.sendKeys(3, Keys.ARROW_DOWN); // Press down arrow 3 times
-   * }</pre>
-   *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param loopCount  number of times to repeat the key sequence
-   * @param keysToSend the keys to send
-   * @return this instance for method chaining
-   */
-  default <T extends CDriverActions> T sendKeys(int loopCount, CharSequence... keysToSend) {
-    return performActionOnDriver(
-        "Send Keys",
-        webDriver -> {
-          Actions actions = new Actions(webDriver);
-
-          for (int i = 0; i < loopCount; ++i) {
-            actions = actions.sendKeys(keysToSend);
-          }
-
-          actions.perform();
-          return (T) this;
-        });
   }
 
   /**
@@ -805,17 +730,12 @@ public interface CDriverActions extends CDriverWaiter {
    * @param keysToSend the keys to send to the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T sendKeys(
-      By locator, int waitSec, CharSequence... keysToSend) {
+  default <T extends CDriverActions> T sendKeys(String locator, int waitSec, String keysToSend) {
     return waitUntil(
         "Send Keys",
         waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el == null || !el.isDisplayed() || !el.isEnabled()) {
-            return null;
-          }
-          el.sendKeys(keysToSend);
+        engine -> {
+          engine.sendKeys(locator, keysToSend);
           return (T) this;
         });
   }
@@ -832,11 +752,11 @@ public interface CDriverActions extends CDriverWaiter {
    * @param keysToSend the keys to send
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T sendKeys(CharSequence... keysToSend) {
-    return performActionOnDriver(
+  default <T extends CDriverActions> T sendKeys(String keysToSend) {
+    return performActionOnEngine(
         "Send Keys",
-        webDriver -> {
-          new Actions(webDriver).sendKeys(keysToSend).perform();
+        engine -> {
+          engine.sendKeys(keysToSend);
           return (T) this;
         });
   }
@@ -853,10 +773,10 @@ public interface CDriverActions extends CDriverWaiter {
    * @return this instance for method chaining
    */
   default <T extends CDriverActions> T deleteAllCookies() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Delete All Cookies",
-        webDriver -> {
-          webDriver.manage().deleteAllCookies();
+        engine -> {
+          engine.deleteAllCookies();
           return (T) this;
         });
   }
@@ -876,8 +796,9 @@ public interface CDriverActions extends CDriverWaiter {
    * @return the Cookie object, or null if not found
    */
   default Cookie getCookie(String name) {
-    return performActionOnDriver(
-        "Get Cookie", webDriver -> webDriver.manage().getCookieNamed(name));
+    return performActionOnEngine(
+        "Get Cookie",
+        engine -> engine.getCookie(name));
   }
 
   /**
@@ -885,16 +806,16 @@ public interface CDriverActions extends CDriverWaiter {
    *
    * <p>Example:</p>
    * <pre>{@code
-   * Set<Cookie> allCookies = driver.getCookies();
+   * List<Cookie> allCookies = driver.getCookies();
    * allCookies.forEach(cookie ->
    *     System.out.println(cookie.getName() + "=" + cookie.getValue())
    * );
    * }</pre>
    *
-   * @return a Set of all cookies for the current domain
+   * @return a List of all cookies for the current domain
    */
-  default Set<Cookie> getCookies() {
-    return performActionOnDriver("Get Cookies", webDriver -> webDriver.manage().getCookies());
+  default List<Cookie> getCookies() {
+    return performActionOnEngine("Get Cookies", CDriverEngine::getCookies);
   }
 
   /**
@@ -930,16 +851,13 @@ public interface CDriverActions extends CDriverWaiter {
    * @return the Cookie object that was added
    */
   default Cookie addCookie(Cookie cookie) {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Add Cookie",
-        webDriver -> {
-          webDriver.manage().addCookie(cookie);
-          return cookie;
-        });
+        engine -> engine.addCookie(cookie));
   }
 
   /**
-   * Sets the caret color for all input elements on the page.
+   * Sets the caret color for all input elements on the engine.
    * This is useful for improving visibility during automated testing.
    *
    * <p>Example:</p>
@@ -973,9 +891,7 @@ public interface CDriverActions extends CDriverWaiter {
   default <T extends CDriverActions> T setStyleForAll(String xpath, String style, String value) {
     executeScript(
         String.format(
-            "document.querySelectorAll(\"%s\").forEach(function(a) {\n"
-                + "  a.style[\"%s\"]=\"%s\";\n"
-                + "});",
+            "document.querySelectorAll(\"%s\").forEach(function(a) { a.style[\"%s\"]=\"%s\"; });",
             xpath, style, value));
     return (T) this;
   }
@@ -1004,16 +920,10 @@ public interface CDriverActions extends CDriverWaiter {
       title = "Execute JavaScript",
       description = "Executes JavaScript code in the browser context"
   )
-  default <R> R executeScript(
-      @CMcpToolParam(name = "script", description = "The JavaScript code to execute", required = true)
-      String script,
-      @CMcpToolParam(name = "args", description = "Optional arguments to pass to the script", required = false)
-      Object... args) {
-    return performActionOnDriver(
+  default <R> R executeScript(String script, Object... args) {
+    return performActionOnEngine(
         "Execute Script",
-        webDriver -> {
-          return (R) ((JavascriptExecutor) webDriver).executeScript(script, args);
-        });
+        engine -> engine.executeScriptOnDriver(script, args));
   }
 
   /**
@@ -1041,14 +951,13 @@ public interface CDriverActions extends CDriverWaiter {
       description = "Executes JavaScript code on a specific element after waiting for it"
   )
   default <R> R executeScript(
-      @CMcpToolParam(name = "locator", description = "The locator to find the element", required = true)
-      By locator,
-      @CMcpToolParam(name = "waitSec", description = "Maximum time in seconds to wait for the element", required = true)
+      @CMcpToolParam(name = "locator", description = "The locator to find the element")
+      String locator,
+      @CMcpToolParam(name = "waitSec", description = "Maximum time in seconds to wait for the element")
       int waitSec,
-      @CMcpToolParam(name = "script", description = "The JavaScript code to execute (element will be passed as arguments[0])", required = true)
+      @CMcpToolParam(name = "script", description = "The JavaScript code to execute (element will be passed as arguments[0])")
       String script) {
-    WebElement elem = waitUntil("Execute Script", waitSec, webDriver -> webDriver.findElement(locator));
-    return executeScript(script, elem);
+    return waitUntil("Execute Script", waitSec, engine -> engine.executeScript(locator, script));
   }
 
   /**
@@ -1068,9 +977,9 @@ public interface CDriverActions extends CDriverWaiter {
    * @return the result of the async script execution
    */
   default <R> R executeAsyncScript(String script, Object... args) {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Execute Async Script",
-        webDriver -> (R) ((JavascriptExecutor) webDriver).executeAsyncScript(script, args));
+        engine -> engine.executeAsyncScript(script, args));
   }
 
   /**
@@ -1094,17 +1003,11 @@ public interface CDriverActions extends CDriverWaiter {
    * @param script  the asynchronous JavaScript code to execute
    * @return the result of the async script execution
    */
-  default <R> R executeAsyncScript(By locator, int waitSec, String script) {
+  default <R> R executeAsyncScript(String locator, int waitSec, String script, Object... args) {
     return waitUntil(
         "Execute Async Script",
         waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el == null) {
-            return null;
-          }
-          return (R) ((JavascriptExecutor) webDriver).executeAsyncScript(script, el);
-        });
+        engine -> engine.executeAsyncScript(locator, script, args));
   }
 
   /**
@@ -1138,7 +1041,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param locator the locator to find the element to focus
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T focus(final By locator) {
+  default <T extends CDriverActions> T focus(final String locator) {
     return focus(locator, DEFAULT_TIMEOUT);
   }
 
@@ -1155,17 +1058,13 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T focus(final By locator, int waitSec) {
+  default <T extends CDriverActions> T focus(final String locator, int waitSec) {
     waitUntil(
         "Focus",
         waitSec,
-        webDriver -> {
-          WebElement el = webDriver.findElement(locator);
-          if (el == null) {
-            return null;
-          }
-          focus(el);
-          return el;
+        engine -> {
+          engine.focus(locator);
+          return (T) this;
         });
     return (T) this;
   }
@@ -1180,57 +1079,22 @@ public interface CDriverActions extends CDriverWaiter {
    * driver.focus(inputField);
    * }</pre>
    *
-   * @param <T>        the type of the implementing class for method chaining
-   * @param webElement the WebElement to focus
+   * @param <T>           the type of the implementing class for method chaining
+   * @param elementHandle the WebElement to focus
    * @return this instance for method chaining
    */
-  default <T extends CDriverActions> T focus(final WebElement webElement) {
+  default <T extends CDriverActions> T focus(final ElementHandle elementHandle) {
     try {
-      return performActionOnDriver(
+      return performActionOnEngine(
           "Focus",
-          webDriver -> {
-            new Actions(webDriver).moveToElement(webElement).perform();
+          engine -> {
+            elementHandle.focus();
             return (T) this;
           });
     } catch (Throwable t) {
-      executeScript("arguments[0].focus();", webElement);
+      executeScript("arguments[0].focus();", elementHandle);
       return (T) this;
     }
-  }
-
-  /**
-   * Retrieves a WebElement using the default timeout.
-   *
-   * <p>Example:</p>
-   * <pre>{@code
-   * WebElement button = driver.getElement(By.id("submit-btn"));
-   * String buttonText = button.getText();
-   * }</pre>
-   *
-   * @param locator the locator to find the element
-   * @return the WebElement if found
-   */
-  default WebElement getElement(By locator) {
-    return getElement(locator, DEFAULT_TIMEOUT);
-  }
-
-  /**
-   * Retrieves a WebElement with a specified wait time.
-   *
-   * <p>Example:</p>
-   * <pre>{@code
-   * WebElement dynamicContent = driver.getElement(By.className("loaded-content"), 10);
-   * if (dynamicContent.isDisplayed()) {
-   *     System.out.println("Content loaded successfully");
-   * }
-   * }</pre>
-   *
-   * @param locator the locator to find the element
-   * @param waitSec maximum time in seconds to wait for the element
-   * @return the WebElement if found within the timeout
-   */
-  default WebElement getElement(By locator, int waitSec) {
-    return waitUntil("Get Element", waitSec, null, webdriver -> webdriver.findElement(locator));
   }
 
   /**
@@ -1249,25 +1113,12 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return the WebElement that was dragged
    */
-  default WebElement dropTo(final By locator, int xOffset, int yOffset, int waitSec) {
+  default <T extends CDriverActions> T dropTo(final String locator, int xOffset, int yOffset, int waitSec) {
     return waitUntil(
         "Drop To",
         waitSec,
         driver -> {
-          WebElement elem = driver.findElement(locator);
-          if (elem != null) {
-            try {
-              new Actions(driver)
-                  .moveToElement(elem)
-                  .clickAndHold()
-                  .moveByOffset(xOffset, yOffset)
-                  .release()
-                  .build()
-                  .perform();
-            } catch (Throwable t) {
-            }
-            return elem;
-          }
+          driver.dropTo(locator, xOffset, yOffset);
           return null;
         });
   }
@@ -1289,63 +1140,38 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec  maximum time in seconds to wait for the element
    * @return the WebElement that was dragged
    */
-  default WebElement dragAndDropTo(final By locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2, int waitSec) {
+  default <T extends CDriverActions> T dragAndDropTo(final String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2, int waitSec) {
     return waitUntil(
         "Drag And Drop To",
         waitSec,
         driver -> {
-          WebElement elem = driver.findElement(locator);
-          if (elem != null) {
-            try {
-              new Actions(driver)
-                  .moveToElement(elem, xOffset1, yOffset1)
-                  .clickAndHold()
-                  .moveByOffset(xOffset2, yOffset2)
-                  .release()
-                  .build()
-                  .perform();
-            } catch (Throwable t) {
-            }
-            return elem;
-          }
+          driver.dragAndDropTo(locator, xOffset1, yOffset1, xOffset2, yOffset2);
           return null;
         });
   }
 
   /**
-   * Performs a drag and drop operation from one element to another element.
+   * Performs a drag and drop operation from a specific point on an element to another point.
    *
    * <p>Example:</p>
    * <pre>{@code
-   * // Drag from specific point on source element to target element
-   * driver.dragAndDropTo(
-   *     By.id("draggable-item"),
-   *     By.id("drop-zone"),
-   *     5, 5,  // Start from 5px right, 5px down from center of source
-   *     3      // Wait up to 3 seconds
-   * );
+   * // Drag from top-left corner of element (10, 10) and move 200 pixels right, 50 down
+   * driver.dragAndDropTo(By.id("draggable"), 10, 10, 200, 50, 5);
    * }</pre>
    *
-   * @param fromLocator the locator to find the source element
-   * @param toLocator   the locator to find the target element
-   * @param xOffset1    horizontal offset from source element center
-   * @param yOffset1    vertical offset from source element center
-   * @param waitSec     maximum time in seconds to wait for elements
-   * @return the source WebElement that was dragged
+   * @param source   the locator to find the source element to drag
+   * @param target   the locator to find the target element to drag
+   * @param xOffset1 horizontal offset from element center for the start point
+   * @param yOffset1 vertical offset from element center for the start point
+   * @param waitSec  maximum time in seconds to wait for the element
+   * @return the WebElement that was dragged
    */
-  default WebElement dragAndDropTo(final By fromLocator, final By toLocator, int xOffset1, int yOffset1, int waitSec) {
+  default <T extends CDriverActions> T dragAndDropTo(final String source, final String target, int xOffset1, int yOffset1, int waitSec) {
     return waitUntil(
         "Drag And Drop To",
         waitSec,
         driver -> {
-          WebElement elem = driver.findElement(fromLocator);
-          if (elem != null) {
-            new Actions(driver)
-                .moveToElement(elem, xOffset1, yOffset1)
-                .dragAndDrop(elem, driver.findElement(toLocator))
-                .build()
-                .perform();
-          }
+          driver.dragAndDropTo(source, target, xOffset1, yOffset1);
           return null;
         });
   }
@@ -1366,19 +1192,12 @@ public interface CDriverActions extends CDriverWaiter {
    * @param waitSec maximum time in seconds to wait for the element
    * @return the WebElement that was moved to
    */
-  default WebElement moveToElement(final By locator, int xOffset, int yOffset, int waitSec) {
+  default <T extends CDriverActions> T moveToElement(final String locator, int xOffset, int yOffset, int waitSec) {
     return waitUntil(
         "Move To Element",
         waitSec,
         driver -> {
-          WebElement elem = driver.findElement(locator);
-          if (elem != null) {
-            try {
-              new Actions(driver).moveToElement(elem).moveByOffset(xOffset, yOffset).perform();
-            } catch (Throwable t) {
-            }
-            return elem;
-          }
+          driver.moveToElement(locator, xOffset, yOffset);
           return null;
         });
   }

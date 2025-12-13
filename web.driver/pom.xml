@@ -6,8 +6,8 @@
     <artifactId>web.driver</artifactId>
     <packaging>jar</packaging>
 
-    <name>Core Automation Toolset - Web Driver</name>
-    <description>The Web Driver to be used in CATs projects for testing</description>
+    <name>Core Automation Toolset - Web Selenium</name>
+    <description>The Web Selenium to be used in CATs projects for testing</description>
 
     <parent>
         <groupId>org.catools</groupId>
@@ -35,6 +35,16 @@
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
+            <artifactId>common.testng</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.logger</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
             <artifactId>media</artifactId>
             <version>${revision}</version>
         </dependency>
@@ -44,40 +54,12 @@
             <version>${revision}</version>
         </dependency>
         <!-- ######################  /CATS ######################### -->
-        <!-- ######################### Selenium ########################### -->
+        <!-- ######################### Playwright ########################### -->
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-http-jdk-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.assertthat</groupId>
-            <artifactId>selenium-shutterbug</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>${selenium-devtools.artifactId}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-        </dependency>
-        <!-- ######################## /Selenium ########################### -->
+        <!-- ######################### /Playwright ########################### -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -86,17 +68,11 @@
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
-        <!-- ###################### Test Containers ######################### -->
+        <!-- ######################## /Selenium ########################### -->
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-selenium</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- ###################### /Test Containers ######################### -->
+        <!-- ######################## /Selenium ########################### -->
     </dependencies>
 </project>

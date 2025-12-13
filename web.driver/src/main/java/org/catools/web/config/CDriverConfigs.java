@@ -38,58 +38,6 @@ import org.catools.common.hocon.model.CHoconPath;
 public class CDriverConfigs {
 
   /**
-   * Determines whether the web driver should wait for the complete ready state before each action.
-   * 
-   * <p>When enabled, the driver will wait for the document ready state to be "complete" 
-   * before executing any web driver action. This helps ensure that the page is fully loaded 
-   * and ready for interaction.</p>
-   * 
-   * <p><b>Configuration path:</b> {@code catools.web.driver.wait_ready_state_before_action}</p>
-   * 
-   * <p><b>Example usage:</b></p>
-   * <pre>{@code
-   * if (CDriverConfigs.waitCompleteReadyStateBeforeEachAction()) {
-   *     // Wait for document.readyState === "complete" before clicking
-   *     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-   *     wait.until(webDriver -> ((JavascriptExecutor) webDriver)
-   *         .executeScript("return document.readyState").equals("complete"));
-   * }
-   * element.click();
-   * }</pre>
-   * 
-   * @return {@code true} if ready state waiting before actions is enabled, {@code false} otherwise
-   */
-  public static boolean waitCompleteReadyStateBeforeEachAction() {
-    return CHocon.asBoolean(Configs.CATOOLS_WEB_DRIVER_WAIT_READY_STATE_BEFORE_ACTION);
-  }
-
-  /**
-   * Determines whether the web driver should wait for the complete ready state after each action.
-   * 
-   * <p>When enabled, the driver will wait for the document ready state to be "complete" 
-   * after executing any web driver action. This helps ensure that any asynchronous operations 
-   * triggered by the action have completed before proceeding.</p>
-   * 
-   * <p><b>Configuration path:</b> {@code catools.web.driver.wait_ready_state_after_action}</p>
-   * 
-   * <p><b>Example usage:</b></p>
-   * <pre>{@code
-   * element.click();
-   * if (CDriverConfigs.waitCompleteReadyStateAfterEachAction()) {
-   *     // Wait for any AJAX calls or dynamic content loading to complete
-   *     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-   *     wait.until(webDriver -> ((JavascriptExecutor) webDriver)
-   *         .executeScript("return document.readyState").equals("complete"));
-   * }
-   * }</pre>
-   * 
-   * @return {@code true} if ready state waiting after actions is enabled, {@code false} otherwise
-   */
-  public static boolean waitCompleteReadyStateAfterEachAction() {
-    return CHocon.asBoolean(Configs.CATOOLS_WEB_DRIVER_WAIT_READY_STATE_AFTER_ACTION);
-  }
-
-  /**
    * Determines whether performance metrics collection is enabled for the web driver.
    * 
    * <p>When enabled, the driver will collect performance-related metrics such as page load times,
@@ -108,7 +56,7 @@ public class CDriverConfigs {
    *     ChromeOptions options = new ChromeOptions();
    *     options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
    *     
-   *     WebDriver driver = new ChromeDriver(options);
+   *     Page driver = new ChromeDriver(options);
    *     
    *     // Collect performance metrics after navigation
    *     driver.get("https://example.com");
@@ -183,7 +131,7 @@ public class CDriverConfigs {
    * WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("submit")));
    * 
    * // Use with fluent waits
-   * Wait<WebDriver> fluentWait = new FluentWait<>(driver)
+   * Wait<Page> fluentWait = new FluentWait<>(driver)
    *     .withTimeout(Duration.ofSeconds(timeoutSeconds))
    *     .pollingEvery(Duration.ofMillis(500));
    * }</pre>
@@ -197,8 +145,6 @@ public class CDriverConfigs {
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
-    CATOOLS_WEB_DRIVER_WAIT_READY_STATE_BEFORE_ACTION("catools.web.driver.wait_ready_state_before_action"),
-    CATOOLS_WEB_DRIVER_WAIT_READY_STATE_AFTER_ACTION("catools.web.driver.wait_ready_state_after_action"),
     CATOOLS_WEB_DRIVER_COLLECT_PERFORMANCE_METRICS("catools.web.driver.collect_performance_metrics"),
     CATOOLS_WEB_DRIVER_COLLECT_NETWORK_METRICS("catools.web.driver.collect_network_metrics"),
     CATOOLS_WEB_DRIVER_BROWSER_TIMEOUT("catools.web.driver.browser_timeout");

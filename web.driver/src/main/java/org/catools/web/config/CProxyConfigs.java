@@ -1,12 +1,12 @@
 package org.catools.web.config;
 
+import com.microsoft.playwright.options.Proxy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-import org.openqa.selenium.Proxy;
 
 /**
  * Configuration utility class for managing web driver proxy settings.
@@ -34,11 +34,11 @@ public class CProxyConfigs {
    * 
    * @example
    * <pre>{@code
-   * // Check if proxy is enabled before configuring WebDriver
+   * // Check if proxy is enabled before configuring Page
    * if (CProxyConfigs.isEnabled()) {
-   *     WebDriver driver = new ChromeDriver(options.setProxy(CProxyConfigs.getProxy()));
+   *     Page driver = new ChromeDriver(options.setProxy(CProxyConfigs.getProxy()));
    * } else {
-   *     WebDriver driver = new ChromeDriver();
+   *     Page driver = new ChromeDriver();
    * }
    * }</pre>
    * 
@@ -61,7 +61,7 @@ public class CProxyConfigs {
    * <p>The method only sets proxy parameters that are explicitly defined in the
    * configuration. Undefined parameters are left with their default values.</p>
    * 
-   * @return a configured {@link Proxy} object ready to be used with WebDriver
+   * @return a configured {@link Proxy} object ready to be used with Page
    * 
    * @example Basic HTTP proxy configuration:
    * <pre>{@code
@@ -69,7 +69,7 @@ public class CProxyConfigs {
    * Proxy proxy = CProxyConfigs.getProxy();
    * ChromeOptions options = new ChromeOptions();
    * options.setProxy(proxy);
-   * WebDriver driver = new ChromeDriver(options);
+   * Page driver = new ChromeDriver(options);
    * }</pre>
    * 
    * @example Configuration example in application.conf:
@@ -108,45 +108,22 @@ public class CProxyConfigs {
    * @see org.openqa.selenium.Proxy.ProxyType
    */
   public static Proxy getProxy() {
-    Proxy proxy = new Proxy();
-
-    proxy.setAutodetect(CHocon.get(Configs.CATOOLS_WEB_PROXY_AUTO_DETECT).asBoolean(false));
-    proxy.setProxyType(CHocon.get(Configs.CATOOLS_WEB_PROXY_PROXY_TYPE).asEnum(Proxy.ProxyType.class, Proxy.ProxyType.MANUAL));
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_FTP_PROXY)) {
-      proxy.setFtpProxy(CHocon.get(Configs.CATOOLS_WEB_PROXY_FTP_PROXY).asString(null));
-    }
-
+    Proxy proxy = null;
     if (definedAsString(Configs.CATOOLS_WEB_PROXY_HTTP_PROXY)) {
-      proxy.setHttpProxy(CHocon.get(Configs.CATOOLS_WEB_PROXY_HTTP_PROXY).asString(null));
+      proxy = new Proxy(CHocon.asString(Configs.CATOOLS_WEB_PROXY_HTTP_PROXY));
+    } else if (definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_PROXY)) {
+      proxy = new Proxy(CHocon.asString(Configs.CATOOLS_WEB_PROXY_SOCKS_PROXY));
     }
 
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_NO_PROXY)) {
-      proxy.setNoProxy(CHocon.get(Configs.CATOOLS_WEB_PROXY_NO_PROXY).asString(null));
-    }
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_SSL_PROXY)) {
-      proxy.setSslProxy(CHocon.get(Configs.CATOOLS_WEB_PROXY_SSL_PROXY).asString(null));
-    }
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_PROXY)) {
-      proxy.setSocksProxy(CHocon.get(Configs.CATOOLS_WEB_PROXY_SOCKS_PROXY).asString(null));
-    }
-
-    if (definedAsInteger(Configs.CATOOLS_WEB_PROXY_SOCKS_VERSION)) {
-      proxy.setSocksVersion(CHocon.get(Configs.CATOOLS_WEB_PROXY_SOCKS_VERSION).asInteger(null));
-    }
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_USERNAME)) {
-      proxy.setSocksUsername(CHocon.get(Configs.CATOOLS_WEB_PROXY_SOCKS_USERNAME).asString(null));
-    }
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_PASSWORD)) {
-      proxy.setSocksPassword(CHocon.get(Configs.CATOOLS_WEB_PROXY_SOCKS_PASSWORD).asString(null));
-    }
-
-    if (definedAsString(Configs.CATOOLS_WEB_PROXY_PROXY_AUTOCONFIG_URL)) {
-      proxy.setProxyAutoconfigUrl(CHocon.get(Configs.CATOOLS_WEB_PROXY_PROXY_AUTOCONFIG_URL).asString(null));
+    // Playwright Proxy supports server, bypass list, username/password via the Proxy builder
+    if (proxy != null) {
+      if (definedAsString(Configs.CATOOLS_WEB_PROXY_NO_PROXY)) {
+        proxy.setBypass(CHocon.asString(Configs.CATOOLS_WEB_PROXY_NO_PROXY));
+      }
+      if (definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_USERNAME) && definedAsString(Configs.CATOOLS_WEB_PROXY_SOCKS_PASSWORD)) {
+        proxy.setUsername(CHocon.asString(Configs.CATOOLS_WEB_PROXY_SOCKS_USERNAME));
+        proxy.setPassword(CHocon.asString(Configs.CATOOLS_WEB_PROXY_SOCKS_PASSWORD));
+      }
     }
 
     return proxy;

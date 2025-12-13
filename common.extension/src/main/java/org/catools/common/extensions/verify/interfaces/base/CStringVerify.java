@@ -168,7 +168,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -178,7 +178,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -190,7 +190,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -200,7 +200,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#containsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -232,7 +232,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -242,7 +242,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -274,7 +274,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -284,7 +284,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -296,7 +296,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -306,7 +306,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to any expected value, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -360,7 +360,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -370,7 +370,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -2077,7 +2077,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -2089,7 +2089,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -2121,7 +2121,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -2133,7 +2133,7 @@ public interface CStringVerify extends CBaseStringExtension, CObjectVerify<Strin
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}

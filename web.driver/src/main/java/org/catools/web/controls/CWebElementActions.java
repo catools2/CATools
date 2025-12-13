@@ -1,6 +1,5 @@
 package org.catools.web.controls;
 
-import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.date.CDate;
@@ -9,23 +8,16 @@ import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
 import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CRetry;
-import org.catools.common.utils.CSleeper;
-import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.web.config.CBrowserConfigs;
 import org.catools.web.config.CGridConfigs;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.utils.CGridUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Quotes;
 
-import java.awt.*;
 import java.io.File;
 import java.util.Date;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
@@ -198,27 +190,27 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * Drags the element to another target element.
    * Uses default timeout for waiting until element is present.
    *
-   * @param target the By locator of the target element
+   * @param target the String locator of the target element
    * @example <pre>
    * // Drag item to a drop zone
-   * draggableItem.dragAndDropTo(By.id("dropZone"));
+   * draggableItem.dragAndDropTo(String.id("dropZone"));
    * </pre>
    */
-  default void dragAndDropTo(By target) {
+  default void dragAndDropTo(String target) {
     dragAndDropTo(target, 0);
   }
 
   /**
    * Drags the element to another target element with custom wait time.
    *
-   * @param target  the By locator of the target element
+   * @param target  the String locator of the target element
    * @param waitSec maximum time in seconds to wait for element to be present
    * @example <pre>
    * // Drag to target element with 20 second timeout
-   * fileItem.dragAndDropTo(By.className("upload-area"), 20);
+   * fileItem.dragAndDropTo(String.className("upload-area"), 20);
    * </pre>
    */
-  default void dragAndDropTo(By target, int waitSec) {
+  default void dragAndDropTo(String target, int waitSec) {
     dragAndDropTo(target, 0, 0, waitSec);
   }
 
@@ -226,31 +218,31 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * Drags the element from a specific offset to a target element.
    * Uses default timeout for waiting until element is present.
    *
-   * @param target   the By locator of the target element
+   * @param target   the String locator of the target element
    * @param xOffset1 source horizontal offset in pixels from element center
    * @param yOffset1 source vertical offset in pixels from element center
    * @example <pre>
    * // Drag from specific point on element to target
-   * resizeHandle.dragAndDropTo(By.id("container"), 10, 10);
+   * resizeHandle.dragAndDropTo(String.id("container"), 10, 10);
    * </pre>
    */
-  default void dragAndDropTo(By target, int xOffset1, int yOffset1) {
+  default void dragAndDropTo(String target, int xOffset1, int yOffset1) {
     dragAndDropTo(target, xOffset1, yOffset1, DEFAULT_TIMEOUT);
   }
 
   /**
    * Drags the element from a specific offset to a target element with custom wait time.
    *
-   * @param target   the By locator of the target element
+   * @param target   the String locator of the target element
    * @param xOffset1 source horizontal offset in pixels from element center
    * @param yOffset1 source vertical offset in pixels from element center
    * @param waitSec  maximum time in seconds to wait for element to be present
    * @example <pre>
    * // Drag from offset to target with timeout
-   * menuItem.dragAndDropTo(By.className("menu-container"), 5, 0, 10);
+   * menuItem.dragAndDropTo(String.className("menu-container"), 5, 0, 10);
    * </pre>
    */
-  default void dragAndDropTo(By target, int xOffset1, int yOffset1, int waitSec) {
+  default void dragAndDropTo(String target, int xOffset1, int yOffset1, int waitSec) {
     isPresent(waitSec);
     getDriver().dragAndDropTo(getLocator(), target, xOffset1, yOffset1, 0);
   }
@@ -293,33 +285,18 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   /**
-   * Gets the location (coordinates) of the element on the page.
-   *
-   * @return Point object containing x and y coordinates
-   * @example <pre>
-   * // Get element position
-   * Point location = button.getLocation();
-   * System.out.println("Element is at: " + location.x + ", " + location.y);
-   * </pre>
-   */
-  default Point getLocation() {
-    org.openqa.selenium.Point p = waitUntil("Get Position", getWaitSec(), WebElement::getLocation);
-    return new Point(p.x, p.y);
-  }
-
-  /**
    * Sends keys to the element (types text or special keys).
    *
-   * @param keys the keys to send (text or special keys like Keys.ENTER)
+   * @param keys the keys to send (text or special keys like "Enter")
    * @example <pre>
    * // Type text in input field
    * inputField.sendKeys("Hello World");
    *
    * // Send special keys
-   * inputField.sendKeys(Keys.CTRL, "a", Keys.DELETE);
+   * inputField.sendKeys("Ctrl", "a", "Delete");
    *
    * // Send combination
-   * inputField.sendKeys("test@example.com", Keys.TAB);
+   * inputField.sendKeys("test@example.com", "Tab");
    * </pre>
    */
   @CMcpTool(
@@ -329,8 +306,29 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       description = "Sends keys to the web element (types text or special keys)"
   )
   default void sendKeys(
-      @CMcpToolParam(name = "keys", description = "The keys to send to the element", required = true) CharSequence... keys) {
+      @CMcpToolParam(name = "keys", description = "The keys to send to the element") String keys) {
     getDriver().sendKeys(getLocator(), getWaitSec(), keys);
+  }
+
+  /**
+   * Press Special keys to the element (types text or special keys).
+   *
+   * @param key the keys to send special keys like "Enter"
+   * @example <pre>
+   * // Type text in input field
+   * inputField.pressKey("Enter");
+   *
+   * </pre>
+   */
+  @CMcpTool(
+      groups = {"web", "web_element"},
+      name = "element_press_key",
+      title = "Press Special Key On Element",
+      description = "Press special key on the web element (i.e. Enter, Tab, etc.)"
+  )
+  default void pressKey(
+      @CMcpToolParam(name = "key", description = "The keys to send to the element") String key) {
+    getDriver().pressKey(getLocator(), key, getWaitSec());
   }
 
   /**
@@ -397,15 +395,6 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
 
   /**
    * Scrolls the element into view within the browser window.
-   *
-   * @param scrollDown true to scroll down to bring element into view, false to scroll up
-   * @example <pre>
-   * // Scroll down to bring footer element into view
-   * footerElement.scrollIntoView(true);
-   *
-   * // Scroll up to bring header element into view
-   * headerElement.scrollIntoView(false);
-   * </pre>
    */
   @CMcpTool(
       groups = {"web", "web_element"},
@@ -413,23 +402,21 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Scroll Element Into View",
       description = "Scrolls the element into view within the browser window"
   )
-  default void scrollIntoView(
-      @CMcpToolParam(name = "scrollDown", description = "True to scroll down, false to scroll up", required = true) boolean scrollDown) {
-    scrollIntoView(scrollDown, getWaitSec());
+  default void scrollIntoView() {
+    scrollIntoView(getWaitSec());
   }
 
   /**
    * Scrolls the element into view within the browser window with custom timeout.
    *
-   * @param scrollDown true to scroll down to bring element into view, false to scroll up
-   * @param waitSec    maximum time in seconds to wait for element to be present
+   * @param waitSec maximum time in seconds to wait for element to be present
    * @example <pre>
    * // Scroll with custom timeout
    * lazyLoadedElement.scrollIntoView(true, 30);
    * </pre>
    */
-  default void scrollIntoView(boolean scrollDown, int waitSec) {
-    getDriver().scrollIntoView(getLocator(), scrollDown, waitSec);
+  default void scrollIntoView(int waitSec) {
+    getDriver().scrollIntoView(getLocator(), waitSec);
   }
 
   /**
@@ -485,39 +472,6 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   /**
-   * Sets a CSS style property on the element using default timeout.
-   *
-   * @param style the CSS style property name
-   * @param color the value to set for the style property
-   * @example <pre>
-   * // Change background color
-   * element.setStyle("backgroundColor", "red");
-   *
-   * // Change border
-   * element.setStyle("border", "2px solid blue");
-   * </pre>
-   */
-  default void setStyle(String style, String color) {
-    setStyle(style, color, getWaitSec());
-  }
-
-  /**
-   * Sets a CSS style property on the element with custom timeout.
-   *
-   * @param style   the CSS style property name
-   * @param color   the value to set for the style property
-   * @param waitSec maximum time in seconds to wait for element to be present
-   * @example <pre>
-   * // Change display property with custom timeout
-   * hiddenElement.setStyle("display", "block", 15);
-   * </pre>
-   */
-  default void setStyle(String style, String color, int waitSec) {
-    isPresent(waitSec);
-    executeScript(String.format("arguments[0][%s][%s]=%s;", Quotes.escape("style"), Quotes.escape(style), Quotes.escape(color)));
-  }
-
-  /**
    * Sets an attribute value on the element using JavaScript using default timeout.
    *
    * @param attributeName the name of the attribute to set
@@ -547,7 +501,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    */
   default void setAttribute(String attributeName, String value, int waitSec) {
     isPresent(waitSec);
-    executeScript(String.format("arguments[0][%s]=%s;", Quotes.escape(attributeName), Quotes.escape(value)));
+    executeScript("arguments[0][\"%s\"]=\"%s\";".formatted(attributeName, value));
   }
 
   /**
@@ -578,7 +532,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    */
   default void removeAttribute(String attributeName, int waitSec) {
     isPresent(waitSec);
-    executeScript(String.format("arguments[0].removeAttribute(%s);", Quotes.escape(attributeName)));
+    executeScript("arguments[0].removeAttribute(\"%s\");".formatted(attributeName));
   }
 
   /**
@@ -641,45 +595,19 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void select(int waitSec) {
-    waitUntil("Select", waitSec, webElement -> {
-      if (!webElement.isSelected()) {
-        _click(false, webElement);
-      }
-      return true;
-    });
+    getDriver()
+        .waitUntil(
+            "Select",
+            waitSec,
+            engine -> {
+              // Check if already selected, if not, click to select
+              if (!engine.isElementSelected(getLocator())) {
+                engine.click(getLocator());
+              }
+              return true;
+            });
   }
 
-  /**
-   * Selects the element using JavaScript (for invisible elements) if not already selected.
-   * Uses default timeout.
-   *
-   * @example <pre>
-   * // Select a hidden checkbox
-   * hiddenCheckbox.selectInvisible();
-   * </pre>
-   */
-  default void selectInvisible() {
-    selectInvisible(getWaitSec());
-  }
-
-  /**
-   * Selects the element using JavaScript (for invisible elements) if not already selected.
-   * Uses custom timeout.
-   *
-   * @param waitSec maximum time in seconds to wait for element to be present
-   * @example <pre>
-   * // Select invisible element with timeout
-   * hiddenRadioButton.selectInvisible(10);
-   * </pre>
-   */
-  default void selectInvisible(int waitSec) {
-    waitUntil("Select", waitSec, webElement -> {
-      if (!webElement.isSelected()) {
-        _click(true, webElement);
-      }
-      return true;
-    });
-  }
 
   /**
    * Deselects the element (for checkboxes) if currently selected.
@@ -705,44 +633,17 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void deselect(int waitSec) {
-    waitUntil("Deselect", waitSec, webElement -> {
-      if (webElement.isSelected()) {
-        _click(false, webElement);
-      }
-      return true;
-    });
-  }
-
-  /**
-   * Deselects the element using JavaScript (for invisible elements) if currently selected.
-   * Uses default timeout.
-   *
-   * @example <pre>
-   * // Deselect a hidden checkbox
-   * hiddenOptionCheckbox.deselectInvisible();
-   * </pre>
-   */
-  default void deselectInvisible() {
-    deselectInvisible(getWaitSec());
-  }
-
-  /**
-   * Deselects the element using JavaScript (for invisible elements) if currently selected.
-   * Uses custom timeout.
-   *
-   * @param waitSec maximum time in seconds to wait for element to be present
-   * @example <pre>
-   * // Deselect invisible element with timeout
-   * hiddenFeatureCheckbox.deselectInvisible(12);
-   * </pre>
-   */
-  default void deselectInvisible(int waitSec) {
-    waitUntil("Deselect", waitSec, webElement -> {
-      if (webElement.isSelected()) {
-        _click(true, webElement);
-      }
-      return true;
-    });
+    getDriver()
+        .waitUntil(
+            "Deselect",
+            waitSec,
+            engine -> {
+              // Check if already selected, if so, click to deselect
+              if (engine.isElementSelected(getLocator())) {
+                engine.click(getLocator());
+              }
+              return true;
+            });
   }
 
   /**
@@ -778,10 +679,14 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void click(int waitSec) {
-    waitUntil("Click", waitSec, webElement -> {
-      _click(false, webElement);
-      return true;
-    });
+    getDriver()
+        .waitUntil(
+            "Click",
+            waitSec,
+            engine -> {
+              engine.click(getLocator());
+              return true;
+            });
   }
 
   /**
@@ -797,7 +702,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    *
    * // Click and wait for element to appear
    * Boolean elementVisible = submitButton.click(driver ->
-   *     driver.$(By.id("success-message")).isDisplayed());
+   *     driver.$(String.id("success-message")).isDisplayed());
    * </pre>
    */
   default <R> R click(com.google.common.base.Function<DR, R> postCondition) {
@@ -815,81 +720,16 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @example <pre>
    * // Click with custom retry settings
    * Boolean success = unreliableButton.click(5, 1000, driver ->
-   *     driver.$(By.id("result")).getText().equals("Success"));
+   *     driver.$(String.id("result")).getText().equals("Success"));
    * </pre>
    */
-  default <R> R click(int retryCount, int interval, com.google.common.base.Function<DR, R> postCondition) {
+  default <R> R click(int retryCount, int interval, Function<DR, R> postCondition) {
     return CRetry.retry(idx -> {
       click();
       return postCondition.apply(getDriver());
     }, retryCount, interval);
   }
 
-  /**
-   * Clicks on the element using JavaScript (for invisible or overlapped elements).
-   * Uses default timeout.
-   *
-   * @example <pre>
-   * // Click an invisible or overlapped element
-   * hiddenButton.clickInvisible();
-   *
-   * // Click element that's behind an overlay
-   * overlappedLink.clickInvisible();
-   * </pre>
-   */
-  default void clickInvisible() {
-    clickInvisible(getWaitSec());
-  }
-
-  /**
-   * Clicks on the element using JavaScript with custom timeout.
-   *
-   * @param waitSec maximum time in seconds to wait for element to be present
-   * @example <pre>
-   * // Click invisible element with timeout
-   * hiddenMenuOption.clickInvisible(15);
-   * </pre>
-   */
-  default void clickInvisible(int waitSec) {
-    getDriver().clickInvisible(getLocator(), waitSec);
-  }
-
-  /**
-   * Clicks invisibly on the element and waits for a post-condition to be satisfied.
-   *
-   * @param <R>           the return type of the post-condition function
-   * @param postCondition function to verify after clicking
-   * @return the result of the post-condition function
-   * @example <pre>
-   * // Click invisible element and verify result
-   * String message = hiddenTrigger.clickInvisible(driver ->
-   *     driver.$(By.id("status")).getText());
-   * </pre>
-   */
-  default <R> R clickInvisible(com.google.common.base.Function<DR, R> postCondition) {
-    return clickInvisible(2, 2000, postCondition);
-  }
-
-  /**
-   * Clicks invisibly on the element and waits for a post-condition with custom retry settings.
-   *
-   * @param <R>           the return type of the post-condition function
-   * @param retryCount    number of times to retry the click if post-condition fails
-   * @param interval      time in milliseconds between retries
-   * @param postCondition function to verify after clicking
-   * @return the result of the post-condition function
-   * @example <pre>
-   * // Click invisible element with custom retry
-   * Boolean loaded = hiddenRefreshButton.clickInvisible(3, 2000, driver ->
-   *     driver.$(By.id("content")).isDisplayed());
-   * </pre>
-   */
-  default <R> R clickInvisible(int retryCount, int interval, com.google.common.base.Function<DR, R> postCondition) {
-    return CRetry.retry(idx -> {
-      clickInvisible();
-      return postCondition.apply(getDriver());
-    }, retryCount, interval);
-  }
 
   /**
    * Opens the URL specified in the element's href attribute in the current tab.
@@ -943,7 +783,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @example <pre>
    * // Navigate with retry logic
    * Boolean pageLoaded = slowLink.openHref(3, 5000, driver ->
-   *     driver.$(By.id("main-content")).isDisplayed());
+   *     driver.$(String.id("main-content")).isDisplayed());
    * </pre>
    */
   default <R> R openHref(int retryCount, int interval, com.google.common.base.Function<DR, R> postCondition) {
@@ -956,39 +796,23 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   // Download File
 
   /**
-   * Downloads a file by clicking the element and waits for the download to complete.
-   *
-   * @param filename the expected filename of the downloaded file
-   * @param renameTo the new name for the downloaded file
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
-   * // Download a PDF report
-   * CFile report = downloadButton.downloadFile("report.pdf", "monthly-report.pdf");
-   * System.out.println("File downloaded to: " + report.getAbsolutePath());
-   * </pre>
-   */
-  default CFile downloadFile(String filename, String renameTo) {
-    return downloadFile(getWaitSec(), filename, renameTo, false);
-  }
-
-  /**
-   * Downloads a file with custom download wait time.
+   * Downloads a file and handles expected alert dialog.
    *
    * @param downloadWait time in seconds to wait for download to complete
    * @param filename     the expected filename of the downloaded file
    * @param renameTo     the new name for the downloaded file
    * @return CFile object representing the downloaded and renamed file
    * @example <pre>
-   * // Download with extended wait time for large files
-   * CFile largeFile = downloadLink.downloadFile(120, "large-dataset.zip", "dataset.zip");
+   * // Download file that shows confirmation alert
+   * CFile backup = exportButton.downloadFile(45, "backup.sql", "database-backup.sql", true);
    * </pre>
    */
   default CFile downloadFile(int downloadWait, String filename, String renameTo) {
-    return downloadFile(downloadWait, filename, renameTo, false);
+    return downloadFile(getWaitSec(), downloadWait, filename, renameTo);
   }
 
   /**
-   * Downloads a file with custom click and download wait times.
+   * Downloads a file with all custom settings including alert handling.
    *
    * @param clickWait    time in seconds to wait for element to be clickable
    * @param downloadWait time in seconds to wait for download to complete
@@ -996,50 +820,12 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @param renameTo     the new name for the downloaded file
    * @return CFile object representing the downloaded and renamed file
    * @example <pre>
-   * // Download with custom click and download timeouts
-   * CFile document = slowButton.downloadFile(30, 60, "document.docx", "final-document.docx");
-   * </pre>
-   */
-  default CFile downloadFile(int clickWait, int downloadWait, String filename, String renameTo) {
-    return downloadFile(clickWait, downloadWait, filename, renameTo, false);
-  }
-
-  /**
-   * Downloads a file and handles expected alert dialog.
-   *
-   * @param downloadWait  time in seconds to wait for download to complete
-   * @param filename      the expected filename of the downloaded file
-   * @param renameTo      the new name for the downloaded file
-   * @param expectedAlert true if an alert dialog is expected after clicking
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
-   * // Download file that shows confirmation alert
-   * CFile backup = exportButton.downloadFile(45, "backup.sql", "database-backup.sql", true);
-   * </pre>
-   */
-  default CFile downloadFile(int downloadWait, String filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
-  }
-
-  /**
-   * Downloads a file with all custom settings including alert handling.
-   *
-   * @param clickWait     time in seconds to wait for element to be clickable
-   * @param downloadWait  time in seconds to wait for download to complete
-   * @param filename      the expected filename of the downloaded file
-   * @param renameTo      the new name for the downloaded file
-   * @param expectedAlert true if an alert dialog is expected after clicking
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
    * // Full control over download process
    * CFile invoice = downloadInvoice.downloadFile(10, 90, "invoice.pdf", "invoice-2023.pdf", true);
    * </pre>
    */
-  default CFile downloadFile(int clickWait, int downloadWait, String filename, String renameTo, boolean expectedAlert) {
+  default CFile downloadFile(int clickWait, int downloadWait, String filename, String renameTo) {
     click(clickWait);
-    if (expectedAlert) {
-      getDriver().getAlert().accept();
-    }
     CFile downloadFolder = CBrowserConfigs.getDownloadFolder(getDriver().getSessionId());
     CFile downloadedFile = new CFile(downloadFolder, filename);
     downloadedFile.verifyExists(downloadWait, 500, "File downloaded! file:" + downloadedFile);
@@ -1047,63 +833,11 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
   }
 
   /**
-   * Downloads a file using pattern matching for the filename.
-   *
-   * @param filename regex pattern to match the downloaded filename
-   * @param renameTo the new name for the downloaded file
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
-   * // Download file with dynamic name using pattern
-   * Pattern reportPattern = Pattern.compile("report_\\d{8}\\.xlsx");
-   * CFile dailyReport = generateReportButton.downloadFile(reportPattern, "daily-report.xlsx");
-   * </pre>
-   */
-  default CFile downloadFile(Pattern filename, String renameTo) {
-    return downloadFile(getWaitSec(), filename, renameTo, false);
-  }
-
-  /**
-   * Downloads a file using pattern matching with custom download wait time.
-   *
-   * @param downloadWait time in seconds to wait for download to complete
-   * @param filename     regex pattern to match the downloaded filename
-   * @param renameTo     the new name for the downloaded file
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
-   * // Download with pattern and extended wait
-   * Pattern logPattern = Pattern.compile("application_\\d+\\.log");
-   * CFile logFile = exportLogsButton.downloadFile(180, logPattern, "app-logs.log");
-   * </pre>
-   */
-  default CFile downloadFile(int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(downloadWait, filename, renameTo, false);
-  }
-
-  /**
-   * Downloads a file using pattern matching with custom click and download wait times.
-   *
-   * @param clickWait    time in seconds to wait for element to be clickable
-   * @param downloadWait time in seconds to wait for download to complete
-   * @param filename     regex pattern to match the downloaded filename
-   * @param renameTo     the new name for the downloaded file
-   * @return CFile object representing the downloaded and renamed file
-   * @example <pre>
-   * // Download with pattern and custom timeouts
-   * Pattern csvPattern = Pattern.compile("data_export_\\d{4}-\\d{2}-\\d{2}\\.csv");
-   * CFile csvFile = slowExportButton.downloadFile(20, 120, csvPattern, "export.csv");
-   * </pre>
-   */
-  default CFile downloadFile(int clickWait, int downloadWait, Pattern filename, String renameTo) {
-    return downloadFile(clickWait, downloadWait, filename, renameTo, false);
-  }
-
-  /**
    * Downloads a file using pattern matching and handles expected alert.
    *
-   * @param downloadWait  time in seconds to wait for download to complete
-   * @param filename      regex pattern to match the downloaded filename
-   * @param renameTo      the new name for the downloaded file
-   * @param expectedAlert true if an alert dialog is expected after clicking
+   * @param downloadWait time in seconds to wait for download to complete
+   * @param filename     regex pattern to match the downloaded filename
+   * @param renameTo     the new name for the downloaded file
    * @return CFile object representing the downloaded and renamed file
    * @example <pre>
    * // Download with pattern and alert handling
@@ -1111,18 +845,17 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * CFile config = backupButton.downloadFile(60, jsonPattern, "config-backup.json", true);
    * </pre>
    */
-  default CFile downloadFile(int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
-    return downloadFile(getWaitSec(), downloadWait, filename, renameTo, expectedAlert);
+  default CFile downloadFile(int downloadWait, Pattern filename, String renameTo) {
+    return downloadFile(getWaitSec(), downloadWait, filename, renameTo);
   }
 
   /**
    * Downloads a file using pattern matching with full control over all settings.
    *
-   * @param clickWait     time in seconds to wait for element to be clickable
-   * @param downloadWait  time in seconds to wait for download to complete
-   * @param filename      regex pattern to match the downloaded filename
-   * @param renameTo      the new name for the downloaded file
-   * @param expectedAlert true if an alert dialog is expected after clicking
+   * @param clickWait    time in seconds to wait for element to be clickable
+   * @param downloadWait time in seconds to wait for download to complete
+   * @param filename     regex pattern to match the downloaded filename
+   * @param renameTo     the new name for the downloaded file
    * @return CFile object representing the downloaded and renamed file
    * @example <pre>
    * // Full control download with pattern matching
@@ -1130,11 +863,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * CFile xmlReport = complexDownloadButton.downloadFile(15, 300, xmlPattern, "final-report.xml", true);
    * </pre>
    */
-  default CFile downloadFile(int clickWait, int downloadWait, Pattern filename, String renameTo, boolean expectedAlert) {
+  default CFile downloadFile(int clickWait, int downloadWait, Pattern filename, String renameTo) {
     click(clickWait);
-    if (expectedAlert) {
-      getDriver().getAlert().accept();
-    }
     CFile downloadFolder = CBrowserConfigs.getDownloadFolder(getDriver().getSessionId());
     File downloadedFile = CRetry.retryIfFalse(idx -> new CList<>(downloadFolder.listFiles()).getFirstOrNull(file -> filename.matcher(file.getName()).matches()), downloadWait * 2, 500);
     CVerify.Bool.isTrue(downloadedFile.exists(), "File downloaded properly!");
@@ -1173,7 +903,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    */
   default void uploadFile(String filePath) {
     if (!CGridConfigs.isUseLocalFileDetectorInOn()) {
-      String fullFileName = getDriver().performActionOnDriver("Copy File To Node", webDriver -> CGridUtil.copyFileToNode(webDriver.getSessionId(), new File(filePath)));
+      String fullFileName = getDriver().performActionOnEngine("Copy File To Node", page -> CGridUtil.copyFileToNode(java.lang.Integer.toHexString(System.identityHashCode(page)), new File(filePath)));
       sendKeys(fullFileName);
     } else {
       sendKeys(filePath);
@@ -1281,10 +1011,14 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void setText(String text, int waitSec) {
-    waitUntil("Set Text", waitSec, el -> {
-      el.sendKeys(getClearKeys(), text);
-      return true;
-    });
+    getDriver()
+        .waitUntil(
+            "Set Text",
+            waitSec,
+            engine -> {
+              engine.setText(getLocator(), text);
+              return true;
+            });
   }
 
   /**
@@ -1315,7 +1049,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void setTextAndEnter(String text, int waitSec) {
-    setTextAnd(text, Keys.ENTER, waitSec);
+    setTextAnd(text, "Enter", waitSec);
   }
 
   /**
@@ -1347,7 +1081,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void setTextAndTab(String text, int waitSec) {
-    setTextAnd(text, Keys.TAB, waitSec);
+    setTextAnd(text, "Tab", waitSec);
   }
 
   /**
@@ -1357,13 +1091,13 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @param keys the key to press after entering text
    * @example <pre>
    * // Set text and press Escape key
-   * editField.setTextAnd("cancelled text", Keys.ESCAPE);
+   * editField.setTextAnd("cancelled text", "Escape");
    *
    * // Set text and press F1 for help
-   * commandField.setTextAnd("help command", Keys.F1);
+   * commandField.setTextAnd("help command", "F1");
    * </pre>
    */
-  default void setTextAnd(String text, Keys keys) {
+  default void setTextAnd(String text, String keys) {
     setTextAnd(text, keys, getWaitSec());
   }
 
@@ -1371,18 +1105,23 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * Sets text in an input field and presses a specified key with custom timeout.
    *
    * @param text    the text to enter
-   * @param keys    the key to press after entering text
+   * @param key     the key to press after entering text
    * @param waitSec maximum time in seconds to wait for element to be present
    * @example <pre>
    * // Set text and press custom key with timeout
-   * specialField.setTextAnd("special input", Keys.F5, 10);
+   * specialField.setTextAnd("special input", "F5", 10);
    * </pre>
    */
-  default void setTextAnd(String text, Keys keys, int waitSec) {
-    waitUntil("Set Text And " + keys.name(), waitSec, el -> {
-      el.sendKeys(getClearKeys(), text, keys);
-      return true;
-    });
+  default void setTextAnd(String text, String key, int waitSec) {
+    getDriver()
+        .waitUntil(
+            "Set Text And " + key,
+            waitSec,
+            engine -> {
+              engine.setText(getLocator(), text);
+              engine.press(getLocator(), key);
+              return true;
+            });
   }
 
   /**
@@ -1479,7 +1218,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    */
   default void setValueAndEnter(String text, int waitSec) {
     setValue(text, waitSec);
-    sendKeys(Keys.ENTER);
+    sendKeys("Enter");
   }
 
   /**
@@ -1509,7 +1248,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    */
   default void setValueAndTab(String text, int waitSec) {
     setValue(text, waitSec);
-    sendKeys(Keys.TAB);
+    sendKeys("Tab");
   }
 
   /**
@@ -1538,10 +1277,14 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void clear(int waitSec) {
-    waitUntil("Clear", waitSec, el -> {
-      el.sendKeys(getClearKeys());
-      return true;
-    });
+    getDriver()
+        .waitUntil(
+            "Clear",
+            waitSec,
+            engine -> {
+              engine.clearElement(getLocator());
+              return true;
+            });
   }
 
   /**
@@ -1596,7 +1339,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       description = "Types text character by character in the web element input field"
   )
   default void type(
-      @CMcpToolParam(name = "text", description = "The text to type", required = true) String text) {
+      @CMcpToolParam(name = "text", description = "The text to type") String text) {
     type(text, getWaitSec());
   }
 
@@ -1644,17 +1387,15 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void type(String text, int waitSec, long intervalInMilliSeconds) {
-    waitUntil("Type", waitSec, el -> {
-      el.sendKeys(getClearKeys());
-
-      if (intervalInMilliSeconds < 10) {
-        el.sendKeys(StringUtils.defaultString(text).split(CStringUtil.EMPTY));
-      } else {
-        for (String c : StringUtils.defaultString(text).split(CStringUtil.EMPTY)) {
-          el.sendKeys(c);
-          CSleeper.sleepTight(intervalInMilliSeconds);
-        }
-      }
+    waitUntil("Type", waitSec, element -> {
+      // Framework-specific implementation will handle typing with delay
+      // Playwright: element.pressSequentially(text, options)
+      // Selenium: manual character-by-character sendKeys with Thread.sleep
+      // For now, delegate to fillElement as a simple fallback
+      getDriver().performActionOnEngine("Type", engine -> {
+        engine.sendKeys(getLocator(), text, intervalInMilliSeconds);
+        return true;
+      });
       return true;
     });
   }
@@ -1714,7 +1455,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void typeAndTab(String text, int waitSec, long intervalInMilliSeconds) {
-    typeAnd(text, Keys.TAB, waitSec, intervalInMilliSeconds);
+    typeAnd(text, "Tab", waitSec, intervalInMilliSeconds);
   }
 
   /**
@@ -1774,7 +1515,7 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * </pre>
    */
   default void typeAndEnter(String text, int waitSec, long intervalInMilliSeconds) {
-    typeAnd(text, Keys.ENTER, waitSec, intervalInMilliSeconds);
+    typeAnd(text, "Enter", waitSec, intervalInMilliSeconds);
   }
 
   /**
@@ -1784,13 +1525,13 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @param keys the key to press after typing
    * @example <pre>
    * // Type text and press Escape
-   * editField.typeAnd("cancelled text", Keys.ESCAPE);
+   * editField.typeAnd("cancelled text", "Escape");
    *
    * // Type text and press F1 for help
-   * helpField.typeAnd("help topic", Keys.F1);
+   * helpField.typeAnd("help topic", "F1");
    * </pre>
    */
-  default void typeAnd(String text, Keys keys) {
+  default void typeAnd(String text, String keys) {
     typeAnd(text, keys, getWaitSec());
   }
 
@@ -1798,15 +1539,14 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * Types text character by character and presses a specified key with custom timeout.
    *
    * @param text    the text to type
-   * @param keys    the key to press after typing
    * @param waitSec maximum time in seconds to wait for element to be present
    * @example <pre>
    * // Type and press custom key with timeout
-   * specialField.typeAnd("special input", Keys.F5, 12);
+   * specialField.typeAnd("special input", "F5", 12);
    * </pre>
    */
-  default void typeAnd(String text, Keys keys, int waitSec) {
-    typeAnd(text, keys, waitSec, 0L);
+  default void typeAnd(String text, String key, int waitSec) {
+    typeAnd(text, key, waitSec, 0L);
   }
 
   /**
@@ -1817,10 +1557,10 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * @param intervalInMilliSeconds delay in milliseconds between each character
    * @example <pre>
    * // Type slowly and press custom key
-   * scriptField.typeAnd("console.log('test');", Keys.F12, 50);
+   * scriptField.typeAnd("console.log('test');", "F12", 50);
    * </pre>
    */
-  default void typeAnd(String text, Keys keys, long intervalInMilliSeconds) {
+  default void typeAnd(String text, String keys, long intervalInMilliSeconds) {
     typeAnd(text, keys, getWaitSec(), intervalInMilliSeconds);
   }
 
@@ -1829,43 +1569,27 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * This is the most comprehensive typing method with full control over all parameters.
    *
    * @param text                   the text to type
-   * @param keys                   the key to press after typing
+   * @param key                    the key to press after typing
    * @param waitSec                maximum time in seconds to wait for element to be present
    * @param intervalInMilliSeconds delay in milliseconds between each character
    * @example <pre>
    * // Full control typing with custom key
-   * complexField.typeAnd("complex data entry", Keys.F10, 20, 100);
+   * complexField.typeAnd("complex data entry", "F10", 20, 100);
    *
    * // Type code slowly and press compile key
-   * codeEditor.typeAnd("function test() { return true; }", Keys.F9, 15, 25);
+   * codeEditor.typeAnd("function test() { return true; }", "F9", "15", "25");
    * </pre>
    */
-  default void typeAnd(String text, Keys keys, int waitSec, long intervalInMilliSeconds) {
-    type(text, waitSec, intervalInMilliSeconds);
-    getDriver().sendKeys(keys);
-  }
-
-  private void _click(boolean useJS, WebElement webElement) {
-    if (useJS) {
-      _clickWithJS(webElement);
-    } else {
-      try {
-        webElement.click();
-      } catch (WebDriverException t) {
-        _clickWithJS(webElement);
-      }
-    }
-  }
-
-  private void _clickWithJS(WebElement webElement) {
-    getDriver().executeScript("arguments[0].click();", webElement);
-  }
-
-
-  private String getClearKeys() {
-    if (getDriver().getPlatform().isMac())
-      return Keys.chord(Keys.COMMAND, "a", Keys.DELETE);
-
-    return Keys.chord(Keys.CONTROL, "a", Keys.DELETE);
+  default void typeAnd(String text, String key, int waitSec, long intervalInMilliSeconds) {
+    waitUntil("Type And " + key, waitSec, element -> {
+      // Framework-specific implementation will handle typing with delay
+      // For now, use fill and sendKeys as fallback
+      getDriver().performActionOnEngine("Type And " + key, engine -> {
+        engine.sendKeys(getLocator(), text, intervalInMilliSeconds);
+        engine.press(getLocator(), key);
+        return true;
+      });
+      return true;
+    });
   }
 }

@@ -1,13 +1,12 @@
 package org.catools.web.listeners;
 
 import org.catools.common.date.CDate;
+import org.catools.web.drivers.CDriverEngine;
 import org.catools.web.entities.CWebPageInfo;
 import org.catools.web.metrics.CWebActionMetric;
 import org.catools.web.metrics.CWebMetric;
 import org.catools.web.metrics.CWebPageLoadMetric;
 import org.catools.web.metrics.CWebPageTransitionInfo;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * A comprehensive web performance metrics collector that implements {@link CDriverListener}
@@ -458,7 +457,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *                   "Navigate to Dashboard". This name appears in performance reports
    *                   and analysis output for easy identification.
    * 
-   * @param webDriver The RemoteWebDriver instance that executed the action. Used for 
+   * @param engine The CDriverEngine instance that executed the action. Used for
    *                  context and potential additional data extraction if needed.
    * 
    * @param pageBeforeAction Complete page state information captured before the action 
@@ -485,7 +484,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    * 
    * <h5>Typical Integration in Driver Wrapper:</h5>
    * <pre>{@code
-   * public class EnhancedWebDriver extends RemoteWebDriver {
+   * public class EnhancedWebDriver extends CDriverEngine {
    *     private List<CDriverListener> listeners = new ArrayList<>();
    *     
    *     &#64;Override
@@ -532,7 +531,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *             long duration = actionStart.getDurationToNow().getNano();
    *             
    *             // This triggers the metrics collection
-   *             metricsCollector.afterAction(actionName, (RemoteWebDriver) driver, 
+   *             metricsCollector.afterAction(actionName, (CDriverEngine) driver, 
    *                 beforeState, afterState, transition, actionStart, duration);
    *                 
    *         } catch (Exception e) {
@@ -541,7 +540,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *             long duration = actionStart.getDurationToNow().getNano();
    *             
    *             metricsCollector.afterAction(actionName + " (FAILED)", 
-   *                 (RemoteWebDriver) driver, beforeState, errorState, 
+   *                 (CDriverEngine) driver, beforeState, errorState, 
    *                 null, actionStart, duration);
    *             throw e;
    *         }
@@ -568,13 +567,13 @@ public class CWebMetricCollectorListener implements CDriverListener {
    * }</pre>
    * 
    * @since 1.0
-   * @see CDriverListener#afterAction(String, RemoteWebDriver, CWebPageInfo, CWebPageInfo, CWebPageTransitionInfo, CDate, long)
+   * @see CDriverListener#afterAction(String, CDriverEngine, CWebPageInfo, CWebPageInfo, CWebPageTransitionInfo, CDate, long)
    * @see CWebMetric#addActionMetric(String, CWebPageInfo, CWebPageInfo, CDate)
    * @see CWebPageInfo
    * @see CWebPageTransitionInfo
    */
   @Override
-  public void afterAction(String actionName, RemoteWebDriver webDriver, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CWebPageTransitionInfo driverMetricInfo, CDate startTime, long durationInNano) {
+  public void afterAction(String actionName, CDriverEngine engine, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CWebPageTransitionInfo driverMetricInfo, CDate startTime, long durationInNano) {
     getWebMetric().addActionMetric(actionName, pageBeforeAction, pageAfterAction, startTime);
   }
 
@@ -614,7 +613,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *   <li>Page refreshes or reloads</li>
    * </ul>
    * 
-   * @param webDriver The RemoteWebDriver instance where the page change occurred.
+   * @param engine The CDriverEngine instance where the page change occurred.
    *                  Used to extract current page information (title, URL) for
    *                  the page load metric recording.
    * 
@@ -646,11 +645,6 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *         // Perform navigation
    *         driver.get(url);
    *         
-   *         // Wait for page load completion
-   *         new WebDriverWait(driver, Duration.ofSeconds(10))
-   *             .until(webDriver -> ((JavascriptExecutor) webDriver)
-   *                 .executeScript("return document.readyState").equals("complete"));
-   *         
    *         // Capture final state and create transition info
    *         CWebPageInfo afterPage = new CWebPageInfo(driver);
    *         CWebPageTransitionInfo transitionInfo = new CWebPageTransitionInfo(
@@ -659,7 +653,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *         long duration = navigationStart.getDurationToNow().getNano();
    *         
    *         // This triggers the onPageChanged method
-   *         metricsListener.onPageChanged((RemoteWebDriver) driver, 
+   *         metricsListener.onPageChanged((CDriverEngine) driver, 
    *             transitionInfo, navigationStart, duration);
    *     }
    * }
@@ -688,7 +682,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *         "User Login Form Submission", beforeSubmit, afterSubmit);
    *     
    *     // Automatically records both load and transition metrics
-   *     metricsListener.onPageChanged((RemoteWebDriver) driver, 
+   *     metricsListener.onPageChanged((CDriverEngine) driver, 
    *         loginTransition, submitStart, submitDuration);
    * }
    * }</pre>
@@ -717,7 +711,7 @@ public class CWebMetricCollectorListener implements CDriverListener {
    *         
    *         long routeDuration = routeChangeStart.getDurationToNow().getNano();
    *         
-   *         metricsListener.onPageChanged((RemoteWebDriver) driver, 
+   *         metricsListener.onPageChanged((CDriverEngine) driver, 
    *             routeTransition, routeChangeStart, routeDuration);
    *     }
    * }
@@ -782,14 +776,13 @@ public class CWebMetricCollectorListener implements CDriverListener {
    * }</pre>
    * 
    * @since 1.0
-   * @see CDriverListener#onPageChanged(RemoteWebDriver, CWebPageTransitionInfo, CDate, long)
-   * @see CWebMetric#addPageLoadMetric(WebDriver, CDate)
+   * @see CDriverListener#onPageChanged(CDriverEngine, CWebPageTransitionInfo, CDate, long)
    * @see CWebMetric#addPagePerformance(CWebPageTransitionInfo)
    * @see CWebPageTransitionInfo
    */
   @Override
-  public void onPageChanged(RemoteWebDriver webDriver, CWebPageTransitionInfo pageTransitionInfo, CDate startTime, long durationInNano) {
-    getWebMetric().addPageLoadMetric(webDriver, startTime);
+  public void onPageChanged(CDriverEngine engine, CWebPageTransitionInfo pageTransitionInfo, CDate startTime, long durationInNano) {
+    getWebMetric().addPageLoadMetric(engine, startTime);
     getWebMetric().addPagePerformance(pageTransitionInfo);
   }
 }

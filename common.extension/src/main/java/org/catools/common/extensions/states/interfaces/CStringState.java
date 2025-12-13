@@ -95,7 +95,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, String)}
    * (CharSequence, CharSequence)} is true, ignoring case.
    *
    * @param expected the expected result.
@@ -108,7 +108,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, String)}
    * (CharSequence, CharSequence)} is true, ignoring case.
    *
    * @param expected the expected result.
@@ -131,7 +131,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, String)} is true.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -154,7 +154,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, String)} is false.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
    *                     null}
@@ -178,7 +178,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link StringUtils#equalsAny(CharSequence, String)} is true
    *
    * @param expectedList a list of strings, may be {@code null}.
    * @return execution boolean result
@@ -190,7 +190,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, String)} is
    * true, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -224,7 +224,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link StringUtils#equalsAny(CharSequence, String)} is false
    *
    * @param expectedList a list of strings, may be {@code null}.
    * @return execution boolean result
@@ -236,7 +236,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -1323,7 +1323,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, String)} is true
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}
@@ -1347,7 +1347,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, String)} is false
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
    *                     null}

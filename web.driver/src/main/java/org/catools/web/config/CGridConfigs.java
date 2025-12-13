@@ -25,7 +25,7 @@ import java.util.logging.Level;
  * // Check if remote driver should be used
  * if (CGridConfigs.isUseRemoteDriver()) {
  *     URL hubUrl = CGridConfigs.getHubURL();
- *     // Initialize remote WebDriver with hub URL
+ *     // Initialize remote Page with hub URL
  * }
  * 
  * // Get CDP URL for debugging
@@ -42,7 +42,7 @@ import java.util.logging.Level;
 public class CGridConfigs {
 
   /**
-   * Determines whether remote WebDriver should be used instead of local WebDriver.
+   * Determines whether remote Page should be used instead of local Page.
    * <p>
    * This setting controls whether tests should connect to a remote Selenium Grid
    * or use local browser drivers.
@@ -53,11 +53,11 @@ public class CGridConfigs {
    * @example
    * <pre>{@code
    * if (CGridConfigs.isUseRemoteDriver()) {
-   *     // Configure RemoteWebDriver
-   *     WebDriver driver = new RemoteWebDriver(CGridConfigs.getHubURL(), capabilities);
+   *     // Configure Page
+   *     Page driver = new Page(CGridConfigs.getHubURL(), capabilities);
    * } else {
    *     // Use local ChromeDriver, FirefoxDriver, etc.
-   *     WebDriver driver = new ChromeDriver();
+   *     Page driver = new ChromeDriver();
    * }
    * }</pre>
    */
@@ -97,13 +97,13 @@ public class CGridConfigs {
    * (https → wss, http → ws).
    * </p>
    * 
-   * @param sessionId the WebDriver session ID to connect to
+   * @param sessionId the Page session ID to connect to
    * @return the CDP WebSocket URL if remote driver is enabled, {@code null} otherwise
    * 
    * @example
    * <pre>{@code
-   * // After creating a RemoteWebDriver session
-   * RemoteWebDriver driver = new RemoteWebDriver(hubUrl, capabilities);
+   * // After creating a Page session
+   * Page driver = new Page(hubUrl, capabilities);
    * String sessionId = driver.getSessionId().toString();
    * String cdpUrl = CGridConfigs.getCdpURL(sessionId);
    * 
@@ -123,9 +123,9 @@ public class CGridConfigs {
   }
 
   /**
-   * Constructs the Selenium Grid Hub URL for WebDriver connections.
+   * Constructs the Selenium Grid Hub URL for Page connections.
    * <p>
-   * This URL is used to initialize RemoteWebDriver instances that connect
+   * This URL is used to initialize Page instances that connect
    * to the Selenium Grid hub. The URL is constructed using the configured
    * schema, IP address, and port.
    * </p>
@@ -139,7 +139,7 @@ public class CGridConfigs {
    * if (hubUrl != null) {
    *     // Example URL: "http://selenium-hub:4444/wd/hub"
    *     ChromeOptions options = new ChromeOptions();
-   *     WebDriver driver = new RemoteWebDriver(hubUrl, options);
+   *     Page driver = new Page(hubUrl, options);
    * }
    * }</pre>
    */
@@ -248,9 +248,9 @@ public class CGridConfigs {
   }
 
   /**
-   * Determines whether local file detector should be enabled for remote WebDriver.
+   * Determines whether local file detector should be enabled for remote Page.
    * <p>
-   * The local file detector allows RemoteWebDriver to handle file uploads
+   * The local file detector allows Page to handle file uploads
    * by automatically detecting local file paths and transferring files
    * to the remote browser session. This is essential for file upload
    * functionality in remote grid environments.
@@ -260,7 +260,7 @@ public class CGridConfigs {
    * 
    * @example
    * <pre>{@code
-   * RemoteWebDriver driver = new RemoteWebDriver(hubUrl, capabilities);
+   * Page driver = new Page(hubUrl, capabilities);
    * 
    * if (CGridConfigs.isUseLocalFileDetectorInOn()) {
    *     // Enable file upload capability for remote sessions
@@ -279,7 +279,7 @@ public class CGridConfigs {
   /**
    * Retrieves the logging level for Selenium Grid operations.
    * <p>
-   * This controls the verbosity of logging output from WebDriver and
+   * This controls the verbosity of logging output from Page and
    * grid-related operations. The level affects both local and remote
    * driver logging behavior.
    * </p>
@@ -290,7 +290,7 @@ public class CGridConfigs {
    * <pre>{@code
    * Level logLevel = CGridConfigs.getLogLevel();
    * 
-   * // Apply to WebDriver logging
+   * // Apply to Page logging
    * LoggingPreferences loggingPrefs = new LoggingPreferences();
    * loggingPrefs.enable(LogType.BROWSER, logLevel);
    * loggingPrefs.enable(LogType.DRIVER, logLevel);

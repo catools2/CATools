@@ -415,7 +415,7 @@ When adding CMcpTool, CMcpResource, CMcpPrompt annotations to any methods:
     groups = {"web", "driver"},
     name = "driver_open_url",
     title = "Open URL",
-    description = "Open URL using CATools WebDriver"
+    description = "Open URL using CATools Page"
 )
 public void open(
     @CMcpToolParam(name = "url", description = "The URL to navigate to") String url
@@ -714,7 +714,7 @@ import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 
 /**
- * Configuration management for WebDriver settings.
+ * Configuration management for Page settings.
  * Uses HOCON for flexible, type-safe configuration.
  */
 @UtilityClass
@@ -731,8 +731,8 @@ public class CWebDriverConfigs {
     @Getter
     @AllArgsConstructor
     private enum Configs implements CHoconPath {
-        CATOOLS_WEBDRIVER_BROWSER("catools.webdriver.browser"),
-        CATOOLS_WEBDRIVER_HEADLESS("catools.webdriver.headless");
+        CATOOLS_WEBDRIVER_BROWSER("catools.page.browser"),
+        CATOOLS_WEBDRIVER_HEADLESS("catools.page.headless");
         
         private final String path;
     }

@@ -79,7 +79,7 @@
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>web.driver.provider</artifactId>
+            <artifactId>web.playwright</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

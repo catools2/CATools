@@ -1,7 +1,6 @@
 package org.catools.web.factory;
 
 import org.catools.common.utils.CStringUtil;
-import org.openqa.selenium.support.FindBy;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom annotation that extends Selenium's {@link FindBy} functionality with additional features
+ * Custom annotation that extends Selenium's functionality with additional features
  * for enhanced web element location and management.
  * 
  * <p>This annotation provides enhanced capabilities over standard Selenium FindBy including:
@@ -43,37 +42,21 @@ import java.lang.annotation.Target;
  * 
  * @author CATools Team
  * @since 1.0
- * @see FindBy
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})
 public @interface CFindBy {
   
   /**
-   * The standard Selenium {@link FindBy} annotation that defines how to locate the web element.
-   * This parameter is required and specifies the locator strategy (id, name, xpath, css, etc.).
-   * 
-   * <p>Examples:
-   * <pre>{@code
-   * // By ID
-   * @CFindBy(findBy = @FindBy(id = "submit-btn"))
-   * 
-   * // By XPath
-   * @CFindBy(findBy = @FindBy(xpath = "//div[@class='container']/input"))
-   * 
-   * // By CSS Selector
-   * @CFindBy(findBy = @FindBy(css = "input[type='email']"))
-   * 
-   * // By Class Name
-   * @CFindBy(findBy = @FindBy(className = "form-control"))
-   * 
-   * // By Name attribute
-   * @CFindBy(findBy = @FindBy(name = "password"))
-   * }</pre>
-   * 
-   * @return the FindBy annotation containing the element locator information
+   * The locator string to use for Playwright. Prefer CSS selectors or XPath
+   * (XPath should start with 'xpath=' to be distinguished, e.g. "xpath=//div[@id='x']").
+   * If empty, the factory will fall back to using the field name as id or name.
+   *
+   * Examples:
+   * - CSS: "div.content > button.submit"
+   * - XPath: "//form//input[@name='email']"
    */
-  FindBy findBy();
+  String locator() default CStringUtil.EMPTY;
 
   /**
    * Optional custom name for the web element used for identification and reporting purposes.
@@ -101,34 +84,6 @@ public @interface CFindBy {
 
   /**
    * Optional wait timeout in seconds for the element to become available.
-   * Specifies how long the driver should wait for the element to be present/visible
-   * before timing out.
-   * 
-   * <p>Values:
-   * <ul>
-   *   <li><b>-1</b> (default): Use the system default wait timeout</li>
-   *   <li><b>0</b>: No explicit wait, immediate check</li>
-   *   <li><b>&gt; 0</b>: Wait for specified number of seconds</li>
-   * </ul>
-   * 
-   * <p>Examples:
-   * <pre>{@code
-   * // Wait up to 15 seconds for a slow-loading element
-   * @CFindBy(
-   *     findBy = @FindBy(id = "async-content"),
-   *     waitInSeconds = 15
-   * )
-   * 
-   * // No wait for elements that should be immediately available
-   * @CFindBy(
-   *     findBy = @FindBy(tagName = "body"),
-   *     waitInSeconds = 0
-   * )
-   * 
-   * // Use system default wait time
-   * @CFindBy(findBy = @FindBy(id = "standard-element"))
-   * }</pre>
-   * 
    * @return the wait timeout in seconds, or -1 to use default timeout
    */
   int waitInSeconds() default -1;

@@ -1,22 +1,22 @@
 package org.catools.web.entities;
 
+import com.microsoft.playwright.Page;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.apache.logging.log4j.util.Strings;
-import org.openqa.selenium.WebDriver;
 
 /**
  * Represents information about a web page, including its title and URL.
  * This class provides a convenient way to capture and store basic web page metadata
- * from a Selenium WebDriver instance.
+ * from a Selenium Page instance.
  * 
  * <p>The class is immutable and uses Lombok annotations for getter generation
  * with method chaining support.</p>
  * 
  * <p><strong>Usage Examples:</strong></p>
  * <pre>{@code
- * // Create page info from a WebDriver instance
- * WebDriver driver = new ChromeDriver();
+ * // Create page info from a Page instance
+ * Page driver = new ChromeDriver();
  * driver.get("https://example.com");
  * CWebPageInfo pageInfo = new CWebPageInfo(driver);
  * System.out.println("Title: " + pageInfo.getTitle());
@@ -51,14 +51,14 @@ public class CWebPageInfo {
    */
   public static final CWebPageInfo BLANK_PAGE = new CWebPageInfo();
   /**
-   * The title of the web page as retrieved from the WebDriver.
+   * The title of the web page as retrieved from the Page.
    * This field is populated during construction and cannot be modified after creation.
    * For blank pages, this will be an empty string.
    */
   private final String title;
   
   /**
-   * The current URL of the web page as retrieved from the WebDriver.
+   * The current URL of the web page as retrieved from the Page.
    * This field is populated during construction and cannot be modified after creation.
    * For blank pages, this will be an empty string.
    */
@@ -70,8 +70,8 @@ public class CWebPageInfo {
   }
 
   /**
-   * Creates a new CWebPageInfo instance by extracting the title and URL from the provided WebDriver.
-   * The WebDriver should be in a valid state with a loaded page for accurate information retrieval.
+   * Creates a new CWebPageInfo instance by extracting the title and URL from the provided Page.
+   * The Page should be in a valid state with a loaded page for accurate information retrieval.
    * 
    * <p>This constructor will immediately call {@code driver.getTitle()} and {@code driver.getCurrentUrl()}
    * to capture the current state of the web page.</p>
@@ -79,7 +79,7 @@ public class CWebPageInfo {
    * <p><strong>Usage Examples:</strong></p>
    * <pre>{@code
    * // Basic usage with a Chrome driver
-   * WebDriver driver = new ChromeDriver();
+   * Page driver = new ChromeDriver();
    * driver.get("https://www.google.com");
    * CWebPageInfo googlePage = new CWebPageInfo(driver);
    * System.out.println("Google page title: " + googlePage.getTitle());
@@ -87,7 +87,7 @@ public class CWebPageInfo {
    * 
    * // Usage in a page object pattern
    * public class HomePage {
-   *     private WebDriver driver;
+   *     private Page driver;
    *     
    *     public CWebPageInfo getPageInfo() {
    *         return new CWebPageInfo(driver);
@@ -105,13 +105,12 @@ public class CWebPageInfo {
    * }
    * }</pre>
    * 
-   * @param driver the WebDriver instance from which to extract page information.
+   * @param page the Page instance from which to extract page information.
    *               Must not be null and should have a page loaded.
    * @throws NullPointerException if the driver is null
-   * @throws org.openqa.selenium.WebDriverException if there's an issue accessing the driver's state
    */
-  public CWebPageInfo(WebDriver driver) {
-    this.title = driver.getTitle();
-    this.url = driver.getCurrentUrl();
+  public CWebPageInfo(Page page) {
+    this.title = page.title();
+    this.url = page.url();
   }
 }

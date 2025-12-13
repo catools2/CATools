@@ -185,7 +185,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -196,7 +196,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -231,7 +231,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -242,7 +242,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -277,7 +277,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, CharSequence...)} equals to the
+   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, String)} equals to the
    * expected value.
    *
    * @param actual       value to compare
@@ -288,7 +288,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, CharSequence...)} equals to the
+   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, String)} equals to the
    * expected value.
    *
    * @param actual       value to compare
@@ -301,7 +301,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * true.
    *
    * @param actual       value to compare
@@ -312,7 +312,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * true.
    *
    * @param actual       value to compare
@@ -369,7 +369,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, String)} is false
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
@@ -379,7 +379,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#equalsAny(CharSequence, String)} is false
    *
    * @param actual       value to compare
    * @param expectedList a list of strings, may be {@code null}.
@@ -391,7 +391,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false.
    *
    * @param actual       value to compare
@@ -402,7 +402,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false.
    *
    * @param actual       value to compare
@@ -2325,7 +2325,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -2338,7 +2338,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -2373,7 +2373,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -2386,7 +2386,7 @@ public class CStringVerification extends CBaseVerification {
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param actual       value to compare
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
