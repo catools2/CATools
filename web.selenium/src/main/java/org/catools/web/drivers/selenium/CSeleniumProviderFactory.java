@@ -27,7 +27,8 @@ public class CSeleniumProviderFactory {
   public static CSeleniumProvider create(CBrowser browser) {
     log.debug("Creating Selenium provider for browser: {}, headless: {}", browser);
     return switch (browser) {
-      case CHROME, CHROMIUM -> new CChromeSeleniumProvider();
+      case CHROME -> new CChromeSeleniumProvider();
+      case CHROMIUM -> new CChromiumSeleniumProvider();
       case FIREFOX -> new CFirefoxSeleniumProvider();
       case EDGE -> new CEdgeSeleniumProvider();
       default -> throw new IllegalArgumentException("Unsupported browser for Selenium: " + browser);

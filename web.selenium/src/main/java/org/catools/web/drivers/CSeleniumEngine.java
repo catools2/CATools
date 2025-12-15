@@ -123,20 +123,33 @@ public class CSeleniumEngine implements CDriverEngine {
    * Closes the driver engine and releases any associated resources.
    */
   @Override
-  public void close() {
-    if (driver != null) {
-      driver.close();
+  public boolean close() {
+    try {
+      if (driver != null) {
+        driver.close();
+      }
+      closed = true;
+      return true;
+    } catch (Exception e) {
+      log.debug("Failed to close driver", e);
+      closed = true; // Mark as closed even if close fails
+      return false;
     }
-    closed = true;
   }
 
   /**
    * Refreshes the current page.
    */
   @Override
-  public void refresh() {
-    if (isClosed()) return;
-    driver.navigate().refresh();
+  public boolean refresh() {
+    if (isClosed()) return false;
+    try {
+      driver.navigate().refresh();
+      return true;
+    } catch (Exception e) {
+      log.debug("Failed to refresh page", e);
+      return false;
+    }
   }
 
   /**
@@ -202,13 +215,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param keysToSend the keys to send
    */
   @Override
-  public void sendKeys(String keysToSend) {
-    if (isClosed()) return;
+  public boolean sendKeys(String keysToSend) {
+    if (isClosed()) return false;
     try {
       WebElement active = driver.switchTo().activeElement();
       if (active != null) active.sendKeys(keysToSend);
+      return true;
     } catch (Exception e) {
       log.debug("sendKeys failed", e);
+      return false;
     }
   }
 
@@ -216,25 +231,27 @@ public class CSeleniumEngine implements CDriverEngine {
    * Sends keys to the current focused element.
    *
    * @param keysToSend             the keys to send
-   * @param intervalInMilliSeconds
+   * @param intervalInMilliSeconds interval between keystrokes
    */
   @Override
-  public void sendKeys(String keysToSend, long intervalInMilliSeconds) {
-    if (isClosed()) return;
+  public boolean sendKeys(String keysToSend, long intervalInMilliSeconds) {
+    if (isClosed()) return false;
     try {
       WebElement active = driver.switchTo().activeElement();
-      if (active == null) return;
+      if (active == null) return false;
       for (char c : keysToSend.toCharArray()) {
         active.sendKeys(String.valueOf(c));
         try {
           Thread.sleep(intervalInMilliSeconds);
         } catch (InterruptedException e) {
           Thread.currentThread().interrupt();
-          break;
+          return false;
         }
       }
+      return true;
     } catch (Exception e) {
       log.debug("sendKeys with interval failed", e);
+      return false;
     }
   }
 
@@ -244,26 +261,29 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param url target URL to open
    */
   @Override
-  public void open(String url) {
-    if (isClosed()) return;
+  public boolean open(String url) {
+    if (isClosed()) return false;
     try {
       driver.get(url);
+      return true;
     } catch (Exception e) {
       log.debug("Open url failed", e);
+      return false;
     }
   }
-
 
   /**
    * Navigate back in the browser history.
    */
   @Override
-  public void goBack() {
-    if (isClosed()) return;
+  public boolean goBack() {
+    if (isClosed()) return false;
     try {
       driver.navigate().back();
+      return true;
     } catch (Exception e) {
       log.debug("Navigate back failed", e);
+      return false;
     }
   }
 
@@ -271,12 +291,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * Navigate forward in the browser history.
    */
   @Override
-  public void goForward() {
-    if (isClosed()) return;
+  public boolean goForward() {
+    if (isClosed()) return false;
     try {
       driver.navigate().forward();
+      return true;
     } catch (Exception e) {
       log.debug("Navigate forward failed", e);
+      return false;
     }
   }
 
@@ -286,20 +308,22 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param title page title to switch to
    */
   @Override
-  public void switchToPage(String title) {
-    if (isClosed()) return;
+  public boolean switchToPage(String title) {
+    if (isClosed()) return false;
     try {
       Set<String> handles = driver.getWindowHandles();
       for (String h : handles) {
         try {
           driver.switchTo().window(h);
-          if (title.equals(driver.getTitle())) return;
+          if (title.equals(driver.getTitle())) return true;
         } catch (Exception ignore) {
         }
       }
       log.warn("No page found with title: {}", title);
+      return false;
     } catch (Exception e) {
       log.debug("switchToPage by title failed", e);
+      return false;
     }
   }
 
@@ -309,17 +333,20 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param index 0-based page index
    */
   @Override
-  public void switchToPage(int index) {
-    if (isClosed()) return;
+  public boolean switchToPage(int index) {
+    if (isClosed()) return false;
     try {
       List<String> handles = new ArrayList<>(driver.getWindowHandles());
       if (index >= 0 && index < handles.size()) {
         driver.switchTo().window(handles.get(index));
+        return true;
       } else {
         log.warn("Invalid page index: {}. Total pages: {}", index, handles.size());
+        return false;
       }
     } catch (Exception e) {
       log.debug("switchToPage by index failed", e);
+      return false;
     }
   }
 
@@ -327,15 +354,18 @@ public class CSeleniumEngine implements CDriverEngine {
    * Switch to the last (most recently opened) page.
    */
   @Override
-  public void switchToLastPage() {
-    if (isClosed()) return;
+  public boolean switchToLastPage() {
+    if (isClosed()) return false;
     try {
       List<String> handles = new ArrayList<>(driver.getWindowHandles());
       if (!handles.isEmpty()) {
         driver.switchTo().window(handles.get(handles.size() - 1));
+        return true;
       }
+      return false;
     } catch (Exception e) {
       log.debug("switchToLastPage failed", e);
+      return false;
     }
   }
 
@@ -343,19 +373,22 @@ public class CSeleniumEngine implements CDriverEngine {
    * Switch to the next page in the list of open pages.
    */
   @Override
-  public void switchToNextPage() {
-    if (isClosed()) return;
+  public boolean switchToNextPage() {
+    if (isClosed()) return false;
     try {
       List<String> handles = new ArrayList<>(driver.getWindowHandles());
       String current = driver.getWindowHandle();
       int idx = handles.indexOf(current);
       if (idx >= 0 && idx < handles.size() - 1) {
         driver.switchTo().window(handles.get(idx + 1));
+        return true;
       } else {
         log.warn("Already on last page or page not found in context");
+        return false;
       }
     } catch (Exception e) {
       log.debug("switchToNextPage failed", e);
+      return false;
     }
   }
 
@@ -365,12 +398,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param frameName frame name or id
    */
   @Override
-  public void switchToFrame(String frameName) {
-    if (isClosed()) return;
+  public boolean switchToFrame(String frameName) {
+    if (isClosed()) return false;
     try {
       driver.switchTo().frame(frameName);
+      return true;
     } catch (Exception e) {
       log.debug("switchToFrame failed for {}", frameName, e);
+      return false;
     }
   }
 
@@ -378,12 +413,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * Switch execution context back to the default content.
    */
   @Override
-  public void switchToDefaultContent() {
-    if (isClosed()) return;
+  public boolean switchToDefaultContent() {
+    if (isClosed()) return false;
     try {
       driver.switchTo().defaultContent();
+      return true;
     } catch (Exception e) {
       log.debug("switchToDefaultContent failed", e);
+      return false;
     }
   }
 
@@ -391,12 +428,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * Press Enter key in the current context.
    */
   @Override
-  public void pressEnter() {
-    if (isClosed()) return;
+  public boolean pressEnter() {
+    if (isClosed()) return false;
     try {
       driver.switchTo().activeElement().sendKeys(Keys.ENTER);
+      return true;
     } catch (Exception e) {
       log.debug("pressEnter failed", e);
+      return false;
     }
   }
 
@@ -404,12 +443,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * Press Escape key in the current context.
    */
   @Override
-  public void pressEscape() {
-    if (isClosed()) return;
+  public boolean pressEscape() {
+    if (isClosed()) return false;
     try {
       driver.switchTo().activeElement().sendKeys(Keys.ESCAPE);
+      return true;
     } catch (Exception e) {
       log.debug("pressEscape failed", e);
+      return false;
     }
   }
 
@@ -417,12 +458,14 @@ public class CSeleniumEngine implements CDriverEngine {
    * Delete all cookies for the current browsing context.
    */
   @Override
-  public void deleteAllCookies() {
-    if (isClosed()) return;
+  public boolean deleteAllCookies() {
+    if (isClosed()) return false;
     try {
       driver.manage().deleteAllCookies();
+      return true;
     } catch (Exception e) {
       log.debug("deleteAllCookies failed", e);
+      return false;
     }
   }
 
@@ -532,14 +575,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element selector or identifier
    */
   @Override
-  public void focus(String locator) {
-    if (isClosed()) return;
+  public boolean focus(String locator) {
+    if (isClosed()) return false;
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Actions(driver).moveToElement(el).perform();
+      return true;
     } catch (Exception e) {
       log.debug("focus failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -549,18 +594,21 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void click(String locator) {
-    if (isClosed()) return;
+  public boolean click(String locator) {
+    if (isClosed()) return false;
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       el.click();
+      return true;
     } catch (Exception e) {
       try {
         // fallback: JS click
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
+        return true;
       } catch (Exception ex) {
         log.debug("click failed for {}", locator, ex);
+        return false;
       }
     }
   }
@@ -571,14 +619,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void mouseClick(String locator) {
-    if (isClosed()) return;
+  public boolean mouseClick(String locator) {
+    if (isClosed()) return false;
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Actions(driver).click(el).perform();
+      return true;
     } catch (Exception e) {
       log.debug("mouseClick failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -588,14 +638,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void mouseDoubleClick(String locator) {
-    if (isClosed()) return;
+  public boolean mouseDoubleClick(String locator) {
+    if (isClosed()) return false;
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Actions(driver).doubleClick(el).perform();
+      return true;
     } catch (Exception e) {
       log.debug("mouseDoubleClick failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -605,14 +657,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void scrollIntoView(String locator) {
-    if (isClosed()) return;
+  public boolean scrollIntoView(String locator) {
+    if (isClosed()) return false;
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
+      return true;
     } catch (Exception e) {
       log.debug("scrollIntoView failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -623,14 +677,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param keysToSend keys to send
    */
   @Override
-  public void sendKeys(String locator, String keysToSend) {
+  public boolean sendKeys(String locator, String keysToSend) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       el.clear();
       el.sendKeys(keysToSend);
+      return true;
     } catch (Exception e) {
       log.debug("sendKeys to locator failed {}", locator, e);
+      return false;
     }
   }
 
@@ -639,12 +695,12 @@ public class CSeleniumEngine implements CDriverEngine {
    *
    * @param locator                element locator
    * @param keysToSend             keys to send
-   * @param intervalInMilliSeconds
+   * @param intervalInMilliSeconds interval between keystrokes
    */
   @Override
-  public void sendKeys(String locator, String keysToSend, long intervalInMilliSeconds) {
+  public boolean sendKeys(String locator, String keysToSend, long intervalInMilliSeconds) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       el.click();
       for (char c : keysToSend.toCharArray()) {
@@ -653,11 +709,13 @@ public class CSeleniumEngine implements CDriverEngine {
           Thread.sleep(intervalInMilliSeconds);
         } catch (InterruptedException ie) {
           Thread.currentThread().interrupt();
-          break;
+          return false;
         }
       }
+      return true;
     } catch (Exception e) {
       log.debug("sendKeys with interval failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -669,13 +727,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param yOffset vertical offset
    */
   @Override
-  public void dropTo(String locator, int xOffset, int yOffset) {
+  public boolean dropTo(String locator, int xOffset, int yOffset) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Actions(driver).dragAndDropBy(el, xOffset, yOffset).perform();
+      return true;
     } catch (Exception e) {
       log.debug("dropTo failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -687,13 +747,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param yOffset vertical offset
    */
   @Override
-  public void moveToElement(String locator, int xOffset, int yOffset) {
+  public boolean moveToElement(String locator, int xOffset, int yOffset) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Actions(driver).moveToElement(el, xOffset, yOffset).perform();
+      return true;
     } catch (Exception e) {
       log.debug("moveToElement failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -706,14 +768,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param yOffset1 vertical offset for source
    */
   @Override
-  public void dragAndDropTo(String source, String target, int xOffset1, int yOffset1) {
+  public boolean dragAndDropTo(String source, String target, int xOffset1, int yOffset1) {
     WebElement src = findElementSafe(source);
     WebElement tgt = findElementSafe(target);
-    if (src == null || tgt == null) return;
+    if (src == null || tgt == null) return false;
     try {
       new Actions(driver).dragAndDrop(src, tgt).perform();
+      return true;
     } catch (Exception e) {
       log.debug("dragAndDropTo failed", e);
+      return false;
     }
   }
 
@@ -727,14 +791,16 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param yOffset2 second vertical offset
    */
   @Override
-  public void dragAndDropTo(String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
+  public boolean dragAndDropTo(String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       // move by offsets using dragAndDropBy twice
       new Actions(driver).dragAndDropBy(el, xOffset2 - xOffset1, yOffset2 - yOffset1).perform();
+      return true;
     } catch (Exception e) {
       log.debug("dragAndDropTo with offsets failed", e);
+      return false;
     }
   }
 
@@ -798,17 +864,68 @@ public class CSeleniumEngine implements CDriverEngine {
   }
 
   /**
-   * Checks if an element matching the locator is visible.
+   * Checks if an element matching the locator is visible to the user.
+   *
+   * <p>This method performs comprehensive visibility checks including:
+   * <ul>
+   *   <li>Element exists in DOM</li>
+   *   <li>Element is displayed (not display:none or visibility:hidden)</li>
+   *   <li>Element has non-zero opacity</li>
+   *   <li>Element has non-zero dimensions (width and height)</li>
+   * </ul>
    *
    * @param locator element locator string
-   * @return true if element is visible, false otherwise
+   * @return true if element is visible to the user, false otherwise
    */
   @Override
   public boolean isElementVisible(String locator) {
     WebElement el = findElementSafe(locator);
     if (el == null) return false;
+
     try {
-      return el.isDisplayed();
+      // If display and visible by CSS
+      if (!el.isDisplayed()) {
+        return false;
+      }
+
+      // If Element have non-zero dimensions
+      org.openqa.selenium.Dimension size = el.getSize();
+      if (size.getWidth() <= 0 || size.getHeight() <= 0) {
+        return false;
+      }
+
+      // opacity must be greater than 0
+      String opacity = el.getCssValue("opacity");
+      if (opacity != null && !opacity.isEmpty()) {
+        try {
+          double opacityValue = Double.parseDouble(opacity);
+          if (opacityValue <= 0) {
+            return false;
+          }
+        } catch (NumberFormatException e) {
+          // Opacity value is not a number, assume visible
+        }
+      }
+
+      // must not be hidden via JavaScript
+      Boolean isHidden = (Boolean) ((JavascriptExecutor) driver).executeScript(
+          "var el = arguments[0];" +
+          "var style = window.getComputedStyle(el);" +
+          "if (style.display === 'none' || style.visibility === 'hidden') return true;" +
+          "if (parseFloat(style.opacity) === 0) return true;" +
+          "if (el.offsetWidth === 0 || el.offsetHeight === 0) return true;" +
+          "if (el.hasAttribute('hidden')) return true;" +
+          "if (el.getAttribute('aria-hidden') === 'true') return true;" +
+          "return false;",
+          el
+      );
+
+      if (Boolean.TRUE.equals(isHidden)) {
+        return false;
+      }
+
+      return true;
+
     } catch (Exception e) {
       return false;
     }
@@ -944,9 +1061,9 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param locator element locator string
    */
   @Override
-  public void clearElement(String locator) {
+  public boolean clearElement(String locator) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       // Fast path: Standard WebDriver clear (works for 90% of cases)
       el.clear();
@@ -966,8 +1083,10 @@ public class CSeleniumEngine implements CDriverEngine {
               "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
           el
       );
+      return true;
     } catch (Exception e) {
       log.debug("clearElement failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -979,14 +1098,32 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param text    text to type
    */
   @Override
-  public void setText(String locator, String text) {
+  public boolean setText(String locator, String text) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
+      // Fast path: Standard clear + sendKeys
+      el.click();
       el.clear();
       el.sendKeys(text);
+
+      // Only trigger JavaScript events if clear didn't work properly
+      // This handles React/Angular/Vue without the overhead for simpler pages
+      String currentValue = el.getAttribute("value");
+      if (currentValue == null || !currentValue.equals(text)) {
+        // Fallback: Use JavaScript to set value and trigger events
+        ((JavascriptExecutor) driver).executeScript(
+            "arguments[0].focus();" +
+                "arguments[0].value = arguments[1];" +
+                "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+            el, text
+        );
+      }
+      return true;
     } catch (Exception e) {
       log.debug("setText failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -997,13 +1134,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param text    key to press
    */
   @Override
-  public void press(String locator, String text) {
+  public boolean press(String locator, String text) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       el.sendKeys(Keys.valueOf(text.toUpperCase()));
+      return true;
     } catch (Exception e) {
       log.debug("press failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -1055,7 +1194,7 @@ public class CSeleniumEngine implements CDriverEngine {
   @Override
   public Options getFirstSelectedOption(String locator) {
     List<Options> opts = getAllSelectedOptions(locator);
-    return opts.isEmpty() ? null : opts.get(0);
+    return opts.isEmpty() ? null : opts.getFirst();
   }
 
   /**
@@ -1084,13 +1223,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param text    visible text to select
    */
   @Override
-  public void selectByVisibleText(String locator, String text) {
+  public boolean selectByVisibleText(String locator, String text) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Select(el).selectByVisibleText(text);
+      return true;
     } catch (Exception e) {
       log.debug("selectByVisibleText failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -1101,13 +1242,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param value   the value attribute to select
    */
   @Override
-  public void selectByValue(String locator, String value) {
+  public boolean selectByValue(String locator, String value) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Select(el).selectByValue(value);
+      return true;
     } catch (Exception e) {
       log.debug("selectByValue failed for {}", locator, e);
+      return false;
     }
   }
 
@@ -1118,13 +1261,15 @@ public class CSeleniumEngine implements CDriverEngine {
    * @param index   0-based index to select
    */
   @Override
-  public void selectByIndex(String locator, int index) {
+  public boolean selectByIndex(String locator, int index) {
     WebElement el = findElementSafe(locator);
-    if (el == null) return;
+    if (el == null) return false;
     try {
       new Select(el).selectByIndex(index);
+      return true;
     } catch (Exception e) {
       log.debug("selectByIndex failed for {}", locator, e);
+      return false;
     }
   }
 

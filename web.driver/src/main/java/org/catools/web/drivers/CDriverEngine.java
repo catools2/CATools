@@ -44,12 +44,12 @@ public interface CDriverEngine {
   /**
    * Closes the driver engine and releases any associated resources.
    */
-  void close();
+  boolean close();
 
   /**
    * Refreshes the current page.
    */
-  void refresh();
+  boolean refresh();
 
   /**
    * Takes a screenshot of the current page.
@@ -84,82 +84,82 @@ public interface CDriverEngine {
    *
    * @param keysToSend the keys to send
    */
-  void sendKeys(String keysToSend);
+  boolean sendKeys(String keysToSend);
 
   /**
    * Sends keys to the current focused element.
    *
    * @param keysToSend the keys to send
    */
-  void sendKeys(String keysToSend, long intervalInMilliSeconds);
+  boolean sendKeys(String keysToSend, long intervalInMilliSeconds);
 
   /**
    * Open the provided URL in the current session.
    *
    * @param url target URL to open
    */
-  void open(String url);
+  boolean open(String url);
 
   /**
    * Navigate back in the browser history.
    */
-  void goBack();
+  boolean goBack();
 
   /**
    * Navigate forward in the browser history.
    */
-  void goForward();
+  boolean goForward();
 
   /**
    * Switch to a page by its title.
    *
    * @param title page title to switch to
    */
-  void switchToPage(String title);
+  boolean switchToPage(String title);
 
   /**
    * Switch to a page by its index.
    *
    * @param index 0-based page index
    */
-  void switchToPage(int index);
+  boolean switchToPage(int index);
 
   /**
    * Switch to the last (most recently opened) page.
    */
-  void switchToLastPage();
+  boolean switchToLastPage();
 
   /**
    * Switch to the next page in the list of open pages.
    */
-  void switchToNextPage();
+  boolean switchToNextPage();
 
   /**
    * Switch the execution context to a frame identified by name.
    *
    * @param frameName frame name or id
    */
-  void switchToFrame(String frameName);
+  boolean switchToFrame(String frameName);
 
   /**
    * Switch execution context back to the default content.
    */
-  void switchToDefaultContent();
+  boolean switchToDefaultContent();
 
   /**
    * Press Enter key in the current context.
    */
-  void pressEnter();
+  boolean pressEnter();
 
   /**
    * Press Escape key in the current context.
    */
-  void pressEscape();
+  boolean pressEscape();
 
   /**
    * Delete all cookies for the current browsing context.
    */
-  void deleteAllCookies();
+  boolean deleteAllCookies();
 
   /**
    * Execute a synchronous JavaScript snippet in the page context.
@@ -212,35 +212,35 @@ public interface CDriverEngine {
    *
    * @param locator element selector or identifier
    */
-  void focus(String locator);
+  boolean focus(String locator);
 
   /**
    * Click the element located by the locator.
    *
    * @param locator element locator
    */
-  void click(String locator);
+  boolean click(String locator);
 
   /**
    * Perform a mouse click on the element located by the locator.
    *
    * @param locator element locator
    */
-  void mouseClick(String locator);
+  boolean mouseClick(String locator);
 
   /**
    * Perform a mouse double-click on the element located by the locator.
    *
    * @param locator element locator
    */
-  void mouseDoubleClick(String locator);
+  boolean mouseDoubleClick(String locator);
 
   /**
    * Scroll the element into view.
    *
    * @param locator element locator
    */
-  void scrollIntoView(String locator);
+  boolean scrollIntoView(String locator);
 
   /**
    * Send keys to the element identified by locator.
@@ -248,7 +248,7 @@ public interface CDriverEngine {
    * @param locator    element locator
    * @param keysToSend keys to send
    */
-  void sendKeys(String locator, String keysToSend);
+  boolean sendKeys(String locator, String keysToSend);
 
   /**
    * Send keys to the element identified by locator.
@@ -256,7 +256,7 @@ public interface CDriverEngine {
    * @param locator    element locator
    * @param keysToSend keys to send
    */
-  void sendKeys(String locator, String keysToSend, long intervalInMilliSeconds);
+  boolean sendKeys(String locator, String keysToSend, long intervalInMilliSeconds);
 
   /**
    * Drop an element to a specified offset.
@@ -265,7 +265,7 @@ public interface CDriverEngine {
    * @param xOffset horizontal offset
    * @param yOffset vertical offset
    */
-  void dropTo(String locator, int xOffset, int yOffset);
+  boolean dropTo(String locator, int xOffset, int yOffset);
 
   /**
    * Move to an element with provided offsets.
@@ -274,7 +274,7 @@ public interface CDriverEngine {
    * @param xOffset horizontal offset
    * @param yOffset vertical offset
    */
-  void moveToElement(final String locator, int xOffset, int yOffset);
+  boolean moveToElement(final String locator, int xOffset, int yOffset);
 
   /**
    * Drag source element and drop it to target with offsets.
@@ -284,7 +284,7 @@ public interface CDriverEngine {
    * @param xOffset1 horizontal offset for source
    * @param yOffset1 vertical offset for source
    */
-  void dragAndDropTo(final String source, final String target, int xOffset1, int yOffset1);
+  boolean dragAndDropTo(final String source, final String target, int xOffset1, int yOffset1);
 
   /**
    * Drag an element from one point to another using offsets.
@@ -295,7 +295,7 @@ public interface CDriverEngine {
    * @param xOffset2 second horizontal offset
    * @param yOffset2 second vertical offset
    */
-  void dragAndDropTo(final String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2);
+  boolean dragAndDropTo(final String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2);
 
   /**
    * Execute a script in the context of an element specified by locator.
@@ -405,7 +405,7 @@ public interface CDriverEngine {
    *
    * @param locator element locator string
    */
-  void clearElement(String locator);
+  boolean clearElement(String locator);
 
   /**
    * Fills the element with text (types text character by character).
@@ -413,7 +413,7 @@ public interface CDriverEngine {
    * @param locator element locator string
    * @param text    text to type
    */
-  void setText(String locator, String text);
+  boolean setText(String locator, String text);
 
   /**
    * Press special key press to the element.
@@ -421,7 +421,7 @@ public interface CDriverEngine {
    * @param locator element locator string
    * @param text    key to press
    */
-  void press(String locator, String text);
+  boolean press(String locator, String text);
 
   /**
    * Takes a screenshot of the element matching the locator.
@@ -461,7 +461,7 @@ public interface CDriverEngine {
    * @param locator element locator string
    * @param text    visible text to select
    */
-  void selectByVisibleText(String locator, String text);
+  boolean selectByVisibleText(String locator, String text);
 
   /**
    * Selects an option by its value attribute.
@@ -469,7 +469,7 @@ public interface CDriverEngine {
    * @param locator element locator string
    * @param value   the value attribute to select
    */
-  void selectByValue(String locator, String value);
+  boolean selectByValue(String locator, String value);
 
   /**
    * Selects an option by its index.
@@ -477,7 +477,7 @@ public interface CDriverEngine {
    * @param locator element locator string
    * @param index   0-based index to select
    */
-  void selectByIndex(String locator, int index);
+  boolean selectByIndex(String locator, int index);
 
   /**
    * Represents an option element in a select control.

@@ -64,7 +64,8 @@ public class CPlaywrightProviderFactory {
     log.debug("Creating Playwright provider for browser: {}, headless: {}", browser, headless);
 
     return switch (browser) {
-      case CHROME, CHROMIUM -> new CChromiumPlaywrightProvider();
+      case CHROME -> new CChromePlaywrightProvider();
+      case CHROMIUM -> new CChromiumPlaywrightProvider();
       case FIREFOX -> new CFirefoxPlaywrightProvider();
       case WEBKIT -> new CWebKitPlaywrightProvider();
       default -> {

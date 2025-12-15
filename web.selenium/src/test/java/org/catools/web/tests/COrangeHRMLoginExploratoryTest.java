@@ -43,7 +43,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     passwordField.Visible.verifyIsTrue("Password field should be visible");
 
     // Step 4: Find and verify login button
-    var loginButton = getDriver().$("//button[@type='submit']", 10);
+    var loginButton = getDriver().$("//button[@type='submit']");
     CVerify.Object.isNotNull(loginButton, "Login button should be present");
     loginButton.Visible.verifyIsTrue("Login button should be visible");
     loginButton.Text.verifyContains("Login", "Login button text should contain 'Login'");
@@ -59,19 +59,19 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Enter invalid username
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     usernameField.setText("invalidUser");
 
     // Step 3: Enter invalid password
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     passwordField.setText("wrongPassword123");
 
     // Step 4: Click login button
-    var loginButton = getDriver().$("//button[@type='submit']", 5);
+    var loginButton = getDriver().$("//button[@type='submit']");
     loginButton.click();
 
     // Step 5: Verify error message appears
-    var errorAlert = getDriver().$(".oxd-alert", 10);
+    var errorAlert = getDriver().$(".oxd-alert");
     CVerify.Object.isNotNull(errorAlert, "Error alert should be present");
     errorAlert.Visible.verifyIsTrue("Error alert should be visible");
     errorAlert.Text.verifyEquals("Invalid credentials", "Error message should indicate invalid credentials");
@@ -87,19 +87,19 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Enter valid username
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     usernameField.setText(VALID_USERNAME);
 
     // Step 3: Enter valid password
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     passwordField.setText(VALID_PASSWORD);
 
     // Step 4: Click login button
-    var loginButton = getDriver().$("//button[@type='submit']", 5);
+    var loginButton = getDriver().$("//button[@type='submit']");
     loginButton.click();
 
     // Step 5: Verify successful login by checking user dropdown
-    var userDropdown = getDriver().$(".oxd-userdropdown", 10);
+    var userDropdown = getDriver().$(".oxd-userdropdown");
     CVerify.Object.isNotNull(userDropdown, "User dropdown should be present after login");
     userDropdown.Visible.verifyIsTrue("User dropdown should be visible after successful login");
   }
@@ -114,7 +114,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Find login slot information section
-    var loginSlot = getDriver().$(".orangehrm-login-slot", 5);
+    var loginSlot = getDriver().$(".orangehrm-login-slot");
     CVerify.Object.isNotNull(loginSlot, "Login info section should be present");
 
     // Step 3: Verify credential hints are visible
@@ -135,7 +135,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     getDriver().Url.verifyContains("orangehrmlive.com", "Should be on OrangeHRM domain");
 
     // Step 3: Find and fill username
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     CVerify.Object.isNotNull(usernameField, "Username field should be present");
     usernameField.setText(VALID_USERNAME);
 
@@ -143,7 +143,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     usernameField.Value.verifyEquals(VALID_USERNAME, "Username should be set correctly");
 
     // Step 5: Find and fill password
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     CVerify.Object.isNotNull(passwordField, "Password field should be present");
     passwordField.setText(VALID_PASSWORD);
 
@@ -151,11 +151,11 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     passwordField.Value.verifyEquals(VALID_PASSWORD, "Password should be set correctly");
 
     // Step 7: Submit login form
-    var loginButton = getDriver().$("//button[@type='submit']", 5);
+    var loginButton = getDriver().$("//button[@type='submit']");
     loginButton.click();
 
     // Step 8: Verify successful navigation to dashboard
-    var userDropdown = getDriver().$(".oxd-userdropdown", 10);
+    var userDropdown = getDriver().$(".oxd-userdropdown");
     userDropdown.Visible.verifyIsTrue("Should navigate to dashboard after successful login");
   }
 
@@ -169,7 +169,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Find login button
-    var loginButton = getDriver().$("//button[@type='submit']", 10);
+    var loginButton = getDriver().$("//button[@type='submit']");
     CVerify.Object.isNotNull(loginButton, "Login button should be present");
 
     // Step 3: Verify button is visible
@@ -192,32 +192,32 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Attempt 1: First invalid login
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     usernameField.setText("wronguser1");
 
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     passwordField.setText("wrongpass1");
 
-    var loginButton = getDriver().$("//button[@type='submit']", 5);
+    var loginButton = getDriver().$("//button[@type='submit']");
     loginButton.click();
 
     // Verify first error
-    var errorAlert = getDriver().$(".oxd-alert", 10);
+    var errorAlert = getDriver().$(".oxd-alert");
     errorAlert.Visible.verifyIsTrue("First error should be visible");
     errorAlert.Text.verifyEquals("Invalid credentials", "Should show invalid credentials message");
 
     // Attempt 2: Second invalid login (fields should still be on page)
-    usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     usernameField.setText("wronguser2");
 
-    passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     passwordField.setText("wrongpass2");
 
-    loginButton = getDriver().$("//button[@type='submit']", 5);
+    loginButton = getDriver().$("//button[@type='submit']");
     loginButton.click();
 
     // Verify second error
-    errorAlert = getDriver().$(".oxd-alert", 10);
+    errorAlert = getDriver().$(".oxd-alert");
     errorAlert.Visible.verifyIsTrue("Second error should be visible");
     errorAlert.Text.verifyEquals("Invalid credentials", "Should show invalid credentials message again");
   }
@@ -232,7 +232,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Enter initial values
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     usernameField.setText("initialUser");
     usernameField.Value.verifyEquals("initialUser", "Initial username should be set");
 
@@ -244,7 +244,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     usernameField.Value.verifyEquals(VALID_USERNAME, "Username should be updated");
 
     // Step 4: Do the same for password
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     passwordField.setText("wrongpassword");
     passwordField.clear();
     passwordField.Value.verifyIsBlank("Password should be empty after clear");
@@ -263,13 +263,13 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     open(ORANGEHRM_URL);
 
     // Step 2: Check username field attributes
-    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']", 5);
+    var usernameField = getDriver().$(USERNAME_FIELD, "[name='" + USERNAME_FIELD + "']");
     CVerify.Object.isNotNull(usernameField, "Username field should be present");
     usernameField.Present.verifyIsTrue("Username field should be in DOM");
     usernameField.Visible.verifyIsTrue("Username field should be visible");
 
     // Step 3: Check password field attributes
-    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']", 5);
+    var passwordField = getDriver().$(PASSWORD_FIELD, "[name='" + PASSWORD_FIELD + "']");
     CVerify.Object.isNotNull(passwordField, "Password field should be present");
     passwordField.Present.verifyIsTrue("Password field should be in DOM");
     passwordField.Visible.verifyIsTrue("Password field should be visible");
@@ -292,7 +292,7 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
     getDriver().Url.verifyContains("orangehrmlive", "URL should contain orangehrmlive domain");
 
     // Step 3: Find and verify branding information in login slot
-    var loginSlot = getDriver().$(".orangehrm-login-slot", 5);
+    var loginSlot = getDriver().$(".orangehrm-login-slot");
     CVerify.Object.isNotNull(loginSlot, "Login information section should be present");
 
     // Step 4: Verify OrangeHRM branding text

@@ -9,9 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.catools.common.otel.COTelConfig;
 import org.catools.web.config.CDriverConfigs;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v138.network.Network;
-import org.openqa.selenium.devtools.v138.network.model.Request;
-import org.openqa.selenium.devtools.v138.network.model.Response;
+import org.openqa.selenium.devtools.v143.network.Network;
+import org.openqa.selenium.devtools.v143.network.model.Request;
+import org.openqa.selenium.devtools.v143.network.model.Response;
 
 import java.net.URI;
 import java.time.Instant;

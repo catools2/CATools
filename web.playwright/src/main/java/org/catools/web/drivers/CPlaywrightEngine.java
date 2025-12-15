@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.catools.web.drivers.CDriverWaiter.DEFAULT_TIMEOUT;
+
 /**
  * Playwright implementation of CDriverEngine providing browser automation capabilities.
  * <p>
@@ -105,7 +107,7 @@ public class CPlaywrightEngine implements CDriverEngine {
    * </p>
    */
   @Override
-  public void close() {
+  public boolean close() {
     if (!isClosed()) {
       try {
         BrowserContext context = page.context();
@@ -113,21 +115,33 @@ public class CPlaywrightEngine implements CDriverEngine {
         if (context != null) {
           context.close();
         }
+        closed = true;
+        return true;
       } catch (Exception e) {
         log.debug("Error closing page/context", e);
+        closed = true; // Mark as closed even if close fails
+        return false;
       }
     }
     closed = true;
+    return true;
   }
 
   /**
    * Refreshes the current page.
    */
   @Override
-  public void refresh() {
+  public boolean refresh() {
     if (!isClosed()) {
-      page.reload();
+      try {
+        page.reload();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to refresh page", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -246,10 +260,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param keysToSend the keys to send
    */
   @Override
-  public void sendKeys(String keysToSend) {
+  public boolean sendKeys(String keysToSend) {
     if (!isClosed()) {
-      page.keyboard().type(keysToSend);
+      try {
+        page.keyboard().type(keysToSend);
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to send keys", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -259,18 +280,26 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param intervalInMilliSeconds the delay in milliseconds between key presses
    */
   @Override
-  public void sendKeys(String keysToSend, long intervalInMilliSeconds) {
+  public boolean sendKeys(String keysToSend, long intervalInMilliSeconds) {
     if (!isClosed()) {
-      for (char c : keysToSend.toCharArray()) {
-        page.keyboard().type(String.valueOf(c));
-        try {
-          Thread.sleep(intervalInMilliSeconds);
-        } catch (InterruptedException e) {
-          Thread.currentThread().interrupt();
-          log.warn("Interrupted while typing with delay", e);
+      try {
+        for (char c : keysToSend.toCharArray()) {
+          page.keyboard().type(String.valueOf(c));
+          try {
+            Thread.sleep(intervalInMilliSeconds);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("Interrupted while typing with delay", e);
+            return false;
+          }
         }
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to send keys with interval", e);
+        return false;
       }
     }
+    return false;
   }
 
   /**
@@ -279,16 +308,16 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param url target URL to open
    */
   @Override
-  public void open(String url) {
+  public boolean open(String url) {
     if (page == null || page.isClosed()) {
       log.warn("Cannot navigate - page is null or closed");
-      return;
+      return false;
     }
 
     BrowserContext context = page.context();
     if (context == null) {
       log.warn("Cannot navigate - browser context is null");
-      return;
+      return false;
     }
 
     // Retry up to 3 times to handle transient errors
@@ -298,7 +327,7 @@ public class CPlaywrightEngine implements CDriverEngine {
       try {
         page.navigate(url, new Page.NavigateOptions()
             .setWaitUntil(com.microsoft.playwright.options.WaitUntilState.DOMCONTENTLOADED));
-        return; // Success
+        return true; // Success
       } catch (com.microsoft.playwright.PlaywrightException e) {
 
         // Check for connection/command errors that indicate browser/context issues
@@ -315,7 +344,7 @@ public class CPlaywrightEngine implements CDriverEngine {
         if (isConnectionError) {
           log.error("Browser connection error on attempt {}/{}: {}. Cannot retry - browser/context is closed.",
               attempt, maxAttempts, e.getMessage());
-          throw new RuntimeException("Navigation failed - browser connection lost: " + e.getMessage(), e);
+          return false;
         }
 
         if (isTransientError) {
@@ -326,46 +355,63 @@ public class CPlaywrightEngine implements CDriverEngine {
               Thread.sleep(200); // Small delay before retry
             } catch (InterruptedException ie) {
               Thread.currentThread().interrupt();
+              return false;
             }
             continue; // Retry
           } else {
             log.warn("Navigation failed after {} attempts to: {}", maxAttempts, url);
             // Don't throw - let the navigation complete even with the error
             // The page usually loads successfully despite the error
-            return;
+            return true; // Return true as page may have loaded
           }
         }
 
         // Handle other specific errors
         if (e.getMessage().contains("Target closed")) {
           log.warn("Page or context was closed during navigation to: {}", url);
-          throw new RuntimeException("Navigation failed - page or context closed: " + e.getMessage(), e);
+          return false;
         }
 
         // Re-throw other exceptions
-        throw e;
+        log.error("Navigation failed with unexpected error", e);
+        return false;
       }
     }
+    return false;
   }
 
   /**
    * Navigate back in the browser history.
    */
   @Override
-  public void goBack() {
+  public boolean goBack() {
     if (!isClosed()) {
-      page.goBack();
+      try {
+        page.goBack();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to go back", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
    * Navigate forward in the browser history.
    */
   @Override
-  public void goForward() {
+  public boolean goForward() {
     if (!isClosed()) {
-      page.goForward();
+      try {
+        page.goForward();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to go forward", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -374,7 +420,7 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param title page title to switch to
    */
   @Override
-  public void switchToPage(String title) {
+  public boolean switchToPage(String title) {
     if (!isClosed()) {
       List<Page> pages = page.context().pages();
       for (Page p : pages) {
@@ -382,7 +428,7 @@ public class CPlaywrightEngine implements CDriverEngine {
           if (p.title().equals(title)) {
             this.page = p;
             p.bringToFront();
-            return;
+            return true;
           }
         } catch (com.microsoft.playwright.PlaywrightException e) {
           // Ignore "Execution context was destroyed" errors - page might be navigating
@@ -390,11 +436,12 @@ public class CPlaywrightEngine implements CDriverEngine {
             log.debug("Page title unavailable during navigation, skipping: {}", e.getMessage());
             continue;
           }
-          throw e;
+          log.debug("Error checking page title", e);
         }
       }
       log.warn("No page found with title: {}", title);
     }
+    return false;
   }
 
   /**
@@ -403,47 +450,65 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param index 0-based page index
    */
   @Override
-  public void switchToPage(int index) {
+  public boolean switchToPage(int index) {
     if (!isClosed()) {
-      List<Page> pages = page.context().pages();
-      if (index >= 0 && index < pages.size()) {
-        this.page = pages.get(index);
-        this.page.bringToFront();
-      } else {
-        log.warn("Invalid page index: {}. Total pages: {}", index, pages.size());
+      try {
+        List<Page> pages = page.context().pages();
+        if (index >= 0 && index < pages.size()) {
+          this.page = pages.get(index);
+          this.page.bringToFront();
+          return true;
+        } else {
+          log.warn("Invalid page index: {}. Total pages: {}", index, pages.size());
+        }
+      } catch (Exception e) {
+        log.debug("Failed to switch to page by index", e);
       }
     }
+    return false;
   }
 
   /**
    * Switch to the last (most recently opened) page.
    */
   @Override
-  public void switchToLastPage() {
+  public boolean switchToLastPage() {
     if (!isClosed()) {
-      List<Page> pages = page.context().pages();
-      if (!pages.isEmpty()) {
-        this.page = pages.getLast();
-        this.page.bringToFront();
+      try {
+        List<Page> pages = page.context().pages();
+        if (!pages.isEmpty()) {
+          this.page = pages.getLast();
+          this.page.bringToFront();
+          return true;
+        }
+      } catch (Exception e) {
+        log.debug("Failed to switch to last page", e);
       }
     }
+    return false;
   }
 
   /**
    * Switch to the next page in the list of open pages.
    */
   @Override
-  public void switchToNextPage() {
+  public boolean switchToNextPage() {
     if (!isClosed()) {
-      List<Page> pages = page.context().pages();
-      int currentIndex = pages.indexOf(this.page);
-      if (currentIndex >= 0 && currentIndex < pages.size() - 1) {
-        this.page = pages.get(currentIndex + 1);
-        this.page.bringToFront();
-      } else {
-        log.warn("Already on last page or page not found in context");
+      try {
+        List<Page> pages = page.context().pages();
+        int currentIndex = pages.indexOf(this.page);
+        if (currentIndex >= 0 && currentIndex < pages.size() - 1) {
+          this.page = pages.get(currentIndex + 1);
+          this.page.bringToFront();
+          return true;
+        } else {
+          log.warn("Already on last page or page not found in context");
+        }
+      } catch (Exception e) {
+        log.debug("Failed to switch to next page", e);
       }
     }
+    return false;
   }
 
   /**
@@ -452,49 +517,72 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param frameName frame name or id
    */
   @Override
-  public void switchToFrame(String frameName) {
+  public boolean switchToFrame(String frameName) {
     // In Playwright, frame switching is done via frame locators
     // This is a simplified implementation - actual usage would be via frame locators in element operations
     log.debug("Frame switching in Playwright is handled via frame locators: {}", frameName);
+    return true; // Playwright handles frames differently
   }
 
   /**
    * Switch execution context back to the default content.
    */
   @Override
-  public void switchToDefaultContent() {
+  public boolean switchToDefaultContent() {
     // In Playwright, frame context is handled automatically via mainFrame()
     log.debug("Switching to default content (main frame)");
+    return true; // Playwright handles frames differently
   }
 
   /**
    * Press Enter key in the current context.
    */
   @Override
-  public void pressEnter() {
+  public boolean pressEnter() {
     if (!isClosed()) {
-      page.keyboard().press("Enter");
+      try {
+        page.keyboard().press("Enter");
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to press Enter", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
    * Press Escape key in the current context.
    */
   @Override
-  public void pressEscape() {
+  public boolean pressEscape() {
     if (!isClosed()) {
-      page.keyboard().press("Escape");
+      try {
+        page.keyboard().press("Escape");
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to press Escape", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
    * Delete all cookies for the current browsing context.
    */
   @Override
-  public void deleteAllCookies() {
+  public boolean deleteAllCookies() {
     if (!isClosed()) {
-      page.context().clearCookies();
+      try {
+        page.context().clearCookies();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to delete cookies", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -585,10 +673,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element selector or identifier
    */
   @Override
-  public void focus(String locator) {
+  public boolean focus(String locator) {
     if (!isClosed()) {
-      page.locator(locator).focus();
+      try {
+        page.locator(locator).focus();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to focus element: {}", locator, e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -597,10 +692,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void click(String locator) {
+  public boolean click(String locator) {
     if (!isClosed()) {
-      page.locator(locator).click();
+      try {
+        page.locator(locator).click();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to click element: {}", locator, e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -609,10 +711,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void mouseClick(String locator) {
+  public boolean mouseClick(String locator) {
     if (!isClosed()) {
-      page.locator(locator).click();
+      try {
+        page.locator(locator).click();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to mouse click element: {}", locator, e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -621,10 +730,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void mouseDoubleClick(String locator) {
+  public boolean mouseDoubleClick(String locator) {
     if (!isClosed()) {
-      page.locator(locator).dblclick();
+      try {
+        page.locator(locator).dblclick();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to double click element: {}", locator, e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -633,10 +749,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element locator
    */
   @Override
-  public void scrollIntoView(String locator) {
+  public boolean scrollIntoView(String locator) {
     if (!isClosed()) {
-      page.locator(locator).scrollIntoViewIfNeeded();
+      try {
+        page.locator(locator).scrollIntoViewIfNeeded();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to scroll element into view: {}", locator, e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -646,10 +769,11 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param keysToSend keys to send
    */
   @Override
-  public void sendKeys(String locator, String keysToSend) {
+  public boolean sendKeys(String locator, String keysToSend) {
     if (!isClosed()) {
-      sendKeys(locator, keysToSend, 5);
+      return sendKeys(locator, keysToSend, DEFAULT_TIMEOUT);
     }
+    return false;
   }
 
   /**
@@ -660,20 +784,28 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param intervalInMilliSeconds the delay in milliseconds between key presses
    */
   @Override
-  public void sendKeys(String locator, String keysToSend, long intervalInMilliSeconds) {
+  public boolean sendKeys(String locator, String keysToSend, long intervalInMilliSeconds) {
     if (!isClosed()) {
-      Locator element = page.locator(locator);
-      element.focus();
-      for (char c : keysToSend.toCharArray()) {
-        page.keyboard().type(String.valueOf(c));
-        try {
-          Thread.sleep(intervalInMilliSeconds);
-        } catch (InterruptedException e) {
-          Thread.currentThread().interrupt();
-          log.warn("Interrupted while typing with delay", e);
+      try {
+        Locator element = page.locator(locator);
+        element.focus();
+        for (char c : keysToSend.toCharArray()) {
+          page.keyboard().type(String.valueOf(c));
+          try {
+            Thread.sleep(intervalInMilliSeconds);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("Interrupted while typing with delay", e);
+            return false;
+          }
         }
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to send keys with interval", e);
+        return false;
       }
     }
+    return false;
   }
 
   /**
@@ -684,11 +816,18 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param yOffset vertical offset
    */
   @Override
-  public void dropTo(String locator, int xOffset, int yOffset) {
+  public boolean dropTo(String locator, int xOffset, int yOffset) {
     if (!isClosed()) {
-      Locator element = page.locator(locator);
-      element.dragTo(element, new Locator.DragToOptions().setTargetPosition(xOffset, yOffset));
+      try {
+        Locator element = page.locator(locator);
+        element.dragTo(element, new Locator.DragToOptions().setTargetPosition(xOffset, yOffset));
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to drop element", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -699,10 +838,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param yOffset vertical offset
    */
   @Override
-  public void moveToElement(String locator, int xOffset, int yOffset) {
+  public boolean moveToElement(String locator, int xOffset, int yOffset) {
     if (!isClosed()) {
-      page.locator(locator).hover(new Locator.HoverOptions().setPosition(xOffset, yOffset));
+      try {
+        page.locator(locator).hover(new Locator.HoverOptions().setPosition(xOffset, yOffset));
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to move to element", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -714,12 +860,19 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param yOffset1 vertical offset for source
    */
   @Override
-  public void dragAndDropTo(String source, String target, int xOffset1, int yOffset1) {
+  public boolean dragAndDropTo(String source, String target, int xOffset1, int yOffset1) {
     if (!isClosed()) {
-      Locator sourceElement = page.locator(source);
-      Locator targetElement = page.locator(target);
-      sourceElement.dragTo(targetElement, new Locator.DragToOptions().setSourcePosition(xOffset1, yOffset1));
+      try {
+        Locator sourceElement = page.locator(source);
+        Locator targetElement = page.locator(target);
+        sourceElement.dragTo(targetElement, new Locator.DragToOptions().setSourcePosition(xOffset1, yOffset1));
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to drag and drop", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -732,13 +885,20 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param yOffset2 second vertical offset
    */
   @Override
-  public void dragAndDropTo(String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
+  public boolean dragAndDropTo(String locator, int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
     if (!isClosed()) {
-      Locator element = page.locator(locator);
-      element.dragTo(element, new Locator.DragToOptions()
-          .setSourcePosition(xOffset1, yOffset1)
-          .setTargetPosition(xOffset2, yOffset2));
+      try {
+        Locator element = page.locator(locator);
+        element.dragTo(element, new Locator.DragToOptions()
+            .setSourcePosition(xOffset1, yOffset1)
+            .setTargetPosition(xOffset2, yOffset2));
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to drag and drop with offsets", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -946,10 +1106,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param locator element locator string
    */
   @Override
-  public void clearElement(String locator) {
+  public boolean clearElement(String locator) {
     if (!isClosed()) {
-      page.locator(locator).clear();
+      try {
+        page.locator(locator).clear();
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to clear element", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -959,10 +1126,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param text    text to type
    */
   @Override
-  public void setText(String locator, String text) {
+  public boolean setText(String locator, String text) {
     if (!isClosed()) {
-      page.locator(locator).fill(text);
+      try {
+        page.locator(locator).fill(text);
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to set text", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -972,10 +1146,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param text    key to press
    */
   @Override
-  public void press(String locator, String text) {
+  public boolean press(String locator, String text) {
     if (!isClosed()) {
-      page.locator(locator).press(text);
+      try {
+        page.locator(locator).press(text);
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to press key", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -1070,15 +1251,22 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param text    visible text to select
    */
   @Override
-  public void selectByVisibleText(String locator, String text) {
+  public boolean selectByVisibleText(String locator, String text) {
     if (!isClosed()) {
-      // Playwright doesn't have a direct selectByLabel, we need to find the option by text
-      String script = String.format(
-          "element => { const option = Array.from(element.options).find(opt => opt.text === '%s'); if (option) element.value = option.value; }",
-          text.replace("'", "\\'")
-      );
-      page.locator(locator).evaluate(script);
+      try {
+        // Playwright doesn't have a direct selectByLabel, we need to find the option by text
+        String script = String.format(
+            "element => { const option = Array.from(element.options).find(opt => opt.text === '%s'); if (option) element.value = option.value; }",
+            text.replace("'", "\\'")
+        );
+        page.locator(locator).evaluate(script);
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to select by visible text", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -1088,10 +1276,17 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param value   the value attribute to select
    */
   @Override
-  public void selectByValue(String locator, String value) {
+  public boolean selectByValue(String locator, String value) {
     if (!isClosed()) {
-      page.locator(locator).selectOption(value);
+      try {
+        page.locator(locator).selectOption(value);
+        return true;
+      } catch (Exception e) {
+        log.debug("Failed to select by value", e);
+        return false;
+      }
     }
+    return false;
   }
 
   /**
@@ -1101,15 +1296,23 @@ public class CPlaywrightEngine implements CDriverEngine {
    * @param index   0-based index to select
    */
   @Override
-  public void selectByIndex(String locator, int index) {
+  public boolean selectByIndex(String locator, int index) {
     if (!isClosed()) {
-      List<Options> options = getOptions(locator);
-      if (index >= 0 && index < options.size()) {
-        String value = options.get(index).value();
-        page.locator(locator).selectOption(value);
-      } else {
-        log.warn("Invalid index {} for select element with {} options", index, options.size());
+      try {
+        List<Options> options = getOptions(locator);
+        if (index >= 0 && index < options.size()) {
+          String value = options.get(index).value();
+          page.locator(locator).selectOption(value);
+          return true;
+        } else {
+          log.warn("Invalid index {} for select element with {} options", index, options.size());
+          return false;
+        }
+      } catch (Exception e) {
+        log.debug("Failed to select by index", e);
+        return false;
       }
     }
+    return false;
   }
 }

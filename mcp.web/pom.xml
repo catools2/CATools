@@ -87,10 +87,5 @@
             <artifactId>web.testng</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.table</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 </project>

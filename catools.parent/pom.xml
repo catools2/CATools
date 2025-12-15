@@ -130,11 +130,11 @@
         <extent.reports.version>5.1.2</extent.reports.version>
 
         <!-- Selenium Devtools -->
-        <selenium-devtools.artifactId>selenium-devtools-v138</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.36.0</selenium.devtools.version>
+        <selenium-devtools.artifactId>selenium-devtools-v143</selenium-devtools.artifactId>
+        <selenium.devtools.version>4.39.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.38.0</selenium.version>
+        <selenium.version>4.39.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
         <selenium-axe.version>4.11.0</selenium-axe.version>
@@ -283,6 +283,11 @@
             <dependency>
                 <groupId>io.opentelemetry</groupId>
                 <artifactId>opentelemetry-sdk-common</artifactId>
+                <version>${opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk-metrics</artifactId>
                 <version>${opentelemetry.version}</version>
             </dependency>
             <dependency>

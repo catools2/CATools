@@ -42,8 +42,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * button.moveTo();
    * </pre>
    */
-  default void moveTo() {
-    moveTo(0, 0);
+  default boolean moveTo() {
+    return moveTo(0, 0);
   }
 
   /**
@@ -55,8 +55,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * element.moveTo(10);
    * </pre>
    */
-  default void moveTo(int waitSec) {
-    moveTo(0, 0, waitSec);
+  default boolean moveTo(int waitSec) {
+    return moveTo(0, 0, waitSec);
   }
 
   /**
@@ -70,8 +70,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * element.moveTo(50, 20);
    * </pre>
    */
-  default void moveTo(int xOffset, int yOffset) {
-    moveTo(xOffset, yOffset, getWaitSec());
+  default boolean moveTo(int xOffset, int yOffset) {
+    return moveTo(xOffset, yOffset, getWaitSec());
   }
 
   /**
@@ -85,9 +85,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * element.moveTo(30, -10, 15);
    * </pre>
    */
-  default void moveTo(int xOffset, int yOffset, int waitSec) {
-    isPresent(waitSec);
-    getDriver().moveToElement(getLocator(), xOffset, yOffset, 0);
+  default boolean moveTo(int xOffset, int yOffset, int waitSec) {
+    return isPresent(waitSec) && getDriver().moveToElement(getLocator(), xOffset, yOffset, 0);
   }
 
   /**
@@ -101,8 +100,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * draggableElement.dropTo(100, 50);
    * </pre>
    */
-  default void dropTo(int xOffset, int yOffset) {
-    dropTo(xOffset, yOffset, getWaitSec());
+  default boolean dropTo(int xOffset, int yOffset) {
+    return dropTo(xOffset, yOffset, getWaitSec());
   }
 
   /**
@@ -116,9 +115,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * draggableElement.dropTo(75, -25, 8);
    * </pre>
    */
-  default void dropTo(int xOffset, int yOffset, int waitSec) {
-    isPresent(waitSec);
-    getDriver().dropTo(getLocator(), xOffset, yOffset, 0);
+  default boolean dropTo(int xOffset, int yOffset, int waitSec) {
+    return isPresent(waitSec) && getDriver().dropTo(getLocator(), xOffset, yOffset, 0);
   }
 
   /**
@@ -132,8 +130,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slider.dragAndDropTo(200, 100);
    * </pre>
    */
-  default void dragAndDropTo(int xOffset2, int yOffset2) {
-    dragAndDropTo(0, 0, xOffset2, yOffset2);
+  default boolean dragAndDropTo(int xOffset2, int yOffset2) {
+    return dragAndDropTo(0, 0, xOffset2, yOffset2);
   }
 
   /**
@@ -147,8 +145,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * draggableItem.dragAndDropTo(150, -50, 12);
    * </pre>
    */
-  default void dragAndDropTo(int xOffset2, int yOffset2, int waitSec) {
-    dragAndDropTo(0, 0, xOffset2, yOffset2, waitSec);
+  default boolean dragAndDropTo(int xOffset2, int yOffset2, int waitSec) {
+    return dragAndDropTo(0, 0, xOffset2, yOffset2, waitSec);
   }
 
   /**
@@ -164,8 +162,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * resizableCorner.dragAndDropTo(10, 5, 100, 75);
    * </pre>
    */
-  default void dragAndDropTo(int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
-    dragAndDropTo(xOffset1, yOffset1, xOffset2, yOffset2, getWaitSec());
+  default boolean dragAndDropTo(int xOffset1, int yOffset1, int xOffset2, int yOffset2) {
+    return dragAndDropTo(xOffset1, yOffset1, xOffset2, yOffset2, getWaitSec());
   }
 
   /**
@@ -181,9 +179,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dragHandle.dragAndDropTo(0, 0, 200, 150, 15);
    * </pre>
    */
-  default void dragAndDropTo(int xOffset1, int yOffset1, int xOffset2, int yOffset2, int waitSec) {
-    isPresent(waitSec);
-    getDriver().dragAndDropTo(getLocator(), xOffset1, yOffset1, xOffset2, yOffset2, 0);
+  default boolean dragAndDropTo(int xOffset1, int yOffset1, int xOffset2, int yOffset2, int waitSec) {
+    return isPresent(waitSec) && getDriver().dragAndDropTo(getLocator(), xOffset1, yOffset1, xOffset2, yOffset2, 0);
   }
 
   /**
@@ -196,8 +193,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * draggableItem.dragAndDropTo(String.id("dropZone"));
    * </pre>
    */
-  default void dragAndDropTo(String target) {
-    dragAndDropTo(target, 0);
+  default boolean dragAndDropTo(String target) {
+    return dragAndDropTo(target, 0);
   }
 
   /**
@@ -210,8 +207,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * fileItem.dragAndDropTo(String.className("upload-area"), 20);
    * </pre>
    */
-  default void dragAndDropTo(String target, int waitSec) {
-    dragAndDropTo(target, 0, 0, waitSec);
+  default boolean dragAndDropTo(String target, int waitSec) {
+    return dragAndDropTo(target, 0, 0, waitSec);
   }
 
   /**
@@ -226,8 +223,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * resizeHandle.dragAndDropTo(String.id("container"), 10, 10);
    * </pre>
    */
-  default void dragAndDropTo(String target, int xOffset1, int yOffset1) {
-    dragAndDropTo(target, xOffset1, yOffset1, DEFAULT_TIMEOUT);
+  default boolean dragAndDropTo(String target, int xOffset1, int yOffset1) {
+    return dragAndDropTo(target, xOffset1, yOffset1, DEFAULT_TIMEOUT);
   }
 
   /**
@@ -242,9 +239,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * menuItem.dragAndDropTo(String.className("menu-container"), 5, 0, 10);
    * </pre>
    */
-  default void dragAndDropTo(String target, int xOffset1, int yOffset1, int waitSec) {
-    isPresent(waitSec);
-    getDriver().dragAndDropTo(getLocator(), target, xOffset1, yOffset1, 0);
+  default boolean dragAndDropTo(String target, int xOffset1, int yOffset1, int waitSec) {
+    return isPresent(waitSec) && getDriver().dragAndDropTo(getLocator(), target, xOffset1, yOffset1, 0);
   }
 
   /**
@@ -305,9 +301,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Send Keys to Element",
       description = "Sends keys to the web element (types text or special keys)"
   )
-  default void sendKeys(
+  default boolean sendKeys(
       @CMcpToolParam(name = "keys", description = "The keys to send to the element") String keys) {
-    getDriver().sendKeys(getLocator(), getWaitSec(), keys);
+    return getDriver().sendKeys(getLocator(), getWaitSec(), keys);
   }
 
   /**
@@ -326,9 +322,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Press Special Key On Element",
       description = "Press special key on the web element (i.e. Enter, Tab, etc.)"
   )
-  default void pressKey(
+  default boolean pressKey(
       @CMcpToolParam(name = "key", description = "The keys to send to the element") String key) {
-    getDriver().pressKey(getLocator(), key, getWaitSec());
+    return getDriver().pressKey(getLocator(), key, getWaitSec());
   }
 
   /**
@@ -346,8 +342,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Mouse Click Element",
       description = "Performs a mouse click on the web element"
   )
-  default void mouseClick() {
-    mouseClick(getWaitSec());
+  default boolean mouseClick() {
+    return mouseClick(getWaitSec());
   }
 
   /**
@@ -360,9 +356,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicButton.mouseClick(20);
    * </pre>
    */
-  default void mouseClick(int waitSec) {
-    moveTo(waitSec);
-    getDriver().mouseClick(getLocator(), waitSec);
+  default boolean mouseClick(int waitSec) {
+    return moveTo(waitSec) && getDriver().mouseClick(getLocator(), waitSec);
   }
 
   /**
@@ -374,8 +369,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * fileIcon.mouseDoubleClick();
    * </pre>
    */
-  default void mouseDoubleClick() {
-    mouseDoubleClick(getWaitSec());
+  default boolean mouseDoubleClick() {
+    return mouseDoubleClick(getWaitSec());
   }
 
   /**
@@ -388,9 +383,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * editableCell.mouseDoubleClick(15);
    * </pre>
    */
-  default void mouseDoubleClick(int waitSec) {
-    moveTo(waitSec);
-    getDriver().mouseDoubleClick(getLocator(), waitSec);
+  default boolean mouseDoubleClick(int waitSec) {
+    return moveTo(waitSec) && getDriver().mouseDoubleClick(getLocator(), waitSec);
   }
 
   /**
@@ -402,8 +396,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Scroll Element Into View",
       description = "Scrolls the element into view within the browser window"
   )
-  default void scrollIntoView() {
-    scrollIntoView(getWaitSec());
+  default boolean scrollIntoView() {
+    return scrollIntoView(getWaitSec());
   }
 
   /**
@@ -415,8 +409,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * lazyLoadedElement.scrollIntoView(true, 30);
    * </pre>
    */
-  default void scrollIntoView(int waitSec) {
-    getDriver().scrollIntoView(getLocator(), waitSec);
+  default boolean scrollIntoView(int waitSec) {
+    return getDriver().scrollIntoView(getLocator(), waitSec);
   }
 
   /**
@@ -427,8 +421,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * horizontalScrollContainer.scrollLeft();
    * </pre>
    */
-  default void scrollLeft() {
-    scrollLeft(900, getWaitSec());
+  default boolean scrollLeft() {
+    return scrollLeft(900, getWaitSec());
   }
 
   /**
@@ -441,8 +435,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * carousel.scrollLeft(500, 10);
    * </pre>
    */
-  default void scrollLeft(int scrollSize, int waitSec) {
-    getDriver().scrollLeft(getLocator(), scrollSize, waitSec);
+  default boolean scrollLeft(int scrollSize, int waitSec) {
+    return getDriver().scrollLeft(getLocator(), scrollSize, waitSec);
   }
 
   /**
@@ -453,8 +447,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * horizontalScrollContainer.scrollRight();
    * </pre>
    */
-  default void scrollRight() {
-    scrollRight(900, getWaitSec());
+  default boolean scrollRight() {
+    return scrollRight(900, getWaitSec());
   }
 
   /**
@@ -467,8 +461,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * imageGallery.scrollRight(300, 8);
    * </pre>
    */
-  default void scrollRight(int scrollSize, int waitSec) {
-    getDriver().scrollRight(getLocator(), scrollSize, waitSec);
+  default boolean scrollRight(int scrollSize, int waitSec) {
+    return getDriver().scrollRight(getLocator(), scrollSize, waitSec);
   }
 
   /**
@@ -484,8 +478,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * inputElement.setAttribute("type", "password");
    * </pre>
    */
-  default void setAttribute(String attributeName, String value) {
-    setAttribute(attributeName, value, getWaitSec());
+  default boolean setAttribute(String attributeName, String value) {
+    return setAttribute(attributeName, value, getWaitSec());
   }
 
   /**
@@ -499,9 +493,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicButton.setAttribute("disabled", "true", 10);
    * </pre>
    */
-  default void setAttribute(String attributeName, String value, int waitSec) {
-    isPresent(waitSec);
-    executeScript("arguments[0][\"%s\"]=\"%s\";".formatted(attributeName, value));
+  default boolean setAttribute(String attributeName, String value, int waitSec) {
+    return isPresent(waitSec) && executeScript("arguments[0][\"%s\"]=\"%s\";".formatted(attributeName, value)) != null;
   }
 
   /**
@@ -516,8 +509,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * element.removeAttribute("data-temp");
    * </pre>
    */
-  default void removeAttribute(String attributeName) {
-    removeAttribute(attributeName, getWaitSec());
+  default boolean removeAttribute(String attributeName) {
+    return removeAttribute(attributeName, getWaitSec());
   }
 
   /**
@@ -530,9 +523,10 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * inputField.removeAttribute("readonly", 12);
    * </pre>
    */
-  default void removeAttribute(String attributeName, int waitSec) {
-    isPresent(waitSec);
+  default boolean removeAttribute(String attributeName, int waitSec) {
+    if (!isPresent(waitSec)) return false;
     executeScript("arguments[0].removeAttribute(\"%s\");".formatted(attributeName));
+    return true;
   }
 
   /**
@@ -547,8 +541,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * radioButton.set(false);
    * </pre>
    */
-  default void set(boolean value) {
-    set(value, DEFAULT_TIMEOUT);
+  default boolean set(boolean value) {
+    return set(value, DEFAULT_TIMEOUT);
   }
 
   /**
@@ -561,11 +555,11 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicCheckbox.set(true, 20);
    * </pre>
    */
-  default void set(boolean value, int waitSec) {
+  default boolean set(boolean value, int waitSec) {
     if (value)
-      select(waitSec);
+      return select(waitSec);
     else
-      deselect(waitSec);
+      return deselect(waitSec);
   }
 
   /**
@@ -580,8 +574,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * genderMaleRadio.select();
    * </pre>
    */
-  default void select() {
-    select(getWaitSec());
+  default boolean select() {
+    return select(getWaitSec());
   }
 
   /**
@@ -594,8 +588,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * termsCheckbox.select(15);
    * </pre>
    */
-  default void select(int waitSec) {
-    getDriver()
+  default boolean select(int waitSec) {
+    return getDriver()
         .waitUntil(
             "Select",
             waitSec,
@@ -618,8 +612,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * newsletterCheckbox.deselect();
    * </pre>
    */
-  default void deselect() {
-    deselect(getWaitSec());
+  default boolean deselect() {
+    return deselect(getWaitSec());
   }
 
   /**
@@ -632,8 +626,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * optionalCheckbox.deselect(8);
    * </pre>
    */
-  default void deselect(int waitSec) {
-    getDriver()
+  default boolean deselect(int waitSec) {
+    return getDriver()
         .waitUntil(
             "Deselect",
             waitSec,
@@ -664,8 +658,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Click Element",
       description = "Clicks on the web element with fallback to JavaScript click if needed"
   )
-  default void click() {
-    click(getWaitSec());
+  default boolean click() {
+    return click(getWaitSec());
   }
 
   /**
@@ -678,15 +672,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicButton.click(20);
    * </pre>
    */
-  default void click(int waitSec) {
-    getDriver()
-        .waitUntil(
-            "Click",
-            waitSec,
-            engine -> {
-              engine.click(getLocator());
-              return true;
-            });
+  default boolean click(int waitSec) {
+    return getDriver().waitUntil("Click", waitSec, engine -> engine.click(getLocator()));
   }
 
   /**
@@ -740,8 +727,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * externalLink.openHref();
    * </pre>
    */
-  default void openHref() {
-    openHref(getWaitSec());
+  default boolean openHref() {
+    return openHref(getWaitSec());
   }
 
   /**
@@ -753,8 +740,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicLink.openHref(10);
    * </pre>
    */
-  default void openHref(int waitSec) {
+  default boolean openHref(int waitSec) {
     getDriver().open(getAttribute("href", waitSec));
+    return true;
   }
 
   /**
@@ -884,8 +872,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * fileInput.uploadFile(imageFile);
    * </pre>
    */
-  default void uploadFile(File file) {
-    uploadFile(CFileUtil.getCanonicalPath(file));
+  default boolean uploadFile(File file) {
+    return uploadFile(CFileUtil.getCanonicalPath(file));
   }
 
   /**
@@ -901,14 +889,15 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * csvUpload.uploadFile("C:\\data\\employees.csv");
    * </pre>
    */
-  default void uploadFile(String filePath) {
+  default boolean uploadFile(String filePath) {
+    boolean result;
     if (!CGridConfigs.isUseLocalFileDetectorInOn()) {
       String fullFileName = getDriver().performActionOnEngine("Copy File To Node", page -> CGridUtil.copyFileToNode(java.lang.Integer.toHexString(System.identityHashCode(page)), new File(filePath)));
-      sendKeys(fullFileName);
+      result = sendKeys(fullFileName);
     } else {
-      sendKeys(filePath);
+      result = sendKeys(filePath);
     }
-    getDriver().pressTab();
+    return result && getDriver().pressTab();
   }
 
   /**
@@ -924,8 +913,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * avatarUpload.uploadResource("default-avatar.png", getClass());
    * </pre>
    */
-  default void uploadResource(String resourceName, Class clazz) {
-    uploadResource(new CResource(resourceName, clazz));
+  default boolean uploadResource(String resourceName, Class clazz) {
+    return uploadResource(new CResource(resourceName, clazz));
   }
 
   /**
@@ -938,9 +927,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * fileInput.uploadResource(templateFile);
    * </pre>
    */
-  default void uploadResource(CResource resource) {
+  default boolean uploadResource(CResource resource) {
     CFile filePath = resource.saveToFolder(CPathConfigs.getTempFolder());
-    uploadFile(filePath.getCanonicalPath());
+    return uploadFile(filePath.getCanonicalPath());
   }
 
   // Input
@@ -960,8 +949,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * birthdateInput.setText(birthDate, "MM/dd/yyyy");
    * </pre>
    */
-  default void setText(Date date, String format) {
-    setText(date, format, getWaitSec());
+  default boolean setText(Date date, String format) {
+    return setText(date, format, getWaitSec());
   }
 
   /**
@@ -975,8 +964,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * eventDateInput.setText(eventDate, "dd/MM/yyyy", 15);
    * </pre>
    */
-  default void setText(Date date, String format, int waitSec) {
-    setText(CDate.of(date).toFormat(format), waitSec);
+  default boolean setText(Date date, String format, int waitSec) {
+    return setText(CDate.of(date).toFormat(format), waitSec);
   }
 
   /**
@@ -995,8 +984,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * commentField.setText("");
    * </pre>
    */
-  default void setText(String text) {
-    setText(text, getWaitSec());
+  default boolean setText(String text) {
+    return setText(text, getWaitSec());
   }
 
   /**
@@ -1010,15 +999,12 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicTextField.setText("Updated content", 20);
    * </pre>
    */
-  default void setText(String text, int waitSec) {
-    getDriver()
+  default boolean setText(String text, int waitSec) {
+    return getDriver()
         .waitUntil(
             "Set Text",
             waitSec,
-            engine -> {
-              engine.setText(getLocator(), text);
-              return true;
-            });
+            engine -> engine.setText(getLocator(), text));
   }
 
   /**
@@ -1034,8 +1020,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * passwordField.setTextAndEnter("mySecretPassword");
    * </pre>
    */
-  default void setTextAndEnter(String text) {
-    setTextAndEnter(text, getWaitSec());
+  default boolean setTextAndEnter(String text) {
+    return setTextAndEnter(text, getWaitSec());
   }
 
   /**
@@ -1048,8 +1034,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slowSearchBox.setTextAndEnter("complex query", 15);
    * </pre>
    */
-  default void setTextAndEnter(String text, int waitSec) {
-    setTextAnd(text, "Enter", waitSec);
+  default boolean setTextAndEnter(String text, int waitSec) {
+    return setTextAnd(text, "Enter", waitSec);
   }
 
   /**
@@ -1066,8 +1052,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * emailField.setTextAndTab("john@example.com");
    * </pre>
    */
-  default void setTextAndTab(String text) {
-    setTextAndTab(text, getWaitSec());
+  default boolean setTextAndTab(String text) {
+    return setTextAndTab(text, getWaitSec());
   }
 
   /**
@@ -1080,8 +1066,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slowLoadingField.setTextAndTab("data", 12);
    * </pre>
    */
-  default void setTextAndTab(String text, int waitSec) {
-    setTextAnd(text, "Tab", waitSec);
+  default boolean setTextAndTab(String text, int waitSec) {
+    return setTextAnd(text, "Tab", waitSec);
   }
 
   /**
@@ -1097,8 +1083,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * commandField.setTextAnd("help command", "F1");
    * </pre>
    */
-  default void setTextAnd(String text, String keys) {
-    setTextAnd(text, keys, getWaitSec());
+  default boolean setTextAnd(String text, String keys) {
+    return setTextAnd(text, keys, getWaitSec());
   }
 
   /**
@@ -1112,16 +1098,12 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * specialField.setTextAnd("special input", "F5", 10);
    * </pre>
    */
-  default void setTextAnd(String text, String key, int waitSec) {
-    getDriver()
+  default boolean setTextAnd(String text, String key, int waitSec) {
+    return getDriver()
         .waitUntil(
             "Set Text And " + key,
             waitSec,
-            engine -> {
-              engine.setText(getLocator(), text);
-              engine.press(getLocator(), key);
-              return true;
-            });
+            engine -> engine.setText(getLocator(), text) && engine.press(getLocator(), key));
   }
 
   /**
@@ -1136,8 +1118,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dateInput.setValue(appointmentDate, "yyyy-MM-dd");
    * </pre>
    */
-  default void setValue(Date date, String format) {
-    setValue(date, format, getWaitSec());
+  default boolean setValue(Date date, String format) {
+    return setValue(date, format, getWaitSec());
   }
 
   /**
@@ -1151,8 +1133,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * startDateInput.setValue(startDate, "MM/dd/yyyy", 8);
    * </pre>
    */
-  default void setValue(Date date, String format, int waitSec) {
-    setValue(CDate.of(date).toFormat(format), waitSec);
+  default boolean setValue(Date date, String format, int waitSec) {
+    return setValue(CDate.of(date).toFormat(format), waitSec);
   }
 
   /**
@@ -1171,8 +1153,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * calculatedField.setValue("42.50");
    * </pre>
    */
-  default void setValue(String text) {
-    setValue(text, getWaitSec());
+  default boolean setValue(String text) {
+    return setValue(text, getWaitSec());
   }
 
   /**
@@ -1185,8 +1167,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicField.setValue("computed value", 12);
    * </pre>
    */
-  default void setValue(String text, int waitSec) {
-    setAttribute("value", text, waitSec);
+  default boolean setValue(String text, int waitSec) {
+    return setAttribute("value", text, waitSec);
   }
 
   /**
@@ -1202,8 +1184,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * quickSearchField.setValueAndEnter("products");
    * </pre>
    */
-  default void setValueAndEnter(String text) {
-    setValueAndEnter(text, getWaitSec());
+  default boolean setValueAndEnter(String text) {
+    return setValueAndEnter(text, getWaitSec());
   }
 
   /**
@@ -1216,9 +1198,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * complexFormField.setValueAndEnter("complex data", 15);
    * </pre>
    */
-  default void setValueAndEnter(String text, int waitSec) {
-    setValue(text, waitSec);
-    sendKeys("Enter");
+  default boolean setValueAndEnter(String text, int waitSec) {
+    return setValue(text, waitSec) && sendKeys("Enter");
   }
 
   /**
@@ -1232,8 +1213,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * // Focus moves to next form field
    * </pre>
    */
-  default void setValueAndTab(String text) {
-    setValueAndTab(text, getWaitSec());
+  default boolean setValueAndTab(String text) {
+    return setValueAndTab(text, getWaitSec());
   }
 
   /**
@@ -1246,9 +1227,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * asyncField.setValueAndTab("calculated value", 10);
    * </pre>
    */
-  default void setValueAndTab(String text, int waitSec) {
-    setValue(text, waitSec);
-    sendKeys("Tab");
+  default boolean setValueAndTab(String text, int waitSec) {
+    return setValue(text, waitSec) && sendKeys("Tab");
   }
 
   /**
@@ -1263,8 +1243,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * searchInput.clear();
    * </pre>
    */
-  default void clear() {
-    clear(getWaitSec());
+  default boolean clear() {
+    return clear(getWaitSec());
   }
 
   /**
@@ -1276,15 +1256,12 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slowLoadingInput.clear(15);
    * </pre>
    */
-  default void clear(int waitSec) {
-    getDriver()
+  default boolean clear(int waitSec) {
+    return getDriver()
         .waitUntil(
             "Clear",
             waitSec,
-            engine -> {
-              engine.clearElement(getLocator());
-              return true;
-            });
+            engine -> engine.clearElement(getLocator()));
   }
 
   /**
@@ -1299,8 +1276,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * datePicker.type(selectedDate, "MM/dd/yyyy");
    * </pre>
    */
-  default void type(Date date, String format) {
-    type(date, format, getWaitSec());
+  default boolean type(Date date, String format) {
+    return type(date, format, getWaitSec());
   }
 
   /**
@@ -1314,8 +1291,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * endDateInput.type(endDate, "yyyy-MM-dd", 12);
    * </pre>
    */
-  default void type(Date date, String format, int waitSec) {
-    type(CDate.of(date).toFormat(format), waitSec);
+  default boolean type(Date date, String format, int waitSec) {
+    return type(CDate.of(date).toFormat(format), waitSec);
   }
 
   /**
@@ -1338,9 +1315,9 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
       title = "Type Text in Element",
       description = "Types text character by character in the web element input field"
   )
-  default void type(
+  default boolean type(
       @CMcpToolParam(name = "text", description = "The text to type") String text) {
-    type(text, getWaitSec());
+    return type(text, getWaitSec());
   }
 
   /**
@@ -1353,8 +1330,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slowField.type("sensitive data", 20);
    * </pre>
    */
-  default void type(String text, int waitSec) {
-    type(text, waitSec, 0L);
+  default boolean type(String text, int waitSec) {
+    return type(text, waitSec, 0L);
   }
 
   /**
@@ -1371,8 +1348,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * tokenField.type("abc123def456", 500);
    * </pre>
    */
-  default void type(String text, long intervalInMilliSeconds) {
-    type(text, getWaitSec(), intervalInMilliSeconds);
+  default boolean type(String text, long intervalInMilliSeconds) {
+    return type(text, getWaitSec(), intervalInMilliSeconds);
   }
 
   /**
@@ -1386,18 +1363,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * specialInput.type("complex input", 15, 200);
    * </pre>
    */
-  default void type(String text, int waitSec, long intervalInMilliSeconds) {
-    waitUntil("Type", waitSec, element -> {
-      // Framework-specific implementation will handle typing with delay
-      // Playwright: element.pressSequentially(text, options)
-      // Selenium: manual character-by-character sendKeys with Thread.sleep
-      // For now, delegate to fillElement as a simple fallback
-      getDriver().performActionOnEngine("Type", engine -> {
-        engine.sendKeys(getLocator(), text, intervalInMilliSeconds);
-        return true;
-      });
-      return true;
-    });
+  default boolean type(String text, int waitSec, long intervalInMilliSeconds) {
+    return getDriver().waitUntil("Type", waitSec, engine -> engine.sendKeys(getLocator(), text, intervalInMilliSeconds));
   }
 
   /**
@@ -1411,8 +1378,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * // Focus automatically moves to next form field
    * </pre>
    */
-  default void typeAndTab(String text) {
-    typeAndTab(text, getWaitSec());
+  default boolean typeAndTab(String text) {
+    return typeAndTab(text, getWaitSec());
   }
 
   /**
@@ -1425,8 +1392,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * dynamicField.typeAndTab("data", 10);
    * </pre>
    */
-  default void typeAndTab(String text, int waitSec) {
-    typeAndTab(text, waitSec, 0L);
+  default boolean typeAndTab(String text, int waitSec) {
+    return typeAndTab(text, waitSec, 0L);
   }
 
   /**
@@ -1439,8 +1406,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * sensitiveField.typeAndTab("secure data", 150);
    * </pre>
    */
-  default void typeAndTab(String text, long intervalInMilliSeconds) {
-    typeAndTab(text, getWaitSec(), intervalInMilliSeconds);
+  default boolean typeAndTab(String text, long intervalInMilliSeconds) {
+    return typeAndTab(text, getWaitSec(), intervalInMilliSeconds);
   }
 
   /**
@@ -1454,8 +1421,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * complexField.typeAndTab("complex input", 15, 100);
    * </pre>
    */
-  default void typeAndTab(String text, int waitSec, long intervalInMilliSeconds) {
-    typeAnd(text, "Tab", waitSec, intervalInMilliSeconds);
+  default boolean typeAndTab(String text, int waitSec, long intervalInMilliSeconds) {
+    return typeAnd(text, "Tab", waitSec, intervalInMilliSeconds);
   }
 
   /**
@@ -1471,8 +1438,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * passwordField.typeAndEnter("mySecretPassword");
    * </pre>
    */
-  default void typeAndEnter(String text) {
-    typeAndEnter(text, getWaitSec());
+  default boolean typeAndEnter(String text) {
+    return typeAndEnter(text, getWaitSec());
   }
 
   /**
@@ -1485,8 +1452,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * slowSearchField.typeAndEnter("complex query", 20);
    * </pre>
    */
-  default void typeAndEnter(String text, int waitSec) {
-    typeAndEnter(text, waitSec, 0L);
+  default boolean typeAndEnter(String text, int waitSec) {
+    return typeAndEnter(text, waitSec, 0L);
   }
 
   /**
@@ -1499,8 +1466,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * commandField.typeAndEnter("important command", 200);
    * </pre>
    */
-  default void typeAndEnter(String text, long intervalInMilliSeconds) {
-    typeAndEnter(text, getWaitSec(), intervalInMilliSeconds);
+  default boolean typeAndEnter(String text, long intervalInMilliSeconds) {
+    return typeAndEnter(text, getWaitSec(), intervalInMilliSeconds);
   }
 
   /**
@@ -1514,8 +1481,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * advancedField.typeAndEnter("advanced input", 18, 75);
    * </pre>
    */
-  default void typeAndEnter(String text, int waitSec, long intervalInMilliSeconds) {
-    typeAnd(text, "Enter", waitSec, intervalInMilliSeconds);
+  default boolean typeAndEnter(String text, int waitSec, long intervalInMilliSeconds) {
+    return typeAnd(text, "Enter", waitSec, intervalInMilliSeconds);
   }
 
   /**
@@ -1531,8 +1498,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * helpField.typeAnd("help topic", "F1");
    * </pre>
    */
-  default void typeAnd(String text, String keys) {
-    typeAnd(text, keys, getWaitSec());
+  default boolean typeAnd(String text, String keys) {
+    return typeAnd(text, keys, getWaitSec());
   }
 
   /**
@@ -1545,8 +1512,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * specialField.typeAnd("special input", "F5", 12);
    * </pre>
    */
-  default void typeAnd(String text, String key, int waitSec) {
-    typeAnd(text, key, waitSec, 0L);
+  default boolean typeAnd(String text, String key, int waitSec) {
+    return typeAnd(text, key, waitSec, 0L);
   }
 
   /**
@@ -1560,8 +1527,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * scriptField.typeAnd("console.log('test');", "F12", 50);
    * </pre>
    */
-  default void typeAnd(String text, String keys, long intervalInMilliSeconds) {
-    typeAnd(text, keys, getWaitSec(), intervalInMilliSeconds);
+  default boolean typeAnd(String text, String keys, long intervalInMilliSeconds) {
+    return typeAnd(text, keys, getWaitSec(), intervalInMilliSeconds);
   }
 
   /**
@@ -1580,16 +1547,8 @@ public interface CWebElementActions<DR extends CDriver> extends CWebElementState
    * codeEditor.typeAnd("function test() { return true; }", "F9", "15", "25");
    * </pre>
    */
-  default void typeAnd(String text, String key, int waitSec, long intervalInMilliSeconds) {
-    waitUntil("Type And " + key, waitSec, element -> {
-      // Framework-specific implementation will handle typing with delay
-      // For now, use fill and sendKeys as fallback
-      getDriver().performActionOnEngine("Type And " + key, engine -> {
-        engine.sendKeys(getLocator(), text, intervalInMilliSeconds);
-        engine.press(getLocator(), key);
-        return true;
-      });
-      return true;
-    });
+  default boolean typeAnd(String text, String key, int waitSec, long intervalInMilliSeconds) {
+    return getDriver().waitUntil("Type And", waitSec, engine ->
+        engine.sendKeys(getLocator(), text, intervalInMilliSeconds) && engine.press(getLocator(), key));
   }
 }

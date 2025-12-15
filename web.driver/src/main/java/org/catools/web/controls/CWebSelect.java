@@ -691,8 +691,8 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
    * countrySelect.set(country.equals("US"));
    * }</pre>
    */
-  public void set(boolean state) {
-    set(state, waitSec);
+  public boolean set(boolean state) {
+    return set(state, waitSec);
   }
 
   /**
@@ -704,11 +704,11 @@ public class CWebSelect<DR extends CDriver> extends CWebElement<DR> {
    * premiumSelect.set(user.isPremiumUser(), 10);
    * }</pre>
    */
-  public void set(boolean state, int waitSec) {
+  public boolean set(boolean state, int waitSec) {
     if (state) {
-      select(waitSec);
+      return select(waitSec);
     } else {
-      deselect(waitSec);
+      return deselect(waitSec);
     }
   }
 }
