@@ -20,22 +20,17 @@
         <dependencies>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web.table</artifactId>
+                <artifactId>web.driver</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web.testng</artifactId>
+                <artifactId>we.selenium</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>selenium</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>web.driver.provider</artifactId>
+                <artifactId>web.playwright</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
