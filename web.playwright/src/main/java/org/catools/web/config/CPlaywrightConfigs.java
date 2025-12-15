@@ -85,6 +85,10 @@ public class CPlaywrightConfigs {
         CHocon.asModel(Configs.CATOOLS_PLAYWRIGHT_LAUNCH_OPTIONS, BrowserType.LaunchOptions.class) : null;
   }
 
+  /**
+   * Retrieves custom Playwright browser context options from configuration.
+   * @return Browser.NewContextOptions if configured, otherwise null.
+   */
   public static Browser.NewContextOptions getNewContextOptions() {
     return CHocon.has(Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS) ?
         CHocon.asModel(Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS, Browser.NewContextOptions.class) : null;

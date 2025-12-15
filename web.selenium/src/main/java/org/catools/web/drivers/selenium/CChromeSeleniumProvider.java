@@ -115,34 +115,6 @@ public class CChromeSeleniumProvider implements CSeleniumProvider {
     // Aggressive performance preferences for automated testing
     prefs.put("plugins.plugins_list", plugins);
 
-    // Disable images for maximum speed (can be overridden by config)
-    prefs.put("profile.default_content_setting_values.images", 2);
-    prefs.put("profile.managed_default_content_settings.images", 2);
-
-    // Disable CSS for even faster rendering
-    // prefs.put("profile.default_content_setting_values.stylesheet", 2);
-
-    // Disable JavaScript (only if tests don't need it - commented out by default)
-    // prefs.put("profile.default_content_setting_values.javascript", 2);
-
-    // Disable plugins/flash
-    prefs.put("profile.default_content_setting_values.plugins", 2);
-
-    // Disable popups
-    prefs.put("profile.default_content_setting_values.popups", 2);
-
-    // Disable geolocation
-    prefs.put("profile.default_content_setting_values.geolocation", 2);
-
-    // Disable notifications
-    prefs.put("profile.default_content_setting_values.notifications", 2);
-
-    // Disable media stream
-    prefs.put("profile.default_content_setting_values.media_stream", 2);
-
-    // Disable automatic downloads
-    prefs.put("profile.default_content_setting_values.automatic_downloads", 2);
-
     if (StringUtils.isNotBlank(CChromeConfigs.getChromeMobileEmulationDeviceName())) {
       setDeviceEmulation(CChromeConfigs.getChromeMobileEmulationDeviceName());
     }
