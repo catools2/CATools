@@ -40,7 +40,7 @@ public class CDriverSession {
    * <p>
    * Must be called before performing any driver actions.
    * </p>
-   * It creates the Page instance using the configured provider and applies
+   * It creates the driver engine instance using the configured provider and applies
    * the specified window dimensions and position.
    *
    * @throws RuntimeException if the driver cannot be created or configured

@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 /**
  * Interface providing navigation capabilities for web drivers, extending CDriverWaiter.
  * This interface offers methods for browser navigation (back/forward), window/frame switching,
- * and engine opening operations.
+ * and page opening operations.
  *
  * <p>All navigation methods support method chaining and provide overloaded versions
  * with retry mechanisms and post-condition validation.</p>
