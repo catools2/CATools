@@ -20,27 +20,17 @@
         <dependencies>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web.table</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>web.testng</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
                 <artifactId>web.driver</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web.driver.provider</artifactId>
+                <artifactId>web.selenium</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web.axe</artifactId>
+                <artifactId>web.playwright</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>
@@ -49,23 +39,7 @@
     <dependencies>
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>web.table</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.testng</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
             <artifactId>web.driver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.driver.provider</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.axe</artifactId>
         </dependency>
     </dependencies>
 </project>

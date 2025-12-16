@@ -1,20 +1,16 @@
 package org.catools.web.drivers;
 
-import com.assertthat.selenium_shutterbug.core.Shutterbug;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.catools.common.date.CDate;
-import org.catools.common.enums.CPlatform;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
 import org.catools.media.model.CScreenShot;
+import org.catools.media.utils.CImageUtil;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.enums.CBrowser;
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.SessionId;
+import org.catools.web.selectors.CBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,44 +18,18 @@ import java.awt.image.BufferedImage;
 import java.util.function.Predicate;
 
 /**
- * Main WebDriver wrapper class that provides comprehensive browser automation capabilities.
- * This class implements both {@link CDriverActions} and {@link CDriverNavigation} interfaces,
- * offering a complete set of web interaction, navigation, and utility methods.
+ * Main browser automation wrapper providing element interaction, navigation, and session management.
+ * <p>
+ * Implements {@link CDriverActions} and {@link CDriverNavigation} for complete browser automation.
+ * Includes dynamic properties for title, URL, and screenshots with automatic waiting.
+ * </p>
  *
- * <p>CDriver acts as the primary entry point for all browser automation tasks, providing
- * high-level methods for element interaction, page navigation, screenshot capture, and
- * browser session management. It includes dynamic properties for page title, URL, and
- * screenshot access with built-in wait mechanisms.</p>
- *
- * <h3>Key Features:</h3>
- * <ul>
- *   <li>Complete browser session lifecycle management</li>
- *   <li>Element finding and interaction methods</li>
- *   <li>Navigation capabilities (back/forward/refresh)</li>
- *   <li>Screenshot and page information capture</li>
- *   <li>Alert handling support</li>
- *   <li>Dynamic properties with automatic waiting</li>
- *   <li>Platform and browser detection</li>
- * </ul>
- *
- * <h3>Usage Examples:</h3>
+ * <p>Example usage:</p>
  * <pre>{@code
- * // Basic browser automation
  * CDriver driver = new CDriver(session);
- * driver.open("https://example.com")
- *       .$(By.id("username")).type("user123")
- *       .$(By.id("password")).type("password")
- *       .$(By.id("login-btn")).click();
- *
- * // Screenshot capture
- * BufferedImage screenshot = driver.ScreenShot.get();
- *
- * // Dynamic property access
- * String pageTitle = driver.Title.get();
- * String currentUrl = driver.Url.get();
- *
- * // Alert handling
- * driver.getAlert().acceptIfPresent();
+ * driver.open("https://example.com");
+ * driver.$("username", "#user").type("test");
+ * driver.$("login", "#submit").click();
  * }</pre>
  *
  * @author CATools Team
@@ -72,14 +42,13 @@ import java.util.function.Predicate;
 public class CDriver implements CDriverActions, CDriverNavigation {
 
   /**
-   * The driver session managing the underlying WebDriver instance and its lifecycle.
-   * This session handles browser creation, configuration, and cleanup operations.
+   * Driver session managing the underlying engine instance and lifecycle.
    */
   @Getter
   private final CDriverSession driverSession;
 
   /**
-   * Logger instance for this CDriver class, used for debugging and tracing operations.
+   * Logger instance for debugging and tracing operations.
    */
   @Getter
   private final Logger logger = LoggerFactory.getLogger(CDriver.class);
@@ -88,7 +57,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * Creates a new CDriver instance with the specified driver session.
    * This is the primary constructor for creating CDriver instances and is used by Guice for dependency injection.
    *
-   * @param driverSession the CDriverSession that manages the WebDriver lifecycle
+   * @param driverSession the CDriverSession that manages the Page lifecycle
    * @example <pre>{@code
    * // Create driver with a new session
    * CDriverSession session = new CDriverSession(provider);
@@ -254,42 +223,6 @@ public class CDriver implements CDriverActions, CDriverNavigation {
   };
 
   /**
-   * Creates and returns a web alert handler for the current driver instance.
-   * This method provides type-safe alert handling with generic support for different driver types.
-   *
-   * <p>The alert handler offers comprehensive methods for interacting with JavaScript alerts,
-   * confirms, and prompts, including automatic waiting and conditional operations.</p>
-   *
-   * @param <DR> the driver type for type-safe method chaining
-   * @param <A>  the alert type extending CWebAlert
-   * @return a new CWebAlert instance configured for this driver
-   * @example <pre>{@code
-   * // Handle simple alert
-   * driver.getAlert().acceptIfPresent();
-   *
-   * // Handle confirmation dialog
-   * driver.click(By.id("delete-btn"));
-   * driver.getAlert().accept(); // Confirm deletion
-   *
-   * // Handle prompt with input
-   * driver.click(By.id("prompt-btn"));
-   * driver.getAlert().sendKeys("User input").accept();
-   *
-   * // Conditional alert handling with timeout
-   * boolean alertHandled = driver.getAlert().acceptIfPresent(true, 5);
-   *
-   * // Get alert text before handling
-   * String alertMessage = driver.getAlert().getText();
-   * driver.getAlert().dismiss();
-   * }</pre>
-   * @see CWebAlert
-   */
-  @SuppressWarnings("unchecked")
-  public <DR extends CDriver, A extends CWebAlert<DR>> A getAlert() {
-    return (A) new CWebAlert<>(this);
-  }
-
-  /**
    * Retrieves the browser type associated with the current driver session.
    * This method returns the browser enumeration value configured in the driver provider.
    *
@@ -354,47 +287,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
   }
 
   /**
-   * Retrieves the unique session ID for the current WebDriver session.
-   * This session ID is generated by the WebDriver server and can be used for
-   * debugging, logging, or advanced driver operations.
-   *
-   * <p>The session ID is particularly useful for:</p>
-   * <ul>
-   *   <li>Debugging WebDriver connections</li>
-   *   <li>Logging and tracing browser sessions</li>
-   *   <li>Advanced WebDriver server operations</li>
-   *   <li>Session management in distributed testing environments</li>
-   * </ul>
-   *
-   * @return the SessionId for the current WebDriver session, or null if no active session
-   * @example <pre>{@code
-   * // Get session ID for logging
-   * SessionId sessionId = driver.getSessionId();
-   * System.out.println("Current session: " + sessionId);
-   *
-   * // Use in distributed testing
-   * SessionId currentSession = driver.getSessionId();
-   * // Store session ID for later reference or debugging
-   * testContext.setSessionId(currentSession);
-   *
-   * // Conditional logic based on session existence
-   * if (driver.getSessionId() != null) {
-   *     // Session is active, proceed with test
-   *     driver.open("https://example.com");
-   * } else {
-   *     // No active session, start new one
-   *     driver.startSession();
-   * }
-   * }</pre>
-   * @see RemoteWebDriver#getSessionId()
-   * @see SessionId
-   */
-  public SessionId getSessionId() {
-    return performActionOnDriver("Copy File To Node", RemoteWebDriver::getSessionId);
-  }
-
-  /**
-   * Terminates all active browser sessions and closes the WebDriver.
+   * Terminates all active browser sessions and closes the Page.
    * This method performs comprehensive cleanup including alert dismissal, window closing,
    * and driver session reset to ensure proper resource cleanup.
    *
@@ -402,7 +295,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * <ol>
    *   <li>Attempts to close any active alerts (with 1-second timeout)</li>
    *   <li>Closes the current browser window</li>
-   *   <li>Quits the entire WebDriver instance</li>
+   *   <li>Quits the entire Page instance</li>
    *   <li>Resets the driver session state</li>
    * </ol>
    *
@@ -437,25 +330,20 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see CDriverSession#reset()
    */
   public void quit() {
-    performActionOnDriver(
+    performActionOnEngine(
         "Quit",
-        webDriver -> {
-          if (webDriver != null) {
+        engine -> {
+          if (engine != null) {
             try {
               try {
-                getAlert().closeIfPresent(true, 1);
+                engine.close();
               } catch (Exception e) {
-                logger.trace("Failed to close alert");
+                logger.trace("Failed to close page");
               }
               try {
-                webDriver.close();
+                engine.close();
               } catch (Exception e) {
-                logger.trace("Failed to close webdriver");
-              }
-              try {
-                webDriver.quit();
-              } catch (Exception e) {
-                logger.trace("Failed to quit webdriver");
+                logger.trace("Failed to quit page");
               }
             } catch (Throwable ex) {
               logger.trace("Failed to quit driver");
@@ -491,10 +379,10 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #refresh(Predicate, int, int)
    */
   public final CDriver refresh() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Refresh",
-        webDriver -> {
-          webDriver.navigate().refresh();
+        engine -> {
+          engine.refresh();
           return this;
         });
   }
@@ -602,23 +490,19 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * // Compare with baseline image...
    * }</pre>
    * @see BufferedImage
-   * @see Shutterbug
    */
   public BufferedImage getScreenShot() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Get Screenshot",
-        webDriver -> {
-          if (webDriver == null || webDriver.getSessionId() == null) {
+        engine -> {
+          if (engine == null) {
             return null;
           }
 
           setCaretColorForAllInputs("transparent");
 
           try {
-            return Shutterbug.shootPage(webDriver)
-                .withTitle(getTitle())
-                .withName(getTitle() + CDate.now().toTimeStampForFileName())
-                .getImage();
+            return CImageUtil.readImage(engine.screenshot());
           } catch (Exception e) {
             return null;
           }
@@ -629,7 +513,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * Retrieves the current page title from the browser.
    * This method safely gets the page title, returning an empty string if no active session exists.
    *
-   * @return the current page title, or empty string if no WebDriver session is active
+   * @return the current page title, or empty string if no Page session is active
    * @example <pre>{@code
    * // Get page title for verification
    * String title = driver.getTitle();
@@ -672,10 +556,10 @@ public class CDriver implements CDriverActions, CDriverNavigation {
       description = "Retrieves the current page title from the browser"
   )
   public String getTitle() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Get Title",
-        webDriver -> {
-          return webDriver != null ? webDriver.getTitle() : CStringUtil.EMPTY;
+        engine -> {
+          return engine != null ? engine.title() : CStringUtil.EMPTY;
         });
   }
 
@@ -683,7 +567,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * Retrieves the current page URL from the browser.
    * This method safely gets the current URL, returning an empty string if no active session exists.
    *
-   * @return the current page URL, or empty string if no WebDriver session is active
+   * @return the current page URL, or empty string if no Page session is active
    * @example <pre>{@code
    * // Get current URL for verification
    * String currentUrl = driver.getUrl();
@@ -720,10 +604,10 @@ public class CDriver implements CDriverActions, CDriverNavigation {
       description = "Retrieves the current page URL from the browser"
   )
   public String getUrl() {
-    return performActionOnDriver(
+    return performActionOnEngine(
         "Get URL",
-        webDriver -> {
-          return webDriver != null ? webDriver.getCurrentUrl() : CStringUtil.EMPTY;
+        engine -> {
+          return engine != null ? engine.url() : CStringUtil.EMPTY;
         });
   }
 
@@ -780,138 +664,15 @@ public class CDriver implements CDriverActions, CDriverNavigation {
   }
 
   /**
-   * Retrieves the platform name from the current WebDriver session capabilities.
-   * This method extracts platform information from the WebDriver capabilities,
-   * which is useful for cross-platform testing and platform-specific operations.
+   * Creates a CWebElement wrapper for the specified locator with default timeout.
+   * This method is the primary way to interact with web elements on the page,
+   * providing a fluent interface for element operations.
    *
-   * @return CPlatform enum representing the current platform, or null if unavailable
-   * @example <pre>{@code
-   * // Get current platform for conditional testing
-   * CPlatform platform = driver.getPlatform();
-   *
-   * // Platform-specific test logic
-   * if (platform == CPlatform.WINDOWS) {
-   *     // Windows-specific keyboard shortcuts
-   *     driver.sendKeys(Keys.CONTROL, "a"); // Ctrl+A
-   * } else if (platform == CPlatform.MAC) {
-   *     // macOS-specific keyboard shortcuts
-   *     driver.sendKeys(Keys.COMMAND, "a"); // Cmd+A
-   * }
-   *
-   * // Platform capability validation
-   * CPlatform currentPlatform = driver.getPlatform();
-   * if (currentPlatform != CPlatform.MOBILE) {
-   *     // Desktop-only operations
-   *     driver.$(By.id("desktop-feature")).click();
-   * }
-   *
-   * // Logging platform information
-   * CPlatform platform = driver.getPlatform();
-   * log.info("Running tests on platform: " + platform);
-   * }</pre>
-   * @see CPlatform
-   * @see org.openqa.selenium.Capabilities
+   * @param locator the CBy locator to find the target element
+   * @return CWebElement wrapper providing rich interaction capabilities
    */
-  public CPlatform getPlatform() {
-    return performActionOnDriver("Get Platform name", webDriver ->
-        CPlatform.fromName(webDriver.getCapabilities().getCapability("platformName").toString()));
-  }
-
-
-  /**
-   * Creates a CWebElement wrapper for the specified ID locator with custom timeout.
-   *
-   * @param name    the element name
-   * @param id      the ID of the element to locate
-   * @param waitSec custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byId(String name, String id, int waitSec) {
-    return new CWebElement<>(name, this, By.id(id), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified name locator with custom timeout.
-   *
-   * @param name        the element name
-   * @param elementName the name of the element to locate
-   * @param waitSec     custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byName(String name, String elementName, int waitSec) {
-    return new CWebElement<>(name, this, By.name(elementName), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified class name with custom timeout.
-   *
-   * @param name      the element name
-   * @param className the class name of the element to locate
-   * @param waitSec   custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byClassName(String name, String className, int waitSec) {
-    return new CWebElement<>(name, this, By.className(className), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified tag name with custom timeout.
-   *
-   * @param name    the element name
-   * @param tagName the tag name of the element to locate
-   * @param waitSec custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byTagName(String name, String tagName, int waitSec) {
-    return new CWebElement<>(name, this, By.tagName(tagName), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified link text with custom timeout.
-   *
-   * @param name     the element name
-   * @param linkText the link text of the element to locate
-   * @param waitSec  custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byLinkText(String name, String linkText, int waitSec) {
-    return new CWebElement<>(name, this, By.linkText(linkText), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified partial link text with custom timeout.
-   *
-   * @param name            the element name
-   * @param partialLinkText the partial Link text of the element to locate
-   * @param waitSec         custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byPartialLinkText(String name, String partialLinkText, int waitSec) {
-    return new CWebElement<>(name, this, By.partialLinkText(partialLinkText), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified xpath with custom timeout.
-   *
-   * @param name    the element name
-   * @param xpath   the xpath of the element to locate
-   * @param waitSec custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byXPath(String name, String xpath, int waitSec) {
-    return new CWebElement<>(name, this, By.xpath(xpath), waitSec);
-  }
-
-  /**
-   * Creates a CWebElement wrapper for the specified cssSelector locator with custom timeout.
-   *
-   * @param name        the element name
-   * @param cssSelector the cssSelector of the element to locate
-   * @param waitSec     custom timeout in seconds for element operations
-   * @return CWebElement wrapper with the specified timeout setting
-   */
-  public CWebElement<CDriver> byCssSelector(String name, String cssSelector, int waitSec) {
-    return new CWebElement<>(name, this, By.cssSelector(cssSelector), waitSec);
+  public <DR extends CDriver> CWebElement<DR> $(CBy locator) {
+    return $(locator, DEFAULT_TIMEOUT);
   }
 
   /**
@@ -919,35 +680,11 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * This method is the primary way to interact with web elements on the page,
    * providing a fluent interface for element operations.
    *
-   * @param locator the By locator to find the target element
+   * @param locator the CBy locator to find the target element
    * @return CWebElement wrapper providing rich interaction capabilities
-   * @example <pre>{@code
-   * // Basic element interaction
-   * driver.$(By.id("username")).type("user123");
-   * driver.$(By.id("password")).type("secret");
-   * driver.$(By.id("login-btn")).click();
-   *
-   * // Method chaining
-   * driver.$(By.id("search-input"))
-   *       .clear()
-   *       .type("selenium webdriver")
-   *       .pressEnter();
-   *
-   * // Element verification
-   * driver.$(By.id("error-message"))
-   *       .verify().isVisible()
-   *       .verify().textContains("Invalid credentials");
-   *
-   * // Complex locators
-   * driver.$(By.xpath("//button[@class='submit' and contains(text(), 'Save')]"))
-   *       .waitUntilClickable()
-   *       .click();
-   * }</pre>
-   * @see CWebElement
-   * @see By
    */
-  public CWebElement<CDriver> $(By locator) {
-    return new CWebElement<>("Get Element", this, locator);
+  public <DR extends CDriver> CWebElement<DR> $(String name, CBy locator) {
+    return $(name, locator, DEFAULT_TIMEOUT);
   }
 
   /**
@@ -955,176 +692,111 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * This method allows you to specify a custom wait time for element operations,
    * useful for elements that may take longer to appear or become interactive.
    *
-   * @param locator the By locator to find the target element
+   * @param locator the CBy locator to find the target element
    * @param waitSec custom timeout in seconds for element operations
    * @return CWebElement wrapper with the specified timeout setting
-   * @example <pre>{@code
-   * // Element with extended timeout for slow-loading content
-   * driver.$(By.id("dynamic-content"), 30)
-   *       .waitUntilVisible()
-   *       .verify().textContains("Loaded");
-   *
-   * // Quick timeout for elements that should appear immediately
-   * driver.$(By.id("instant-feedback"), 2)
-   *       .verify().isDisplayed();
-   *
-   * // AJAX content with custom wait time
-   * driver.$(By.className("ajax-result"), 15)
-   *       .waitUntil(el -> !el.getText().equals("Loading..."))
-   *       .click();
-   *
-   * // Form submission with longer timeout
-   * driver.$(By.id("submit-button"), 45)
-   *       .click()
-   *       .waitUntil(btn -> btn.getAttribute("disabled") != null);
-   * }</pre>
-   * @see CWebElement
-   * @see By
    */
-  public CWebElement<CDriver> $(By locator, int waitSec) {
-    return new CWebElement<>("Get Element", this, locator, waitSec);
+  public <DR extends CDriver> CWebElement<DR> $(CBy locator, int waitSec) {
+    return $("Get Element", locator, waitSec);
   }
 
   /**
-   * Creates a CWebElement wrapper using XPath locator with default timeout.
-   * This is a convenience method that automatically wraps the provided XPath string
-   * in a By.xpath() locator for easier element selection.
+   * Creates a CWebElement wrapper for the specified locator with custom timeout.
+   * This method allows you to specify a custom wait time for element operations,
+   * useful for elements that may take longer to appear or become interactive.
    *
-   * @param xpath XPath expression to locate the target element
-   * @return CWebElement wrapper for the XPath-located element
-   * @example <pre>{@code
-   * // Simple XPath element selection
-   * driver.$("//input[@name='email']").type("user@example.com");
-   *
-   * // Complex XPath with text matching
-   * driver.$("//button[contains(text(), 'Sign Up')]").click();
-   *
-   * // XPath with multiple conditions
-   * driver.$("//div[@class='form-group']//input[@type='password']")
-   *       .type("secretpassword");
-   *
-   * // XPath for table navigation
-   * driver.$("//table[@id='data-table']//tr[2]//td[3]")
-   *       .verify().textEquals("Expected Value");
-   *
-   * // Dynamic XPath with variables (use String.format for dynamic values)
-   * String userId = "12345";
-   * driver.$(String.format("//user[@id='%s']//button[@action='delete']", userId))
-   *       .click();
-   * }</pre>
-   * @see #$(By)
-   * @see By#xpath(String)
-   */
-  public CWebElement<CDriver> $(String xpath) {
-    return $(By.xpath(xpath));
-  }
-
-  /**
-   * Creates a CWebElement wrapper using XPath locator with custom timeout.
-   * This convenience method combines XPath element location with custom timeout
-   * configuration for elements that may require different wait times.
-   *
-   * @param xpath   XPath expression to locate the target element
+   * @param locator the CBy locator to find the target element
    * @param waitSec custom timeout in seconds for element operations
-   * @return CWebElement wrapper for the XPath-located element with custom timeout
-   * @example <pre>{@code
-   * // Slow-loading dynamic content with XPath
-   * driver.$("//div[@class='dynamic-content']//span[@id='result']", 30)
-   *       .waitUntilVisible()
-   *       .verify().textIsNotEmpty();
-   *
-   * // Quick validation with shorter timeout
-   * driver.$("//div[@class='validation-error']", 3)
-   *       .verify().isVisible();
-   *
-   * // Complex form element with extended wait
-   * driver.$("//form[@name='checkout']//input[@data-field='credit-card']", 20)
-   *       .waitUntilEnabled()
-   *       .type("4111111111111111");
-   *
-   * // AJAX table row with custom timeout
-   * driver.$("//table[@id='results']//tr[contains(@class, 'new-row')]", 25)
-   *       .waitUntilPresent()
-   *       .$(By.tagName("button"))
-   *       .click();
-   * }</pre>
-   * @see #$(By, int)
-   * @see By#xpath(String)
+   * @return CWebElement wrapper with the specified timeout setting
    */
-  public CWebElement<CDriver> $(String xpath, int waitSec) {
-    return $(By.xpath(xpath), waitSec);
+  @SuppressWarnings("unchecked")
+  public <DR extends CDriver> CWebElement<DR> $(String name, CBy locator, int waitSec) {
+    return $(name, locator.getSelector(), waitSec);
   }
 
   /**
-   * Creates a CWebElement wrapper using CSS selector locator with default timeout.
-   * This is a convenience method that automatically wraps the provided CSS selector
-   * in a By.cssSelector() locator for modern web element selection.
+   * Creates a CWebElement wrapper for the specified locator with default timeout.
+   * This method is the primary way to interact with web elements on the page,
+   * providing a fluent interface for element operations.
    *
-   * @param cssSelector CSS selector expression to locate the target element
-   * @return CWebElement wrapper for the CSS selector-located element
-   * @example <pre>{@code
-   * // Simple CSS selector usage
-   * driver.$$("input[type='email']").type("user@example.com");
-   * driver.$$("button.primary").click();
-   *
-   * // Complex CSS selectors
-   * driver.$$("form#login .form-group:nth-child(2) input")
-   *       .type("password123");
-   *
-   * // Class and attribute combinations
-   * driver.$$(".nav-menu li[data-page='dashboard'] a")
-   *       .click();
-   *
-   * // CSS pseudo-selectors
-   * driver.$$("table tr:first-child td:last-child")
-   *       .verify().textContains("Total");
-   *
-   * // Modern CSS features
-   * driver.$$("div:has(> .error-icon) .error-message")
-   *       .verify().isVisible();
-   * }</pre>
-   * @see #$(By)
-   * @see By#cssSelector(String)
+   * @param locator the CBy locator to find the target element
+   * @return CWebElement wrapper providing rich interaction capabilities
    */
-  public CWebElement<CDriver> $$(String cssSelector) {
-    return $(By.cssSelector(cssSelector));
+  public <DR extends CDriver> CWebElement<DR> $(String locator) {
+    return $(locator, DEFAULT_TIMEOUT);
   }
 
   /**
-   * Creates a CWebElement wrapper using CSS selector locator with custom timeout.
-   * This convenience method combines CSS selector element location with custom timeout
-   * configuration for elements that may require different wait times.
+   * Creates a CWebElement wrapper for the specified locator with default timeout.
+   * This method is the primary way to interact with web elements on the page,
+   * providing a fluent interface for element operations.
    *
-   * @param cssSelector CSS selector expression to locate the target element
-   * @param waitSec     custom timeout in seconds for element operations
-   * @return CWebElement wrapper for the CSS selector-located element with custom timeout
-   * @example <pre>{@code
-   * // Dynamic content with CSS selector and extended timeout
-   * driver.$$(".loading-spinner", 30)
-   *       .waitUntilNotVisible();
-   *
-   * // Form validation with custom timeout
-   * driver.$$(".form-errors .field-error", 5)
-   *       .verify().isDisplayed();
-   *
-   * // AJAX content loading
-   * driver.$$("[data-testid='search-results'] .result-item", 20)
-   *       .waitUntilPresent()
-   *       .verify().countEquals(10);
-   *
-   * // Interactive element with longer wait
-   * driver.$$("button[aria-label='Save Changes']:not([disabled])", 15)
-   *       .waitUntilClickable()
-   *       .click();
-   *
-   * // Complex nested selectors with timeout
-   * driver.$$(".modal.active .modal-content form input[name='confirmation']", 10)
-   *       .type("CONFIRM");
-   * }</pre>
-   * @see #$(By, int)
-   * @see By#cssSelector(String)
+   * @param locator the CBy locator to find the target element
+   * @return CWebElement wrapper providing rich interaction capabilities
    */
-  public CWebElement<CDriver> $$(String cssSelector, int waitSec) {
-    return $(By.cssSelector(cssSelector), waitSec);
+  public <DR extends CDriver> CWebElement<DR> $(String name, String locator) {
+    return $(name, locator, DEFAULT_TIMEOUT);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified locator with custom timeout.
+   * This method allows you to specify a custom wait time for element operations,
+   * useful for elements that may take longer to appear or become interactive.
+   *
+   * @param locator the CBy locator to find the target element
+   * @param waitSec custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  public <DR extends CDriver> CWebElement<DR> $(String locator, int waitSec) {
+    return $("Get Element", locator, waitSec);
+  }
+
+  /**
+   * Creates a CWebElement wrapper for the specified locator with custom timeout.
+   * This method allows you to specify a custom wait time for element operations,
+   * useful for elements that may take longer to appear or become interactive.
+   *
+   * @param locator the CBy locator to find the target element
+   * @param waitSec custom timeout in seconds for element operations
+   * @return CWebElement wrapper with the specified timeout setting
+   */
+  @SuppressWarnings("unchecked")
+  public <DR extends CDriver> CWebElement<DR> $(String name, String locator, int waitSec) {
+    return new CWebElement<>(name, (DR) this, locator, waitSec);
+  }
+
+  /**
+   * Retrieves the underlying Page session id for the current driver session.
+   * This method safely gets the session id, returning null if no active session exists.
+   *
+   * @return the current page session id, or null if no Page session is active
+   * @example <pre>{@code
+   * // Get current session id for verification
+   * String sessionId = driver.getSessionId();
+   * assert sessionId != null;
+   *
+   * // Use in logging or debugging
+   * log.info("Current session id: " + driver.getSessionId());
+   *
+   * // Conditional logic based on session id
+   * if (driver.getSessionId().equals("expected-session-id")) {
+   *     // Perform actions for specific session
+   * }
+   * }</pre>
+   * @see #getTitle()
+   * @see #getUrl()
+   */
+  @CMcpTool(
+      groups = {"web", "driver"},
+      name = "driver_get_session_id",
+      title = "Get Session Id",
+      description = "Retrieves the underlying Page session id for the current driver session"
+  )
+  public String getSessionId() {
+    return performActionOnEngine(
+        "Get Session Id",
+        engine -> engine != null ? engine.getSessionId() : null
+    );
   }
 }
+

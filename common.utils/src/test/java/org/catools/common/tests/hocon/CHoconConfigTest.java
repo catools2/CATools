@@ -85,8 +85,6 @@ public class CHoconConfigTest {
     CHoconConfig cfg = new CHoconConfig(ConfigFactory.empty(), path);
     String value = cfg.asString();
     Assert.assertEquals(value, "vault-secret-value");
-
-    // cleanup done by @AfterMethod
   }
 
   @Test

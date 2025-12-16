@@ -60,11 +60,9 @@
         <module>extentreport</module>
         <module>reportportal</module>
         <module>sql</module>
-        <module>web.axe</module>
+        <module>web.selenium</module>
         <module>web.driver</module>
-        <module>web.driver.provider</module>
-        <module>web.testng</module>
-        <module>web.table</module>
+        <module>web.playwright</module>
         <module>web</module>
         <module>pipeline</module>
         <module>metrics</module>

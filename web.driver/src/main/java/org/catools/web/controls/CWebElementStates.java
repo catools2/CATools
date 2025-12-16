@@ -7,12 +7,10 @@ import org.catools.mcp.annotation.CMcpTool;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.config.CDriverConfigs;
 import org.catools.web.drivers.CDriver;
-import org.openqa.selenium.*;
+import org.catools.web.drivers.CDriverEngine;
 
 import java.awt.image.BufferedImage;
 import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -49,7 +47,7 @@ public interface CWebElementStates<DR extends CDriver> {
    *
    * @return the By locator
    */
-  By getLocator();
+  String getLocator();
 
   // Getters
 
@@ -81,8 +79,7 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default Integer getOffset(int waitSec) {
-    return waitUntil(
-        "Get Offset", waitSec, null, el -> Integer.valueOf(el.getAttribute("offsetTop")));
+    throw new UnsupportedOperationException("This method must be implemented by web framework-specific subclass");
   }
 
   /**
@@ -119,17 +116,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isStaleness(int waitSec) {
-    return waitUntil(
-        "Is Staleness",
-        waitSec,
-        false,
-        el -> {
-          try {
-            return !el.isEnabled();
-          } catch (StaleElementReferenceException | NullPointerException var3) {
-            return true;
-          }
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Staleness",
+            waitSec,
+            false,
+            engine -> engine.getElementCount(getLocator()) == 0);
   }
 
   /**
@@ -205,7 +197,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isPresent(int waitSec) {
-    return waitUntil("Is Present", waitSec, false, Objects::nonNull);
+    return getDriver()
+        .waitUntil(
+            "Is Present",
+            waitSec,
+            false,
+            engine -> engine.getElementCount(getLocator()) > 0);
   }
 
   /**
@@ -243,17 +240,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isNotPresent(int waitSec) {
-    return waitUntil(
-        "Is Not Present",
-        waitSec,
-        false,
-        webDriver -> {
-          try {
-            return webDriver.findElement(getLocator()) == null;
-          } catch (NoSuchElementException | NoSuchFrameException | NoSuchWindowException e) {
-            return true;
-          }
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Not Present",
+            waitSec,
+            false,
+            engine -> engine.getElementCount(getLocator()) == 0);
   }
 
   /**
@@ -294,7 +286,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isVisible(int waitSec) {
-    return waitUntil("Is Visible", waitSec, false, WebElement::isDisplayed);
+    return getDriver()
+        .waitUntil(
+            "Is Visible",
+            waitSec,
+            false,
+            engine -> engine.isElementVisible(getLocator()));
   }
 
   /**
@@ -329,18 +326,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isNotVisible(int waitSec) {
-    return waitUntil(
-        "Is Not Visible",
-        waitSec,
-        false,
-        webDriver -> {
-          try {
-            WebElement el = webDriver.findElement(getLocator());
-            return !el.isDisplayed();
-          } catch (NoSuchElementException | NoSuchFrameException | NoSuchWindowException e) {
-            return true;
-          }
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Not Visible",
+            waitSec,
+            false,
+            engine -> !engine.isElementVisible(getLocator()));
   }
 
   /**
@@ -384,20 +375,20 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isEnabled(int waitSec) {
-    return waitUntil(
-        "Is Enable",
-        waitSec,
-        false,
-        el -> {
-          return el != null
-              && el.isEnabled()
-              && StringUtils.isBlank(el.getAttribute("readonly"))
-              && StringUtils.isBlank(el.getAttribute("disabled"))
-              && el.findElements(
-                  By.xpath(
-                      "./ancestor::*[contains(@class, 'disabled') or contains(@class, 'readonly') or contains(@class, 'hidden')]"))
-              .isEmpty();
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Enable",
+            waitSec,
+            false,
+            engine -> {
+              if (engine.getElementCount(getLocator()) == 0) return false;
+              boolean enabled = engine.isElementEnabled(getLocator());
+              String ro = engine.getElementAttribute(getLocator(), "readonly");
+              String dis = engine.getElementAttribute(getLocator(), "disabled");
+              return enabled
+                  && StringUtils.isBlank(ro)
+                  && StringUtils.isBlank(dis);
+            });
   }
 
   /**
@@ -433,18 +424,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isNotEnabled(int waitSec) {
-    return waitUntil(
-        "Is Not Enabled",
-        waitSec,
-        false,
-        el -> {
-          return el != null
-              && !(el.isEnabled()
-              && StringUtils.isBlank(el.getAttribute("readonly"))
-              && StringUtils.isBlank(el.getAttribute("disabled"))
-              && el.findElements(By.xpath("./ancestor::*[contains(@class, 'disabled') or contains(@class, 'readonly') or contains(@class, 'hidden')]"))
-              .isEmpty());
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Not Enabled",
+            waitSec,
+            false,
+            engine -> !isEnabled(waitSec));
   }
 
   /**
@@ -479,7 +464,13 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isSelected(int waitSec) {
-    return isVisible(waitSec) && waitUntil("Is Selected", 1, false, WebElement::isSelected);
+    return isVisible(waitSec)
+        && getDriver()
+        .waitUntil(
+            "Is Selected",
+            1,
+            false,
+            engine -> engine.getElementCount(getLocator()) > 0 && engine.isElementSelected(getLocator()));
   }
 
   /**
@@ -514,18 +505,12 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default boolean isNotSelected(int waitSec) {
-    return waitUntil(
-        "Is Not Selected",
-        waitSec,
-        false,
-        webDriver -> {
-          try {
-            WebElement el = webDriver.findElement(getLocator());
-            return el != null && !el.isSelected();
-          } catch (NoSuchElementException | NoSuchFrameException | NoSuchWindowException e) {
-            return true;
-          }
-        });
+    return getDriver()
+        .waitUntil(
+            "Is Not Selected",
+            waitSec,
+            false,
+            engine -> engine.getElementCount(getLocator()) == 0 || !engine.isElementSelected(getLocator()));
   }
 
   /**
@@ -636,7 +621,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getText(int waitSec) {
-    return waitUntil("Get Text", waitSec, CStringUtil.EMPTY, WebElement::getText);
+    return getDriver()
+        .waitUntil(
+            "Get Text",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              String text = engine.getElementText(getLocator());
+              return text == null ? CStringUtil.EMPTY : text;
+            });
   }
 
   /**
@@ -711,7 +704,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getValue(int waitSec) {
-    return waitUntil("Get Value", waitSec, CStringUtil.EMPTY, el -> el.getAttribute("value"));
+    return getDriver()
+        .waitUntil(
+            "Get Value",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              String v = engine.getElementValue(getLocator());
+              return v == null ? CStringUtil.EMPTY : v;
+            });
   }
 
   /**
@@ -746,52 +747,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getInnerHTML(int waitSec) {
-    return waitUntil(
-        "Get Inner HTML",
-        waitSec,
-        CStringUtil.EMPTY,
-        el -> getDriver().executeScript("return arguments[0].innerHTML", el));
-  }
-
-  /**
-   * Gets the tag name of the element using the default timeout.
-   *
-   * @return the tag name of the element (e.g., "div", "input", "button"), or empty string if not found
-   * @example <pre>
-   * CWebElement element = driver.$(By.id("my-element"));
-   * String tagName = element.getTagName();
-   *
-   * if ("input".equals(tagName)) {
-   *     System.out.println("Element is an input field");
-   * }
-   * </pre>
-   */
-  default String getTagName() {
-    return getTagName(DEFAULT_TIMEOUT);
-  }
-
-  /**
-   * Gets the tag name of the element within the specified timeout.
-   *
-   * @param waitSec the maximum time to wait in seconds
-   * @return the tag name of the element (e.g., "div", "input", "button"), or empty string if not found
-   * @example <pre>
-   * // Wait for dynamically created element and check its type
-   * CWebElement newElement = driver.$(By.className("dynamic-element"));
-   * String tag = newElement.getTagName(3);
-   *
-   * switch (tag.toLowerCase()) {
-   *     case "button":
-   *         System.out.println("Dynamic button created");
-   *         break;
-   *     case "input":
-   *         System.out.println("Dynamic input field created");
-   *         break;
-   * }
-   * </pre>
-   */
-  default String getTagName(int waitSec) {
-    return waitUntil("Get Tag", waitSec, CStringUtil.EMPTY, WebElement::getTagName);
+    return getDriver()
+        .waitUntil(
+            "Get Inner HTML",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              Object res = engine.getElementInnerHtml(getLocator());
+              return res == null ? CStringUtil.EMPTY : res.toString();
+            });
   }
 
   /**
@@ -829,7 +793,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getCss(final String cssKey, int waitSec) {
-    return waitUntil("Get Css", waitSec, CStringUtil.EMPTY, el -> el.getCssValue(cssKey));
+    return getDriver()
+        .waitUntil(
+            "Get Css",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              String res = engine.getElementCssValue(getLocator(), cssKey);
+              return res == null ? CStringUtil.EMPTY : res;
+            });
   }
 
   /**
@@ -873,7 +845,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getAttribute(final String attribute, int waitSec) {
-    return waitUntil("Get Attribute", waitSec, CStringUtil.EMPTY, el -> el.getAttribute(attribute));
+    return getDriver()
+        .waitUntil(
+            "Get Attribute",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              String v = engine.getElementAttribute(getLocator(), attribute);
+              return v == null ? CStringUtil.EMPTY : v;
+            });
   }
 
   /**
@@ -909,7 +889,15 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default String getAriaRole(int waitSec) {
-    return waitUntil("Get AriaRole", waitSec, CStringUtil.EMPTY, WebElement::getAriaRole);
+    return getDriver()
+        .waitUntil(
+            "Get AriaRole",
+            waitSec,
+            CStringUtil.EMPTY,
+            engine -> {
+              String v = engine.getElementAttribute(getLocator(), "role");
+              return v == null ? CStringUtil.EMPTY : v;
+            });
   }
 
   /**
@@ -948,76 +936,62 @@ public interface CWebElementStates<DR extends CDriver> {
    * </pre>
    */
   default BufferedImage getScreenShot(int waitSec) {
-    return waitUntil(
-        "Get ScreenShot",
-        waitSec,
-        el -> CImageUtil.readImageOrNull(el.getScreenshotAs(OutputType.BYTES)));
-  }
-
-  /**
-   * Gets the platform information from the driver session.
-   *
-   * @return the Platform object containing platform details
-   * @example <pre>
-   * CWebElement element = driver.$(By.id("platform-specific"));
-   * Platform platform = element.getPlatform();
-   *
-   * if (platform.is(Platform.WINDOWS)) {
-   *     // Handle Windows-specific behavior
-   * } else if (platform.is(Platform.MAC)) {
-   *     // Handle Mac-specific behavior
-   * }
-   * </pre>
-   */
-  default Platform getPlatform() {
-    return getDriver().getDriverSession().getPlatform();
+    return getDriver()
+        .waitUntil(
+            "Get ScreenShot",
+            waitSec,
+            null,
+            engine -> {
+              if (engine.getElementCount(getLocator()) == 0) return null;
+              try {
+                byte[] bytes = engine.screenshotElement(getLocator());
+                return CImageUtil.readImageOrNull(bytes);
+              } catch (Throwable t) {
+                return null;
+              }
+            });
   }
 
   // Protected utility methods
 
   /**
-   * Utility method to wait for a condition on the web element and execute an action.
-   * This method finds the element using the locator and applies the given function.
+   * Waits until an element-based condition is satisfied and executes an action.
+   * This method delegates to the driver engine's applyToElement for framework-specific handling.
    *
-   * @param <C>        the return type of the action function
+   * @param <C>        the return type of the action
    * @param actionName descriptive name of the action for logging
    * @param waitSec    maximum time to wait in seconds
-   * @param action     function to execute on the found element
+   * @param action     function to execute on the found element (Locator for Playwright, WebElement for Selenium)
    * @return the result of the action function, or null if element not found
    */
-  default <C> C waitUntil(String actionName, int waitSec, Function<WebElement, C> action) {
-    return getDriver()
-        .waitUntil(
-            actionName,
-            waitSec,
-            webDriver -> {
-              assert webDriver != null;
-              WebElement element = webDriver.findElement(getLocator());
-              return action.apply(element);
-            });
+  default <C> C waitUntil(String actionName, int waitSec, Function<CDriverEngine, C> action) {
+    return waitUntil(actionName, waitSec, null, action);
   }
 
   /**
-   * Utility method to wait for a condition on the web element and execute an action with a default return value.
-   * This method finds the element using the locator and applies the given function.
+   * Waits until an element-based condition is satisfied and executes an action with a default return value.
+   * This method delegates to the driver engine's applyToElement for framework-specific handling.
    *
-   * @param <C>        the return type of the action function
+   * @param <C>        the return type of the action
    * @param actionName descriptive name of the action for logging
    * @param waitSec    maximum time to wait in seconds
    * @param defaultTo  default value to return if element not found or action fails
-   * @param action     function to execute on the found element
+   * @param action     function to execute on the found element (Locator for Playwright, WebElement for Selenium)
    * @return the result of the action function, or defaultTo if element not found
    */
-  default <C> C waitUntil(String actionName, int waitSec, C defaultTo, Function<WebElement, C> action) {
+  default <C> C waitUntil(String actionName, int waitSec, C defaultTo, Function<CDriverEngine, C> action) {
     return getDriver()
         .waitUntil(
             actionName,
             waitSec,
             defaultTo,
-            webDriver -> {
-              assert webDriver != null;
-              WebElement element = webDriver.findElement(getLocator());
-              return action.apply(element);
+            engine -> {
+              assert engine != null;
+              try {
+                return action.apply(engine);
+              } catch (Throwable t) {
+                return null;
+              }
             });
   }
 }

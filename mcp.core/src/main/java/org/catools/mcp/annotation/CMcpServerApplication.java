@@ -1,7 +1,5 @@
 package org.catools.mcp.annotation;
 
-import org.catools.common.utils.CStringUtil;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -29,24 +27,17 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CMcpServerApplication {
   /**
-   * The name of the tool. Defaults to the name of the annotated method.
-   *
-   * @return the name of the tool
-   */
-  String[] groups() default CStringUtil.EMPTY;
-
-  /**
    * The base package for component scanning. Defaults to the package of the annotated class.
    *
    * @return the base package for component scanning
    */
-  String basePackage() default CStringUtil.EMPTY;
+  String[] basePackages() default {};
 
   /**
    * The base package class for component scanning. Defaults to {@code Object.class}.
    *
    * <p>Note: This attribute is intended to be used when the base package cannot be determined
-   * statically. In most cases, {@link #basePackage()} should be used instead.
+   * statically. In most cases, {@link #basePackages()} should be used instead.
    *
    * @return the base package class for component scanning
    */

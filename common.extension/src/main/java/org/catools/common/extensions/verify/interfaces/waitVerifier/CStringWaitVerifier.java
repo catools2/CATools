@@ -410,7 +410,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -424,7 +424,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -439,7 +439,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -451,7 +451,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is true.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is true.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -514,7 +514,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -528,7 +528,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -543,7 +543,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -555,7 +555,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, CharSequence...)} is false.
+   * Verify if result of {@link CStringUtil#endsWithAny(CharSequence, String)} is false.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequences to find, may be empty or contain {@code
@@ -568,7 +568,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to the expected value, ignoring case.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
@@ -582,7 +582,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to the expected value, ignoring case.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
@@ -597,7 +597,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to the expected value, ignoring case.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
@@ -609,7 +609,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)}
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)}
    * equals to the expected value, ignoring case.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
@@ -726,7 +726,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
@@ -740,7 +740,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
@@ -755,7 +755,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
@@ -767,7 +767,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
+   * Verify if result of {@link CStringUtil#equalsAnyIgnoreCase(CharSequence, String)} is
    * false, ignoring case.
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
@@ -5038,7 +5038,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5052,7 +5052,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5067,7 +5067,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5079,7 +5079,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is true
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is true
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5146,7 +5146,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5160,7 +5160,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5175,7 +5175,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param verifier      CTest, CVerifier or any other verification queue instance
    * @param searchInputs  the case-sensitive CharSequence prefixes, may be empty or contain {@code
@@ -5187,7 +5187,7 @@ public interface CStringWaitVerifier extends CStringVerifier, CObjectWaitVerifie
   }
 
   /**
-   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, CharSequence...)} is false
+   * Verify if result of {@link CStringUtil#startsWithAny(CharSequence, String)} is false
    *
    * @param verifier               CTest, CVerifier or any other verification queue instance
    * @param searchInputs           the case-sensitive CharSequence prefixes, may be empty or contain {@code

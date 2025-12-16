@@ -79,17 +79,7 @@
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>web.driver.provider</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.testng</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.table</artifactId>
+            <artifactId>web.playwright</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

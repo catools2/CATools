@@ -42,7 +42,7 @@ public class TestMcpPrompts {
 
   @CMcpPrompt(groups = "test")
   public String promptWithRequiredParam(
-      @CMcpPromptParam(name = "param", description = "param", required = true) String param) {
+      @CMcpPromptParam(name = "param", description = "param") String param) {
 
     log.debug("calling promptWithRequiredParam with param: {}", param);
     return "promptWithRequiredParam is called with param: " + param;
@@ -51,7 +51,7 @@ public class TestMcpPrompts {
   @CMcpPrompt(groups = "test")
   public String promptWithMultiParams(
       @CMcpPromptParam(name = "param1", description = "param1") String param1,
-      @CMcpPromptParam(name = "param2", description = "param2", required = true) String param2) {
+      @CMcpPromptParam(name = "param2", description = "param2") String param2) {
 
     log.debug("calling promptWithMultiParams with params: {}, {}", param1, param2);
     return String.format("promptWithMultiParams is called with params: %s, %s", param1, param2);

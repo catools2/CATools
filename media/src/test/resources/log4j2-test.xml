@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" packages="org.catools.common.logger.converters">
+<Configuration status="WARN">
+    <Plugins>
+        <Packages>
+            <Package>org.catools.common.logger.converters</Package>
+        </Packages>
+    </Plugins>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout

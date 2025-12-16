@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.web.drivers.CDriver;
-import org.catools.web.drivers.CWebAlert;
 import org.catools.web.exceptions.CPageNotOpenedException;
 import org.catools.web.factory.CWebElementFactory;
 
@@ -142,7 +141,6 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent<DR> 
     CWebElementFactory.initElements(this);
     this.titlePattern = titlePattern;
     try {
-      driver.waitCompleteReadyState();
       verifyDisplayed(waitSecs);
     } catch (Throwable t) {
       if (!tryRefreshIfNotDisplayed) {
@@ -245,32 +243,6 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent<DR> 
   public <T extends CWebPage<DR>> T verifyDisplayed(int waitSecs) {
     CVerify.Bool.isTrue(isDisplayed(waitSecs), String.format("Verify %s page is displayed", getClass().getSimpleName()));
     return (T) this;
-  }
-
-  /**
-   * Creates and returns a web alert handler for this page.
-   * This method provides access to browser alert, confirm, and prompt dialogs
-   * that may appear during page interactions.
-   *
-   * @return a CWebAlert instance for handling browser dialogs
-   * 
-   * <p><strong>Example:</strong></p>
-   * <pre>{@code
-   * // Handle a confirmation dialog
-   * myPage.clickDeleteButton();
-   * CWebAlert<CDriver> alert = myPage.getAlert();
-   * if (alert.isPresent()) {
-   *     alert.accept(); // Click OK/Yes
-   * }
-   * 
-   * // Handle a prompt dialog
-   * myPage.clickRenameButton();
-   * alert = myPage.getAlert();
-   * alert.sendKeys("New Name").accept();
-   * }</pre>
-   */
-  public CWebAlert<DR> getAlert() {
-    return new CWebAlert<>(driver);
   }
 
   /**

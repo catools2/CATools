@@ -7,7 +7,7 @@ import org.catools.common.extensions.types.CDynamicNumberExtension;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.media.model.CScreenShot;
 import org.catools.web.drivers.CDriver;
-import org.openqa.selenium.By;
+import org.catools.web.selectors.CBy;
 
 import java.awt.image.BufferedImage;
 
@@ -63,7 +63,7 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    */
   @Getter
   @Setter
-  protected By locator;
+  protected String locator;
 
   /**
    * Default constructor for dependency injection frameworks.
@@ -81,11 +81,27 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    *
    *                <p>Example:</p>
    *                <pre>{@code
-   *                               CWebElement<CDriver> submitBtn = new CWebElement<>("Submit Button", driver, By.id("submit"));
-   *                               }</pre>
+   *                                              CWebElement<CDriver> submitBtn = new CWebElement<>("Submit Button", driver, By.id("submit"));
+   *                                              }</pre>
    */
-  public CWebElement(String name, DR driver, By locator) {
+  public CWebElement(String name, DR driver, String locator) {
     this(name, driver, locator, CDriver.DEFAULT_TIMEOUT);
+  }
+
+  /**
+   * Creates a new CWebElement with the default timeout.
+   *
+   * @param name    the descriptive name for this element
+   * @param driver  the web driver instance
+   * @param locator the locator strategy to find the element
+   *
+   *  <p>Example:</p>
+   *  <pre>{@code
+   *  CWebElement<CDriver> cancelLink = new CWebElement<>("Cancel Link", driver, By.linkText("Cancel"));
+   *  }</pre>
+   */
+  public CWebElement(String name, DR driver, CBy locator) {
+    this(name, driver, locator.getSelector(), CDriver.DEFAULT_TIMEOUT);
   }
 
   /**
@@ -96,13 +112,31 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * @param locator the locator strategy to find the element
    * @param waitSec the custom timeout in seconds for this element's operations
    *
-   *                <p>Example:</p>
-   *                <pre>{@code
-   *                               // Create element with 10-second timeout
-   *                               CWebElement<CDriver> slowElement = new CWebElement<>("Slow Element", driver, By.className("slow"), 10);
-   *                               }</pre>
+   * <p>Example:</p>
+   * <pre>{@code
+   * // Create element with 15-second timeout
+   * CWebElement<CDriver> dynamicElement = new CWexwbElement<>("Dynamic Element", driver, By.xpath("//div[@class='dynamic']"), 15);
+   * }</pre>
    */
-  public CWebElement(String name, DR driver, By locator, int waitSec) {
+  public CWebElement(String name, DR driver, CBy locator, int waitSec) {
+    this(name, driver, locator.getSelector(), waitSec);
+  }
+
+  /**
+   * Creates a new CWebElement with a custom timeout.
+   *
+   * @param name    the descriptive name for this element
+   * @param driver  the web driver instance
+   * @param locator the locator strategy to find the element
+   * @param waitSec the custom timeout in seconds for this element's operations
+   *
+   * <p>Example:</p>
+   * <pre>{@code
+   * // Create element with 10-second timeout
+   * CWebElement<CDriver> slowElement = new CWebElement<>("Slow Element", driver, By.className("slow"), 10);
+   * }</pre>
+   */
+  public CWebElement(String name, DR driver, String locator, int waitSec) {
     super();
     this.name = name;
     this.driver = driver;
@@ -354,36 +388,6 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
     @Override
     public String getVerifyMessagePrefix() {
       return name + " Inner HTML";
-    }
-  };
-
-  /**
-   * Dynamic extension for retrieving element tag name.
-   * Provides verification and wait capabilities for the element's HTML tag.
-   *
-   * <p>Example usage:</p>
-   * <pre>{@code
-   * // Verify element is a button
-   * element.TagName.verifyEquals("button", "Element should be a button");
-   *
-   * // Verify element is an input
-   * element.TagName.verifyEquals("input", "Element should be an input field");
-   * }</pre>
-   */
-  public final CDynamicStringExtension TagName = new CDynamicStringExtension() {
-    @Override
-    public String _get() {
-      return getTagName(0);
-    }
-
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
-
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Tag Name";
     }
   };
 

@@ -6,7 +6,6 @@ import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.utils.CFileUtil;
 import org.catools.web.config.CGridConfigs;
-import org.openqa.selenium.remote.SessionId;
 
 import java.io.File;
 import java.net.URL;
@@ -30,15 +29,15 @@ public class CGridUtil {
    * <p>This method queries the Selenium Grid Hub to find which node is handling
    * the specified session and returns the connection details.</p>
    * 
-   * @param sessionId the Selenium WebDriver session ID to look up
+   * @param sessionId the Selenium Page session ID to look up
    * @return a String array where index 0 is the hostname and index 1 is the port,
    *         or null if remote driver is not being used
    * @throws RuntimeException if unable to retrieve node information from the grid
    * 
    * @example
    * <pre>{@code
-   * // Get the current session ID from a WebDriver instance
-   * SessionId sessionId = ((RemoteWebDriver) driver).getSessionId();
+   * // Get the current session ID from a Page instance
+   * String sessionId = ((Page) driver).getSessionId();
    * 
    * // Retrieve the node's hostname and port
    * String[] nodeInfo = CGridUtil.getHostNameAndPort(sessionId);
@@ -49,12 +48,12 @@ public class CGridUtil {
    * }
    * }</pre>
    */
-  public static String[] getHostNameAndPort(SessionId sessionId) {
+  public static String[] getHostNameAndPort(String sessionId) {
     if (!CGridConfigs.isUseRemoteDriver()) {
       return null;
     }
     String[] hostAndPort = new String[2];
-    String errorMsg = "Failed to acquire remote webdriver node and port info. Root cause: ";
+    String errorMsg = "Failed to acquire remote page node and port info. Root cause: ";
 
     try {
       String targetURL =
@@ -85,7 +84,7 @@ public class CGridUtil {
    * <p>This is a convenience method that copies the source file to the remote node
    * while preserving the original filename and directory structure.</p>
    * 
-   * @param sessionId the Selenium WebDriver session ID to identify the target node
+   * @param sessionId the Selenium Page session ID to identify the target node
    * @param srcFile the source file to be copied to the remote node
    * @return the path where the file was copied on the remote node
    * @throws RuntimeException if the file copy operation fails or node information cannot be retrieved
@@ -94,7 +93,7 @@ public class CGridUtil {
    * <pre>{@code
    * // Copy a test data file to the remote node
    * File testDataFile = new File("/local/path/test-data.json");
-   * SessionId sessionId = ((RemoteWebDriver) driver).getSessionId();
+   * String sessionId = ((Page) driver).getSessionId();
    * 
    * String remotePath = CGridUtil.copyFileToNode(sessionId, testDataFile);
    * System.out.println("File copied to: " + remotePath);
@@ -102,7 +101,7 @@ public class CGridUtil {
    * // Now the file can be accessed on the remote node during test execution
    * }</pre>
    */
-  public static String copyFileToNode(SessionId sessionId, File srcFile) {
+  public static String copyFileToNode(String sessionId, File srcFile) {
     return copyFileToNode(sessionId, srcFile, srcFile);
   }
 
@@ -112,7 +111,7 @@ public class CGridUtil {
    * <p>This method allows you to specify both the source file and the destination
    * folder on the remote node, providing more control over where the file is placed.</p>
    * 
-   * @param sessionId the Selenium WebDriver session ID to identify the target node
+   * @param sessionId the Selenium Page session ID to identify the target node
    * @param srcFile the source file to be copied to the remote node
    * @param destFolder the destination folder on the remote node where the file should be placed
    * @return the path where the file was copied on the remote node
@@ -124,7 +123,7 @@ public class CGridUtil {
    * // Copy a configuration file to a specific directory on the remote node
    * File configFile = new File("/local/config/app.properties");
    * File remoteDestination = new File("/remote/test/config/");
-   * SessionId sessionId = ((RemoteWebDriver) driver).getSessionId();
+   * String sessionId = ((Page) driver).getSessionId();
    * 
    * String remotePath = CGridUtil.copyFileToNode(sessionId, configFile, remoteDestination);
    * System.out.println("Configuration file copied to: " + remotePath);
@@ -132,7 +131,7 @@ public class CGridUtil {
    * // The file is now available at the specified location on the remote node
    * }</pre>
    */
-  public static String copyFileToNode(SessionId sessionId, File srcFile, File destFolder) {
+  public static String copyFileToNode(String sessionId, File srcFile, File destFolder) {
     return CFileUtil.copyToRemoteFolder(srcFile, Objects.requireNonNull(getHostNameAndPort(sessionId))[0], destFolder);
   }
 }

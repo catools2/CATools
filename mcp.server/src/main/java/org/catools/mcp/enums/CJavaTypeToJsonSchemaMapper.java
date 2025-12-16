@@ -82,7 +82,6 @@ public enum CJavaTypeToJsonSchemaMapper {
    * The JSON schema data type.
    * -- GETTER --
    * Returns the JSON schema data type.
-   *
    */
   @Getter
   private final String jsonSchemaType;

@@ -124,22 +124,25 @@
         <jacoco.version>0.8.14</jacoco.version>
 
         <!-- POI -->
-        <poi.version>5.5.0</poi.version>
+        <poi.version>5.5.1</poi.version>
 
         <!-- Extent Reports -->
         <extent.reports.version>5.1.2</extent.reports.version>
 
         <!-- Selenium Devtools -->
-        <selenium-devtools.artifactId>selenium-devtools-v138</selenium-devtools.artifactId>
-        <selenium.devtools.version>4.36.0</selenium.devtools.version>
+        <selenium-devtools.artifactId>selenium-devtools-v143</selenium-devtools.artifactId>
+        <selenium.devtools.version>4.39.0</selenium.devtools.version>
 
         <!-- Selenium -->
-        <selenium.version>4.38.0</selenium.version>
+        <selenium.version>4.39.0</selenium.version>
         <selenium.shutterbug.version>1.6</selenium.shutterbug.version>
         <selenium-http-jdk-client.version>4.13.0</selenium-http-jdk-client.version>
         <selenium-axe.version>4.11.0</selenium-axe.version>
         <httpclient.version>4.5.14</httpclient.version>
         <webdrivermanager.version>6.3.3</webdrivermanager.version>
+
+        <!-- Playwright -->
+        <playwright.version>1.57.0</playwright.version>
 
         <!-- Report Portal -->
         <reportportal.version>5.4.8</reportportal.version>
@@ -280,6 +283,11 @@
             <dependency>
                 <groupId>io.opentelemetry</groupId>
                 <artifactId>opentelemetry-sdk-common</artifactId>
+                <version>${opentelemetry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk-metrics</artifactId>
                 <version>${opentelemetry.version}</version>
             </dependency>
             <dependency>
@@ -549,7 +557,6 @@
                 <artifactId>${selenium-devtools.artifactId}</artifactId>
                 <version>${selenium.devtools.version}</version>
             </dependency>
-            <!-- ================== /Selenium ======================= -->
             <dependency>
                 <groupId>io.github.bonigarcia</groupId>
                 <artifactId>webdrivermanager</artifactId>
@@ -560,6 +567,14 @@
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
+            <!-- ================== /Selenium ======================= -->
+            <!-- ================== Playwright ======================= -->
+            <dependency>
+                <groupId>com.microsoft.playwright</groupId>
+                <artifactId>playwright</artifactId>
+                <version>${playwright.version}</version>
+            </dependency>
+            <!-- ================== /Playwright ======================= -->
             <!-- ###################### /WEB ######################### -->
             <dependency>
                 <groupId>com.googlecode.libphonenumber</groupId>
@@ -843,6 +858,23 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.source}</target>
                         <release>${maven.compiler.source}</release>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.apache.logging.log4j</groupId>
+                                <artifactId>log4j-core</artifactId>
+                                <version>${apache-log4j.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.42</version>
+                            </path>
+                            <!-- add other processors here if needed -->
+                        </annotationProcessorPaths>
+                        <!-- suppress the javac options warning -->
+                        <compilerArgs>
+                            <arg>-Xlint:-options</arg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>

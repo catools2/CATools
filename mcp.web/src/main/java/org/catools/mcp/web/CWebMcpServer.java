@@ -10,10 +10,9 @@ import org.catools.mcp.di.CGuiceInjectorModule;
 /**
  * Simple runner for the MCP web server PoC.
  * Starts the MCP server using the default `mcp-server.yml` configuration on the classpath.
- *
  */
 @Slf4j
-@CMcpServerApplication(basePackage = "org.catools", groups = {"web"})
+@CMcpServerApplication(basePackages = "org.catools")
 public class CWebMcpServer {
 
   public static void main(String[] args) {

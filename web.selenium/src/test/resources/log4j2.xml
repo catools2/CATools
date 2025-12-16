@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Plugins>
+        <Packages>
+            <Package>org.catools.common.logger.converters</Package>
+        </Packages>
+    </Plugins>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%logger{36} %magenta{%d{yy-MM-dd HH:mm:ss:SSS}} [%highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}] %msg%n%CEvnT"
+                    disableAnsi="false"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <logger name="com.epam.reportportal.utils.SubscriptionUtils" level="OFF"/>
+        <logger name="com.epam.reportportal.service.Launch" level="OFF"/>
+        <logger name="org.openqa.selenium.devtools" level="OFF"/>
+        <logger name="org.openqa.selenium" level="OFF"/>
+        <logger name="org.testng" level="debug"/>
+        <Root level="${sys:CATOOLS_LOGGER_CONSOLE_LOG_LEVEL:-trace}">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

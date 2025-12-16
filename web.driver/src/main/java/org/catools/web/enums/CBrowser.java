@@ -47,7 +47,13 @@ public enum CBrowser {
   CHROME,
   
   /** Microsoft Edge browser */
-  EDGE;
+  EDGE,
+
+  /** Playwright Chromium browser (supports Chrome, Edge, and other Chromium-based browsers) */
+  CHROMIUM,
+
+  /** Playwright WebKit browser (Safari engine) */
+  WEBKIT;
 
   /**
    * Checks if this browser instance represents Google Chrome.
@@ -59,7 +65,7 @@ public enum CBrowser {
    * <pre>{@code
    * CBrowser browser = CBrowser.CHROME;
    * if (browser.isChrome()) {
-   *     // Configure Chrome-specific WebDriver options
+   *     // Configure Chrome-specific Page options
    *     ChromeOptions options = new ChromeOptions();
    *     options.addArguments("--headless");
    * }
@@ -84,14 +90,14 @@ public enum CBrowser {
    * <pre>{@code
    * CBrowser browser = CBrowser.FIREFOX;
    * if (browser.isFirefox()) {
-   *     // Configure Firefox-specific WebDriver options
+   *     // Configure Firefox-specific Page options
    *     FirefoxOptions options = new FirefoxOptions();
    *     options.setHeadless(true);
    * }
    * 
    * // Use in test setup
    * if (browser.isFirefox()) {
-   *     System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+   *     System.setProperty("page.gecko.driver", "/path/to/geckodriver");
    * }
    * }</pre>
    * 
@@ -111,7 +117,7 @@ public enum CBrowser {
    * <pre>{@code
    * CBrowser browser = CBrowser.EDGE;
    * if (browser.isEdge()) {
-   *     // Configure Edge-specific WebDriver options
+   *     // Configure Edge-specific Page options
    *     EdgeOptions options = new EdgeOptions();
    *     options.addArguments("--inprivate");
    * }

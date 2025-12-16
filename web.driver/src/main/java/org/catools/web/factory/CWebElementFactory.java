@@ -6,11 +6,6 @@ import org.catools.web.collections.CWebElements;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriverWaiter;
 import org.catools.web.pages.CWebComponent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ByIdOrName;
-import org.openqa.selenium.support.FindAll;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -25,7 +20,6 @@ import java.util.Objects;
  * <ul>
  *   <li>{@link CFindBy} - For single CWebElement fields</li>
  *   <li>{@link CFindBys} - For CWebElements collections</li>
- *   <li>{@link FindBy} - Standard Selenium annotation for CWebElement fields</li>
  * </ul>
  * 
  * <p>Usage example:</p>
@@ -37,7 +31,7 @@ import java.util.Objects;
  *     @CFindBys(xpath = "//input[@type='button']")
  *     private CWebElements<LoginPage> buttons;
  *     
- *     public LoginPage(WebDriver driver) {
+ *     public LoginPage(Page driver) {
  *         super(driver);
  *         CWebElementFactory.initElements(this); // Initialize all annotated fields
  *     }
@@ -54,7 +48,7 @@ public class CWebElementFactory {
   /**
    * Initializes all annotated web element fields in the given CWebComponent instance.
    * This method traverses the component's class hierarchy and decorates fields annotated
-   * with {@link CFindBy}, {@link CFindBys}, or {@link FindBy}.
+   * with {@link CFindBy}, {@link CFindBys}.
    * 
    * <p>The method processes fields as follows:</p>
    * <ul>
@@ -88,7 +82,7 @@ public class CWebElementFactory {
    *     @FindBy(className = "price-total")
    *     private CWebElement<ShoppingCartPage> totalPrice;
    *     
-   *     public ShoppingCartPage(WebDriver driver) {
+   *     public ShoppingCartPage(Page driver) {
    *         super(driver);
    *         CWebElementFactory.initElements(this); // Initializes all annotated fields
    *     }
@@ -117,7 +111,6 @@ public class CWebElementFactory {
    * 
    * @see CFindBy
    * @see CFindBys
-   * @see FindBy
    * @see CWebElement
    * @see CWebElements
    * @see CWebComponent
@@ -168,32 +161,21 @@ public class CWebElementFactory {
 
   private static CWebElement<?> buildWebElement(CWebComponent<?> component, Field field) {
     CFindBy cFindBYInfo = field.getAnnotation(CFindBy.class);
-    FindBy findBYInfo = field.getAnnotation(FindBy.class);
 
     String name = field.getName();
     int timeout = CDriverWaiter.DEFAULT_TIMEOUT;
 
-    By by;
-    if (cFindBYInfo != null) {
-      if (cFindBYInfo.findBy() == null) {
-        by = new ByIdOrName(field.getName());
-      } else {
-        by = new FindBy.FindByBuilder().buildIt(cFindBYInfo.findBy(), field);
-      }
-
-      if (StringUtils.isNotBlank(cFindBYInfo.name())) {
-        name = cFindBYInfo.name();
-      }
-
-      if (cFindBYInfo.waitInSeconds() > 0)
-        timeout = cFindBYInfo.waitInSeconds();
-    } else if (findBYInfo != null) {
-      by = new FindBy.FindByBuilder().buildIt(findBYInfo, field);
+    String locator;
+    if (cFindBYInfo != null && StringUtils.isNotBlank(cFindBYInfo.locator())) {
+      locator = cFindBYInfo.locator();
+      if (StringUtils.isNotBlank(cFindBYInfo.name())) name = cFindBYInfo.name();
+      if (cFindBYInfo.waitInSeconds() > 0) timeout = cFindBYInfo.waitInSeconds();
     } else {
-      by = new ByIdOrName(field.getName());
+      // fallback to id or name
+      locator = "#" + field.getName();
     }
 
-    return new CWebElement<>(name, component.getDriver(), by, timeout);
+    return component.getDriver().$(name, locator, timeout);
   }
 
   private static CWebElements<?> buildWebElements(CWebComponent<?> component, Field field) {
@@ -213,9 +195,7 @@ public class CWebElementFactory {
   }
 
   private static void assertValidAnnotations(Field field) {
-    CList<Annotation> seleniumAnnotatoins = CList.of(
-        field.getAnnotation(FindBys.class),
-        field.getAnnotation(FindAll.class));
+    CList<Annotation> seleniumAnnotatoins = CList.of();
 
     if (seleniumAnnotatoins.getAll(Objects::nonNull).isNotEmpty()) {
       throw new IllegalArgumentException("You should only use CFindBys or CFindBy or FindBy annotation! (Attention to first Letter 'C')");
