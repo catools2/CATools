@@ -6,10 +6,11 @@ import org.catools.web.enums.CBrowser;
 /**
  * Factory class for creating Playwright browser providers based on browser type.
  *
- * <p>This class provides a centralized way to instantiate the appropriate Playwright provider
- * based on the desired browser type (Chromium, Firefox, or WebKit).
+ * <p>This class provides a centralized way to instantiate the appropriate Playwright provider based
+ * on the desired browser type (Chromium, Firefox, or WebKit).
  *
  * <h3>Usage Examples:</h3>
+ *
  * <pre>{@code
  * // Create a Chromium provider
  * CPlaywrightProvider chromiumProvider = CPlaywrightProviderFactory.create(CBrowser.CHROMIUM);
@@ -52,15 +53,15 @@ public class CPlaywrightProviderFactory {
   /**
    * Creates a Playwright provider instance with custom configuration.
    *
-   * @param browser        The browser type to create a provider for
-   * @param headless       Whether to run the browser in headless mode
-   * @param viewportWidth  The viewport width (can be null for default)
+   * @param browser The browser type to create a provider for
+   * @param headless Whether to run the browser in headless mode
+   * @param viewportWidth The viewport width (can be null for default)
    * @param viewportHeight The viewport height (can be null for default)
    * @return A CPlaywrightProvider instance configured for the specified browser
    * @throws IllegalArgumentException if the browser type is not supported for Playwright
    */
-  public static CPlaywrightProvider create(CBrowser browser, boolean headless,
-                                           Integer viewportWidth, Integer viewportHeight) {
+  public static CPlaywrightProvider create(
+      CBrowser browser, boolean headless, Integer viewportWidth, Integer viewportHeight) {
     log.debug("Creating Playwright provider for browser: {}, headless: {}", browser, headless);
 
     return switch (browser) {
@@ -69,11 +70,14 @@ public class CPlaywrightProviderFactory {
       case FIREFOX -> new CFirefoxPlaywrightProvider();
       case WEBKIT -> new CWebKitPlaywrightProvider();
       default -> {
-        log.error("Browser type {} is not supported for Playwright. " +
-            "Use CHROMIUM, FIREFOX, or WEBKIT.", browser);
+        log.error(
+            "Browser type {} is not supported for Playwright. "
+                + "Use CHROMIUM, FIREFOX, or WEBKIT.",
+            browser);
         throw new IllegalArgumentException(
-            "Unsupported browser for Playwright: " + browser +
-                ". Use CHROMIUM, FIREFOX, or WEBKIT.");
+            "Unsupported browser for Playwright: "
+                + browser
+                + ". Use CHROMIUM, FIREFOX, or WEBKIT.");
       }
     };
   }
@@ -91,15 +95,13 @@ public class CPlaywrightProviderFactory {
   /**
    * Creates a Playwright provider with custom viewport dimensions.
    *
-   * @param browser        The browser type to create a provider for
-   * @param viewportWidth  The viewport width
+   * @param browser The browser type to create a provider for
+   * @param viewportWidth The viewport width
    * @param viewportHeight The viewport height
    * @return A CPlaywrightProvider instance with custom viewport
    */
-  public static CPlaywrightProvider createWithViewport(CBrowser browser,
-                                                       int viewportWidth,
-                                                       int viewportHeight) {
+  public static CPlaywrightProvider createWithViewport(
+      CBrowser browser, int viewportWidth, int viewportHeight) {
     return create(browser, false, viewportWidth, viewportHeight);
   }
 }
-

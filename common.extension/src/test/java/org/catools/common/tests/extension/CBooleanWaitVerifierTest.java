@@ -1,12 +1,11 @@
 package org.catools.common.tests.extension;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.types.CDynamicBooleanExtension;
 import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.function.Consumer;
 
 public class CBooleanWaitVerifierTest extends CBaseUnitTest {
 

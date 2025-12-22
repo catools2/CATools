@@ -5,7 +5,8 @@ import org.catools.common.collections.CSet;
 /**
  * Enumeration representing the various statuses of a test execution in the ZAPI system.
  *
- * <p>This enum provides methods to determine if a status indicates a running, failed, skipped, or passed state.</p>
+ * <p>This enum provides methods to determine if a status indicates a running, failed, skipped, or
+ * passed state.
  */
 public enum CZApiExecutionStatus {
   SUCCESS, // Indicates that the execution was successful.
@@ -40,7 +41,8 @@ public enum CZApiExecutionStatus {
   /**
    * Checks if the current status represents a skipped state.
    *
-   * @return {@code true} if the status is one of {@link #SKIP}, {@link #IGNORED}, {@link #DEFERRED}, or {@link #AWAITING}, otherwise {@code false}.
+   * @return {@code true} if the status is one of {@link #SKIP}, {@link #IGNORED}, {@link
+   *     #DEFERRED}, or {@link #AWAITING}, otherwise {@code false}.
    */
   public boolean isSkipped() {
     return new CSet<>(SKIP, IGNORED, DEFERRED, AWAITING).contains(this);
@@ -49,7 +51,8 @@ public enum CZApiExecutionStatus {
   /**
    * Checks if the current status represents a passed state.
    *
-   * @return {@code true} if the status is one of {@link #SUCCESS} or {@link #SUCCESS_PERCENTAGE_FAILURE}, otherwise {@code false}.
+   * @return {@code true} if the status is one of {@link #SUCCESS} or {@link
+   *     #SUCCESS_PERCENTAGE_FAILURE}, otherwise {@code false}.
    */
   public boolean isPassed() {
     return new CSet<>(SUCCESS, SUCCESS_PERCENTAGE_FAILURE).contains(this);

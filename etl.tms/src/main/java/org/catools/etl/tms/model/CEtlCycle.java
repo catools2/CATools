@@ -1,17 +1,15 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
 
 @Entity
 @Table(name = "cycle", schema = "tms")
@@ -21,9 +19,10 @@ import java.util.Date;
 @Accessors(chain = true)
 public class CEtlCycle implements Serializable {
 
-  public static final CEtlCycle UNSET = new CEtlCycle("UNSET", "UNSET", CEtlVersion.UNSET, null, null);
-  @Serial
-  private static final long serialVersionUID = 6051874018185613707L;
+  public static final CEtlCycle UNSET =
+      new CEtlCycle("UNSET", "UNSET", CEtlVersion.UNSET, null, null);
+  @Serial private static final long serialVersionUID = 6051874018185613707L;
+
   @Id
   @Column(name = "id", length = 20, unique = true, nullable = false)
   private String id;
@@ -46,12 +45,7 @@ public class CEtlCycle implements Serializable {
       foreignKey = @ForeignKey(name = "FK_CYCLE_VERSION"))
   private CEtlVersion version;
 
-  public CEtlCycle(
-      String id,
-      String name,
-      CEtlVersion version,
-      Date endDate,
-      Date startDate) {
+  public CEtlCycle(String id, String name, CEtlVersion version, Date endDate, Date startDate) {
     this.id = id;
     this.name = StringUtils.substring(name, 0, 250);
     this.version = version;

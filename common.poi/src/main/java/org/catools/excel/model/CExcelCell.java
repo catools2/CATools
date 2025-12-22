@@ -1,10 +1,9 @@
 package org.catools.excel.model;
 
+import java.util.Date;
 import lombok.Data;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
-
-import java.util.Date;
 
 @Data
 public class CExcelCell {

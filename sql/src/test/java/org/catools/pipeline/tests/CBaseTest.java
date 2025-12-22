@@ -15,15 +15,19 @@ public class CBaseTest {
   protected static final String PRIMARY = "PRIMARY";
   protected static final String SELECT_COUNT = "Select count(*) from git.\"commit\"";
   protected static final String FROM_ALL = "from git.\"commit\"";
-  protected static final String VALID_FROM_COMMIT = "from git.\"commit\" where hash='d78457d822a84787cd23bcbd04a7b01ec4a6de6a'";
+  protected static final String VALID_FROM_COMMIT =
+      "from git.\"commit\" where hash='d78457d822a84787cd23bcbd04a7b01ec4a6de6a'";
   protected static final String INVALID_FROM_COMMIT = "from git.\"commit\" where hash='INVALID'";
   protected static final String DATE_FORMAT = "YYYY-MM-dd HH:mm:ss.SSS";
 
-  protected static final CGitCommit commit = new CGitCommit() {{
-    setHash("d78457d822a84787cd23bcbd04a7b01ec4a6de6a");
-    setShortMessage("Merge branch 'fix_code_smells' into 'master'");
-    setCommitTime(CDate.of("2022-08-10 19:20:00.000", DATE_FORMAT));
-  }};
+  protected static final CGitCommit commit =
+      new CGitCommit() {
+        {
+          setHash("d78457d822a84787cd23bcbd04a7b01ec4a6de6a");
+          setShortMessage("Merge branch 'fix_code_smells' into 'master'");
+          setCommitTime(CDate.of("2022-08-10 19:20:00.000", DATE_FORMAT));
+        }
+      };
 
   private final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:17");
 
@@ -31,7 +35,6 @@ public class CBaseTest {
   public void afterClass() {
     postgres.stop();
   }
-
 
   @BeforeSuite
   public void beforeSuite() {

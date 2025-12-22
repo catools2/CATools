@@ -13,7 +13,8 @@ public class CEtlConfigs {
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
-    CATOOLS_ETL_TMS_BULK_TRANSACTION_PARTITION_SIZE("catools.etl.tms.bulk_transaction_partition_size");
+    CATOOLS_ETL_TMS_BULK_TRANSACTION_PARTITION_SIZE(
+        "catools.etl.tms.bulk_transaction_partition_size");
 
     private final String path;
   }

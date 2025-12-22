@@ -5,11 +5,13 @@ import org.catools.etl.tms.model.CEtlItemStatusTransition;
 import org.hibernate.annotations.QueryHints;
 
 public class CEtlItemStatusTransitionDao extends CEtlBaseDao {
-  public static CEtlItemStatusTransition getItemStatusTransition(String itemId, CEtlItemStatusTransition statusTransition) {
+  public static CEtlItemStatusTransition getItemStatusTransition(
+      String itemId, CEtlItemStatusTransition statusTransition) {
     return getTransactionResult(
         session -> {
           return session
-              .createNamedQuery("getItemStatusTransitionByStatusesAndDate", CEtlItemStatusTransition.class)
+              .createNamedQuery(
+                  "getItemStatusTransitionByStatusesAndDate", CEtlItemStatusTransition.class)
               .setParameter("fromName", statusTransition.getFrom().getName())
               .setParameter("toName", statusTransition.getTo().getName())
               .setParameter("occurred", CDate.of(statusTransition.getOccurred()).getTimeStamp())

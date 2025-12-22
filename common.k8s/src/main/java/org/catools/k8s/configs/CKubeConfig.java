@@ -7,15 +7,13 @@ import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.k8s.enums.CKubeConnectionType;
 
-/**
- * Kubernetes configuration including connection parameters.
- */
+/** Kubernetes configuration including connection parameters. */
 @UtilityClass
 public class CKubeConfig {
 
   /**
-   * Connection type for k8s api client.
-   * it can be one of {@link CKubeConnectionType#values()} values
+   * Connection type for k8s api client. it can be one of {@link CKubeConnectionType#values()}
+   * values
    *
    * @return
    */
@@ -29,9 +27,9 @@ public class CKubeConfig {
    * @return
    */
   public static boolean shouldValidateSSL() {
-    return CHocon.has(Configs.CATOOLS_K8S_CONNECTION_VALIDATE_SSL) ?
-        CHocon.asBoolean(Configs.CATOOLS_K8S_CONNECTION_VALIDATE_SSL) :
-        false;
+    return CHocon.has(Configs.CATOOLS_K8S_CONNECTION_VALIDATE_SSL)
+        ? CHocon.asBoolean(Configs.CATOOLS_K8S_CONNECTION_VALIDATE_SSL)
+        : false;
   }
 
   /**

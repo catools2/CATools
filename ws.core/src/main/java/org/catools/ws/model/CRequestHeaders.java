@@ -1,12 +1,10 @@
 package org.catools.ws.model;
 
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 
-import java.util.Map;
-
 public class CRequestHeaders extends CHashMap<String, String> {
-  public CRequestHeaders() {
-  }
+  public CRequestHeaders() {}
 
   public CRequestHeaders(int initialCapacity, float loadFactor) {
     super(initialCapacity, loadFactor);

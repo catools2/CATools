@@ -1,10 +1,10 @@
 package org.catools.mcp.util;
 
-import org.catools.common.utils.CStringUtil;
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
+
+import org.catools.common.utils.CStringUtil;
+import org.testng.annotations.Test;
 
 public class TypeConverterTest {
 

@@ -6,13 +6,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * A simple implementation to execute parallel tasks using {@link CExecutorService} with a simplified interface
- * for the majority of automation needs.
+ * A simple implementation to execute parallel tasks using {@link CExecutorService} with a
+ * simplified interface for the majority of automation needs.
  *
  * <p>This class provides a convenient way to run the same task multiple times in parallel threads.
- * It automatically manages thread creation, task execution, and resource cleanup.</p>
+ * It automatically manages thread creation, task execution, and resource cleanup.
  *
  * <h3>Basic Usage Example:</h3>
+ *
  * <pre>{@code
  * // Run a simple computation task on 4 threads
  * CParallelRunner<Boolean> runner = new CParallelRunner<>(
@@ -37,6 +38,7 @@ import java.util.concurrent.TimeoutException;
  * }</pre>
  *
  * <h3>Web Load Testing Example:</h3>
+ *
  * <pre>{@code
  * // Simulate concurrent web requests for load testing
  * CParallelRunner<String> loadTester = new CParallelRunner<>(
@@ -46,10 +48,10 @@ import java.util.concurrent.TimeoutException;
  *         // Simulate HTTP request
  *         String url = "http://example.com/api/test";
  *         long startTime = System.currentTimeMillis();
- *         
+ *
  *         // Your HTTP client code here
  *         // HttpResponse response = httpClient.get(url);
- *         
+ *
  *         long endTime = System.currentTimeMillis();
  *         return "Request completed in " + (endTime - startTime) + "ms";
  *     }
@@ -65,6 +67,7 @@ import java.util.concurrent.TimeoutException;
  * }</pre>
  *
  * <h3>Database Connection Testing Example:</h3>
+ *
  * <pre>{@code
  * // Test database connection pool under concurrent load
  * CParallelRunner<Integer> dbTester = new CParallelRunner<>(
@@ -98,22 +101,23 @@ public class CParallelRunner<T> {
   private final CExecutorService<T> executor;
 
   /**
-   * Constructs a new CParallelRunner with the specified name, thread count, and task.
-   * Uses the default behavior of stopping execution when an exception occurs.
+   * Constructs a new CParallelRunner with the specified name, thread count, and task. Uses the
+   * default behavior of stopping execution when an exception occurs.
    *
-   * <p>This constructor is ideal for scenarios where you want to ensure that if any
-   * thread encounters an error, the entire parallel execution stops immediately.</p>
+   * <p>This constructor is ideal for scenarios where you want to ensure that if any thread
+   * encounters an error, the entire parallel execution stops immediately.
    *
    * <h4>Example - File Processing:</h4>
+   *
    * <pre>{@code
    * // Process multiple files concurrently
    * List<File> filesToProcess = Arrays.asList(
-   *     new File("file1.txt"), 
-   *     new File("file2.txt"), 
+   *     new File("file1.txt"),
+   *     new File("file2.txt"),
    *     new File("file3.txt")
    * );
    * AtomicInteger fileIndex = new AtomicInteger(0);
-   * 
+   *
    * CParallelRunner<String> fileProcessor = new CParallelRunner<>(
    *     "FileProcessor",
    *     3,
@@ -129,11 +133,12 @@ public class CParallelRunner<T> {
    * }</pre>
    *
    * <h4>Example - Mathematical Computation:</h4>
+   *
    * <pre>{@code
    * // Calculate prime numbers in parallel
    * AtomicLong counter = new AtomicLong(2);
    * List<Long> primes = Collections.synchronizedList(new ArrayList<>());
-   * 
+   *
    * CParallelRunner<Void> primeCalculator = new CParallelRunner<>(
    *     "PrimeCalculator",
    *     Runtime.getRuntime().availableProcessors(),
@@ -157,20 +162,22 @@ public class CParallelRunner<T> {
   }
 
   /**
-   * Constructs a new CParallelRunner with the specified name, thread count, task, and exception handling behavior.
+   * Constructs a new CParallelRunner with the specified name, thread count, task, and exception
+   * handling behavior.
    *
    * <p>This constructor provides full control over how the runner behaves when exceptions occur.
-   * When {@code stopOnException} is false, the runner will continue executing remaining tasks
-   * even if some threads encounter exceptions.</p>
+   * When {@code stopOnException} is false, the runner will continue executing remaining tasks even
+   * if some threads encounter exceptions.
    *
    * <h4>Example - Resilient Data Processing:</h4>
+   *
    * <pre>{@code
    * // Process data records, continuing even if some fail
    * List<DataRecord> records = getDataRecords();
    * AtomicInteger recordIndex = new AtomicInteger(0);
    * List<String> results = Collections.synchronizedList(new ArrayList<>());
    * List<Exception> errors = Collections.synchronizedList(new ArrayList<>());
-   * 
+   *
    * CParallelRunner<String> dataProcessor = new CParallelRunner<>(
    *     "DataProcessor",
    *     5,
@@ -194,11 +201,12 @@ public class CParallelRunner<T> {
    * }</pre>
    *
    * <h4>Example - Critical System Validation:</h4>
+   *
    * <pre>{@code
    * // Validate system components, stop immediately on any failure
    * List<SystemComponent> components = getSystemComponents();
    * AtomicInteger componentIndex = new AtomicInteger(0);
-   * 
+   *
    * CParallelRunner<Boolean> systemValidator = new CParallelRunner<>(
    *     "SystemValidator",
    *     components.size(),
@@ -221,7 +229,8 @@ public class CParallelRunner<T> {
    * @param name the name of the runner (used for thread naming and identification)
    * @param threadCount the number of threads to use (should be > 0)
    * @param callable the task to be executed in parallel by each thread
-   * @param stopOnException whether to stop execution immediately when any thread encounters an exception
+   * @param stopOnException whether to stop execution immediately when any thread encounters an
+   *     exception
    * @throws IllegalArgumentException if threadCount is <= 0
    */
   public CParallelRunner(
@@ -234,14 +243,15 @@ public class CParallelRunner<T> {
 
   /**
    * Checks if the executor has been started.
-   * 
-   * <p>This method is useful for monitoring the lifecycle of the parallel runner
-   * and ensuring that tasks have begun execution before proceeding with other operations.</p>
+   *
+   * <p>This method is useful for monitoring the lifecycle of the parallel runner and ensuring that
+   * tasks have begun execution before proceeding with other operations.
    *
    * <h4>Example - Monitoring Execution State:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("Monitor", 3, () -> "task");
-   * 
+   *
    * // Start execution in a separate thread
    * CompletableFuture.runAsync(() -> {
    *     try {
@@ -250,7 +260,7 @@ public class CParallelRunner<T> {
    *         t.printStackTrace();
    *     }
    * });
-   * 
+   *
    * // Monitor progress
    * while (!runner.isStarted()) {
    *     Thread.sleep(10);
@@ -267,18 +277,19 @@ public class CParallelRunner<T> {
 
   /**
    * Checks if the executor has finished execution.
-   * 
-   * <p>This method returns true when all submitted tasks have completed execution,
-   * either successfully or with exceptions. It's useful for determining when
-   * results are ready to be processed.</p>
+   *
+   * <p>This method returns true when all submitted tasks have completed execution, either
+   * successfully or with exceptions. It's useful for determining when results are ready to be
+   * processed.
    *
    * <h4>Example - Waiting for Completion:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<Integer> calculator = new CParallelRunner<>("Calculator", 4, () -> {
    *     // Perform some calculation
    *     return (int)(Math.random() * 1000);
    * });
-   * 
+   *
    * // Start execution asynchronously
    * CompletableFuture.runAsync(() -> {
    *     try {
@@ -287,13 +298,13 @@ public class CParallelRunner<T> {
    *         t.printStackTrace();
    *     }
    * });
-   * 
+   *
    * // Poll for completion
    * while (!calculator.isFinished()) {
    *     System.out.println("Calculations in progress...");
    *     Thread.sleep(100);
    * }
-   * 
+   *
    * System.out.println("All calculations completed!");
    * calculator.shutdown();
    * }</pre>
@@ -306,18 +317,19 @@ public class CParallelRunner<T> {
 
   /**
    * Checks if the executor has been shut down.
-   * 
+   *
    * <p>This method returns true if {@link #shutdown()} or {@link #shutdownNow()} has been called,
    * regardless of whether all tasks have actually finished executing. Use {@link #isTerminated()}
-   * to check if all tasks have completed after shutdown.</p>
+   * to check if all tasks have completed after shutdown.
    *
    * <h4>Example - Shutdown State Monitoring:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("StateMonitor", 3, () -> {
    *     Thread.sleep(2000); // 2 second task
    *     return "Task completed";
    * });
-   * 
+   *
    * // Start execution in background
    * CompletableFuture.runAsync(() -> {
    *     try {
@@ -326,23 +338,23 @@ public class CParallelRunner<T> {
    *         t.printStackTrace();
    *     }
    * });
-   * 
+   *
    * Thread.sleep(500); // Let tasks start
-   * 
+   *
    * System.out.println("Is shutdown: " + runner.isShutdown()); // false
    * System.out.println("Is terminated: " + runner.isTerminated()); // false
-   * 
+   *
    * runner.shutdown(); // Initiate shutdown
-   * 
+   *
    * System.out.println("Is shutdown: " + runner.isShutdown()); // true
    * System.out.println("Is terminated: " + runner.isTerminated()); // likely false (tasks still running)
-   * 
+   *
    * // Wait for termination
    * while (!runner.isTerminated()) {
    *     Thread.sleep(100);
    *     System.out.println("Waiting for termination...");
    * }
-   * 
+   *
    * System.out.println("Is terminated: " + runner.isTerminated()); // true
    * }</pre>
    *
@@ -357,18 +369,19 @@ public class CParallelRunner<T> {
 
   /**
    * Checks if the executor has been terminated.
-   * 
-   * <p>This method returns true only after {@link #shutdown()} or {@link #shutdownNow()} has been called
-   * AND all tasks have completed execution. This is useful for confirming that all resources have been
-   * properly released and all threads have finished.</p>
+   *
+   * <p>This method returns true only after {@link #shutdown()} or {@link #shutdownNow()} has been
+   * called AND all tasks have completed execution. This is useful for confirming that all resources
+   * have been properly released and all threads have finished.
    *
    * <h4>Example - Complete Lifecycle Management:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("LifecycleRunner", 4, () -> {
    *     Thread.sleep(1000); // Simulate work
    *     return "Task completed";
    * });
-   * 
+   *
    * // Start execution in background
    * CompletableFuture<Void> execution = CompletableFuture.runAsync(() -> {
    *     try {
@@ -377,18 +390,18 @@ public class CParallelRunner<T> {
    *         t.printStackTrace();
    *     }
    * });
-   * 
+   *
    * Thread.sleep(500); // Let tasks start
-   * 
+   *
    * System.out.println("Started: " + runner.isStarted());     // true
    * System.out.println("Finished: " + runner.isFinished());   // false
    * System.out.println("Shutdown: " + runner.isShutdown());   // false
    * System.out.println("Terminated: " + runner.isTerminated()); // false
-   * 
+   *
    * // Wait for completion and then shutdown
    * execution.join();
    * runner.shutdown();
-   * 
+   *
    * System.out.println("After shutdown:");
    * System.out.println("Finished: " + runner.isFinished());   // true
    * System.out.println("Shutdown: " + runner.isShutdown());   // true
@@ -396,6 +409,7 @@ public class CParallelRunner<T> {
    * }</pre>
    *
    * <h4>Example - Cleanup Verification:</h4>
+   *
    * <pre>{@code
    * // Ensure proper cleanup after forced shutdown
    * CParallelRunner<Void> resourceRunner = new CParallelRunner<>("ResourceRunner", 5, () -> {
@@ -416,7 +430,7 @@ public class CParallelRunner<T> {
    *     }
    *     return null;
    * });
-   * 
+   *
    * try {
    *     CompletableFuture.runAsync(() -> {
    *         try {
@@ -425,10 +439,10 @@ public class CParallelRunner<T> {
    *             // Handle interruption
    *         }
    *     });
-   *     
+   *
    *     Thread.sleep(200); // Let tasks start
    *     resourceRunner.shutdownNow(); // Force shutdown
-   *     
+   *
    *     // Wait for termination to ensure cleanup is complete
    *     long startTime = System.currentTimeMillis();
    *     while (!resourceRunner.isTerminated()) {
@@ -438,11 +452,11 @@ public class CParallelRunner<T> {
    *             break;
    *         }
    *     }
-   *     
+   *
    *     if (resourceRunner.isTerminated()) {
    *         System.out.println("All resources properly cleaned up");
    *     }
-   *     
+   *
    * } catch (InterruptedException e) {
    *     Thread.currentThread().interrupt();
    * }
@@ -459,12 +473,13 @@ public class CParallelRunner<T> {
 
   /**
    * Executes all tasks in the runner, waiting for their completion.
-   * 
-   * <p>This method blocks the calling thread until all tasks have completed execution.
-   * If any task throws an exception and {@code stopOnException} is true (default),
-   * this method will throw that exception and attempt to cancel remaining tasks.</p>
+   *
+   * <p>This method blocks the calling thread until all tasks have completed execution. If any task
+   * throws an exception and {@code stopOnException} is true (default), this method will throw that
+   * exception and attempt to cancel remaining tasks.
    *
    * <h4>Example - Simple Parallel Execution:</h4>
+   *
    * <pre>{@code
    * AtomicInteger counter = new AtomicInteger(0);
    * CParallelRunner<Integer> runner = new CParallelRunner<>(
@@ -476,7 +491,7 @@ public class CParallelRunner<T> {
    *         return value;
    *     }
    * );
-   * 
+   *
    * try {
    *     runner.invokeAll();
    *     System.out.println("Final counter value: " + counter.get());
@@ -488,6 +503,7 @@ public class CParallelRunner<T> {
    * }</pre>
    *
    * <h4>Example - Exception Handling:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>(
    *     "ExceptionDemo",
@@ -499,7 +515,7 @@ public class CParallelRunner<T> {
    *         return "Success";
    *     }
    * );
-   * 
+   *
    * try {
    *     runner.invokeAll();
    *     System.out.println("All tasks completed successfully");
@@ -520,12 +536,13 @@ public class CParallelRunner<T> {
 
   /**
    * Executes all tasks in the runner, waiting for their completion or until the timeout expires.
-   * 
-   * <p>This method provides a way to limit the maximum execution time for all parallel tasks.
-   * If the timeout expires before all tasks complete, the method will attempt to cancel
-   * remaining tasks and throw a TimeoutException.</p>
+   *
+   * <p>This method provides a way to limit the maximum execution time for all parallel tasks. If
+   * the timeout expires before all tasks complete, the method will attempt to cancel remaining
+   * tasks and throw a TimeoutException.
    *
    * <h4>Example - API Stress Testing with Timeout:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> apiTester = new CParallelRunner<>(
    *     "APIStressTester",
@@ -537,7 +554,7 @@ public class CParallelRunner<T> {
    *         return "API call completed in " + delay + "ms";
    *     }
    * );
-   * 
+   *
    * try {
    *     // Allow maximum 3 seconds for all API calls to complete
    *     apiTester.invokeAll(3, TimeUnit.SECONDS);
@@ -552,10 +569,11 @@ public class CParallelRunner<T> {
    * }</pre>
    *
    * <h4>Example - Batch Processing with Time Constraints:</h4>
+   *
    * <pre>{@code
    * List<Document> documents = getDocumentsToProcess();
    * AtomicInteger docIndex = new AtomicInteger(0);
-   * 
+   *
    * CParallelRunner<String> docProcessor = new CParallelRunner<>(
    *     "DocumentProcessor",
    *     4,
@@ -568,7 +586,7 @@ public class CParallelRunner<T> {
    *         return null;
    *     }
    * );
-   * 
+   *
    * try {
    *     // Process for maximum 30 minutes
    *     docProcessor.invokeAll(30, TimeUnit.MINUTES);
@@ -593,19 +611,20 @@ public class CParallelRunner<T> {
 
   /**
    * Initiates an orderly shutdown of the runner.
-   * 
-   * <p>This method initiates a graceful shutdown where previously submitted tasks
-   * are allowed to complete, but no new tasks will be accepted. This method does
-   * not wait for previously submitted tasks to complete execution.</p>
+   *
+   * <p>This method initiates a graceful shutdown where previously submitted tasks are allowed to
+   * complete, but no new tasks will be accepted. This method does not wait for previously submitted
+   * tasks to complete execution.
    *
    * <h4>Example - Graceful Shutdown:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("GracefulRunner", 4, () -> {
    *     // Simulate long-running task
    *     Thread.sleep(2000);
    *     return "Task completed";
    * });
-   * 
+   *
    * try {
    *     // Start execution in separate thread
    *     CompletableFuture.runAsync(() -> {
@@ -615,19 +634,19 @@ public class CParallelRunner<T> {
    *             t.printStackTrace();
    *         }
    *     });
-   *     
+   *
    *     // Let it run for a while
    *     Thread.sleep(1000);
-   *     
+   *
    *     // Initiate graceful shutdown
    *     runner.shutdown();
-   *     
+   *
    *     // Wait for existing tasks to complete
    *     while (!runner.isTerminated()) {
    *         System.out.println("Waiting for tasks to complete...");
    *         Thread.sleep(100);
    *     }
-   *     
+   *
    *     System.out.println("All tasks completed, runner shut down gracefully");
    * } catch (InterruptedException e) {
    *     Thread.currentThread().interrupt();
@@ -643,12 +662,13 @@ public class CParallelRunner<T> {
 
   /**
    * Attempts to stop all actively executing tasks and halts the processing of waiting tasks.
-   * 
-   * <p>This method attempts to forcefully shutdown the runner by interrupting all
-   * currently running tasks. It does not wait for actively executing tasks to
-   * terminate, but it does return a list of tasks that were waiting for execution.</p>
+   *
+   * <p>This method attempts to forcefully shutdown the runner by interrupting all currently running
+   * tasks. It does not wait for actively executing tasks to terminate, but it does return a list of
+   * tasks that were waiting for execution.
    *
    * <h4>Example - Emergency Shutdown:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("EmergencyRunner", 5, () -> {
    *     try {
@@ -667,7 +687,7 @@ public class CParallelRunner<T> {
    *         return "Interrupted via exception";
    *     }
    * });
-   * 
+   *
    * try {
    *     // Start execution in separate thread
    *     CompletableFuture.runAsync(() -> {
@@ -677,30 +697,31 @@ public class CParallelRunner<T> {
    *             System.out.println("Execution was interrupted: " + t.getMessage());
    *         }
    *     });
-   *     
+   *
    *     // Let it run briefly
    *     Thread.sleep(500);
-   *     
+   *
    *     // Force immediate shutdown
    *     System.out.println("Forcing immediate shutdown...");
    *     runner.shutdownNow();
-   *     
+   *
    *     // Brief wait to see the interruption effects
    *     Thread.sleep(1000);
-   *     
+   *
    * } catch (InterruptedException e) {
    *     Thread.currentThread().interrupt();
    * }
    * }</pre>
    *
    * <h4>Example - Timeout-based Forced Shutdown:</h4>
+   *
    * <pre>{@code
    * CParallelRunner<String> runner = new CParallelRunner<>("TimeoutRunner", 3, () -> {
    *     // Long-running task
    *     Thread.sleep(10000); // 10 seconds
    *     return "Should not complete";
    * });
-   * 
+   *
    * try {
    *     // Try to complete within 2 seconds
    *     runner.invokeAll(2, TimeUnit.SECONDS);

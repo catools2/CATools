@@ -23,10 +23,11 @@ public class CParallelCollectionIOTest {
   public void testRun() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 2);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(true);
-      return List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(true);
+          return List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 2, "Only 2 records has been read from main list");
@@ -36,10 +37,11 @@ public class CParallelCollectionIOTest {
   public void testRunTimeout() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 2);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(true);
-      return List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(true);
+          return List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> CSleeper.sleepTightInSeconds(idx));
     pt.run(1L, TimeUnit.SECONDS);
   }
@@ -48,11 +50,12 @@ public class CParallelCollectionIOTest {
   public void testRunInputExceptionAfterEof() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 1);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(true);
-      Objects.requireNonNull(null);
-      return List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(true);
+          Objects.requireNonNull(null);
+          return List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
   }
@@ -61,10 +64,11 @@ public class CParallelCollectionIOTest {
   public void testRunInputExceptionWithoutEof() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 1);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      Objects.requireNonNull(null);
-      return List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          Objects.requireNonNull(null);
+          return List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
   }
@@ -73,10 +77,11 @@ public class CParallelCollectionIOTest {
   public void testRunOutputException() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 4, 1);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(true);
-      return List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(true);
+          return List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> Objects.requireNonNull(null));
     pt.run();
   }
@@ -86,10 +91,11 @@ public class CParallelCollectionIOTest {
   public void testTestRun2Threads() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 2);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(integers.isEmpty());
-      return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(integers.isEmpty());
+          return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 0, "All records has been read from main list");
@@ -100,10 +106,11 @@ public class CParallelCollectionIOTest {
   public void testTestRun4Threads() throws Throwable {
     CParallelCollectionIO<Integer> pt = new CParallelCollectionIO<>("P1", 2, 1);
     List<Integer> integers = new ArrayList<>(List.of(1, 2, 3, 4));
-    pt.setInputExecutor(eof -> {
-      eof.set(integers.isEmpty());
-      return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
-    });
+    pt.setInputExecutor(
+        eof -> {
+          eof.set(integers.isEmpty());
+          return integers.isEmpty() ? Collections.emptyList() : List.of(integers.remove(0));
+        });
     pt.setOutputExecutor((eof, idx) -> log.trace(idx + CStringUtil.EMPTY));
     pt.run();
     Assert.assertEquals(integers.size(), 0, "All records has been read from main list");

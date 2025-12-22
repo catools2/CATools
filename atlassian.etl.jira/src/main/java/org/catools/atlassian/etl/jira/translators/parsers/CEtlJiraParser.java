@@ -10,22 +10,23 @@ import java.util.Comparator;
 import java.util.function.Function;
 
 /**
- * Utility class for parsing Jira issue fields using various field parsers.
- * It maintains a list of parsers and applies the most suitable one to each field.
- * Fields that cannot be parsed are logged and skipped.
+ * Utility class for parsing Jira issue fields using various field parsers. It maintains a list of
+ * parsers and applies the most suitable one to each field. Fields that cannot be parsed are logged
+ * and skipped.
  *
  * <p>Example:
+ *
  * <pre>{@code
  * IssueField field = ...;
  * CHashMap<String, String> parsedField = CEtlJiraParser.parserJiraField(field);
  * }</pre>
- * </p>
  */
 @Slf4j
 @UtilityClass
 public class CEtlJiraParser {
   private static final CList<IssueField> skippedFields = new CList<>();
-  private static final CList<Function<IssueField, CEtlJiraFieldParser>> fieldParsers = new CList<>();
+  private static final CList<Function<IssueField, CEtlJiraFieldParser>> fieldParsers =
+      new CList<>();
 
   static {
     // Initialize the list of field parsers
@@ -39,10 +40,10 @@ public class CEtlJiraParser {
    * Adds a new field parser to the list of available parsers.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlJiraParser.addFieldParser(field -> new CustomFieldParser(field));
    * }</pre>
-   * </p>
    *
    * @param parserFunction a function that takes an IssueField and returns a CEtlJiraFieldParser
    */
@@ -51,15 +52,15 @@ public class CEtlJiraParser {
   }
 
   /**
-   * Parses a given Jira issue field using the most suitable parser from the list.
-   * If no suitable parser is found, the field is logged and skipped.
+   * Parses a given Jira issue field using the most suitable parser from the list. If no suitable
+   * parser is found, the field is logged and skipped.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * IssueField field = ...;
    * CHashMap<String, String> parsedField = CEtlJiraParser.parserJiraField(field);
    * }</pre>
-   * </p>
    *
    * @param field the Jira issue field to be parsed
    * @return a map of name-value pairs extracted from the field, or an empty map if skipped
@@ -70,7 +71,7 @@ public class CEtlJiraParser {
     // Skip fields without a parser or those related to Jira plugins
     if (list.isEmpty()
         || (field.getValue() != null
-        && field.getValue().toString().contains("com.atlassian.jira.plugin"))) {
+            && field.getValue().toString().contains("com.atlassian.jira.plugin"))) {
       skippedFields.add(field);
       log.trace(
           "Could not find parser for field {} with value {}.\n record will be skipped",

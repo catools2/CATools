@@ -7,20 +7,22 @@ import org.catools.web.entities.CWebPageInfo;
 import org.catools.web.metrics.CWebPageTransitionInfo;
 
 /**
- * Driver listener interface to manage event handling throughout the WebDriver lifecycle.
- * This interface provides hooks for monitoring and reacting to driver initialization,
- * actions, and page transitions.
+ * Driver listener interface to manage event handling throughout the WebDriver lifecycle. This
+ * interface provides hooks for monitoring and reacting to driver initialization, actions, and page
+ * transitions.
  *
- * <p>Implementations can be used for various purposes such as:</p>
+ * <p>Implementations can be used for various purposes such as:
+ *
  * <ul>
- *   <li>Logging driver activities</li>
- *   <li>Performance monitoring and metrics collection</li>
- *   <li>Screenshot capture on actions</li>
- *   <li>Custom reporting and analytics</li>
- *   <li>Error handling and recovery</li>
+ *   <li>Logging driver activities
+ *   <li>Performance monitoring and metrics collection
+ *   <li>Screenshot capture on actions
+ *   <li>Custom reporting and analytics
+ *   <li>Error handling and recovery
  * </ul>
  *
- * <p><strong>Example implementation:</strong></p>
+ * <p><strong>Example implementation:</strong>
+ *
  * <pre>{@code
  * public class MyDriverListener implements CDriverListener {
  *     private final Logger logger = LoggerFactory.getLogger(MyDriverListener.class);
@@ -47,19 +49,20 @@ public interface CDriverListener {
   /**
    * Triggers before WebDriver initialization.
    *
-   * <p>This method is called before the WebDriver instance is created, providing
-   * an opportunity to perform setup operations, validate capabilities, or log
-   * initialization details.</p>
+   * <p>This method is called before the WebDriver instance is created, providing an opportunity to
+   * perform setup operations, validate capabilities, or log initialization details.
    *
-   * <p><strong>Common use cases:</strong></p>
+   * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li>Logging the browser and platform being used</li>
-   *   <li>Validating required capabilities</li>
-   *   <li>Setting up test environment prerequisites</li>
-   *   <li>Initializing performance monitoring</li>
+   *   <li>Logging the browser and platform being used
+   *   <li>Validating required capabilities
+   *   <li>Setting up test environment prerequisites
+   *   <li>Initializing performance monitoring
    * </ul>
    *
-   * <p><strong>Example usage:</strong></p>
+   * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * @Override
    * public void beforeInit(Capabilities capabilities) {
@@ -75,29 +78,28 @@ public interface CDriverListener {
    *     }
    * }
    * }</pre>
-   *
    */
-  default void beforeInit() {
-  }
+  default void beforeInit() {}
 
   /**
    * Triggers after WebDriver initialization is complete.
    *
-   * <p>This method is called immediately after the WebDriver instance has been
-   * successfully created and is ready for use. This is the perfect place to
-   * perform post-initialization setup, configure the driver, or capture
-   * initialization metrics.</p>
+   * <p>This method is called immediately after the WebDriver instance has been successfully created
+   * and is ready for use. This is the perfect place to perform post-initialization setup, configure
+   * the driver, or capture initialization metrics.
    *
-   * <p><strong>Common use cases:</strong></p>
+   * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li>Configuring timeouts and window size</li>
-   *   <li>Taking initial screenshots</li>
-   *   <li>Recording initialization completion time</li>
-   *   <li>Setting up browser-specific configurations</li>
-   *   <li>Initializing page object factories</li>
+   *   <li>Configuring timeouts and window size
+   *   <li>Taking initial screenshots
+   *   <li>Recording initialization completion time
+   *   <li>Setting up browser-specific configurations
+   *   <li>Initializing page object factories
    * </ul>
    *
-   * <p><strong>Example usage:</strong></p>
+   * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * @Override
    * public void afterInit(CDriverProvider driverProvider, CDriverEngine engine) {
@@ -119,29 +121,29 @@ public interface CDriverListener {
    * }</pre>
    *
    * @param driverProvider the provider that created the WebDriver instance
-   * @param engine         the newly created WebDriver instance
+   * @param engine the newly created WebDriver instance
    */
-  default void afterInit(CDriverEngineProvider driverProvider, CDriverEngine engine) {
-  }
+  default void afterInit(CDriverEngineProvider driverProvider, CDriverEngine engine) {}
 
   /**
    * Triggers before each WebDriver interaction/action is performed.
    *
-   * <p>This method is called immediately before any WebDriver action such as
-   * clicking elements, entering text, navigating to pages, or retrieving element
-   * properties. It provides an opportunity to prepare for the action, capture
-   * pre-action state, or implement custom logic.</p>
+   * <p>This method is called immediately before any WebDriver action such as clicking elements,
+   * entering text, navigating to pages, or retrieving element properties. It provides an
+   * opportunity to prepare for the action, capture pre-action state, or implement custom logic.
    *
-   * <p><strong>Common use cases:</strong></p>
+   * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li>Logging the action being performed</li>
-   *   <li>Taking screenshots before critical actions</li>
-   *   <li>Implementing retry logic preparation</li>
-   *   <li>Validating page state before action</li>
-   *   <li>Performance monitoring setup</li>
+   *   <li>Logging the action being performed
+   *   <li>Taking screenshots before critical actions
+   *   <li>Implementing retry logic preparation
+   *   <li>Validating page state before action
+   *   <li>Performance monitoring setup
    * </ul>
    *
-   * <p><strong>Example usage:</strong></p>
+   * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * @Override
    * public void beforeAction(RemoteWebDriver webDriver, CWebPageInfo currentPage, String actionName) {
@@ -167,32 +169,32 @@ public interface CDriverListener {
    * }
    * }</pre>
    *
-   * @param webDriver   the WebDriver instance performing the action
+   * @param webDriver the WebDriver instance performing the action
    * @param currentPage information about the current page state
-   * @param actionName  the name/description of the action being performed
+   * @param actionName the name/description of the action being performed
    */
-  default void beforeAction(CDriverEngine webDriver, CWebPageInfo currentPage, String actionName) {
-  }
+  default void beforeAction(CDriverEngine webDriver, CWebPageInfo currentPage, String actionName) {}
 
   /**
    * Triggers after each WebDriver interaction/action is completed.
    *
-   * <p>This method is called immediately after any WebDriver action has been
-   * performed, providing comprehensive information about the action results,
-   * page state changes, performance metrics, and timing data. This is the
-   * primary hook for post-action processing and analysis.</p>
+   * <p>This method is called immediately after any WebDriver action has been performed, providing
+   * comprehensive information about the action results, page state changes, performance metrics,
+   * and timing data. This is the primary hook for post-action processing and analysis.
    *
-   * <p><strong>Common use cases:</strong></p>
+   * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li>Performance monitoring and metrics collection</li>
-   *   <li>Error detection and logging</li>
-   *   <li>Screenshot capture after actions</li>
-   *   <li>Page state validation</li>
-   *   <li>Custom reporting and analytics</li>
-   *   <li>Action result verification</li>
+   *   <li>Performance monitoring and metrics collection
+   *   <li>Error detection and logging
+   *   <li>Screenshot capture after actions
+   *   <li>Page state validation
+   *   <li>Custom reporting and analytics
+   *   <li>Action result verification
    * </ul>
    *
-   * <p><strong>Example usage:</strong></p>
+   * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * @Override
    * public void afterAction(String actionName, CDriverEngine webDriver,
@@ -227,13 +229,13 @@ public interface CDriverListener {
    * }
    * }</pre>
    *
-   * @param actionName       the name/description of the action that was performed
-   * @param webDriver        the WebDriver instance that performed the action
+   * @param actionName the name/description of the action that was performed
+   * @param webDriver the WebDriver instance that performed the action
    * @param pageBeforeAction page information before the action was performed
-   * @param pageAfterAction  page information after the action was completed
+   * @param pageAfterAction page information after the action was completed
    * @param driverMetricInfo metrics and performance data about the page transition
-   * @param startTime        the timestamp when the action started
-   * @param durationInNano   the duration of the action in nanoseconds
+   * @param startTime the timestamp when the action started
+   * @param durationInNano the duration of the action in nanoseconds
    */
   default void afterAction(
       String actionName,
@@ -242,28 +244,28 @@ public interface CDriverListener {
       CWebPageInfo pageAfterAction,
       CWebPageTransitionInfo driverMetricInfo,
       CDate startTime,
-      long durationInNano) {
-  }
+      long durationInNano) {}
 
   /**
    * Triggers when a page transition/change is detected.
    *
-   * <p>This method is called when the WebDriver detects that the current page
-   * has changed, typically due to navigation, form submissions, or dynamic
-   * content loading. It provides specific metrics about the page transition
-   * and timing information.</p>
+   * <p>This method is called when the WebDriver detects that the current page has changed,
+   * typically due to navigation, form submissions, or dynamic content loading. It provides specific
+   * metrics about the page transition and timing information.
    *
-   * <p><strong>Common use cases:</strong></p>
+   * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li>Page load performance monitoring</li>
-   *   <li>Navigation tracking and analytics</li>
-   *   <li>Page transition logging</li>
-   *   <li>Wait condition validation</li>
-   *   <li>Page readiness verification</li>
-   *   <li>Custom page load event handling</li>
+   *   <li>Page load performance monitoring
+   *   <li>Navigation tracking and analytics
+   *   <li>Page transition logging
+   *   <li>Wait condition validation
+   *   <li>Page readiness verification
+   *   <li>Custom page load event handling
    * </ul>
    *
-   * <p><strong>Example usage:</strong></p>
+   * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * @Override
    * public void onPageChanged(CDriverEngine webDriver, CWebPageTransitionInfo driverMetricInfo,
@@ -301,15 +303,14 @@ public interface CDriverListener {
    * }
    * }</pre>
    *
-   * @param webDriver        the WebDriver instance where the page change occurred
+   * @param webDriver the WebDriver instance where the page change occurred
    * @param driverMetricInfo metrics and performance data about the page transition
-   * @param startTime        the timestamp when the page transition started
-   * @param durationInNano   the duration of the page transition in nanoseconds
+   * @param startTime the timestamp when the page transition started
+   * @param durationInNano the duration of the page transition in nanoseconds
    */
   default void onPageChanged(
       CDriverEngine webDriver,
       CWebPageTransitionInfo driverMetricInfo,
       CDate startTime,
-      long durationInNano) {
-  }
+      long durationInNano) {}
 }

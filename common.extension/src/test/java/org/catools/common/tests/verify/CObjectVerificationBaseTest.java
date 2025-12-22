@@ -1,11 +1,10 @@
 package org.catools.common.tests.verify;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.hard.CObjectVerification;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.function.Consumer;
 
 public abstract class CObjectVerificationBaseTest extends CBaseUnitTest {
 
@@ -63,11 +62,18 @@ public abstract class CObjectVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEquals() {
     verify(object -> object.notEquals(new Object(), new Object()));
-    verify(object -> object.notEquals(new Object(), new Object(), "CollectionExpectationTest ::> verifyNotEquals "));
+    verify(
+        object ->
+            object.notEquals(
+                new Object(), new Object(), "CollectionExpectationTest ::> verifyNotEquals "));
     verify(object -> object.notEquals(null, new Object()));
-    verify(object -> object.notEquals(null, new Object(), "CollectionExpectationTest ::> verifyNotEquals "));
+    verify(
+        object ->
+            object.notEquals(null, new Object(), "CollectionExpectationTest ::> verifyNotEquals "));
     verify(object -> object.notEquals(new Object(), null));
-    verify(object -> object.notEquals(new Object(), null, "CollectionExpectationTest ::> verifyNotEquals "));
+    verify(
+        object ->
+            object.notEquals(new Object(), null, "CollectionExpectationTest ::> verifyNotEquals "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

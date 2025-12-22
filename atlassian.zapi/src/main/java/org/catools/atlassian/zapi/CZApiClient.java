@@ -10,9 +10,9 @@ import org.catools.atlassian.zapi.rest.zql.CZApiSearchClient;
 /**
  * Main client class for interacting with the ZAPI system.
  *
- * <p>This class provides static instances of various client components to interact with
- * different parts of the ZAPI REST API, such as execution statuses, cycles, searches, executions,
- * projects, and versions.</p>
+ * <p>This class provides static instances of various client components to interact with different
+ * parts of the ZAPI REST API, such as execution statuses, cycles, searches, executions, projects,
+ * and versions.
  */
 public class CZApiClient {
 

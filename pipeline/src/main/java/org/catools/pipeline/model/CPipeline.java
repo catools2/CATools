@@ -1,22 +1,23 @@
 package org.catools.pipeline.model;
 
+import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
-
 @Entity
-@NamedQuery(name = "getLastByName", query = "FROM CPipeline where id = (Select max(id) FROM CPipeline where name=:name)")
+@NamedQuery(
+    name = "getLastByName",
+    query = "FROM CPipeline where id = (Select max(id) FROM CPipeline where name=:name)")
 @Table(name = "pipeline", schema = PIPELINE_SCHEMA)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "pipeline")
 @Data
@@ -24,8 +25,7 @@ import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
 @Accessors(chain = true)
 public class CPipeline implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6051874043285613707L;
+  @Serial private static final long serialVersionUID = 6051874043285613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +55,8 @@ public class CPipeline implements Serializable {
       cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
       targetEntity = CPipelineProject.class,
       fetch = FetchType.LAZY)
-  @JoinColumn(name = "project_code",
+  @JoinColumn(
+      name = "project_code",
       referencedColumnName = "code",
       nullable = false,
       foreignKey = @ForeignKey(name = "FK_PIPELINE_PROJECT"))
@@ -80,7 +81,6 @@ public class CPipeline implements Serializable {
       schema = PIPELINE_SCHEMA,
       name = "pipeline_metadata_mid",
       joinColumns = {@JoinColumn(name = "pipeline_id")},
-      inverseJoinColumns = {@JoinColumn(name = "metadata_id")}
-  )
+      inverseJoinColumns = {@JoinColumn(name = "metadata_id")})
   private List<CPipelineMetaData> metadata = new ArrayList<>();
 }

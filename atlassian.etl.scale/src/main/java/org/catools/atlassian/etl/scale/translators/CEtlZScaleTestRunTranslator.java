@@ -74,11 +74,13 @@ public class CEtlZScaleTestRunTranslator {
    * @param execution The ZScale test execution to be translated.
    * @return The translated ETL execution.
    */
-  public static CEtlExecution translateExecution(CZScaleTestRun testRun, CEtlCycle cycle, CZScaleTestExecution execution) {
+  public static CEtlExecution translateExecution(
+      CZScaleTestRun testRun, CEtlCycle cycle, CZScaleTestExecution execution) {
     Objects.requireNonNull(execution);
 
     // Find or create the ETL execution
-    CEtlExecution etlExecution = CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
+    CEtlExecution etlExecution =
+        CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
     if (etlExecution == null) {
       etlExecution = new CEtlExecution();
       etlExecution.setId(String.valueOf(execution.getId()));
@@ -118,9 +120,9 @@ public class CEtlZScaleTestRunTranslator {
    * @return The ETL user representing the executor.
    */
   private static CEtlUser getExecutor(CZScaleTestExecution execution) {
-    return StringUtils.isBlank(execution.getExecutedBy()) ?
-        CEtlUser.UNSET :
-        CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedBy()));
+    return StringUtils.isBlank(execution.getExecutedBy())
+        ? CEtlUser.UNSET
+        : CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedBy()));
   }
 
   /**
@@ -130,8 +132,8 @@ public class CEtlZScaleTestRunTranslator {
    * @return The corresponding ETL execution status.
    */
   private static CEtlExecutionStatus getStatus(CZScaleExecutionStatus status) {
-    return status == null || StringUtils.isBlank(status.getScaleName()) ?
-        CEtlExecutionStatus.UNSET :
-        CEtlCacheManager.readExecutionStatus(new CEtlExecutionStatus(status.getScaleName()));
+    return status == null || StringUtils.isBlank(status.getScaleName())
+        ? CEtlExecutionStatus.UNSET
+        : CEtlCacheManager.readExecutionStatus(new CEtlExecutionStatus(status.getScaleName()));
   }
 }

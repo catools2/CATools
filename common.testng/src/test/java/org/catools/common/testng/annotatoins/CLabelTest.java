@@ -99,7 +99,8 @@ public class CLabelTest extends CTest {
   @CRegression(depth = 1)
   @CSeverity(level = 1)
   public void ignoreBecauseHasNoRunTag() {
-    throw new CRuntimeException("Should skip if test execution requires test execution by specific tag condition");
+    throw new CRuntimeException(
+        "Should skip if test execution requires test execution by specific tag condition");
   }
 
   @Test
@@ -108,8 +109,7 @@ public class CLabelTest extends CTest {
   @RALL3
   @CRegression(depth = 1)
   @CSeverity(level = 1)
-  public void shouldRunByAllLabel() {
-  }
+  public void shouldRunByAllLabel() {}
 
   @Test
   @RALL1
@@ -117,13 +117,11 @@ public class CLabelTest extends CTest {
   @RALL3
   @CRegression(depth = 1)
   @CSeverity(level = 1)
-  public void shouldRunByAnyLabel() {
-  }
+  public void shouldRunByAnyLabel() {}
 
   @Test(dependsOnMethods = {"shouldRunByAllLabel", "shouldRunByAnyLabel"})
   @RANY1
   @CRegression(depth = 1)
   @CSeverity(level = 1)
-  public void testLabels() {
-  }
+  public void testLabels() {}
 }

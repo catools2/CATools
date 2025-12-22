@@ -1,19 +1,17 @@
 package org.catools.etl.k8s.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
+import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
 
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
-
+import javax.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 @Entity
 @Table(name = "container", schema = K8S_SCHEMA)
@@ -22,8 +20,7 @@ import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
 @Accessors(chain = true)
 public class CEtlKubeContainer implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6052874018185613707L;
+  @Serial private static final long serialVersionUID = 6052874018185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

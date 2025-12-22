@@ -39,8 +39,10 @@ public class CHashMapTest extends BaseCMapTest {
 
     CVerify.Int.equals(map2.size(), 2, "cloned map changed");
     CVerify.Bool.isFalse(map2.containsKey("A"), "cloned map does not have A entity");
-    CVerify.String.equals(map2.get("B"), "2", "cloned map did not changed untouched record changed");
-    CVerify.String.equals(map2.get("C"), "3", "cloned map did not changed untouched record changed");
+    CVerify.String.equals(
+        map2.get("B"), "2", "cloned map did not changed untouched record changed");
+    CVerify.String.equals(
+        map2.get("C"), "3", "cloned map did not changed untouched record changed");
   }
 
   @Override

@@ -1,5 +1,12 @@
 package org.catools.common.extensions.verify;
 
+import static org.catools.common.text.CStringDiffConfigs.getDiffEditCost;
+import static org.catools.common.text.match.CStringDiff.coloredDiff;
+import static org.catools.common.text.match.CStringDiff.prettyDiff;
+
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CAnsiConfigs;
@@ -8,14 +15,6 @@ import org.catools.common.extensions.CTypeExtensionConfigs;
 import org.catools.common.utils.CAnsiUtil;
 import org.catools.common.utils.CSleeper;
 import org.catools.common.utils.CStringUtil;
-
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
-
-import static org.catools.common.text.CStringDiffConfigs.getDiffEditCost;
-import static org.catools.common.text.match.CStringDiff.coloredDiff;
-import static org.catools.common.text.match.CStringDiff.prettyDiff;
 
 @Slf4j
 public class CVerificationInfo<A, B> {
@@ -194,9 +193,10 @@ public class CVerificationInfo<A, B> {
     if (obj == null) {
       return "<NULL>";
     }
-    return obj.getClass().isArray() ? new CList<>((String[]) obj).toString() : (obj + CStringUtil.EMPTY);
+    return obj.getClass().isArray()
+        ? new CList<>((String[]) obj).toString()
+        : (obj + CStringUtil.EMPTY);
   }
 
-  record CVerificationResult<O>(O actual, O expected, boolean computedResult) {
-  }
+  record CVerificationResult<O>(O actual, O expected, boolean computedResult) {}
 }

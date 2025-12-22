@@ -1,12 +1,11 @@
 package org.catools.common.configs;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.vault.CVaultAuthType;
-
-import java.util.List;
 
 public class CVaultConfigs {
 
@@ -65,7 +64,6 @@ public class CVaultConfigs {
   public static String getTlsCertString() {
     return CHocon.asString(Configs.CATOOLS_VAULT_TLS_CERT_STRING);
   }
-
 
   @Getter
   @AllArgsConstructor

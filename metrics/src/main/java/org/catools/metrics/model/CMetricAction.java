@@ -1,16 +1,15 @@
 package org.catools.metrics.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-import org.catools.metrics.configs.CMetricsConfigs;
-
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.catools.metrics.configs.CMetricsConfigs;
 
 @Entity
 @Table(name = "action", schema = CMetricsConfigs.PERFORMANCE_SCHEMA)
@@ -19,8 +18,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class CMetricAction implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 2373708561876051404L;
+  @Serial private static final long serialVersionUID = 2373708561876051404L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +49,8 @@ public class CMetricAction implements Serializable {
       cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
       targetEntity = CMetricProject.class,
       fetch = FetchType.LAZY)
-  @JoinColumn(name = "project_code",
+  @JoinColumn(
+      name = "project_code",
       referencedColumnName = "code",
       nullable = false,
       foreignKey = @ForeignKey(name = "FK_PIPELINE_PROJECT"))
@@ -65,8 +64,6 @@ public class CMetricAction implements Serializable {
       schema = CMetricsConfigs.PERFORMANCE_SCHEMA,
       name = "metric_metadata_mid",
       joinColumns = {@JoinColumn(name = "metric_id")},
-      inverseJoinColumns = {@JoinColumn(name = "metadata_id")}
-  )
+      inverseJoinColumns = {@JoinColumn(name = "metadata_id")})
   private List<CMetric> metrics = new ArrayList<>();
-
 }

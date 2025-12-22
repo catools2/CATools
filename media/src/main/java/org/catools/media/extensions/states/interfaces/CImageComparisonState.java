@@ -1,7 +1,14 @@
 package org.catools.media.extensions.states.interfaces;
 
+import static org.catools.media.enums.CImageComparisonType.GRAY_FLOAT_32;
+import static org.catools.media.utils.CImageComparisonUtil.toBufferedImageList;
+import static org.catools.media.utils.CImageUtil.toBufferedImage;
+
 import boofcv.factory.template.TemplateScoreType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.function.Predicate;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.io.CResource;
@@ -12,20 +19,11 @@ import org.catools.media.utils.CImageComparisonUtil;
 import org.catools.media.utils.CImageUtil;
 import org.catools.media.utils.CTemplateMatchingUtil;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.function.Predicate;
-
-import static org.catools.media.enums.CImageComparisonType.GRAY_FLOAT_32;
-import static org.catools.media.utils.CImageComparisonUtil.toBufferedImageList;
-import static org.catools.media.utils.CImageUtil.toBufferedImage;
-
 /**
- * CImageComparisonState is an interface to define state of BufferedImage (from one of supported sources) in relation to one or
- * more File, Resource or BufferedImage.
+ * CImageComparisonState is an interface to define state of BufferedImage (from one of supported
+ * sources) in relation to one or more File, Resource or BufferedImage.
  */
 public interface CImageComparisonState extends CObjectState<BufferedImage> {
-
 
   default boolean test(Predicate<BufferedImage> predicate) {
     return predicate.test(_get());
@@ -58,9 +56,9 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
    * @return execution result
    */
   default boolean isEqual(final BufferedImage expected) {
-    return CImageComparisonUtil.getDiffs(toBufferedImage(_get()), expected, GRAY_FLOAT_32).isEmpty();
+    return CImageComparisonUtil.getDiffs(toBufferedImage(_get()), expected, GRAY_FLOAT_32)
+        .isEmpty();
   }
-
 
   /**
    * Check if actual and expected are equal.
@@ -71,7 +69,6 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   default boolean isEqual(final File expected) {
     return isEqual(toBufferedImage(expected));
   }
-
 
   /**
    * Check if actual and expected are equal.
@@ -90,7 +87,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
    * @return execution result
    */
   default boolean isNotEqual(final BufferedImage expected) {
-    return CImageComparisonUtil.getDiffs(toBufferedImage(_get()), expected, GRAY_FLOAT_32).isNotEmpty();
+    return CImageComparisonUtil.getDiffs(toBufferedImage(_get()), expected, GRAY_FLOAT_32)
+        .isNotEmpty();
   }
 
   /**
@@ -159,7 +157,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
    * Check if actual value equals to any expected values.
    *
    * @param expected values to compare, return false if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   default boolean equalsAny(final Iterable expected) {
@@ -232,11 +230,10 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check
-   * that actual value equals to none of expected values.
+   * Check that actual value equals to none of expected values.
    *
    * @param expected values to compare, return true if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   default boolean equalsNone(final Iterable expected) {
@@ -264,7 +261,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check if actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -274,7 +272,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check if actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -284,7 +283,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check if actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -296,7 +296,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -307,7 +307,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -318,7 +318,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -329,20 +329,21 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean contains(final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean contains(
+      final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
     return contains(expected, scoreType, (BufferedImage) null, matchPrecision);
   }
 
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
@@ -353,140 +354,188 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean contains(final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean contains(
+      final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
     return contains(expected, scoreType, (BufferedImage) null, matchPrecision);
   }
 
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean contains(final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  default boolean contains(
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     return CTemplateMatchingUtil.findMatches(
-        CBoofCVUtil.toGrayF32(toBufferedImage(_get())),
-        CBoofCVUtil.toGrayF32(expected),
-        mask == null ? null : CBoofCVUtil.toGrayF32(mask),
+            CBoofCVUtil.toGrayF32(toBufferedImage(_get())),
+            CBoofCVUtil.toGrayF32(expected),
+            mask == null ? null : CBoofCVUtil.toGrayF32(mask),
+            scoreType,
+            1,
+            matchPrecision)
+        .isNotEmpty();
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
+    return contains(
+        expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
+    return contains(
+        expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final File expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
+    return contains(toBufferedImage(expected), scoreType, mask, matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+    return contains(
+        expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final File expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
+    return contains(
+        expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
+    return contains(toBufferedImage(expected), scoreType, mask, matchPrecision);
+  }
+
+  /**
+   * Check if actual contains expected image with at least 99.9% match precision.
+   *
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param matchPrecision The match precision in percent (100 means 100% match)
+   * @return execution result
+   */
+  default boolean contains(
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
+    return contains(
+        toBufferedImage(expected),
         scoreType,
-        1,
-        matchPrecision).isNotEmpty();
+        mask == null ? null : toBufferedImage(mask),
+        matchPrecision);
   }
 
   /**
    * Check if actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean contains(final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
-    return contains(expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
+  default boolean contains(
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
+    return contains(
+        toBufferedImage(expected),
+        scoreType,
+        mask == null ? null : toBufferedImage(mask),
+        matchPrecision);
   }
 
   /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
-    return contains(expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
-    return contains(toBufferedImage(expected), scoreType, mask, matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
-    return contains(expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
-    return contains(expected, scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
-    return contains(toBufferedImage(expected), scoreType, mask, matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
-    return contains(toBufferedImage(expected), scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
-  }
-
-  /**
-   * Check if actual contains expected image with at least 99.9% match precision.
-   *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @return execution result
-   */
-  default boolean contains(final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
-    return contains(toBufferedImage(expected), scoreType, mask == null ? null : toBufferedImage(mask), matchPrecision);
-  }
-
-  /**
-   * Check if actual not contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual not contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -496,7 +545,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check if actual not contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual not contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -506,7 +556,8 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check if actual not contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check if actual not contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -518,7 +569,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -529,7 +580,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -540,7 +591,7 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -551,69 +602,79 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean notContains(
+      final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
     return notContains(expected, scoreType, null, matchPrecision);
   }
 
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final File expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean notContains(
+      final File expected, TemplateScoreType scoreType, float matchPrecision) {
     return notContains(expected, scoreType, null, matchPrecision);
   }
 
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean notContains(
+      final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
     return notContains(expected, scoreType, null, matchPrecision);
   }
 
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final BufferedImage expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  default boolean notContains(
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision) {
     return CTemplateMatchingUtil.findMatches(
-        CBoofCVUtil.toGrayF32(toBufferedImage(_get())),
-        CBoofCVUtil.toGrayF32(expected),
-        mask == null ? null : CBoofCVUtil.toGrayF32(mask),
-        scoreType,
-        1,
-        matchPrecision).isEmpty();
+            CBoofCVUtil.toGrayF32(toBufferedImage(_get())),
+            CBoofCVUtil.toGrayF32(expected),
+            mask == null ? null : CBoofCVUtil.toGrayF32(mask),
+            scoreType,
+            1,
+            matchPrecision)
+        .isEmpty();
   }
 
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final File expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
-    return notContains(toBufferedImage(expected),
+  default boolean notContains(
+      final File expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
+    return notContains(
+        toBufferedImage(expected),
         scoreType,
         mask == null ? null : toBufferedImage(mask),
         matchPrecision);
@@ -622,26 +683,27 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check if actual not contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean notContains(final CResource expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
-    return notContains(toBufferedImage(expected),
+  default boolean notContains(
+      final CResource expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
+    return notContains(
+        toBufferedImage(expected),
         scoreType,
         mask == null ? null : toBufferedImage(mask),
         matchPrecision);
   }
 
-
   /**
-   * Check that actual image contains any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check that actual image contains any of expected images with at least 99.9% match precision
+   * using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return false if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   default boolean containsAny(final Iterable<?> expected) {
@@ -649,11 +711,10 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check that actual image contains any of expected images
-   * with at least 99.9% match precision.
+   * Check that actual image contains any of expected images with at least 99.9% match precision.
    *
-   * @param expected  values to compare, return false if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -664,27 +725,32 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsAny(final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean containsAny(
+      final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
     return containsAny(expected, scoreType, (BufferedImage) null, matchPrecision);
   }
 
   /**
    * Check that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsAny(final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  default boolean containsAny(
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision) {
     for (var exp : expected) {
       if (exp == null) {
         continue;
@@ -711,37 +777,42 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsAny(final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
+  default boolean containsAny(
+      final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
     return containsAny(expected, scoreType, toBufferedImage(mask), matchPrecision);
   }
 
   /**
    * Check that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsAny(final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
+  default boolean containsAny(
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      CResource mask,
+      float matchPrecision) {
     return containsAny(expected, scoreType, toBufferedImage(mask), matchPrecision);
   }
 
   /**
-   * Check that actual image does not contain any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Check that actual image does not contain any of expected images with at least 99.9% match
+   * precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return true if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   default boolean containsNone(final Iterable<?> expected) {
@@ -749,11 +820,11 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   }
 
   /**
-   * Check that actual image does not contain any of expected images
-   * with at least 99.9% match precision.
+   * Check that actual image does not contain any of expected images with at least 99.9% match
+   * precision.
    *
-   * @param expected  values to compare, return true if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
@@ -764,27 +835,32 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
   /**
    * Check that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsNone(final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  default boolean containsNone(
+      final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
     return containsNone(expected, scoreType, null, matchPrecision);
   }
 
   /**
    * Check that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  default boolean containsNone(final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  default boolean containsNone(
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision) {
     for (var exp : expected) {
       if (exp == null) {
         continue;
@@ -807,7 +883,6 @@ public interface CImageComparisonState extends CObjectState<BufferedImage> {
     }
     return true;
   }
-
 
   default void generateDiffForAllExpected(String diffFileNamePrefix, Iterable<?> expectedList) {
     int counter = 0;

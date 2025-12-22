@@ -9,11 +9,12 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 /**
- * CTimeBoxRunner is a utility class that executes a task within a specified time frame.
- * If the task exceeds the defined timeout, it either throws an exception or returns null,
- * depending on the configuration.
+ * CTimeBoxRunner is a utility class that executes a task within a specified time frame. If the task
+ * exceeds the defined timeout, it either throws an exception or returns null, depending on the
+ * configuration.
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * try {
  *     String result = CTimeBoxRunner.get(() -> {
@@ -24,7 +25,6 @@ import java.util.function.Supplier;
  *     System.err.println("Task timed out");
  * }
  * }</pre>
- * </p>
  *
  * @param <R> the type of the result produced by the task
  */
@@ -61,8 +61,8 @@ public class CTimeBoxRunner<R> implements Runnable {
   }
 
   /**
-   * Executes a task and returns the result. If the task exceeds the timeout, it either throws
-   * an exception or returns null, based on the configuration.
+   * Executes a task and returns the result. If the task exceeds the timeout, it either throws an
+   * exception or returns null, based on the configuration.
    *
    * @param job the task to be executed
    * @param timeout the maximum time allowed for the task to complete
@@ -75,13 +75,13 @@ public class CTimeBoxRunner<R> implements Runnable {
   public static <R> R get(
       Supplier<R> job, long timeout, TimeUnit unit, boolean throwExceptionIfTimeout) {
     return new CTimeBoxRunner<>(
-        job, (int) TimeUnit.SECONDS.convert(timeout, unit), throwExceptionIfTimeout)
+            job, (int) TimeUnit.SECONDS.convert(timeout, unit), throwExceptionIfTimeout)
         .get();
   }
 
   /**
-   * Executes a task and returns the result. If the task exceeds the timeout, it either throws
-   * an exception or returns null, based on the configuration.
+   * Executes a task and returns the result. If the task exceeds the timeout, it either throws an
+   * exception or returns null, based on the configuration.
    *
    * @param job the task to be executed
    * @param timeoutInSeconds the maximum time allowed for the task to complete, in seconds
@@ -94,9 +94,7 @@ public class CTimeBoxRunner<R> implements Runnable {
     return new CTimeBoxRunner<>(job, timeoutInSeconds, throwExceptionIfTimeout).get();
   }
 
-  /**
-   * Executes the task in a separate thread and handles timeout logic.
-   */
+  /** Executes the task in a separate thread and handles timeout logic. */
   @Override
   public void run() {
     try {

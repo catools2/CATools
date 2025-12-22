@@ -1,12 +1,11 @@
 package org.catools.mcp.server.converter;
 
-import org.catools.mcp.util.CTypeConverter;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.catools.mcp.util.CTypeConverter;
 
 /**
  * This interface is used to convert the value of a parameter annotated with {@link A} to the
@@ -19,9 +18,9 @@ public interface CParameterConverter<A extends Annotation> {
    * Converts the value of the specified parameter annotated with the specified annotation to the
    * required type.
    *
-   * @param parameter  the parameter to convert
+   * @param parameter the parameter to convert
    * @param annotation the annotation that annotates the parameter
-   * @param args       the arguments passed to the method
+   * @param args the arguments passed to the method
    * @return the converted value of the parameter
    */
   Object convert(Parameter parameter, A annotation, Map<String, Object> args);
@@ -33,13 +32,12 @@ public interface CParameterConverter<A extends Annotation> {
    */
   Class<A> getAnnotationType();
 
-
   /**
    * Converts the values of all parameters annotated with the specified annotation to the required
    * types.
    *
    * @param methodParameters the parameters of the method
-   * @param args             the arguments passed to the method
+   * @param args the arguments passed to the method
    * @return the converted values of all parameters
    */
   default List<Object> convertAll(Parameter[] methodParameters, Map<String, Object> args) {

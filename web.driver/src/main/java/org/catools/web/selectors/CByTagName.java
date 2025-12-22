@@ -5,14 +5,16 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
-public class ByTagName extends CBy {
-  private final String selector;
+public class CByTagName extends CByXPath {
 
-  public ByTagName(String tagName) {
+  public CByTagName(String tagName) {
+    super(toSelector(tagName));
+  }
+
+  private static String toSelector(String tagName) {
     Objects.requireNonNull(tagName, "tagName must not be null");
     String trimmed = tagName.trim();
     if (trimmed.isEmpty()) throw new IllegalArgumentException("Tag name must not be blank");
-    this.selector = trimmed;
+    return trimmed;
   }
 }
-

@@ -70,10 +70,10 @@ public interface CIterableState<E, C extends Iterable<E>> extends CObjectState<C
    *
    * @param o element whose presence in this collection is to be tested
    * @return {@code true} if this collection contains the specified element
-   * @throws ClassCastException   if the type of the specified element is incompatible with this
-   *                              collection
+   * @throws ClassCastException if the type of the specified element is incompatible with this
+   *     collection
    * @throws NullPointerException if the specified element is null and this collection does not
-   *                              permit null elements
+   *     permit null elements
    */
   default boolean contains(Object o) {
     for (E a : _get()) {
@@ -107,7 +107,7 @@ public interface CIterableState<E, C extends Iterable<E>> extends CObjectState<C
    * Check if actual collection contains all elements from the expected collection. Please note that
    * actual collection might have more elements.
    *
-   * @param expected   value to compare
+   * @param expected value to compare
    * @param onNotMatch consumer to call if no match found
    * @return execution boolean result
    */
@@ -143,7 +143,7 @@ public interface CIterableState<E, C extends Iterable<E>> extends CObjectState<C
    * Check if actual collection contains none of elements from the expected collection.
    *
    * @param expected value to compare
-   * @param onMatch  consumer to call if match found
+   * @param onMatch consumer to call if match found
    * @return execution boolean result
    */
   default boolean containsNone(C expected, Consumer<E> onMatch) {
@@ -206,12 +206,13 @@ public interface CIterableState<E, C extends Iterable<E>> extends CObjectState<C
    * First we compare that actual collection contains all expected collection elements and then we
    * verify that expected has all elements from actual.
    *
-   * @param expected              value to compare
-   * @param onActualNotContains   consumer to call if match found
+   * @param expected value to compare
+   * @param onActualNotContains consumer to call if match found
    * @param onExpectedNotContains consumer to call if match found
    * @return execution boolean result
    */
-  default boolean isEqual(C expected, Consumer<E> onActualNotContains, Consumer<E> onExpectedNotContains) {
+  default boolean isEqual(
+      C expected, Consumer<E> onActualNotContains, Consumer<E> onExpectedNotContains) {
     if (expected == null) {
       return false;
     }
@@ -275,7 +276,7 @@ public interface CIterableState<E, C extends Iterable<E>> extends CObjectState<C
    * expected elements are exist in it.
    *
    * @param onActualContains consumer to call if match found
-   * @param expected         value to compare
+   * @param expected value to compare
    * @return execution boolean result
    */
   default boolean notContainsAll(C expected, Consumer<E> onActualContains) {

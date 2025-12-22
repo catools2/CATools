@@ -12,7 +12,7 @@ import org.catools.atlassian.zapi.model.CZApiVersion;
 /**
  * Utility class for parsing cycle data in the ZAPI system.
  *
- * <p>This class provides methods to parse a {@link CZApiCycle} object from a JSON response.</p>
+ * <p>This class provides methods to parse a {@link CZApiCycle} object from a JSON response.
  */
 @UtilityClass
 public class CZApiCycleParser {

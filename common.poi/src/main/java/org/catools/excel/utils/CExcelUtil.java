@@ -1,5 +1,7 @@
 package org.catools.excel.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import lombok.experimental.UtilityClass;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,31 +14,31 @@ import org.catools.excel.model.CExcelCell;
 import org.catools.excel.model.CExcelRow;
 import org.catools.excel.model.CExcelSheet;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 @UtilityClass
 public class CExcelUtil {
 
   /**
    * Read XSS workbook from an input stream
    *
-   * @param resource   resource to read workbook from
+   * @param resource resource to read workbook from
    * @param sheetIndex the sheet index to read
    * @return the sheet data
    */
-  public static CExcelSheet readXSSFWorksheet(CResource resource, int sheetIndex, boolean hasHeader) {
-    return resource.performActionOnResource((s, inputStream) -> readXSSFWorksheet(inputStream, sheetIndex, hasHeader));
+  public static CExcelSheet readXSSFWorksheet(
+      CResource resource, int sheetIndex, boolean hasHeader) {
+    return resource.performActionOnResource(
+        (s, inputStream) -> readXSSFWorksheet(inputStream, sheetIndex, hasHeader));
   }
 
   /**
    * Read XSS workbook from an input stream
    *
    * @param inputStream stream to read workbook from
-   * @param sheetIndex  the sheet index to read
+   * @param sheetIndex the sheet index to read
    * @return the sheet data
    */
-  public static CExcelSheet readXSSFWorksheet(InputStream inputStream, int sheetIndex, boolean hasHeader) {
+  public static CExcelSheet readXSSFWorksheet(
+      InputStream inputStream, int sheetIndex, boolean hasHeader) {
     Workbook workbook = getXSSFWorksheet(inputStream);
     return readWorksheet(workbook, sheetIndex, hasHeader);
   }
@@ -56,7 +58,7 @@ public class CExcelUtil {
   }
 
   /**
-   * @param workbook   the Excel workbook to read
+   * @param workbook the Excel workbook to read
    * @param sheetIndex the index of the sheet to read
    * @return the sheet data
    */
@@ -73,8 +75,7 @@ public class CExcelUtil {
 
       CExcelRow excelRow = readRow(excelSheet, row, header);
 
-      if (excelRow.isNotEmpty())
-        excelSheet.put(row.getRowNum(), excelRow);
+      if (excelRow.isNotEmpty()) excelSheet.put(row.getRowNum(), excelRow);
     }
 
     return excelSheet;

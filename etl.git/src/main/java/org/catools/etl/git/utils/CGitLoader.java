@@ -1,5 +1,10 @@
 package org.catools.etl.git.utils;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.concurrent.CParallelRunner;
@@ -14,8 +19,16 @@ import org.catools.etl.git.model.CGitRepository;
 import org.catools.etl.git.model.CGitUser;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.diff.*;
-import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.Edit;
+import org.eclipse.jgit.diff.EditList;
+import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.CommitTimeRevFilter;
@@ -25,12 +38,6 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.util.io.NullOutputStream;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
 @Slf4j
 @UtilityClass
 public class CGitLoader {
@@ -38,31 +45,50 @@ public class CGitLoader {
     loadRepository(name, url, null, totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, Date since, Date until, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name, String url, Date since, Date until, int totalParallelProcessors) {
     Git git = CGitCloneClient.clone(name, url);
-    loadRepository(name, url, git, CommitTimeRevFilter.between(since, until), totalParallelProcessors);
+    loadRepository(
+        name, url, git, CommitTimeRevFilter.between(since, until), totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, RevFilter filter, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name, String url, RevFilter filter, int totalParallelProcessors) {
     Git git = CGitCloneClient.clone(name, url);
     loadRepository(name, url, git, filter, totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, String username, String password, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name, String url, String username, String password, int totalParallelProcessors) {
     loadRepository(name, url, username, password, null, totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, String username, String password, Date since, Date until, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name,
+      String url,
+      String username,
+      String password,
+      Date since,
+      Date until,
+      int totalParallelProcessors) {
     Git git = CGitCloneClient.clone(name, url, username, password);
-    loadRepository(name, url, git, CommitTimeRevFilter.between(since, until), totalParallelProcessors);
+    loadRepository(
+        name, url, git, CommitTimeRevFilter.between(since, until), totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, String username, String password, RevFilter filter, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name,
+      String url,
+      String username,
+      String password,
+      RevFilter filter,
+      int totalParallelProcessors) {
     Git git = CGitCloneClient.clone(name, url, username, password);
     loadRepository(name, url, git, filter, totalParallelProcessors);
   }
 
-  public static void loadRepository(String name, String url, Git git, RevFilter filter, int totalParallelProcessors) {
+  public static void loadRepository(
+      String name, String url, Git git, RevFilter filter, int totalParallelProcessors) {
     CGitRepository gitRepository = new CGitRepository();
     gitRepository.setUrl(url);
     gitRepository.setName(name);
@@ -82,22 +108,32 @@ public class CGitLoader {
     }
   }
 
-  private static void readCommits(Git git, CGitRepository gitRepository, Repository repo, RevFilter filter, int totalParallelProcessors) throws IOException, GitAPIException {
+  private static void readCommits(
+      Git git,
+      CGitRepository gitRepository,
+      Repository repo,
+      RevFilter filter,
+      int totalParallelProcessors)
+      throws IOException, GitAPIException {
     Iterator<RevCommit> commits = git.log().setRevFilter(filter).all().call().iterator();
 
-    CParallelRunner<Boolean> runner = new CParallelRunner<>("Git Commit Reader", totalParallelProcessors, () -> {
-      while (true) {
-        RevCommit commit = null;
-        synchronized (commits) {
-          if (!commits.hasNext()) break;
-          commit = commits.next();
-        }
-        if (commit != null) {
-          loadCommit(git, gitRepository, repo, commit);
-        }
-      }
-      return true;
-    });
+    CParallelRunner<Boolean> runner =
+        new CParallelRunner<>(
+            "Git Commit Reader",
+            totalParallelProcessors,
+            () -> {
+              while (true) {
+                RevCommit commit = null;
+                synchronized (commits) {
+                  if (!commits.hasNext()) break;
+                  commit = commits.next();
+                }
+                if (commit != null) {
+                  loadCommit(git, gitRepository, repo, commit);
+                }
+              }
+              return true;
+            });
 
     try {
       runner.invokeAll();
@@ -106,7 +142,9 @@ public class CGitLoader {
     }
   }
 
-  private static void loadCommit(Git git, CGitRepository gitRepository, Repository repo, RevCommit commit) throws IOException, GitAPIException {
+  private static void loadCommit(
+      Git git, CGitRepository gitRepository, Repository repo, RevCommit commit)
+      throws IOException, GitAPIException {
     CGitCommit gitCommit = new CGitCommit();
     gitCommit.setHash(commit.getName());
     gitCommit.setRepository(gitRepository);
@@ -124,7 +162,8 @@ public class CGitLoader {
     CGitCommitDao.merge(gitCommit);
   }
 
-  private static void addFileDiff(CGitCommit gitCommit, RevCommit commit, Repository repo) throws IOException {
+  private static void addFileDiff(CGitCommit gitCommit, RevCommit commit, Repository repo)
+      throws IOException {
     if (commit.getParentCount() == 0) return;
 
     if (commit.getParentCount() == 0) {
@@ -136,7 +175,9 @@ public class CGitLoader {
     }
   }
 
-  private static void readDiffsWithParent(Repository repo, CGitCommit gitCommit, RevCommit commit, RevCommit parent) throws IOException {
+  private static void readDiffsWithParent(
+      Repository repo, CGitCommit gitCommit, RevCommit commit, RevCommit parent)
+      throws IOException {
     AbstractTreeIterator parentTree = getParser(repo, parent);
     AbstractTreeIterator commitTree = getParser(repo, commit);
 
@@ -163,16 +204,17 @@ public class CGitLoader {
     }
   }
 
-  private static AbstractTreeIterator getParser(Repository repo, RevCommit commi) throws IOException {
-    if (commi == null)
-      return new EmptyTreeIterator();
+  private static AbstractTreeIterator getParser(Repository repo, RevCommit commi)
+      throws IOException {
+    if (commi == null) return new EmptyTreeIterator();
 
     CanonicalTreeParser parentTree = new CanonicalTreeParser();
     parentTree.reset(repo.newObjectReader(), commi.getTree());
     return parentTree;
   }
 
-  private static void addRelatedTags(Git git, CGitCommit gitCommit, RevCommit commit) throws IOException, GitAPIException {
+  private static void addRelatedTags(Git git, CGitCommit gitCommit, RevCommit commit)
+      throws IOException, GitAPIException {
     List<Ref> list = git.tagList().setContains(commit.getId()).call();
     for (Ref tag : list) {
       ObjectId objectId = Objects.requireNonNull(tag.getObjectId());
@@ -180,7 +222,8 @@ public class CGitLoader {
     }
   }
 
-  private static void addRelatedBranches(Repository repo, CGitCommit gitCommit, RevCommit commit) throws IOException {
+  private static void addRelatedBranches(Repository repo, CGitCommit gitCommit, RevCommit commit)
+      throws IOException {
     RevWalk walk = new RevWalk(repo);
     RevCommit targetCommit = walk.parseCommit(repo.resolve(commit.getName()));
     for (Ref ref : repo.getRefDatabase().getRefs()) {

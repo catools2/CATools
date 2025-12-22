@@ -1,5 +1,7 @@
 package org.catools.common.tests.verify;
 
+import java.util.Map;
+import java.util.function.Consumer;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.verify.hard.CMapVerification;
@@ -7,9 +9,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
-
-import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -57,11 +56,17 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsNone() {
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
     verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6)));
-    verify(collection -> collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.containsNone(toMap(1, 2, 3), toMap(4, 5, 6), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -120,7 +125,8 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEmptyOrNotContains() {
     verify(collection -> collection.emptyOrNotContains(toMap(1, 2, 3), "5", 5));
-    verify(collection -> collection.emptyOrNotContains(toMap(1, 2, 3), "5", 5, "%s#%s", getParams()));
+    verify(
+        collection -> collection.emptyOrNotContains(toMap(1, 2, 3), "5", 5, "%s#%s", getParams()));
     verify(collection -> collection.emptyOrNotContains(toMap(), "1", 1));
     verify(collection -> collection.emptyOrNotContains(toMap(), "1", 1, "%s#%s", getParams()));
   }
@@ -231,17 +237,24 @@ public abstract class CMapVerificationBaseTest extends CBaseUnitTest {
     verify(collection -> collection.notContains(toMap(1, 2, 3), "2", 3));
     verify(collection -> collection.notContains(toMap(1, 2, 3), "2", 3, "%s#%s", getParams()));
     verify(collection -> collection.notContains(toMap(1, 2, 3), Map.entry("4", 2)));
-    verify(collection -> collection.notContains(toMap(1, 2, 3), Map.entry("4", 2), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.notContains(toMap(1, 2, 3), Map.entry("4", 2), "%s#%s", getParams()));
     verify(collection -> collection.notContains(toMap(1, 2, 3), Map.entry("2", 3)));
-    verify(collection -> collection.notContains(toMap(1, 2, 3), Map.entry("2", 3), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.notContains(toMap(1, 2, 3), Map.entry("2", 3), "%s#%s", getParams()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotContainsAll() {
     verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 4)));
-    verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 4), "%s#%s", getParams()));
+    verify(
+        collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 4), "%s#%s", getParams()));
     verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 2, 3, 4)));
-    verify(collection -> collection.notContainsAll(toMap(1, 2, 3), toMap(1, 2, 3, 4), "%s#%s", getParams()));
+    verify(
+        collection ->
+            collection.notContainsAll(toMap(1, 2, 3), toMap(1, 2, 3, 4), "%s#%s", getParams()));
     verify(collection -> collection.notContainsAll(toMap(), toMap(1)));
     verify(collection -> collection.notContainsAll(toMap(), toMap(1), "%s#%s", getParams()));
   }

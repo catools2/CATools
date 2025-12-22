@@ -1,5 +1,11 @@
 package org.catools.common.tests.types;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,13 +19,6 @@ import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CInputStreamUtil;
 import org.catools.common.utils.CSleeper;
 import org.testng.annotations.Test;
-
-import java.lang.reflect.Field;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @Slf4j
 public class CFileTest extends CBaseUnitTest {
@@ -108,7 +107,9 @@ public class CFileTest extends CBaseUnitTest {
     CVerify.File.equalsStringContent(file1, file2, "CFile -> copy method copied file");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CFileOperationException.class)
+  @Test(
+      retryAnalyzer = CTestRetryAnalyzer.class,
+      expectedExceptions = CFileOperationException.class)
   public void testCopy_N() {
     CFile file1 = getValidFile();
     CFile file2 = getInvalidFile();
@@ -173,12 +174,14 @@ public class CFileTest extends CBaseUnitTest {
   public void testDelete_InvalidDirectory() {
     CFile invalidFile = mock(CFile.class);
     when(invalidFile.isDirectory()).thenReturn(true);
-    CVerify.Bool.isFalse(getInvalidFile().delete(), "CFile -> delete cannot delete if file name is not valid");
+    CVerify.Bool.isFalse(
+        getInvalidFile().delete(), "CFile -> delete cannot delete if file name is not valid");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testDelete_InvalidFile() {
-    CVerify.Bool.isFalse(getInvalidFile().delete(), "CFile -> delete cannot delete if file name is not valid");
+    CVerify.Bool.isFalse(
+        getInvalidFile().delete(), "CFile -> delete cannot delete if file name is not valid");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = RuntimeException.class)
@@ -340,7 +343,8 @@ public class CFileTest extends CBaseUnitTest {
   @Test(
       retryAnalyzer = CTestRetryAnalyzer.class,
       expectedExceptions = CFileOperationException.class)
-  public void testSafeRename_CannotDeleteDestFile() throws NoSuchFieldException, IllegalAccessException {
+  public void testSafeRename_CannotDeleteDestFile()
+      throws NoSuchFieldException, IllegalAccessException {
     CFile file1 = getValidFile().write("ABCD");
     CFile file2 = getValidMockedFile();
     file2.write("ABC");
@@ -351,7 +355,8 @@ public class CFileTest extends CBaseUnitTest {
   @Test(
       retryAnalyzer = CTestRetryAnalyzer.class,
       expectedExceptions = CFileOperationException.class)
-  public void testSafeRename_CannotDeleteSrcFile() throws NoSuchFieldException, IllegalAccessException {
+  public void testSafeRename_CannotDeleteSrcFile()
+      throws NoSuchFieldException, IllegalAccessException {
     CFile file1 = getValidFile().write("ABC");
     CFile file2 = getValidMockedFile();
     file2.write("ABCD");
@@ -408,10 +413,10 @@ public class CFileTest extends CBaseUnitTest {
   public void testWaitForWritable1() {
     CFile file1 = getValidFile();
     new Thread(
-        () -> {
-          CSleeper.sleepTightInSeconds(1);
-          file1.createNewFile();
-        })
+            () -> {
+              CSleeper.sleepTightInSeconds(1);
+              file1.createNewFile();
+            })
         .run();
     CVerify.Bool.isTrue(file1.waitForWritable(2), "CFile -> waitForWritable works fine");
   }
@@ -420,10 +425,10 @@ public class CFileTest extends CBaseUnitTest {
   public void testWaitForWritable3() {
     CFile file1 = getValidFile();
     new Thread(
-        () -> {
-          CSleeper.sleepTightInSeconds(1);
-          file1.createNewFile();
-        })
+            () -> {
+              CSleeper.sleepTightInSeconds(1);
+              file1.createNewFile();
+            })
         .run();
     CVerify.Bool.isTrue(file1.waitForWritable(2, 100), "CFile -> waitForWritable works fine");
   }
@@ -432,10 +437,10 @@ public class CFileTest extends CBaseUnitTest {
   public void testWaitToExists() {
     CFile file1 = getValidFile();
     new Thread(
-        () -> {
-          CSleeper.sleepTightInSeconds(1);
-          file1.write("ABCD");
-        })
+            () -> {
+              CSleeper.sleepTightInSeconds(1);
+              file1.write("ABCD");
+            })
         .run();
     CVerify.Bool.isTrue(file1.waitToExists(2), "CFile -> waitToExists works fine");
     CVerify.String.equals(file1.readString(), "ABCD", "CFile -> waitToExists works fine");
@@ -445,10 +450,10 @@ public class CFileTest extends CBaseUnitTest {
   public void testWaitToExists1() {
     CFile file1 = getValidFile();
     new Thread(
-        () -> {
-          CSleeper.sleepTightInSeconds(1);
-          file1.write("ABCD");
-        })
+            () -> {
+              CSleeper.sleepTightInSeconds(1);
+              file1.write("ABCD");
+            })
         .run();
     CVerify.Bool.isTrue(file1.waitToExists(2, 100), "CFile -> waitToExists works fine");
     CVerify.String.equals(file1.readString(), "ABCD", "CFile -> waitToExists works fine");

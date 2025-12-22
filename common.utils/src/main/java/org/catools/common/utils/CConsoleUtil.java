@@ -1,16 +1,13 @@
 package org.catools.common.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.AnsiConsole;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-/**
- * {@code CConsole} uses to handle console interaction
- */
+/** {@code CConsole} uses to handle console interaction */
 @UtilityClass
 public class CConsoleUtil {
   public static synchronized String print(String input, final Object... params) {

@@ -16,28 +16,6 @@
         <relativePath>../catools.parent/pom.xml</relativePath>
     </parent>
 
-    <repositories>
-        <repository>
-            <id>maven</id>
-            <url>${mvn.repo.url}</url>
-        </repository>
-        <repository>
-            <id>snapshot</id>
-            <url>${repo.snapshot.url}</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>maven-atlassian-external</id>
-            <url>https://maven.atlassian.com/content/repositories/atlassian-public</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- ######################  CATools ######################### -->
         <dependency>
@@ -57,7 +35,6 @@
         </dependency>
         <!-- ######################  /CATools ######################### -->
         <!-- ###################### ATLASSIAN ######################### -->
-        <!-- jira -->
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-rest-java-client-core</artifactId>

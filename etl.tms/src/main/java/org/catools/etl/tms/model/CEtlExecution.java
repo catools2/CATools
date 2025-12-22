@@ -1,15 +1,13 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
 
 @Entity
 @Table(name = "execution", schema = "tms")
@@ -19,8 +17,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class CEtlExecution implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6051874018285613707L;
+  @Serial private static final long serialVersionUID = 6051874018285613707L;
 
   @Id
   @Column(name = "id", length = 20, unique = true, nullable = false)

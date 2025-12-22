@@ -1,6 +1,12 @@
 package org.catools.mcp.di;
 
+import static com.google.inject.Scopes.SINGLETON;
+import static java.util.stream.Collectors.toSet;
+
 import com.google.inject.AbstractModule;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Set;
 import org.catools.mcp.annotation.CMcpPrompt;
 import org.catools.mcp.annotation.CMcpResource;
 import org.catools.mcp.annotation.CMcpServerApplication;
@@ -15,13 +21,6 @@ import org.catools.mcp.server.component.CMcpServerTool;
 import org.catools.mcp.server.converter.CMcpPromptParameterConverter;
 import org.catools.mcp.server.converter.CMcpToolParameterConverter;
 import org.reflections.Reflections;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Set;
-
-import static com.google.inject.Scopes.SINGLETON;
-import static java.util.stream.Collectors.toSet;
 
 /**
  * This class is a Guice module that configures bindings for classes annotated with {@link

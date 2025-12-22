@@ -9,9 +9,9 @@ import lombok.experimental.Accessors;
 /**
  * Represents a test script in the Scale system.
  *
- * <p>This class models the details of a test script, including its unique identifier,
- * type, and associated steps. It supports JSON serialization/deserialization
- * and uses Lombok annotations for boilerplate code reduction.</p>
+ * <p>This class models the details of a test script, including its unique identifier, type, and
+ * associated steps. It supports JSON serialization/deserialization and uses Lombok annotations for
+ * boilerplate code reduction.
  */
 @Data
 @NoArgsConstructor
@@ -20,18 +20,12 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CZScaleTestScript {
 
-  /**
-   * The unique identifier of the test script.
-   */
+  /** The unique identifier of the test script. */
   private int id;
 
-  /**
-   * The type of the test script.
-   */
+  /** The type of the test script. */
   private String type;
 
-  /**
-   * The steps associated with the test script.
-   */
+  /** The steps associated with the test script. */
   private CZScaleTestScriptSteps steps;
 }

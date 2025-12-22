@@ -13,26 +13,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
 /**
- * Base test class providing common functionality for TestNG tests.
- * This class manages test lifecycle, logging, state management, and metadata handling.
- * 
- * <p>Example usage:</p>
+ * Base test class providing common functionality for TestNG tests. This class manages test
+ * lifecycle, logging, state management, and metadata handling.
+ *
+ * <p>Example usage:
+ *
  * <pre>{@code
  * public class MyTest extends CTest {
  *     @Test
  *     public void testExample() {
  *         addMetadata("testType", "integration");
  *         updateDataState("userId", "12345");
- *         
+ *
  *         // Test logic here
- *         
+ *
  *         String userId = getDataState("userId");
  *         assert userId.equals("12345");
  *     }
- *     
+ *
  *     @Override
  *     protected void onSuccess() {
  *         getLogger().info("Test completed successfully!");
@@ -48,48 +56,41 @@ public class CTest {
     ThreadContext.put("LogFolder", CLoggerConfigs.getLogFolderPath());
   }
 
-  /**
-   * Logger instance for this test class.
-   * Use this logger for test-specific logging operations.
-   */
+  /** Logger instance for this test class. Use this logger for test-specific logging operations. */
   public final Logger logger = LoggerFactory.getLogger(CTest.class);
 
   private static boolean FIRST_RUN_PREPARATION_CALLED = false;
 
-  /**
-   * Current test execution status.
-   */
+  /** Current test execution status. */
   private CExecutionStatus testResult = CExecutionStatus.CREATED;
 
   /**
    * Test state data container for storing key-value pairs during test execution.
-   * 
+   *
    * @return the data state container
    */
-  @Getter
-  private final CTestStateData dataState = new CTestStateData();
+  @Getter private final CTestStateData dataState = new CTestStateData();
 
   /**
    * Test metadata container for storing test-related metadata.
-   * 
+   *
    * @return the metadata container
    */
-  @Getter
-  private final CTestMetadata metadata = new CTestMetadata();
+  @Getter private final CTestMetadata metadata = new CTestMetadata();
 
   /**
    * The name of this test class derived from the class name.
-   * 
+   *
    * @return the test name
    */
-  @Getter
-  private final String name = CTestClassUtil.getTestName(getClass());
+  @Getter private final String name = CTestClassUtil.getTestName(getClass());
 
   /**
-   * Executes before the entire test suite runs.
-   * Ensures that first-run preparation is called only once across all test classes.
-   * 
-   * <p>Example usage in subclass:</p>
+   * Executes before the entire test suite runs. Ensures that first-run preparation is called only
+   * once across all test classes.
+   *
+   * <p>Example usage in subclass:
+   *
    * <pre>{@code
    * @Override
    * public void beforeSuite() {
@@ -108,17 +109,17 @@ public class CTest {
 
   /**
    * Executes before each test group runs.
-   * 
+   *
    * @param context the TestNG test context containing test information
-   * 
-   * <p>Example usage in subclass:</p>
-   * <pre>{@code
+   *     <p>Example usage in subclass:
+   *     <pre>{@code
    * @Override
    * public void beforeTest(ITestContext context) {
    *     super.beforeTest(context);
    *     // Additional test-level setup
    *     getLogger().info("Starting test group: " + context.getName());
    * }
+   *
    * }</pre>
    */
   @BeforeTest
@@ -127,10 +128,11 @@ public class CTest {
   }
 
   /**
-   * Executes before each test class runs.
-   * Sets up logging context with log folder path and test name.
-   * 
-   * <p>Example usage in subclass:</p>
+   * Executes before each test class runs. Sets up logging context with log folder path and test
+   * name.
+   *
+   * <p>Example usage in subclass:
+   *
    * <pre>{@code
    * @Override
    * public void beforeClass() {
@@ -148,19 +150,18 @@ public class CTest {
   }
 
   /**
-   * Executes before each test method runs.
-   * Sets up logging context for the specific test method.
-   * 
+   * Executes before each test method runs. Sets up logging context for the specific test method.
+   *
    * @param result the TestNG test result containing method information
-   * 
-   * <p>Example usage in subclass:</p>
-   * <pre>{@code
+   *     <p>Example usage in subclass:
+   *     <pre>{@code
    * @Override
    * public void beforeMethod(ITestResult result) {
    *     super.beforeMethod(result);
    *     // Additional method-level setup
    *     updateDataState("startTime", System.currentTimeMillis());
    * }
+   *
    * }</pre>
    */
   @BeforeMethod
@@ -171,13 +172,12 @@ public class CTest {
   }
 
   /**
-   * Executes after each test method completes.
-   * Captures test result status and logs any exceptions that occurred.
-   * 
+   * Executes after each test method completes. Captures test result status and logs any exceptions
+   * that occurred.
+   *
    * @param result the TestNG test result containing execution information
-   * 
-   * <p>Example usage in subclass:</p>
-   * <pre>{@code
+   *     <p>Example usage in subclass:
+   *     <pre>{@code
    * @Override
    * public void afterMethod(ITestResult result) {
    *     super.afterMethod(result);
@@ -188,6 +188,7 @@ public class CTest {
    *         addMetadata("executionTime", String.valueOf(duration));
    *     }
    * }
+   *
    * }</pre>
    */
   @AfterMethod
@@ -203,10 +204,11 @@ public class CTest {
   }
 
   /**
-   * Executes after each test class completes.
-   * Calls appropriate status-specific callback methods based on test execution result.
-   * 
-   * <p>Example usage in subclass:</p>
+   * Executes after each test class completes. Calls appropriate status-specific callback methods
+   * based on test execution result.
+   *
+   * <p>Example usage in subclass:
+   *
    * <pre>{@code
    * @Override
    * public void afterClass() {
@@ -230,19 +232,19 @@ public class CTest {
   }
 
   /**
-   * Executes after each test group completes.
-   * Removes test name from thread context to clean up logging context.
-   * 
+   * Executes after each test group completes. Removes test name from thread context to clean up
+   * logging context.
+   *
    * @param context the TestNG test context containing test information
-   * 
-   * <p>Example usage in subclass:</p>
-   * <pre>{@code
+   *     <p>Example usage in subclass:
+   *     <pre>{@code
    * @Override
    * public void afterTest(ITestContext context) {
    *     super.afterTest(context);
    *     // Additional test-level cleanup
    *     getLogger().info("Test group completed: " + context.getName());
    * }
+   *
    * }</pre>
    */
   @AfterTest
@@ -252,10 +254,11 @@ public class CTest {
   }
 
   /**
-   * Executes after the entire test suite completes.
-   * Override this method in subclasses to perform suite-level cleanup.
-   * 
-   * <p>Example usage in subclass:</p>
+   * Executes after the entire test suite completes. Override this method in subclasses to perform
+   * suite-level cleanup.
+   *
+   * <p>Example usage in subclass:
+   *
    * <pre>{@code
    * @Override
    * public void afterSuite() {
@@ -266,26 +269,25 @@ public class CTest {
    * }</pre>
    */
   @AfterSuite
-  public void afterSuite() {
-  }
+  public void afterSuite() {}
 
   /**
-   * Updates the test data state with a key-value pair.
-   * This method provides a convenient way to store test-specific data during execution.
-   * 
+   * Updates the test data state with a key-value pair. This method provides a convenient way to
+   * store test-specific data during execution.
+   *
    * @param key the key to store the value under
    * @param value the value to store
-   * 
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Store user ID for later use in test
    * updateDataState("userId", "12345");
-   * 
+   *
    * // Store complex objects
    * updateDataState("userObject", new User("John", "Doe"));
-   * 
+   *
    * // Store test configuration
    * updateDataState("testConfig", Map.of("timeout", 30, "retries", 3));
+   *
    * }</pre>
    */
   public void updateDataState(String key, Object value) {
@@ -294,22 +296,21 @@ public class CTest {
 
   /**
    * Retrieves a value from the test data state by key.
-   * 
+   *
    * @param <T> the type of the value to retrieve
    * @param key the key to lookup
    * @return the value associated with the key, or null if not found
-   * 
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Retrieve previously stored user ID
    * String userId = getDataState("userId");
-   * 
+   *
    * // Retrieve complex objects with casting
    * User user = getDataState("userObject");
-   * 
+   *
    * // Retrieve with explicit type specification
    * Map<String, Object> config = this.<Map<String, Object>>getDataState("testConfig");
-   * 
+   *
    * // Safe retrieval with null check
    * String optionalValue = getDataState("optionalKey");
    * if (optionalValue != null) {
@@ -322,25 +323,25 @@ public class CTest {
   }
 
   /**
-   * Adds metadata key-value pair if the key doesn't already exist.
-   * Metadata is typically used for test reporting and categorization.
-   * 
+   * Adds metadata key-value pair if the key doesn't already exist. Metadata is typically used for
+   * test reporting and categorization.
+   *
    * @param key the metadata key
    * @param value the metadata value
-   * 
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Add test categorization metadata
    * addMetadata("testType", "integration");
    * addMetadata("priority", "high");
    * addMetadata("component", "user-service");
-   * 
+   *
    * // Add environment information
    * addMetadata("environment", "staging");
    * addMetadata("browser", "chrome");
-   * 
+   *
    * // Add test timing information
    * addMetadata("expectedDuration", "30s");
+   *
    * }</pre>
    */
   public void addMetadata(String key, String value) {
@@ -348,10 +349,11 @@ public class CTest {
   }
 
   /**
-   * Called when test execution is in awaiting status.
-   * Override this method to implement custom behavior for awaiting tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution is in awaiting status. Override this method to implement custom
+   * behavior for awaiting tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onAwaiting() {
@@ -360,14 +362,14 @@ public class CTest {
    * }
    * }</pre>
    */
-  protected void onAwaiting() {
-  }
+  protected void onAwaiting() {}
 
   /**
-   * Called when test execution is blocked.
-   * Override this method to implement custom behavior for blocked tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution is blocked. Override this method to implement custom behavior for
+   * blocked tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onBlocked() {
@@ -376,14 +378,14 @@ public class CTest {
    * }
    * }</pre>
    */
-  protected void onBlocked() {
-  }
+  protected void onBlocked() {}
 
   /**
-   * Called when test execution is deferred.
-   * Override this method to implement custom behavior for deferred tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution is deferred. Override this method to implement custom behavior for
+   * deferred tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onDeferred() {
@@ -392,82 +394,82 @@ public class CTest {
    * }
    * }</pre>
    */
-  protected void onDeferred() {
-  }
+  protected void onDeferred() {}
 
   /**
-   * Called when test execution fails.
-   * Override this method to implement custom behavior for failed tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution fails. Override this method to implement custom behavior for failed
+   * tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onFailure() {
    *     getLogger().error("Test failed - capturing screenshots and logs");
    *     addMetadata("failureHandled", "true");
-   *     
+   *
    *     // Capture screenshot if UI test
    *     // captureScreenshot();
-   *     
+   *
    *     // Send notification
    *     // notifyFailure();
    * }
    * }</pre>
    */
-  protected void onFailure() {
-  }
+  protected void onFailure() {}
 
   /**
-   * Called when test execution is skipped.
-   * Override this method to implement custom behavior for skipped tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution is skipped. Override this method to implement custom behavior for
+   * skipped tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onSkip() {
    *     getLogger().info("Test skipped - checking skip reason");
    *     addMetadata("skipHandled", "true");
-   *     
+   *
    *     // Log skip reason
    *     // logSkipReason();
    * }
    * }</pre>
    */
-  protected void onSkip() {
-  }
+  protected void onSkip() {}
 
   /**
-   * Called when test execution succeeds.
-   * Override this method to implement custom behavior for successful tests.
-   * 
-   * <p>Example usage:</p>
+   * Called when test execution succeeds. Override this method to implement custom behavior for
+   * successful tests.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onSuccess() {
    *     getLogger().info("Test completed successfully");
    *     addMetadata("successHandled", "true");
-   *     
+   *
    *     // Clean up test data
    *     // cleanupTestData();
-   *     
+   *
    *     // Update test metrics
    *     // updateSuccessMetrics();
    * }
    * }</pre>
    */
-  protected void onSuccess() {
-  }
+  protected void onSuccess() {}
 
   /**
-   * Called during the first test suite execution for one-time initialization.
-   * Override this method to implement custom first-run setup logic.
-   * 
-   * <p>Example usage:</p>
+   * Called during the first test suite execution for one-time initialization. Override this method
+   * to implement custom first-run setup logic.
+   *
+   * <p>Example usage:
+   *
    * <pre>{@code
    * @Override
    * protected void onFirstRun() {
    *     getLogger().info("Performing first-run initialization");
-   *     
+   *
    *     // Initialize global test resources
    *     // initializeDatabase();
    *     // setupTestEnvironment();
@@ -475,8 +477,7 @@ public class CTest {
    * }
    * }</pre>
    */
-  protected void onFirstRun() {
-  }
+  protected void onFirstRun() {}
 
   private String getMethodName(ITestResult result) {
     if (result == null || result.getMethod() == null) {
@@ -500,22 +501,21 @@ public class CTest {
   }
 
   /**
-   * Gets the logger instance for this test class.
-   * This provides access to the SLF4J logger for test-specific logging.
-   * 
+   * Gets the logger instance for this test class. This provides access to the SLF4J logger for
+   * test-specific logging.
+   *
    * @return the logger instance
-   * 
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Log test progress
    * getLogger().info("Starting user authentication test");
-   * 
+   *
    * // Log debug information
    * getLogger().debug("User ID: {}, Session: {}", userId, sessionId);
-   * 
+   *
    * // Log warnings
    * getLogger().warn("Using fallback configuration");
-   * 
+   *
    * // Log errors with exception
    * try {
    *     // test code

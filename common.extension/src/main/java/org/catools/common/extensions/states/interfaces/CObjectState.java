@@ -29,7 +29,6 @@ public interface CObjectState<O> extends CBaseState<O> {
     return Objects.equals(_get(), expected);
   }
 
-
   /**
    * Check if actual and expected are not equal
    *

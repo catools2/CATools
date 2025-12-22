@@ -23,7 +23,8 @@ public class CReportPortalService extends TestNGService {
   }
 
   @Override
-  protected StartTestItemRQ buildStartStepRq(final @Nonnull ITestResult testResult, final @Nonnull TestMethodType type) {
+  protected StartTestItemRQ buildStartStepRq(
+      final @Nonnull ITestResult testResult, final @Nonnull TestMethodType type) {
     StartTestItemRQ rq = super.buildStartStepRq(testResult, type);
 
     CTestResult result = new CTestResult(testResult);
@@ -53,8 +54,7 @@ public class CReportPortalService extends TestNGService {
     StringBuilder stringBuffer = new StringBuilder();
     stringBuffer.append(super.createStepDescription(testResult));
 
-    if (!stringBuffer.isEmpty())
-      stringBuffer.append("\n");
+    if (!stringBuffer.isEmpty()) stringBuffer.append("\n");
 
     stringBuffer.append(getTestInfoForReport(testResult));
     return stringBuffer.toString();
@@ -68,11 +68,10 @@ public class CReportPortalService extends TestNGService {
 
     if (result.getTestIds().isNotEmpty()) {
       if (StringUtils.isBlank(CTestManagementConfigs.getUrlToTest())) {
-        stringBuffer.append("Tests: ")
-            .append(result.getTestIds().join(", "))
-            .append("\n");
+        stringBuffer.append("Tests: ").append(result.getTestIds().join(", ")).append("\n");
       } else {
-        stringBuffer.append("Tests: ")
+        stringBuffer
+            .append("Tests: ")
             .append(result.getTestIds().mapToSet(CReportPortalService::getJiraUrl).join(", "))
             .append("\n");
       }
@@ -80,11 +79,10 @@ public class CReportPortalService extends TestNGService {
 
     if (result.getDefectIds().isNotEmpty()) {
       if (StringUtils.isBlank(CTestManagementConfigs.getUrlToDefect())) {
-        stringBuffer.append("Defects: ")
-            .append(result.getDefectIds().join(", "))
-            .append("\n");
+        stringBuffer.append("Defects: ").append(result.getDefectIds().join(", ")).append("\n");
       } else {
-        stringBuffer.append("Defects: ")
+        stringBuffer
+            .append("Defects: ")
             .append(result.getDefectIds().mapToSet(CReportPortalService::getDefectLink).join(", "))
             .append("\n");
       }
@@ -92,12 +90,15 @@ public class CReportPortalService extends TestNGService {
 
     if (result.getOpenDefectIds().isNotEmpty()) {
       if (StringUtils.isBlank(CTestManagementConfigs.getUrlToDefect())) {
-        stringBuffer.append("Open Defects: ")
+        stringBuffer
+            .append("Open Defects: ")
             .append(result.getOpenDefectIds().join(", "))
             .append("\n");
       } else {
-        stringBuffer.append("Open Defects: ")
-            .append(result.getOpenDefectIds().mapToSet(CReportPortalService::getDefectLink).join(", "))
+        stringBuffer
+            .append("Open Defects: ")
+            .append(
+                result.getOpenDefectIds().mapToSet(CReportPortalService::getDefectLink).join(", "))
             .append("\n");
       }
     }

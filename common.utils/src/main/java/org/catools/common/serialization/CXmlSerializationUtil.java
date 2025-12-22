@@ -2,12 +2,11 @@ package org.catools.common.serialization;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.File;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import org.catools.common.exception.CRuntimeException;
 import org.catools.common.utils.CResourceUtil;
-
-import java.io.File;
-import java.util.Objects;
 
 @UtilityClass
 public class CXmlSerializationUtil {
@@ -20,17 +19,25 @@ public class CXmlSerializationUtil {
     }
   }
 
-  public static <T> T read(String resourceName, Class<?> classLoader, Class<T> clazz, SerializationFeature... serializationFeature) {
-    return CResourceUtil.performActionOnResource(resourceName, classLoader, (s, inputStream) -> {
-      try {
-        return getMarshaller(serializationFeature).readValue(inputStream, clazz);
-      } catch (Throwable e) {
-        throw new CRuntimeException("Failed to deserialize file " + resourceName, e);
-      }
-    });
+  public static <T> T read(
+      String resourceName,
+      Class<?> classLoader,
+      Class<T> clazz,
+      SerializationFeature... serializationFeature) {
+    return CResourceUtil.performActionOnResource(
+        resourceName,
+        classLoader,
+        (s, inputStream) -> {
+          try {
+            return getMarshaller(serializationFeature).readValue(inputStream, clazz);
+          } catch (Throwable e) {
+            throw new CRuntimeException("Failed to deserialize file " + resourceName, e);
+          }
+        });
   }
 
-  public static <T> T read(File file, Class<T> clazz, SerializationFeature... serializationFeature) {
+  public static <T> T read(
+      File file, Class<T> clazz, SerializationFeature... serializationFeature) {
     try {
       return getMarshaller(serializationFeature).readValue(file, clazz);
     } catch (Throwable e) {
@@ -38,7 +45,8 @@ public class CXmlSerializationUtil {
     }
   }
 
-  public static <T> T read(byte[] content, Class<T> clazz, SerializationFeature... serializationFeature) {
+  public static <T> T read(
+      byte[] content, Class<T> clazz, SerializationFeature... serializationFeature) {
     try {
       return getMarshaller(serializationFeature).readValue(content, clazz);
     } catch (Throwable e) {

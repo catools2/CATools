@@ -1,13 +1,12 @@
 package org.catools.common.tests.waitVerifier;
 
+import java.util.Collection;
+import java.util.List;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CCollectionWaitVerifier;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Collection;
-import java.util.List;
 
 public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -18,7 +17,8 @@ public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testWaitSizeIsGreaterThan() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifySizeIsGreaterThan(verifier, 2, 1));
+    verify(
+        verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifySizeIsGreaterThan(verifier, 2, 1));
     verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifySizeIsGreaterThan(verifier, 2));
   }
 
@@ -44,20 +44,31 @@ public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsAll() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, List.of(1, 3), 1));
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, new CSet<>(1, 2)));
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsAll(verifier, List.of(2, 3)));
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsAll(verifier, new CSet<>()));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, List.of(1, 3), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, new CSet<>(1, 2)));
+    verify(
+        verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsAll(verifier, List.of(2, 3)));
+    verify(
+        verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsAll(verifier, new CSet<>()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, List.of(1, 23)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, List.of(1, 23)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N2() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsAll(verifier, new CSet<>(1, 2, 3, 4)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3))
+                .verifyContainsAll(verifier, new CSet<>(1, 2, 3, 4)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -72,29 +83,42 @@ public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsNone() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, List.of(4, 5, 6), 1));
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>(4, 5, 6)));
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, List.of(4, 5, 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, List.of(4, 5, 6), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>(4, 5, 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, List.of(4, 5, 6)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, List.of(1, 5, 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, List.of(1, 5, 6)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N2() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>(2, 5, 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>(2, 5, 6)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N3() {
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, List.of(3, 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, List.of(3, 6)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N4() {
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>()));
+    verify(
+        verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyContainsNone(verifier, new CSet<>()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -146,11 +170,16 @@ public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEquals() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyEquals(verifier, List.of(1, 2, 3), 1));
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyEquals(verifier, new CSet<>(1, 2, 3)));
-    verify(verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyEquals(verifier, List.of(1, 2, 3)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyEquals(verifier, List.of(1, 2, 3), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyEquals(verifier, new CSet<>(1, 2, 3)));
+    verify(
+        verifier -> toWaitVerifier(new CSet<>(1, 2, 3)).verifyEquals(verifier, List.of(1, 2, 3)));
     verify(verifier -> toWaitVerifier(new CSet<>()).verifyEquals(verifier, List.of()));
-  }  // Negative
+  } // Negative
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N() {
@@ -224,13 +253,20 @@ public class CCollectionWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotContainsAll() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyNotContainsAll(verifier, List.of(1, 4), 1));
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyNotContainsAll(verifier, new CSet<>(1, 2, 3, 4)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyNotContainsAll(verifier, List.of(1, 4), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3))
+                .verifyNotContainsAll(verifier, new CSet<>(1, 2, 3, 4)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N() {
-    verify(verifier -> toWaitVerifier(new CList<>(1, 2, 3)).verifyNotContainsAll(verifier, List.of(1, 2, 3)));
+    verify(
+        verifier ->
+            toWaitVerifier(new CList<>(1, 2, 3)).verifyNotContainsAll(verifier, List.of(1, 2, 3)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

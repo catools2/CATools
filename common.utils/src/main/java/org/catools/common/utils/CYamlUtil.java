@@ -3,12 +3,11 @@ package org.catools.common.utils;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import java.io.File;
 import lombok.experimental.UtilityClass;
 import org.catools.common.exception.CFileNotFoundException;
 import org.catools.common.exception.CInvalidYamlContentFormatException;
 import org.catools.common.exception.CInvalidYamlFileFormatException;
-
-import java.io.File;
 
 @UtilityClass
 public class CYamlUtil {

@@ -1,14 +1,13 @@
 package org.catools.mcp.configuration;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CYamlUtil;
-import org.catools.mcp.exception.CMcpServerConfigurationException;
-
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CYamlUtil;
+import org.catools.mcp.exception.CMcpServerConfigurationException;
 
 /**
  * This record represents a YAML configuration loader for MCP (Model Context Protocol) server
@@ -20,14 +19,10 @@ import java.nio.file.Paths;
 @Slf4j
 public record CYamlConfigurationLoader(String configFileName) {
 
-  /**
-   * The default file name for the MCP server configuration file.
-   */
+  /** The default file name for the MCP server configuration file. */
   private static final String DEFAULT_CONFIG_FILE_NAME = "mcp-server.yml";
 
-  /**
-   * Constructs a YAMLConfigurationLoader with the default configuration file name.
-   */
+  /** Constructs a YAMLConfigurationLoader with the default configuration file name. */
   public CYamlConfigurationLoader() {
     this(DEFAULT_CONFIG_FILE_NAME);
   }

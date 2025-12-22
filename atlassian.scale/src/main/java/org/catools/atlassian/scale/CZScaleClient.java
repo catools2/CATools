@@ -6,22 +6,22 @@ import org.catools.atlassian.scale.rest.testcase.CZScaleTestCaseClient;
 /**
  * Main client for interacting with the Scale system.
  *
- * <p>This class provides static instances of clients for managing test runs and test cases
- * in the Scale system. It acts as an entry point for accessing these clients.</p>
+ * <p>This class provides static instances of clients for managing test runs and test cases in the
+ * Scale system. It acts as an entry point for accessing these clients.
  */
 public class CZScaleClient {
 
   /**
    * Static instance of the test run client.
    *
-   * <p>Provides methods to interact with the Scale system's test run API.</p>
+   * <p>Provides methods to interact with the Scale system's test run API.
    */
   public static final CZScaleTestRunClient TestRuns = new CZScaleTestRunClient();
 
   /**
    * Static instance of the test case client.
    *
-   * <p>Provides methods to interact with the Scale system's test case API.</p>
+   * <p>Provides methods to interact with the Scale system's test case API.
    */
   public static final CZScaleTestCaseClient TestCases = new CZScaleTestCaseClient();
 }

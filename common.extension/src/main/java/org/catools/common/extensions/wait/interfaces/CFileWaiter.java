@@ -1,13 +1,10 @@
 package org.catools.common.extensions.wait.interfaces;
 
+import java.io.File;
 import org.catools.common.extensions.states.interfaces.CFileState;
 import org.catools.common.io.CFile;
 
-import java.io.File;
-
-/**
- * CFileWaiter is an interface for CFile waiter related methods.
- */
+/** CFileWaiter is an interface for CFile waiter related methods. */
 public interface CFileWaiter extends CObjectWaiter<File> {
 
   /**
@@ -27,25 +24,28 @@ public interface CFileWaiter extends CObjectWaiter<File> {
    * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} interval till the actual and
    * expected file have the exact same content.
    *
-   * @param expectedFile  file to compare
+   * @param expectedFile file to compare
    * @param waitInSeconds maximum wait time
    * @return true if wait operation succeed otherwise return false
    */
   default boolean waitEqualsStringContent(final File expectedFile, final int waitInSeconds) {
-    return waitEqualsStringContent(expectedFile, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+    return waitEqualsStringContent(
+        expectedFile, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
    * Wait for defined number of seconds till the actual and expected file have the exact same
    * content.
    *
-   * @param expectedFile           file to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expectedFile file to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitEqualsStringContent(final File expectedFile, final int waitInSeconds, final int intervalInMilliSeconds) {
-    return _waiter(o -> toState(o).equalsStringContent(expectedFile), waitInSeconds, intervalInMilliSeconds);
+  default boolean waitEqualsStringContent(
+      final File expectedFile, final int waitInSeconds, final int intervalInMilliSeconds) {
+    return _waiter(
+        o -> toState(o).equalsStringContent(expectedFile), waitInSeconds, intervalInMilliSeconds);
   }
 
   /**
@@ -72,7 +72,7 @@ public interface CFileWaiter extends CObjectWaiter<File> {
   /**
    * Wait for defined number of seconds till the the file exists
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
@@ -106,7 +106,7 @@ public interface CFileWaiter extends CObjectWaiter<File> {
   /**
    * Wait for defined number of seconds till the the file does not exist
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
@@ -131,25 +131,30 @@ public interface CFileWaiter extends CObjectWaiter<File> {
    * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} interval till the actual and
    * expected file does not have the exact same content.
    *
-   * @param expectedFile  file to compare
+   * @param expectedFile file to compare
    * @param waitInSeconds maximum wait time
    * @return true if wait operation succeed otherwise return false
    */
   default boolean waitNotEqualsStringContent(final CFile expectedFile, final int waitInSeconds) {
-    return waitNotEqualsStringContent(expectedFile, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+    return waitNotEqualsStringContent(
+        expectedFile, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
    * Wait for defined number of seconds till the actual and expected file does not have the exact
    * same content.
    *
-   * @param expectedFile           file to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expectedFile file to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitNotEqualsStringContent(final CFile expectedFile, final int waitInSeconds, final int intervalInMilliSeconds) {
-    return _waiter(o -> toState(o).notEqualsStringContent(expectedFile), waitInSeconds, intervalInMilliSeconds);
+  default boolean waitNotEqualsStringContent(
+      final CFile expectedFile, final int waitInSeconds, final int intervalInMilliSeconds) {
+    return _waiter(
+        o -> toState(o).notEqualsStringContent(expectedFile),
+        waitInSeconds,
+        intervalInMilliSeconds);
   }
 
   private CFileState toState(Object e) {

@@ -1,12 +1,10 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlPriorities extends CSet<CEtlPriority> {
-  public CEtlPriorities() {
-  }
+  public CEtlPriorities() {}
 
   public CEtlPriorities(CEtlPriority... c) {
     super(c);

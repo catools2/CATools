@@ -16,13 +16,12 @@ import org.codehaus.jettison.json.JSONObject;
 /**
  * Client class for managing test cycles in the ZAPI system.
  *
- * <p>This class provides methods to retrieve, create, and clone test cycles using the ZAPI REST API.</p>
+ * <p>This class provides methods to retrieve, create, and clone test cycles using the ZAPI REST
+ * API.
  */
 public class CZApiCycleClient extends CZApiRestClient {
 
-  /**
-   * Default constructor for the CZApiCycleClient.
-   */
+  /** Default constructor for the CZApiCycleClient. */
   public CZApiCycleClient() {
     super();
   }
@@ -45,7 +44,8 @@ public class CZApiCycleClient extends CZApiRestClient {
    *
    * @param project the project for which cycles are being retrieved
    * @param version the version for which cycles are being retrieved
-   * @return a {@link CZApiCycles} object containing all cycles for the specified project and version
+   * @return a {@link CZApiCycles} object containing all cycles for the specified project and
+   *     version
    */
   public CZApiCycles getAllCycle(CZApiProject project, CZApiVersion version) {
     RequestSpecification specification =

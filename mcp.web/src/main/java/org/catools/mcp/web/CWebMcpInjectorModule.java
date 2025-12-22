@@ -9,12 +9,11 @@ import org.catools.web.drivers.CDriverActions;
 import org.catools.web.tests.CWebTest;
 
 /**
- * Guice module for Web MCP Server dependency injection.
- * This module overrides the automatic interface binding from CGuiceInjectorModule
- * with concrete implementations.
+ * Guice module for Web MCP Server dependency injection. This module overrides the automatic
+ * interface binding from CGuiceInjectorModule with concrete implementations.
  *
- * <p>This module is designed to be used with Modules.override() to replace the
- * CDriverActions binding that CGuiceInjectorModule creates when it scans for @CMcpTool methods.
+ * <p>This module is designed to be used with Modules.override() to replace the CDriverActions
+ * binding that CGuiceInjectorModule creates when it scans for @CMcpTool methods.
  */
 public class CWebMcpInjectorModule extends AbstractModule {
 

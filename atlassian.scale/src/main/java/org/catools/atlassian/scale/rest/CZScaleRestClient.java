@@ -20,17 +20,14 @@ import java.util.function.Consumer;
 /**
  * Base REST client for interacting with the Scale system.
  *
- * <p>This class provides common functionality for making HTTP requests, handling retries,
- * and processing data in parallel. It is designed to be extended by other REST client
- * classes to interact with specific endpoints in the Scale system.</p>
+ * <p>This class provides common functionality for making HTTP requests, handling retries, and
+ * processing data in parallel. It is designed to be extended by other REST client classes to
+ * interact with specific endpoints in the Scale system.
  */
 public class CZScaleRestClient {
 
-  /**
-   * Default constructor.
-   */
-  public CZScaleRestClient() {
-  }
+  /** Default constructor. */
+  public CZScaleRestClient() {}
 
   /**
    * Reads all data in parallel using the specified input and output executors.
@@ -52,29 +49,33 @@ public class CZScaleRestClient {
 
     Set<T> output = Collections.synchronizedSet(new HashSet<>());
 
-    CParallelCollectionIO<T> parallelIO = new CParallelCollectionIO<>(actionName, parallelInputCount, parallelOutputCount);
+    CParallelCollectionIO<T> parallelIO =
+        new CParallelCollectionIO<>(actionName, parallelInputCount, parallelOutputCount);
 
     int maxResult = CZScaleConfigs.Scale.getSearchBufferSize();
     AtomicInteger counter = new AtomicInteger(0);
 
-    parallelIO.setInputExecutor(eof -> {
-      int startAt = counter.getAndIncrement() * maxResult;
-      Set<T> result = CRetry.retry(integer -> requestProcessor.apply(startAt, maxResult), 3, 5000);
-      if (result == null || result.isEmpty()) {
-        eof.set(true);
-        CSleeper.sleepTight(500);
-      } else {
-        output.addAll(result);
-        eof.set(false);
-      }
-      return result;
-    });
+    parallelIO.setInputExecutor(
+        eof -> {
+          int startAt = counter.getAndIncrement() * maxResult;
+          Set<T> result =
+              CRetry.retry(integer -> requestProcessor.apply(startAt, maxResult), 3, 5000);
+          if (result == null || result.isEmpty()) {
+            eof.set(true);
+            CSleeper.sleepTight(500);
+          } else {
+            output.addAll(result);
+            eof.set(false);
+          }
+          return result;
+        });
 
-    parallelIO.setOutputExecutor((eof, issue) -> {
-      if (onAction != null && issue != null) {
-        onAction.accept(issue);
-      }
-    });
+    parallelIO.setOutputExecutor(
+        (eof, issue) -> {
+          if (onAction != null && issue != null) {
+            onAction.accept(issue);
+          }
+        });
 
     try {
       parallelIO.run();

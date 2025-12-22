@@ -1,12 +1,10 @@
 package org.catools.media.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CDiffPoints extends CSet<CDiffPoint> {
-  public CDiffPoints() {
-  }
+  public CDiffPoints() {}
 
   public CDiffPoints(CDiffPoint... c) {
     super(c);

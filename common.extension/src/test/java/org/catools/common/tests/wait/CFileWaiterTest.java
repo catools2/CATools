@@ -69,8 +69,8 @@ public class CFileWaiterTest extends CBaseUnitTest {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     CVerify.Bool.isTrue(
         toWaiter(
-            new CFile(getPath("testEquals1WhenNoDest1", paragraphs) + "Invalid")
-                .getCanonicalPath())
+                new CFile(getPath("testEquals1WhenNoDest1", paragraphs) + "Invalid")
+                    .getCanonicalPath())
             .waitEqualsStringContent(getFile("testEquals1WhenNoDest12", paragraphs)),
         "%s#%s",
         getParams());
@@ -113,8 +113,8 @@ public class CFileWaiterTest extends CBaseUnitTest {
     String paragraphs = RandomStringUtils.randomAlphabetic(50);
     CVerify.Bool.isTrue(
         toWaiter(
-            new CFile(getPath("testNotEquals_NoSrc", paragraphs + "1") + "Invalid")
-                .getCanonicalPath())
+                new CFile(getPath("testNotEquals_NoSrc", paragraphs + "1") + "Invalid")
+                    .getCanonicalPath())
             .waitNotEqualsStringContent(getFile("testNotEquals_NoSrc2", paragraphs)),
         "%s#%s",
         getParams());

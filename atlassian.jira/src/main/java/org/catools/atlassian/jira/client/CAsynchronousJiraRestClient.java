@@ -9,9 +9,8 @@ import jakarta.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 /**
- * Custom implementation of the AsynchronousJiraRestClient.
- * This class extends the default AsynchronousJiraRestClient and provides
- * a custom implementation for the SearchRestClient.
+ * Custom implementation of the AsynchronousJiraRestClient. This class extends the default
+ * AsynchronousJiraRestClient and provides a custom implementation for the SearchRestClient.
  */
 public class CAsynchronousJiraRestClient extends AsynchronousJiraRestClient
     implements JiraRestClient {
@@ -22,7 +21,7 @@ public class CAsynchronousJiraRestClient extends AsynchronousJiraRestClient
   /**
    * Constructs a new instance of CAsynchronousJiraRestClient.
    *
-   * @param serverUri  The base URI of the Jira server.
+   * @param serverUri The base URI of the Jira server.
    * @param httpClient The HTTP client used for making requests.
    */
   public CAsynchronousJiraRestClient(URI serverUri, DisposableHttpClient httpClient) {

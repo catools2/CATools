@@ -4,12 +4,11 @@ import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.util.Config;
+import java.io.IOException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.k8s.enums.CKubeConnectionType;
 import org.catools.k8s.exception.CKubeOperationException;
-
-import java.io.IOException;
 
 @Slf4j
 @UtilityClass
@@ -47,11 +46,16 @@ public class CKubeConfigBuilder {
   }
 
   private static ApiClient fromToken() {
-    return Config.fromToken(CKubeConfig.getConnectionUrl(), CKubeConfig.getToken(), CKubeConfig.shouldValidateSSL());
+    return Config.fromToken(
+        CKubeConfig.getConnectionUrl(), CKubeConfig.getToken(), CKubeConfig.shouldValidateSSL());
   }
 
   private static ApiClient fromUserPassword() {
-    return Config.fromUserPassword(CKubeConfig.getConnectionUrl(), CKubeConfig.getUsername(), CKubeConfig.getPassword(), CKubeConfig.shouldValidateSSL());
+    return Config.fromUserPassword(
+        CKubeConfig.getConnectionUrl(),
+        CKubeConfig.getUsername(),
+        CKubeConfig.getPassword(),
+        CKubeConfig.shouldValidateSSL());
   }
 
   private static ApiClient fromConfig() {
@@ -59,7 +63,8 @@ public class CKubeConfigBuilder {
       return Config.fromConfig(CKubeConfig.getKubeConfigPath());
     } catch (IOException e) {
       throw new CKubeOperationException(
-          "Failed to build client using the provided configuration file. configFile:" + CKubeConfig.getKubeConfigPath(),
+          "Failed to build client using the provided configuration file. configFile:"
+              + CKubeConfig.getKubeConfigPath(),
           e);
     }
   }
@@ -68,7 +73,8 @@ public class CKubeConfigBuilder {
     try {
       return Config.defaultClient();
     } catch (IOException e) {
-      throw new CKubeOperationException("Failed to build client using the default kubeconfig file.", e);
+      throw new CKubeOperationException(
+          "Failed to build client using the default kubeconfig file.", e);
     }
   }
 

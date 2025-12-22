@@ -1,13 +1,12 @@
 package org.catools.common.tests.waitVerifier;
 
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CMapWaitVerifier;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
-
-import java.util.Map;
 
 public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -30,7 +29,8 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsAll_N2() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyContainsAll(verifier, toMap(1, 2, 3, 4)));
+    verify(
+        verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyContainsAll(verifier, toMap(1, 2, 3, 4)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -46,7 +46,8 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsNone() {
     verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyContainsNone(verifier, toMap(4, 5, 6)));
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyContainsNone(verifier, toMap(4, 5, 6), 1));
+    verify(
+        verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyContainsNone(verifier, toMap(4, 5, 6), 1));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -92,7 +93,9 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEmptyOrNotContains() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrNotContains(verifier, toEntity(5), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrNotContains(verifier, toEntity(5), 1));
     verify(verifier -> toWaitVerifier(toMap()).verifyEmptyOrNotContains(verifier, "1", 1));
   }
 
@@ -108,13 +111,17 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEmptyOrContainsWithEntry() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrContains(verifier, Map.entry("1", 1), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrContains(verifier, Map.entry("1", 1), 1));
     verify(verifier -> toWaitVerifier(toMap()).verifyEmptyOrContains(verifier, Map.entry("5", 5)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrContainsWithEntry_N() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrContains(verifier, Map.entry("6", 6)));
+    verify(
+        verifier ->
+            toWaitVerifier(toMap(1, 2, 3)).verifyEmptyOrContains(verifier, Map.entry("6", 6)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -224,8 +231,11 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotContainsAll() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 4), 1));
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 2, 3, 4)));
+    verify(
+        verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 4), 1));
+    verify(
+        verifier ->
+            toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 2, 3, 4)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -235,7 +245,8 @@ public class CMapWaitVerifyTest extends CBaseWaitVerifyTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N() {
-    verify(verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 2, 3)));
+    verify(
+        verifier -> toWaitVerifier(toMap(1, 2, 3)).verifyNotContainsAll(verifier, toMap(1, 2, 3)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

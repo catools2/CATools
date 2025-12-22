@@ -1,14 +1,13 @@
 package org.catools.ws.soap;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.concurrent.CTimeBoxRunner;
-
-import javax.mail.*;
 import java.io.ByteArrayOutputStream;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.mail.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.concurrent.CTimeBoxRunner;
 
 @Slf4j
 public class CMailClient {

@@ -1,17 +1,16 @@
 package org.catools.common.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import lombok.experimental.UtilityClass;
-import org.catools.common.exception.CInvalidJsonFormatException;
-import org.catools.common.exception.CJsonGenerationException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Objects;
+import lombok.experimental.UtilityClass;
+import org.catools.common.exception.CInvalidJsonFormatException;
+import org.catools.common.exception.CJsonGenerationException;
 
 @UtilityClass
 public class CJsonUtil {
@@ -31,7 +30,8 @@ public class CJsonUtil {
     return _read(input, clazz, modules);
   }
 
-  public static <T> T read(String wsResponseContent, TypeReference<T> typeReference, Module... modules) {
+  public static <T> T read(
+      String wsResponseContent, TypeReference<T> typeReference, Module... modules) {
     final ObjectMapper mapper = getObjectMapper(modules);
     try {
       return (T) mapper.readValue(wsResponseContent, typeReference);

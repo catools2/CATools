@@ -1,9 +1,8 @@
 package org.catools.common.extensions.verify.interfaces.waitVerify;
 
+import java.util.Date;
 import org.catools.common.extensions.states.interfaces.CDateState;
 import org.catools.common.extensions.verify.interfaces.base.CDateVerify;
-
-import java.util.Date;
 
 /**
  * CDateVerifier is an interface for Date verification related methods.
@@ -21,16 +20,13 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
-   * @param format        date format to be use
+   * @param expected value to compare
+   * @param format date format to be use
    * @param waitInSeconds maximum wait time
    */
   default void verifyEqualsByFormat(
-      final Date expected,
-      final String format,
-      final int waitInSeconds) {
-    verifyEqualsByFormat(
-        expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
+      final Date expected, final String format, final int waitInSeconds) {
+    verifyEqualsByFormat(expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
 
   /**
@@ -40,11 +36,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
-   * @param format        date format to be use
+   * @param expected value to compare
+   * @param format date format to be use
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsByFormat(
       final Date expected,
@@ -53,12 +49,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
       final String message,
       final Object... params) {
     verifyEqualsByFormat(
-        expected,
-        format,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -68,9 +59,9 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param format                 date format to be use
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param format date format to be use
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsByFormat(
@@ -79,11 +70,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyEqualsByFormat(
-        expected,
-        format,
-        waitInSeconds,
-        intervalInMilliSeconds,
-        "Equals By Format " + format);
+        expected, format, waitInSeconds, intervalInMilliSeconds, "Equals By Format " + format);
   }
 
   /**
@@ -93,12 +80,12 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param format                 date format to be use
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param format date format to be use
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsByFormat(
       final Date expected,
@@ -122,7 +109,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    */
   default void verifyEqualsDatePortion(final Date expected, final int waitInSeconds) {
@@ -135,22 +122,15 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsDatePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final String message,
-      final Object... params) {
+      final Date expected, final int waitInSeconds, final String message, final Object... params) {
     verifyEqualsDatePortion(
-        expected,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -159,19 +139,14 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsDatePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final int intervalInMilliSeconds) {
+      final Date expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyEqualsDatePortion(
-        expected,
-        waitInSeconds,
-        intervalInMilliSeconds,
-        getDefaultMessage("Date Portion Equals"));
+        expected, waitInSeconds, intervalInMilliSeconds, getDefaultMessage("Date Portion Equals"));
   }
 
   /**
@@ -180,11 +155,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsDatePortion(
       final Date expected,
@@ -207,7 +182,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    */
   default void verifyEqualsTimePortion(final Date expected, final int waitInSeconds) {
@@ -220,22 +195,15 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsTimePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final String message,
-      final Object... params) {
+      final Date expected, final int waitInSeconds, final String message, final Object... params) {
     verifyEqualsTimePortion(
-        expected,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -244,19 +212,14 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyEqualsTimePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final int intervalInMilliSeconds) {
+      final Date expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyEqualsTimePortion(
-        expected,
-        waitInSeconds,
-        intervalInMilliSeconds,
-        getDefaultMessage("Time Portion Equals"));
+        expected, waitInSeconds, intervalInMilliSeconds, getDefaultMessage("Time Portion Equals"));
   }
 
   /**
@@ -265,11 +228,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsTimePortion(
       final Date expected,
@@ -293,14 +256,12 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
-   * @param format        date format to be use
+   * @param expected value to compare
+   * @param format date format to be use
    * @param waitInSeconds maximum wait time
    */
   default void verifyNotEqualsByFormat(
-      final Date expected,
-      final String format,
-      final int waitInSeconds) {
+      final Date expected, final String format, final int waitInSeconds) {
     verifyNotEqualsByFormat(
         expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds());
   }
@@ -312,11 +273,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
-   * @param format        date format to be use
+   * @param expected value to compare
+   * @param format date format to be use
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsByFormat(
       final Date expected,
@@ -325,12 +286,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
       final String message,
       final Object... params) {
     verifyNotEqualsByFormat(
-        expected,
-        format,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, format, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -340,9 +296,9 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param format                 date format to be use
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param format date format to be use
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsByFormat(
@@ -351,11 +307,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
       final int waitInSeconds,
       final int intervalInMilliSeconds) {
     verifyNotEqualsByFormat(
-        expected,
-        format,
-        waitInSeconds,
-        intervalInMilliSeconds,
-        "Not Equals By Format " + format);
+        expected, format, waitInSeconds, intervalInMilliSeconds, "Not Equals By Format " + format);
   }
 
   /**
@@ -365,12 +317,12 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param format                 date format to be use
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param format date format to be use
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsByFormat(
       final Date expected,
@@ -395,7 +347,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    */
   default void verifyNotEqualsDatePortion(final Date expected, final int waitInSeconds) {
@@ -409,22 +361,15 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsDatePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final String message,
-      final Object... params) {
+      final Date expected, final int waitInSeconds, final String message, final Object... params) {
     verifyNotEqualsDatePortion(
-        expected,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -434,14 +379,12 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsDatePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final int intervalInMilliSeconds) {
+      final Date expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyNotEqualsDatePortion(
         expected,
         waitInSeconds,
@@ -456,11 +399,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsDatePortion(
       final Date expected,
@@ -484,7 +427,7 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    */
   default void verifyNotEqualsTimePortion(final Date expected, final int waitInSeconds) {
@@ -498,22 +441,15 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsTimePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final String message,
-      final Object... params) {
+      final Date expected, final int waitInSeconds, final String message, final Object... params) {
     verifyNotEqualsTimePortion(
-        expected,
-        waitInSeconds,
-        getDefaultWaitIntervalInMilliSeconds(),
-        message,
-        params);
+        expected, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
@@ -523,14 +459,12 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
   default void verifyNotEqualsTimePortion(
-      final Date expected,
-      final int waitInSeconds,
-      final int intervalInMilliSeconds) {
+      final Date expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyNotEqualsTimePortion(
         expected,
         waitInSeconds,
@@ -545,11 +479,11 @@ public interface CDateWaitVerify extends CDateVerify, CObjectWaitVerify<Date, CD
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsTimePortion(
       final Date expected,

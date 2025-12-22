@@ -1,14 +1,13 @@
 package org.catools.common.tests.wait;
 
+import java.math.BigDecimal;
+import java.util.function.Consumer;
 import org.catools.common.exception.CInvalidRangeException;
 import org.catools.common.extensions.verify.hard.CBooleanVerification;
 import org.catools.common.extensions.wait.interfaces.CNumberWaiter;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
-import java.util.function.Consumer;
 
 public abstract class CNumberBaseWaiterTest extends CBaseUnitTest {
 

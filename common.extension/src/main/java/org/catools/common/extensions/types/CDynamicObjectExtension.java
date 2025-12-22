@@ -10,7 +10,10 @@ import org.catools.common.extensions.wait.interfaces.CObjectWaiter;
  * adding new functionality will be much easier.
  */
 public abstract class CDynamicObjectExtension<O extends Object> extends CStaticObjectExtension<O>
-    implements CObjectState<O>, CObjectWaiter<O>, CObjectWaitVerify<O, CObjectState<O>>, CObjectWaitVerifier<O, CObjectState<O>> {
+    implements CObjectState<O>,
+        CObjectWaiter<O>,
+        CObjectWaitVerify<O, CObjectState<O>>,
+        CObjectWaitVerifier<O, CObjectState<O>> {
 
   @Override
   public boolean withWaiter() {

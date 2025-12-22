@@ -17,7 +17,8 @@ public abstract class CPlaywrightTest<DR extends CDriver> extends CWebTest<DR> {
     if (playwrightProvider == null) {
       synchronized (this) {
         if (playwrightProvider == null) {
-          playwrightProvider = CPlaywrightProviderFactory.create(CBrowserConfigs.getCurrentBrowser());
+          playwrightProvider =
+              CPlaywrightProviderFactory.create(CBrowserConfigs.getCurrentBrowser());
         }
       }
     }

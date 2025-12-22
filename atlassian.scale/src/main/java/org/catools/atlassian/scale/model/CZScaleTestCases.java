@@ -7,20 +7,18 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of test cases in the Scale system.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleTestCase} objects. It includes constructors
- * for creating the collection from various input sources, such as arrays, streams,
- * or iterables.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleTestCase} objects. It includes constructors for creating the collection from
+ * various input sources, such as arrays, streams, or iterables.
  */
 public class CZScaleTestCases extends CSet<CZScaleTestCase> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of test cases.</p>
+   * <p>Creates an empty collection of test cases.
    */
-  public CZScaleTestCases() {
-  }
+  public CZScaleTestCases() {}
 
   /**
    * Constructs a collection of test cases from an array of test cases.
@@ -43,7 +41,8 @@ public class CZScaleTestCases extends CSet<CZScaleTestCase> {
   /**
    * Constructs a collection of test cases from an iterable of test cases.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleTestCase} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleTestCase} objects to initialize the
+   *     collection
    */
   public CZScaleTestCases(Iterable<CZScaleTestCase> iterable) {
     super(iterable);

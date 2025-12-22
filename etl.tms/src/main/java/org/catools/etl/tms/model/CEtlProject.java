@@ -1,14 +1,13 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
 
 @NamedQuery(name = "getProjectByName", query = "FROM CEtlProject where name=:name")
 @Entity
@@ -20,8 +19,8 @@ import java.io.Serializable;
 public class CEtlProject implements Serializable {
 
   public static final CEtlProject UNSET = new CEtlProject("UNSET");
-  @Serial
-  private static final long serialVersionUID = 6069874018185613707L;
+  @Serial private static final long serialVersionUID = 6069874018185613707L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

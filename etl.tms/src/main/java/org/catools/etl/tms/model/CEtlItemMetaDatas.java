@@ -1,12 +1,10 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlItemMetaDatas extends CSet<CEtlItemMetaData> {
-  public CEtlItemMetaDatas() {
-  }
+  public CEtlItemMetaDatas() {}
 
   public CEtlItemMetaDatas(CEtlItemMetaData... c) {
     super(c);

@@ -22,7 +22,8 @@ import org.catools.common.extensions.wait.interfaces.CFileWaiter;
  * }
  * </code> </strong>
  */
-public interface CDynamicFileExtension extends CStaticFileExtension, CFileWaiter, CFileWaitVerifier, CFileWaitVerify {
+public interface CDynamicFileExtension
+    extends CStaticFileExtension, CFileWaiter, CFileWaitVerifier, CFileWaitVerify {
   @Override
   default boolean withWaiter() {
     return true;

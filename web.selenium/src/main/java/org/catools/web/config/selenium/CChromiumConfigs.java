@@ -11,12 +11,11 @@ import java.util.List;
 
 /**
  * Utility class for managing chromium browser configuration settings.
- * <p>
- * This class provides static methods to retrieve various chromium browser configuration
- * properties from the application configuration using HOCON format.
- * All configuration values are read from the application's configuration files
- * and can be overridden through system properties or environment variables.
- * </p>
+ *
+ * <p>This class provides static methods to retrieve various chromium browser configuration
+ * properties from the application configuration using HOCON format. All configuration values are
+ * read from the application's configuration files and can be overridden through system properties
+ * or environment variables.
  *
  * @since 1.0
  */
@@ -25,14 +24,13 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the path to the chromium binary executable.
-   * <p>
-   * This method returns the configured path to the chromium browser executable.
-   * If not specified in the configuration, chromium will use its default installation path.
-   * </p>
+   *
+   * <p>This method returns the configured path to the chromium browser executable. If not specified
+   * in the configuration, chromium will use its default installation path.
    *
    * @return the path to chromium binary executable, or null if not configured
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * String chromiumPath = CChromiumConfigs.getBinaryPath();
    * // Example return: "/usr/bin/google-chrome" or "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
    * }</pre>
@@ -43,14 +41,14 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the default command-line arguments for Chrome browser.
-   * <p>
-   * These arguments are applied to every Chrome browser instance created.
-   * Common arguments include disabling features, setting window sizes, or enabling/disabling specific Chrome features.
-   * </p>
+   *
+   * <p>These arguments are applied to every Chrome browser instance created. Common arguments
+   * include disabling features, setting window sizes, or enabling/disabling specific Chrome
+   * features.
    *
    * @return a list of default Chrome command-line arguments
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * List<String> args = CChromeConfigs.getDefaultArguments();
    * // Example return: ["--disable-web-security", "--disable-features=VizDisplayCompositor", "--no-sandbox"]
    * }</pre>
@@ -61,20 +59,20 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the page load strategy for Chrome browser.
-   * <p>
-   * The page load strategy determines when WebDriver considers a page load complete.
-   * This affects when control is returned to the test after a navigation command.
-   * </p>
+   *
+   * <p>The page load strategy determines when WebDriver considers a page load complete. This
+   * affects when control is returned to the test after a navigation command.
    *
    * @return the configured PageLoadStrategy enum value
-   * @see PageLoadStrategy#NORMAL - waits for all resources to load (default)
-   * @see PageLoadStrategy#EAGER - waits for DOM to be ready, doesn't wait for images/stylesheets
-   * @see PageLoadStrategy#NONE - returns immediately after initial page load
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * PageLoadStrategy strategy = CChromeConfigs.getPageLoadStrategy();
    * // Example return: PageLoadStrategy.EAGER
    * }</pre>
+   *
+   * @see PageLoadStrategy#NORMAL - waits for all resources to load (default)
+   * @see PageLoadStrategy#EAGER - waits for DOM to be ready, doesn't wait for images/stylesheets
+   * @see PageLoadStrategy#NONE - returns immediately after initial page load
    */
   public static PageLoadStrategy getPageLoadStrategy() {
     return CHocon.asEnum(Configs.CATOOLS_WEB_CHROMIUM_PAGE_LOAD_STRATEGY, PageLoadStrategy.class);
@@ -82,15 +80,14 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the list of Chrome plugins/extensions to disable.
-   * <p>
-   * This method returns plugin names or extension IDs that should be disabled
-   * when Chrome browser starts. Disabling unnecessary plugins can improve
-   * browser performance and stability during automated testing.
-   * </p>
+   *
+   * <p>This method returns plugin names or extension IDs that should be disabled when Chrome
+   * browser starts. Disabling unnecessary plugins can improve browser performance and stability
+   * during automated testing.
    *
    * @return a list of plugin names or extension IDs to disable
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * List<String> pluginsToDisable = CChromeConfigs.getPluginsToDisable();
    * // Example return: ["Chrome PDF Viewer", "Adobe Flash Player", "abcdefghijklmnopqrstuvwxyz123456"]
    * }</pre>
@@ -101,15 +98,14 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the list of Chrome plugins/extensions to enable.
-   * <p>
-   * This method returns plugin names or extension IDs that should be explicitly enabled
-   * when Chrome browser starts. This is useful for enabling specific extensions
-   * required for testing scenarios.
-   * </p>
+   *
+   * <p>This method returns plugin names or extension IDs that should be explicitly enabled when
+   * Chrome browser starts. This is useful for enabling specific extensions required for testing
+   * scenarios.
    *
    * @return a list of plugin names or extension IDs to enable
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * List<String> pluginsToEnable = CChromeConfigs.getPluginsToEnable();
    * // Example return: ["Test Extension", "gighmmpiobklfepjocnamgkkbiglidom"]
    * }</pre>
@@ -120,15 +116,13 @@ public class CChromiumConfigs {
 
   /**
    * Checks if Chrome browser should run in headless mode.
-   * <p>
-   * Headless mode runs the browser without a graphical user interface,
-   * which is useful for automated testing in CI/CD environments or
-   * server environments where no display is available.
-   * </p>
+   *
+   * <p>Headless mode runs the browser without a graphical user interface, which is useful for
+   * automated testing in CI/CD environments or server environments where no display is available.
    *
    * @return true if headless mode is enabled, false otherwise
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * boolean isHeadless = CChromeConfigs.isInHeadLessMode();
    * // Example return: true (for CI environments) or false (for local development)
    * }</pre>
@@ -139,15 +133,13 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves additional command-line arguments specific to headless mode.
-   * <p>
-   * These arguments are applied only when Chrome is running in headless mode.
-   * They can include window size settings, disable GPU acceleration,
-   * or other headless-specific optimizations.
-   * </p>
+   *
+   * <p>These arguments are applied only when Chrome is running in headless mode. They can include
+   * window size settings, disable GPU acceleration, or other headless-specific optimizations.
    *
    * @return a list of headless-specific Chrome command-line arguments
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * List<String> headlessArgs = CChromeConfigs.getHeadLessArguments();
    * // Example return: ["--window-size=1920,1080", "--disable-gpu", "--no-sandbox"]
    * }</pre>
@@ -158,15 +150,14 @@ public class CChromiumConfigs {
 
   /**
    * Retrieves the device name for Chrome mobile emulation.
-   * <p>
-   * This method returns the name of the mobile device to emulate when running Chrome.
-   * Mobile emulation allows testing web applications as they would appear and behave
-   * on mobile devices without requiring actual mobile hardware.
-   * </p>
+   *
+   * <p>This method returns the name of the mobile device to emulate when running Chrome. Mobile
+   * emulation allows testing web applications as they would appear and behave on mobile devices
+   * without requiring actual mobile hardware.
    *
    * @return the mobile device name for emulation, or null if not configured
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * String deviceName = CChromeConfigs.getChromeMobileEmulationDeviceName();
    * // Example return: "iPhone 12 Pro", "Samsung Galaxy S21", "iPad Pro"
    * }</pre>
@@ -185,7 +176,8 @@ public class CChromiumConfigs {
     CATOOLS_WEB_CHROMIUM_PLUGINS_TO_ENABLE("catools.web.chromium.plugins_to_enable"),
     CATOOLS_WEB_CHROMIUM_HEADLESS_ENABLE("catools.web.chromium.headless_enable"),
     CATOOLS_WEB_CHROMIUM_HEADLESS_ARGUMENTS("catools.web.chromium.headless_arguments"),
-    CATOOLS_WEB_CHROMIUM_MOBILE_EMULATION_DEVICE_NAME("catools.web.chromium.mobile_emulation_device_name");
+    CATOOLS_WEB_CHROMIUM_MOBILE_EMULATION_DEVICE_NAME(
+        "catools.web.chromium.mobile_emulation_device_name");
 
     private final String path;
   }

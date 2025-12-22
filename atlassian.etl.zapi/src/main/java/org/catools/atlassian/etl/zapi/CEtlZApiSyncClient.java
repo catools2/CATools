@@ -14,8 +14,8 @@ import org.catools.etl.tms.model.CEtlExecution;
 import java.util.Date;
 
 /**
- * Client class for synchronizing ZAPI data with the ETL system.
- * Provides methods to synchronize projects, versions, cycles, and executions.
+ * Client class for synchronizing ZAPI data with the ETL system. Provides methods to synchronize
+ * projects, versions, cycles, and executions.
  */
 @Slf4j
 public class CEtlZApiSyncClient {
@@ -29,11 +29,13 @@ public class CEtlZApiSyncClient {
    * @param parallelInputCount The number of parallel threads for input operations.
    * @param parallelOutputCount The number of parallel threads for output operations.
    */
-  public static void syncZephyr(CSet<String> projectNamesToSync, int parallelInputCount, int parallelOutputCount) {
+  public static void syncZephyr(
+      CSet<String> projectNamesToSync, int parallelInputCount, int parallelOutputCount) {
     CZApiProjects projects = CZApiClient.Project.getProjects();
 
     for (CZApiProject project : projects.getAll(p -> projectNamesToSync.contains(p.getName()))) {
-      CZApiVersions projectVersions = CZApiClient.Version.getProjectVersions(project).getAllVersions();
+      CZApiVersions projectVersions =
+          CZApiClient.Version.getProjectVersions(project).getAllVersions();
 
       // Remove "Unscheduled" cycles from the versions
       projectVersions.removeIf(v -> StringUtils.containsIgnoreCase(UNSCHEDULED, v.getName()));
@@ -63,12 +65,7 @@ public class CEtlZApiSyncClient {
                 new CZApiVersion().setId(version.getId()).setName(version.getName()));
 
         if (cycles != null && cycles.isNotEmpty()) {
-          addExecutions(
-              project,
-              version,
-              cycles,
-              parallelInputCount,
-              parallelOutputCount);
+          addExecutions(project, version, cycles, parallelInputCount, parallelOutputCount);
         }
       }
       // Update the last synchronization time for the project
@@ -92,8 +89,11 @@ public class CEtlZApiSyncClient {
       int parallelInputCount,
       int parallelOutputCount) {
     // Determine the last synchronization time for the executions
-    Date lastSync = CEtlLastSyncDao.getExecutionLastSync(ZAPI, project.getName(), version.getName());
-    String zql = String.format("project=\"%s\" AND fixVersion = \"%s\"", project.getName(), version.getName());
+    Date lastSync =
+        CEtlLastSyncDao.getExecutionLastSync(ZAPI, project.getName(), version.getName());
+    String zql =
+        String.format(
+            "project=\"%s\" AND fixVersion = \"%s\"", project.getName(), version.getName());
 
     Date syncStartTime = CDate.now();
     CZApiClient.Search.getExecutions(
@@ -104,13 +104,16 @@ public class CEtlZApiSyncClient {
         zApiExecutions -> {
           if (zApiExecutions != null && zApiExecutions.isNotEmpty()) {
             // Filter out executions that do not belong to the specified project or version
-            zApiExecutions.removeIf(e -> !project.getName().equalsIgnoreCase(e.getProjectName())
-                || !version.getName().equalsIgnoreCase(e.getVersionName()));
+            zApiExecutions.removeIf(
+                e ->
+                    !project.getName().equalsIgnoreCase(e.getProjectName())
+                        || !version.getName().equalsIgnoreCase(e.getVersionName()));
 
             if (zApiExecutions.isNotEmpty()) {
               // Translate and merge each execution into the ETL system
               for (CZApiExecution execution : zApiExecutions) {
-                CEtlExecution translatedExecution = CEtlZApiTranslator.translateExecution(project, version, cycles, execution);
+                CEtlExecution translatedExecution =
+                    CEtlZApiTranslator.translateExecution(project, version, cycles, execution);
                 CEtlExecutionDao.mergeExecution(translatedExecution);
               }
             }
@@ -118,6 +121,7 @@ public class CEtlZApiSyncClient {
         });
 
     // Update the last synchronization time for the executions
-    CEtlLastSyncDao.updateExecutionLastSync(ZAPI, project.getName(), version.getName(), syncStartTime);
+    CEtlLastSyncDao.updateExecutionLastSync(
+        ZAPI, project.getName(), version.getName(), syncStartTime);
   }
 }

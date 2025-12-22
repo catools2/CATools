@@ -9,24 +9,16 @@ import org.catools.common.utils.CStringUtil;
  */
 public class CMcpSseServerInfo extends CMcpServerInfo {
 
-  /**
-   * The base URL of the MCP server.
-   */
+  /** The base URL of the MCP server. */
   private final String baseUrl;
 
-  /**
-   * The endpoint of the MCP server to send messages.
-   */
+  /** The endpoint of the MCP server to send messages. */
   private final String messageEndpoint;
 
-  /**
-   * The endpoint of the MCP server to receive SSE events.
-   */
+  /** The endpoint of the MCP server to receive SSE events. */
   private final String sseEndpoint;
 
-  /**
-   * The port of the MCP HTTP server.
-   */
+  /** The port of the MCP HTTP server. */
   private final int port;
 
   /**
@@ -87,29 +79,19 @@ public class CMcpSseServerInfo extends CMcpServerInfo {
     return port;
   }
 
-  /**
-   * The builder class for {@code McpSseServerInfo}.
-   */
+  /** The builder class for {@code McpSseServerInfo}. */
   public static class Builder extends CMcpServerInfo.Builder<Builder> {
 
-    /**
-     * The base URL of the MCP server. Default value is {@code ""}.
-     */
+    /** The base URL of the MCP server. Default value is {@code ""}. */
     private String baseUrl = CStringUtil.EMPTY;
 
-    /**
-     * The endpoint of the MCP server to send messages. Default value is {@code "/mcp/message"}.
-     */
+    /** The endpoint of the MCP server to send messages. Default value is {@code "/mcp/message"}. */
     private String messageEndpoint = "/mcp/message";
 
-    /**
-     * The endpoint of the MCP server to receive SSE events. Default value is {@code "/sse"}.
-     */
+    /** The endpoint of the MCP server to receive SSE events. Default value is {@code "/sse"}. */
     private String sseEndpoint = "/sse";
 
-    /**
-     * The port of the MCP HTTP server. Default value is {@code 8080}.
-     */
+    /** The port of the MCP HTTP server. Default value is {@code 8080}. */
     private int port = 8080;
 
     /**

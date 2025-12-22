@@ -1,13 +1,12 @@
 package org.catools.common.text.match;
 
+import java.util.LinkedList;
+import java.util.List;
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 import org.catools.common.text.CStringDiffConfigs;
 import org.catools.common.utils.CAnsiUtil;
 import org.catools.common.utils.CStringUtil;
 import org.fusesource.jansi.Ansi;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class CStringDiff {
   private static final int DIFF_EDIT_COST = CStringDiffConfigs.getDiffEditCost();
@@ -21,7 +20,11 @@ public class CStringDiff {
     if (diff.isEmpty()) {
       return CStringUtil.EMPTY;
     }
-    return diffPrettyFormat(diff, CStringDiffConfigs.getEqualFormat(), CStringDiffConfigs.getDeleteFormat(), CStringDiffConfigs.getInsertFormat());
+    return diffPrettyFormat(
+        diff,
+        CStringDiffConfigs.getEqualFormat(),
+        CStringDiffConfigs.getDeleteFormat(),
+        CStringDiffConfigs.getInsertFormat());
   }
 
   public static String coloredDiff(String original, String text2) {
@@ -33,14 +36,19 @@ public class CStringDiff {
     if (diffs.isEmpty()) {
       return CStringUtil.EMPTY;
     }
-    return coloredDiff(diffs, CStringDiffConfigs.getEqualColor(), CStringDiffConfigs.getDeleteColor(), CStringDiffConfigs.getInsertColor());
+    return coloredDiff(
+        diffs,
+        CStringDiffConfigs.getEqualColor(),
+        CStringDiffConfigs.getDeleteColor(),
+        CStringDiffConfigs.getInsertColor());
   }
 
   public static LinkedList<DiffMatchPatch.Diff> diff(String original, String text2) {
     return diff(original, text2, DIFF_EDIT_COST);
   }
 
-  public static LinkedList<DiffMatchPatch.Diff> diff(String original, String text2, int diffEditCost) {
+  public static LinkedList<DiffMatchPatch.Diff> diff(
+      String original, String text2, int diffEditCost) {
     DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
     diffMatchPatch.diffEditCost = (short) diffEditCost;
     LinkedList<DiffMatchPatch.Diff> diffs = diffMatchPatch.diffMain(original, text2);
@@ -48,7 +56,11 @@ public class CStringDiff {
     return diffs;
   }
 
-  public static String diffPrettyFormat(List<DiffMatchPatch.Diff> diffs, String equalFormat, String deleteFormat, String insertFormat) {
+  public static String diffPrettyFormat(
+      List<DiffMatchPatch.Diff> diffs,
+      String equalFormat,
+      String deleteFormat,
+      String insertFormat) {
     StringBuilder output = new StringBuilder();
     for (DiffMatchPatch.Diff diff : diffs) {
       switch (diff.operation) {
@@ -60,21 +72,45 @@ public class CStringDiff {
     return output.toString();
   }
 
-  public static String coloredDiff(List<DiffMatchPatch.Diff> diffs, Ansi.Color equalForeground, Ansi.Color deleteForeground, Ansi.Color insertForeground) {
-    return coloredDiff(diffs, Ansi.Color.DEFAULT, equalForeground, Ansi.Color.DEFAULT, deleteForeground, Ansi.Color.DEFAULT, insertForeground);
+  public static String coloredDiff(
+      List<DiffMatchPatch.Diff> diffs,
+      Ansi.Color equalForeground,
+      Ansi.Color deleteForeground,
+      Ansi.Color insertForeground) {
+    return coloredDiff(
+        diffs,
+        Ansi.Color.DEFAULT,
+        equalForeground,
+        Ansi.Color.DEFAULT,
+        deleteForeground,
+        Ansi.Color.DEFAULT,
+        insertForeground);
   }
 
-  public static String coloredDiff(List<DiffMatchPatch.Diff> diffs, Ansi.Color equalBackground, Ansi.Color equalForeground, Ansi.Color deleteBackground, Ansi.Color deleteForeground, Ansi.Color insertBackground, Ansi.Color insertForeground) {
+  public static String coloredDiff(
+      List<DiffMatchPatch.Diff> diffs,
+      Ansi.Color equalBackground,
+      Ansi.Color equalForeground,
+      Ansi.Color deleteBackground,
+      Ansi.Color deleteForeground,
+      Ansi.Color insertBackground,
+      Ansi.Color insertForeground) {
     StringBuilder output = new StringBuilder();
     output.append(CAnsiUtil.RESET);
     for (DiffMatchPatch.Diff diff : diffs) {
       switch (diff.operation) {
         case INSERT ->
-            output.append(CAnsiUtil.encode(diff.text, Ansi.Attribute.INTENSITY_BOLD, insertForeground, insertBackground));
+            output.append(
+                CAnsiUtil.encode(
+                    diff.text, Ansi.Attribute.INTENSITY_BOLD, insertForeground, insertBackground));
         case DELETE ->
-            output.append(CAnsiUtil.encode(diff.text, Ansi.Attribute.INTENSITY_BOLD, deleteForeground, deleteBackground));
+            output.append(
+                CAnsiUtil.encode(
+                    diff.text, Ansi.Attribute.INTENSITY_BOLD, deleteForeground, deleteBackground));
         case EQUAL ->
-            output.append(CAnsiUtil.encode(diff.text, Ansi.Attribute.INTENSITY_BOLD, equalForeground, equalBackground));
+            output.append(
+                CAnsiUtil.encode(
+                    diff.text, Ansi.Attribute.INTENSITY_BOLD, equalForeground, equalBackground));
       }
     }
     output.append(CAnsiUtil.RESET);

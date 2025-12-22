@@ -1,13 +1,12 @@
 package org.catools.common.tests.wait;
 
+import java.util.Date;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.extensions.wait.interfaces.CDateWaiter;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Date;
 
 public class CDateWaiterTest extends CBaseUnitTest {
 

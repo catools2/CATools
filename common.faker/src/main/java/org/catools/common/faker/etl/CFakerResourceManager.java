@@ -1,109 +1,114 @@
 package org.catools.common.faker.etl;
 
 import com.mifmif.common.regex.Generex;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.faker.exception.CFakerCountryNotFoundException;
 import org.catools.common.faker.model.CRandomCities;
 import org.catools.common.faker.model.CRandomCity;
 import org.catools.common.faker.model.CRandomCountry;
 import org.catools.common.faker.model.CRandomState;
-import org.catools.common.faker.provider.*;
+import org.catools.common.faker.provider.CFakerCompanyProvider;
+import org.catools.common.faker.provider.CFakerCountryProvider;
+import org.catools.common.faker.provider.CFakerNameProvider;
+import org.catools.common.faker.provider.CFakerStateProvider;
+import org.catools.common.faker.provider.CFakerStateProviders;
+import org.catools.common.faker.provider.CFakerStreetAddressProvider;
 import org.catools.common.utils.CResourceUtil;
 import org.catools.common.utils.CStringUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
- * Resource manager for loading and processing data from Ruby Faker resources.
- * This class provides functionality to load country-specific data including names, addresses, 
- * companies, states, and cities from resource files.
- * 
+ * Resource manager for loading and processing data from Ruby Faker resources. This class provides
+ * functionality to load country-specific data including names, addresses, companies, states, and
+ * cities from resource files.
+ *
  * <p>The resource files are organized in a hierarchical structure with country-specific directories
  * containing various data files such as names, addresses, states, and cities. The class supports
- * special markers for including other resources and generating data from regular expressions.</p>
- * 
- * <p>Resource file markers supported:</p>
+ * special markers for including other resources and generating data from regular expressions.
+ *
+ * <p>Resource file markers supported:
+ *
  * <ul>
- *   <li>&lt;&lt; - Include another resource file</li>
- *   <li>@Reg= - Generate data from regular expression</li>
+ *   <li>&lt;&lt; - Include another resource file
+ *   <li>@Reg= - Generate data from regular expression
  * </ul>
- * 
+ *
+ * @author CA Tools Development Team
  * @see CFakerCountryProvider
  * @see CFakerCountryNotFoundException
- * @author CA Tools Development Team
  * @since 1.0
  */
 public class CFakerResourceManager {
-  
+
   /**
-   * Retrieves a comprehensive country provider containing all data for the specified country.
-   * This method loads country information including basic country data, states/provinces, 
-   * cities, name providers, company providers, and address providers.
-   * 
-   * <p>The method reads from the country_info.txt resource file and matches the country
-   * by its 3-letter ISO code. Once found, it constructs a complete CFakerCountryProvider
-   * with all associated data providers.</p>
-   * 
-   * <p>Country data includes:</p>
+   * Retrieves a comprehensive country provider containing all data for the specified country. This
+   * method loads country information including basic country data, states/provinces, cities, name
+   * providers, company providers, and address providers.
+   *
+   * <p>The method reads from the country_info.txt resource file and matches the country by its
+   * 3-letter ISO code. Once found, it constructs a complete CFakerCountryProvider with all
+   * associated data providers.
+   *
+   * <p>Country data includes:
+   *
    * <ul>
-   *   <li>ISO codes (2-letter and 3-letter)</li>
-   *   <li>Country name</li>
-   *   <li>Currency information (code and name)</li>
-   *   <li>Phone number format</li>
-   *   <li>Postal code format and regex pattern</li>
-   *   <li>States/provinces with cities</li>
-   *   <li>Name providers (first, middle, last names with prefixes/suffixes)</li>
-   *   <li>Company providers (names, prefixes, suffixes)</li>
-   *   <li>Address providers (street names, numbers, prefixes, suffixes)</li>
+   *   <li>ISO codes (2-letter and 3-letter)
+   *   <li>Country name
+   *   <li>Currency information (code and name)
+   *   <li>Phone number format
+   *   <li>Postal code format and regex pattern
+   *   <li>States/provinces with cities
+   *   <li>Name providers (first, middle, last names with prefixes/suffixes)
+   *   <li>Company providers (names, prefixes, suffixes)
+   *   <li>Address providers (street names, numbers, prefixes, suffixes)
    * </ul>
-   * 
-   * @param countryCode3 the 3-letter ISO country code (case-insensitive).
-   *                     Examples: "USA", "CAN", "GBR", "DEU", "FRA"
+   *
+   * @param countryCode3 the 3-letter ISO country code (case-insensitive). Examples: "USA", "CAN",
+   *     "GBR", "DEU", "FRA"
    * @return a CFakerCountryProvider containing all data for the specified country
    * @throws CFakerCountryNotFoundException if the country code is not found in the resource files
    * @throws IllegalArgumentException if countryCode3 is null or empty
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Get provider for United States
    * CFakerCountryProvider usaProvider = CFakerResourceManager.getCountry("USA");
-   * 
+   *
    * // Access country information
    * CRandomCountry country = usaProvider.getCountry();
    * System.out.println(country.getName()); // "United States"
    * System.out.println(country.getCurrencyCode()); // "USD"
-   * 
+   *
    * // Access state providers
    * CFakerStateProviders stateProviders = usaProvider.getStateProviders();
    * CFakerStateProvider californiaProvider = stateProviders.getByCode("CA");
-   * 
+   *
    * // Access name provider
    * CFakerNameProvider nameProvider = usaProvider.getNameProvider();
    * String firstName = nameProvider.getRandomMaleFirstName();
    * String lastName = nameProvider.getRandomMaleSurname();
-   * 
+   *
    * // Access company provider
    * CFakerCompanyProvider companyProvider = usaProvider.getCompanyProvider();
    * String companyName = companyProvider.getRandomCompanyName();
-   * 
+   *
    * // Access address provider
    * CFakerStreetAddressProvider addressProvider = usaProvider.getAddressProvider();
    * String streetName = addressProvider.getRandomStreetName();
    * }</pre>
-   * 
+   *
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Handle country not found
    * try {
    *     CFakerCountryProvider provider = CFakerResourceManager.getCountry("XYZ");
    * } catch (CFakerCountryNotFoundException e) {
    *     System.err.println("Country not found: " + e.getCountryCode());
    * }
-   * 
+   *
    * // Get provider for Canada
    * CFakerCountryProvider canadaProvider = CFakerResourceManager.getCountry("can"); // case-insensitive
    * }</pre>

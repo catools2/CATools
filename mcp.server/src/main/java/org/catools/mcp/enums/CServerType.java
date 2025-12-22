@@ -7,13 +7,9 @@ package org.catools.mcp.enums;
  */
 public enum CServerType {
 
-  /**
-   * The MCP server runs in {@code SYNC} mode.
-   */
+  /** The MCP server runs in {@code SYNC} mode. */
   SYNC,
 
-  /**
-   * The MCP server runs in {@code ASYNC} mode.
-   */
+  /** The MCP server runs in {@code ASYNC} mode. */
   ASYNC
 }

@@ -27,7 +27,8 @@ import java.util.function.Predicate;
  */
 @JsonDeserialize(as = CHashMap.class)
 @JsonIgnoreProperties(value = {"empty"})
-public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K, V>, CMapState<K, V> {
+public interface CMap<K, V>
+    extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K, V>, CMapState<K, V> {
   /**
    * get the {@link Map<K,V>} of items
    *
@@ -102,7 +103,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against value
    * @return {@code CList} of key of elements from map which matched the {@code predicate} otherwise
-   * return empty list.
+   *     return empty list.
    */
   default CSet<K> getAllKeys(Predicate<V> predicate) {
     CSet<K> result = new CSet<>();
@@ -122,7 +123,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against key
    * @return {@code CList} of value of elements from map which matched the {@code predicate}
-   * otherwise return empty list.
+   *     otherwise return empty list.
    */
   default CList<V> getAllValues(Predicate<K> predicate) {
     CList<V> result = new CList<>();
@@ -162,7 +163,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param value value to search for
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    * @throws NoSuchElementException in case no match found
    */
   default K getFirstKeyByValue(V value) {
@@ -177,7 +178,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against value
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    * @throws NoSuchElementException in case no match found
    */
   default K getFirstKeyByValue(Predicate<V> predicate) {
@@ -194,10 +195,10 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    * #getFirst(BiPredicate)}, {@see #getAll(BiPredicate)}, {@see #getFirstValueByKey(Predicate)}
    * {@see #getAllValues(Predicate)} {@see #getAllKeys(Predicate)}.
    *
-   * @param value    value to search for
+   * @param value value to search for
    * @param otherKey to return if no match found
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default K getFirstKeyByValueOrElse(V value, K otherKey) {
     return getFirstKeyByValueOrElse(v -> Objects.equals(v, value), otherKey);
@@ -210,9 +211,9 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    * {@see #getAllValues(Predicate)} {@see #getAllKeys(Predicate)}.
    *
    * @param predicate tests against value
-   * @param otherKey  to return if no match found
+   * @param otherKey to return if no match found
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default K getFirstKeyByValueOrElse(Predicate<V> predicate, K otherKey) {
     for (java.util.Map.Entry<K, V> entry : asSet()) {
@@ -231,7 +232,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param value value to search for
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default K getFirstKeyByValueOrNull(V value) {
     return getFirstKeyByValueOrNull(v -> Objects.equals(v, value));
@@ -245,7 +246,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against value
    * @return key of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default K getFirstKeyByValueOrNull(Predicate<V> predicate) {
     return getFirstKeyByValueOrElse(predicate, null);
@@ -259,7 +260,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param key the key we are searching for
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    * @throws NoSuchElementException if not match found
    */
   default V getFirstValueByKey(K key) {
@@ -274,7 +275,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against key
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    * @throws NoSuchElementException if not match found
    */
   default V getFirstValueByKey(Predicate<K> predicate) {
@@ -291,10 +292,10 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    * {@see #getAll(BiPredicate)}, {@see #getFirstValueByKey(Predicate)} {@link
    * #getFirstKeyByValue(Predicate)} {@see #getAllKeys(Predicate)}.
    *
-   * @param key        the key we are searching for
+   * @param key the key we are searching for
    * @param otherValue to return in case if predicate did not match any value
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default V getFirstValueByKeyOrElse(K key, V otherValue) {
     return getFirstValueByKeyOrElse(k -> Objects.equals(k, key), otherValue);
@@ -306,10 +307,10 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    * {@see #getAll(BiPredicate)}, {@see #getFirstValueByKey(Predicate)} {@link
    * #getFirstKeyByValue(Predicate)} {@see #getAllKeys(Predicate)}.
    *
-   * @param predicate  tests against key
+   * @param predicate tests against key
    * @param otherValue to return in case if predicate did not match any value
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default V getFirstValueByKeyOrElse(Predicate<K> predicate, V otherValue) {
     for (java.util.Map.Entry<K, V> entry : asSet()) {
@@ -328,7 +329,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param key the key we are searching for
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default V getFirstValueByKeyOrNull(K key) {
     return getFirstValueByKeyOrNull(k -> Objects.equals(k, key));
@@ -342,7 +343,7 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    *
    * @param predicate tests against key
    * @return value of first element from map which matched the {@code predicate} otherwise return
-   * null.
+   *     null.
    */
   default V getFirstValueByKeyOrNull(Predicate<K> predicate) {
     return getFirstValueByKeyOrElse(predicate, null);
@@ -360,14 +361,14 @@ public interface CMap<K, V> extends Map<K, V>, CMapVerify<K, V>, CMapVerifier<K,
    * <p>The specified list must be modifiable, but need not be resizable.
    *
    * @param comparator the comparator to determine the order of the list. A {@code null} value
-   *                   indicates that the elements' <i>natural ordering</i> should be used.
+   *     indicates that the elements' <i>natural ordering</i> should be used.
    * @return {@link CLinkedMap} sorted based on defined comparator
-   * @throws ClassCastException            if the list contains elements that are not <i>mutually
-   *                                       comparable</i> using the specified comparator.
+   * @throws ClassCastException if the list contains elements that are not <i>mutually
+   *     comparable</i> using the specified comparator.
    * @throws UnsupportedOperationException if the specified list's list-iterator does not support
-   *                                       the {@code set} operation.
-   * @throws IllegalArgumentException      (optional) if the comparator is found to violate the {@link
-   *                                       Comparator} contract
+   *     the {@code set} operation.
+   * @throws IllegalArgumentException (optional) if the comparator is found to violate the {@link
+   *     Comparator} contract
    * @see CList#sort(Comparator)
    */
   default CLinkedMap<K, V> getSortedMap(Comparator<java.util.Map.Entry<K, V>> comparator) {

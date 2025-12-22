@@ -7,20 +7,18 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of Scale attachments.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleAttachment} objects. It includes constructors for
- * creating the collection from various input sources, such as arrays, streams,
- * or iterables.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleAttachment} objects. It includes constructors for creating the collection from
+ * various input sources, such as arrays, streams, or iterables.
  */
 public class CZScaleAttachments extends CSet<CZScaleAttachment> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of Scale attachments.</p>
+   * <p>Creates an empty collection of Scale attachments.
    */
-  public CZScaleAttachments() {
-  }
+  public CZScaleAttachments() {}
 
   /**
    * Constructs a collection of Scale attachments from an array of attachments.
@@ -34,7 +32,8 @@ public class CZScaleAttachments extends CSet<CZScaleAttachment> {
   /**
    * Constructs a collection of Scale attachments from a stream of attachments.
    *
-   * @param stream a {@link Stream} of {@link CZScaleAttachment} objects to initialize the collection
+   * @param stream a {@link Stream} of {@link CZScaleAttachment} objects to initialize the
+   *     collection
    */
   public CZScaleAttachments(Stream<CZScaleAttachment> stream) {
     super(stream);
@@ -43,7 +42,8 @@ public class CZScaleAttachments extends CSet<CZScaleAttachment> {
   /**
    * Constructs a collection of Scale attachments from an iterable of attachments.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleAttachment} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleAttachment} objects to initialize the
+   *     collection
    */
   public CZScaleAttachments(Iterable<CZScaleAttachment> iterable) {
     super(iterable);

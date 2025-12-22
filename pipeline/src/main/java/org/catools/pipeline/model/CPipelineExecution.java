@@ -1,18 +1,16 @@
 package org.catools.pipeline.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
 
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
-
+import javax.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(name = "execution", schema = PIPELINE_SCHEMA)
@@ -21,8 +19,7 @@ import static org.catools.pipeline.configs.CPipelineConfigs.PIPELINE_SCHEMA;
 @Accessors(chain = true)
 public class CPipelineExecution implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6051874058285613707L;
+  @Serial private static final long serialVersionUID = 6051874058285613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -118,7 +115,6 @@ public class CPipelineExecution implements Serializable {
       schema = PIPELINE_SCHEMA,
       name = "execution_metadata_mid",
       joinColumns = {@JoinColumn(name = "execution_id")},
-      inverseJoinColumns = {@JoinColumn(name = "metadata_id")}
-  )
+      inverseJoinColumns = {@JoinColumn(name = "metadata_id")})
   private List<CPipelineExecutionMetaData> metadata = new ArrayList<>();
 }

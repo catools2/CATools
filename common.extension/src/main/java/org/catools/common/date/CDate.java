@@ -33,9 +33,9 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Creates a new CDate object representing the current date and time.
-   * 
+   *
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate();
    * System.out.println(date); // Current date and time
    * </pre>
@@ -45,12 +45,12 @@ public class CDate extends Date implements CDynamicDateExtension {
   }
 
   /**
-   * Creates a new CDate object from the specified time in milliseconds since January 1, 1970, 00:00:00 GMT.
-   * 
+   * Creates a new CDate object from the specified time in milliseconds since January 1, 1970,
+   * 00:00:00 GMT.
+   *
    * @param date the time in milliseconds since the epoch
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * long timestamp = System.currentTimeMillis();
    * CDate date = new CDate(timestamp);
    * System.out.println(date); // Date corresponding to the timestamp
@@ -62,15 +62,14 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Creates a new CDate object by parsing the given date string using the specified format.
-   * 
+   *
    * @param date the date string to parse
    * @param format the format pattern to use for parsing
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25", "yyyy-MM-dd");
    * System.out.println(date); // December 25, 2023
-   * 
+   *
    * CDate dateTime = new CDate("25/12/2023 14:30:00", "dd/MM/yyyy HH:mm:ss");
    * System.out.println(dateTime); // December 25, 2023 2:30 PM
    * </pre>
@@ -83,11 +82,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Creates a new CDate object from an existing Date object.
-   * 
+   *
    * @param date the Date object to copy
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * Date javaDate = new Date();
    * CDate cDate = new CDate(javaDate);
    * System.out.println(cDate); // Same date and time as javaDate
@@ -99,11 +97,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a CDate representing the current date and time in the default time zone.
-   * 
+   *
    * @return a new CDate instance representing the current moment
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate now = CDate.now();
    * System.out.println("Current time: " + now);
    * </pre>
@@ -114,16 +111,15 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a CDate representing the current date and time in the specified time zone.
-   * 
+   *
    * @param timeZone the time zone to use
    * @return a new CDate instance representing the current moment in the specified time zone
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * TimeZone utc = TimeZone.getTimeZone("UTC");
    * CDate utcNow = CDate.now(utc);
    * System.out.println("Current UTC time: " + utcNow);
-   * 
+   *
    * TimeZone tokyo = TimeZone.getTimeZone("Asia/Tokyo");
    * CDate tokyoNow = CDate.now(tokyo);
    * System.out.println("Current Tokyo time: " + tokyoNow);
@@ -171,7 +167,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
+   * @param str the date to parse, not null
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    */
@@ -187,7 +183,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
+   * @param str the date to parse, not null
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    */
@@ -203,9 +199,9 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
-   * @param locale        the locale whose date format symbols should be used. If <code>null</code>, the
-   *                      system locale is used (as per {@see #valueOf(String, String...)}).
+   * @param str the date to parse, not null
+   * @param locale the locale whose date format symbols should be used. If <code>null</code>, the
+   *     system locale is used (as per {@see #valueOf(String, String...)}).
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    */
@@ -221,13 +217,14 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
-   * @param locale        the locale whose date format symbols should be used. If <code>null</code>, the
-   *                      system locale is used (as per {@see #valueOf(String, String...)}).
+   * @param str the date to parse, not null
+   * @param locale the locale whose date format symbols should be used. If <code>null</code>, the
+   *     system locale is used (as per {@see #valueOf(String, String...)}).
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    */
-  public static CDate valueOf(final String str, final Locale locale, final String... parsePatterns) {
+  public static CDate valueOf(
+      final String str, final Locale locale, final String... parsePatterns) {
     return of(CDateUtil.valueOf(str, locale, parsePatterns));
   }
 
@@ -239,7 +236,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
+   * @param str the date to parse, not null
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date or null if could not parse
    */
@@ -256,20 +253,28 @@ public class CDate extends Date implements CDynamicDateExtension {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
-   * @param locale        the locale whose date format symbols should be used. If <code>null</code>, the
-   *                      system locale is used (as per {@see #valueOf(String, String...)}).
+   * @param str the date to parse, not null
+   * @param locale the locale whose date format symbols should be used. If <code>null</code>, the
+   *     system locale is used (as per {@see #valueOf(String, String...)}).
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date or null if could not parse
    */
-  public static CDate valueOfOrNull(final String str, final Locale locale, final String... parsePatterns) {
+  public static CDate valueOfOrNull(
+      final String str, final Locale locale, final String... parsePatterns) {
     Date date = CDateUtil.valueOfOrNull(str, locale, parsePatterns);
     return date == null ? null : of(date);
   }
 
   @JsonIgnore
   private static String getFormattedDuration(Duration duration) {
-    String time = String.format("%02d:%02d:%02d:%03d", duration.toHoursPart(), duration.toMinutesPart(), duration.toSecondsPart(), duration.toMillisPart()).replaceAll("\\s+", "0");
+    String time =
+        String.format(
+                "%02d:%02d:%02d:%03d",
+                duration.toHoursPart(),
+                duration.toMinutesPart(),
+                duration.toSecondsPart(),
+                duration.toMillisPart())
+            .replaceAll("\\s+", "0");
 
     if (duration.toDaysPart() > 0) {
       return String.format("%dd %s", duration.toDaysPart(), time);
@@ -367,11 +372,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Converts a LocalDate to a CDate instance.
-   * 
+   *
    * @return a LocalDate representation of this CDate
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * LocalDate localDate = date.asLocalDate();
    * System.out.println("Local date: " + localDate); // 2023-12-25
@@ -391,15 +395,14 @@ public class CDate extends Date implements CDynamicDateExtension {
    * @param field the field from {@code Calendar} or <code>SEMI_MONTH</code>
    * @return the different ceil date, not null
    * @throws IllegalArgumentException if the date is <code>null</code>
-   * @throws ArithmeticException      if the year is over 280 million
-   * 
+   * @throws ArithmeticException if the year is over 280 million
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-03-28 13:45:01.231", "yyyy-MM-dd HH:mm:ss.SSS");
-   * 
+   *
    * CDate ceilHour = date.clone().ceiling(Calendar.HOUR_OF_DAY);
    * System.out.println(ceilHour); // 2023-03-28 14:00:00.000
-   * 
+   *
    * CDate ceilMonth = date.clone().ceiling(Calendar.MONTH);
    * System.out.println(ceilMonth); // 2023-04-01 00:00:00.000
    * </pre>
@@ -413,12 +416,11 @@ public class CDate extends Date implements CDynamicDateExtension {
    * Create a deep copy of CDate object
    *
    * @return CDate with the time set to value of getTime()
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate original = CDate.now();
    * CDate copy = original.clone();
-   * 
+   *
    * // Modify the copy without affecting the original
    * copy.addDays(5);
    * System.out.println("Original: " + original);
@@ -434,20 +436,19 @@ public class CDate extends Date implements CDynamicDateExtension {
    * we convert date values to formatted string using provided format and then compare then using
    * string compression.
    *
-   * @param date   date to compare current value against
+   * @param date date to compare current value against
    * @param format the format which should be used during compression.
    * @return the value {@code 0} if the argument Date is equal to this Date; a value less than
-   * {@code 0} if this Date is before the Date argument; and a value greater than
-   * 
+   *     {@code 0} if this Date is before the Date argument; and a value greater than
    * @example
-   * <pre>
+   *     <pre>
    * CDate date1 = new CDate("2023-12-25 10:30:45", "yyyy-MM-dd HH:mm:ss");
    * CDate date2 = new CDate("2023-12-25 15:45:30", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * // Compare only the date part (ignoring time)
    * int result = date1.compareDateByFormat(date2, "yyyy-MM-dd");
    * System.out.println(result); // 0 (same date)
-   * 
+   *
    * // Compare with time included
    * int resultWithTime = date1.compareDateByFormat(date2, "yyyy-MM-dd HH:mm:ss");
    * System.out.println(resultWithTime); // negative value (date1 is before date2)
@@ -464,22 +465,22 @@ public class CDate extends Date implements CDynamicDateExtension {
    *
    * @param date date to compare current value against
    * @return the value {@code 0} if the values are equal; the value less than {@code 0} if the
-   * string value is less and greater than {@code 0} if it is bigger
-   * @see #compareDateByFormat(Date, String)
-   * @see #compareTimePortion(Date)
-   * 
+   *     string value is less and greater than {@code 0} if it is bigger
    * @example
-   * <pre>
+   *     <pre>
    * CDate date1 = new CDate("2023-12-25 10:30:45", "yyyy-MM-dd HH:mm:ss");
    * CDate date2 = new CDate("2023-12-25 23:59:59", "yyyy-MM-dd HH:mm:ss");
    * CDate date3 = new CDate("2023-12-26 01:00:00", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * int result1 = date1.compareDatePortion(date2);
    * System.out.println(result1); // 0 (same date, different times)
-   * 
+   *
    * int result2 = date1.compareDatePortion(date3);
    * System.out.println(result2); // negative value (date1 is before date3)
    * </pre>
+   *
+   * @see #compareDateByFormat(Date, String)
+   * @see #compareTimePortion(Date)
    */
   public int compareDatePortion(Date date) {
     return compareDateByFormat(date, DATE_ONLY_FORMAT_STRING);
@@ -492,22 +493,22 @@ public class CDate extends Date implements CDynamicDateExtension {
    *
    * @param date date to compare current value against
    * @return the value {@code 0} if the values are equal; the value less than {@code 0} if the
-   * string value is less and greater than {@code 0} if it is bigger
-   * @see #compareDateByFormat(Date, String)
-   * @see #compareDatePortion(Date)
-   * 
+   *     string value is less and greater than {@code 0} if it is bigger
    * @example
-   * <pre>
+   *     <pre>
    * CDate date1 = new CDate("2023-12-25 10:30:45", "yyyy-MM-dd HH:mm:ss");
    * CDate date2 = new CDate("2023-12-26 10:30:45", "yyyy-MM-dd HH:mm:ss");
    * CDate date3 = new CDate("2023-12-25 15:45:30", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * int result1 = date1.compareTimePortion(date2);
    * System.out.println(result1); // 0 (same time, different dates)
-   * 
+   *
    * int result2 = date1.compareTimePortion(date3);
    * System.out.println(result2); // negative value (10:30:45 is before 15:45:30)
    * </pre>
+   *
+   * @see #compareDateByFormat(Date, String)
+   * @see #compareDatePortion(Date)
    */
   public int compareTimePortion(Date date) {
     return compareDateByFormat(date, TIME_FORMAT);
@@ -567,17 +568,16 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Gets the duration from the specified date to this date.
-   * 
+   *
    * @param date the starting date
    * @return the duration from the specified date to this date
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate startDate = new CDate("2023-12-25 10:00:00", "yyyy-MM-dd HH:mm:ss");
    * CDate endDate = new CDate("2023-12-25 15:30:45", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * Duration duration = endDate.getDurationFrom(startDate);
-   * System.out.println("Duration: " + duration.toHours() + " hours, " + 
+   * System.out.println("Duration: " + duration.toHours() + " hours, " +
    *                    duration.toMinutesPart() + " minutes");
    * // Output: Duration: 5 hours, 30 minutes
    * </pre>
@@ -589,11 +589,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Gets the duration from now to this date.
-   * 
+   *
    * @return the duration from the current time to this date
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate futureDate = CDate.now().addHours(3);
    * Duration duration = futureDate.getDurationFromNow();
    * System.out.println("Time until future date: " + duration.toHours() + " hours");
@@ -607,17 +606,16 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Gets the duration from this date to the specified date.
-   * 
+   *
    * @param date the ending date
    * @return the duration from this date to the specified date
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate startDate = new CDate("2023-12-25 10:00:00", "yyyy-MM-dd HH:mm:ss");
    * CDate endDate = new CDate("2023-12-27 14:30:00", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * Duration duration = startDate.getDurationTo(endDate);
-   * System.out.println("Duration: " + duration.toDays() + " days, " + 
+   * System.out.println("Duration: " + duration.toDays() + " days, " +
    *                    duration.toHoursPart() + " hours");
    * // Output: Duration: 2 days, 4 hours
    * </pre>
@@ -629,11 +627,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Gets the duration from this date to the current time.
-   * 
+   *
    * @return the duration from this date to now
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate pastDate = CDate.now().addHours(-2);
    * Duration duration = pastDate.getDurationToNow();
    * System.out.println("Time since past date: " + duration.toHours() + " hours");
@@ -849,11 +846,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Gets the timestamp as a SQL Timestamp object.
-   * 
+   *
    * @return the timestamp representation of this date
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * Timestamp timestamp = date.getTimeStamp();
    * System.out.println("SQL Timestamp: " + timestamp);
@@ -933,15 +929,14 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date represents today's date (ignoring time).
-   * 
+   *
    * @return true if this date is today, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate today = CDate.now();
    * CDate yesterday = CDate.now().addDays(-1);
    * CDate todayDifferentTime = new CDate(today.getTime() + 3600000); // +1 hour
-   * 
+   *
    * System.out.println(today.isTodayDate()); // true
    * System.out.println(yesterday.isTodayDate()); // false
    * System.out.println(todayDifferentTime.isTodayDate()); // true (same date, different time)
@@ -954,14 +949,13 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Monday.
-   * 
+   *
    * @return true if this date is a Monday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate monday = new CDate("2023-12-25", "yyyy-MM-dd"); // Assuming this is a Monday
    * CDate tuesday = monday.clone().addDays(1);
-   * 
+   *
    * System.out.println(monday.isMonday()); // true
    * System.out.println(tuesday.isMonday()); // false
    * </pre>
@@ -973,11 +967,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Saturday.
-   * 
+   *
    * @return true if this date is a Saturday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-23", "yyyy-MM-dd"); // Assuming this is a Saturday
    * System.out.println(date.isSaturday()); // true
    * System.out.println(date.isSunday()); // false
@@ -990,11 +983,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Sunday.
-   * 
+   *
    * @return true if this date is a Sunday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-24", "yyyy-MM-dd"); // Assuming this is a Sunday
    * System.out.println(date.isSunday()); // true
    * System.out.println(date.isMonday()); // false
@@ -1007,14 +999,13 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Thursday.
-   * 
+   *
    * @return true if this date is a Thursday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-28", "yyyy-MM-dd"); // Assuming this is a Thursday
    * System.out.println(date.isThursday()); // true
-   * System.out.println("Is weekend: " + (date.isSaturday() || date.isSunday())); // false  
+   * System.out.println("Is weekend: " + (date.isSaturday() || date.isSunday())); // false
    * </pre>
    */
   @JsonIgnore
@@ -1024,11 +1015,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Tuesday.
-   * 
+   *
    * @return true if this date is a Tuesday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-26", "yyyy-MM-dd"); // Assuming this is a Tuesday
    * System.out.println(date.isTuesday()); // true
    * System.out.println(date.isWednesday()); // false
@@ -1041,11 +1031,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Wednesday.
-   * 
+   *
    * @return true if this date is a Wednesday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-27", "yyyy-MM-dd"); // Assuming this is a Wednesday
    * System.out.println(date.isWednesday()); // true
    * System.out.println("Mid-week: " + date.isWednesday()); // true
@@ -1058,11 +1047,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Checks if this date falls on a Friday.
-   * 
+   *
    * @return true if this date is a Friday, false otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-29", "yyyy-MM-dd"); // Assuming this is a Friday
    * System.out.println(date.isFriday()); // true
    * System.out.println("TGIF: " + date.isFriday()); // true
@@ -1080,13 +1068,12 @@ public class CDate extends Date implements CDynamicDateExtension {
    * 31.
    *
    * @return the length of the month in days
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate january = new CDate("2023-01-15", "yyyy-MM-dd");
    * CDate february = new CDate("2023-02-15", "yyyy-MM-dd");
    * CDate februaryLeap = new CDate("2024-02-15", "yyyy-MM-dd");
-   * 
+   *
    * System.out.println("January days: " + january.lengthOfMonth()); // 31
    * System.out.println("February 2023 days: " + february.lengthOfMonth()); // 28
    * System.out.println("February 2024 days: " + februaryLeap.lengthOfMonth()); // 29 (leap year)
@@ -1102,12 +1089,11 @@ public class CDate extends Date implements CDynamicDateExtension {
    * <p>This returns the length of the year in days, either 365 or 366.
    *
    * @return 366 if the year is leap, 365 otherwise
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate regularYear = new CDate("2023-06-15", "yyyy-MM-dd");
    * CDate leapYear = new CDate("2024-06-15", "yyyy-MM-dd");
-   * 
+   *
    * System.out.println("2023 length: " + regularYear.lengthOfYear()); // 365
    * System.out.println("2024 length: " + leapYear.lengthOfYear()); // 366
    * System.out.println("2024 is leap: " + leapYear.isLeapYear()); // true
@@ -1193,12 +1179,11 @@ public class CDate extends Date implements CDynamicDateExtension {
    *
    * @return the created Calendar
    * @throws NullPointerException if null is passed in
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * Calendar calendar = date.toCalendar();
-   * 
+   *
    * System.out.println("Year: " + calendar.get(Calendar.YEAR));
    * System.out.println("Month: " + calendar.get(Calendar.MONTH));
    * System.out.println("Day: " + calendar.get(Calendar.DAY_OF_MONTH));
@@ -1214,16 +1199,15 @@ public class CDate extends Date implements CDynamicDateExtension {
    * @param tz the time zone of the {@code date}
    * @return the created Calendar
    * @throws NullPointerException if {@code date} or {@code tz} is null
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * TimeZone utc = TimeZone.getTimeZone("UTC");
    * Calendar utcCalendar = date.toCalendar(utc);
-   * 
+   *
    * TimeZone tokyo = TimeZone.getTimeZone("Asia/Tokyo");
    * Calendar tokyoCalendar = date.toCalendar(tokyo);
-   * 
+   *
    * System.out.println("UTC hour: " + utcCalendar.get(Calendar.HOUR_OF_DAY));
    * System.out.println("Tokyo hour: " + tokyoCalendar.get(Calendar.HOUR_OF_DAY));
    * </pre>
@@ -1234,11 +1218,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Formats this date as a date-only string using MM/dd/yyyy format.
-   * 
+   *
    * @return the formatted date string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45", "yyyy-MM-dd HH:mm:ss");
    * String dateOnly = date.toDateOnlyString();
    * System.out.println(dateOnly); // "12/25/2023"
@@ -1250,11 +1233,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Converts this date to a Duration representing the time elapsed since the epoch.
-   * 
+   *
    * @return the Duration representation of this date's time value
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * Duration duration = date.toDuration();
    * System.out.println("Milliseconds since epoch: " + duration.toMillis());
@@ -1267,20 +1249,19 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Formats this date using the specified format pattern.
-   * 
+   *
    * @param format the format pattern to use
    * @return the formatted date string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * String formatted1 = date.toFormat("yyyy-MM-dd");
    * System.out.println(formatted1); // "2023-12-25"
-   * 
+   *
    * String formatted2 = date.toFormat("dd/MM/yyyy HH:mm");
    * System.out.println(formatted2); // "25/12/2023 14:30"
-   * 
+   *
    * String formatted3 = date.toFormat("EEEE, MMMM dd, yyyy");
    * System.out.println(formatted3); // "Monday, December 25, 2023"
    * </pre>
@@ -1291,20 +1272,19 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Formats this date using the specified format pattern and time zone.
-   * 
+   *
    * @param format the format pattern to use
    * @param timeZone the time zone to use for formatting
    * @return the formatted date string in the specified time zone
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * TimeZone utc = TimeZone.getTimeZone("UTC");
    * TimeZone tokyo = TimeZone.getTimeZone("Asia/Tokyo");
-   * 
+   *
    * String utcTime = date.toFormat("yyyy-MM-dd HH:mm:ss", utc);
    * String tokyoTime = date.toFormat("yyyy-MM-dd HH:mm:ss", tokyo);
-   * 
+   *
    * System.out.println("UTC: " + utcTime);
    * System.out.println("Tokyo: " + tokyoTime);
    * </pre>
@@ -1315,15 +1295,14 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a formatted duration string representation of this date's time value.
-   * 
+   *
    * @return formatted duration string (e.g., "1d 05:30:15:123" or "05:30:15:123")
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate(90061123L); // 1 day, 1 hour, 1 minute, 1 second, 123 ms
    * String formatted = date.toFormattedDuration();
    * System.out.println(formatted); // "1d 01:01:01:123"
-   * 
+   *
    * CDate shortDuration = new CDate(3661123L); // 1 hour, 1 minute, 1 second, 123 ms
    * String shortFormatted = shortDuration.toFormattedDuration();
    * System.out.println(shortFormatted); // "01:01:01:123"
@@ -1335,15 +1314,14 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a formatted duration string from the specified date to this date.
-   * 
+   *
    * @param date the starting date
    * @return formatted duration string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate startDate = new CDate("2023-12-25 10:00:00", "yyyy-MM-dd HH:mm:ss");
    * CDate endDate = new CDate("2023-12-26 15:30:45", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * String duration = endDate.toFormattedDurationFrom(startDate);
    * System.out.println("Duration: " + duration); // "1d 05:30:45:000"
    * </pre>
@@ -1354,11 +1332,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a formatted duration string from now to this date.
-   * 
+   *
    * @return formatted duration string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate futureDate = CDate.now().addHours(3).addMinutes(15);
    * String duration = futureDate.toFormattedDurationFromNow();
    * System.out.println("Time until: " + duration); // "03:15:00:000"
@@ -1370,15 +1347,14 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a formatted duration string from this date to the specified date.
-   * 
+   *
    * @param date the ending date
    * @return formatted duration string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate startDate = new CDate("2023-12-25 10:00:00", "yyyy-MM-dd HH:mm:ss");
    * CDate endDate = new CDate("2023-12-25 13:45:30", "yyyy-MM-dd HH:mm:ss");
-   * 
+   *
    * String duration = startDate.toFormattedDurationTo(endDate);
    * System.out.println("Duration: " + duration); // "03:45:30:000"
    * </pre>
@@ -1389,11 +1365,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns a formatted duration string from this date to now.
-   * 
+   *
    * @return formatted duration string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate pastDate = CDate.now().addHours(-2).addMinutes(-30);
    * String duration = pastDate.toFormattedDurationToNow();
    * System.out.println("Time since: " + duration); // "02:30:00:000"
@@ -1405,11 +1380,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Converts this date to a LocalDate representation.
-   * 
+   *
    * @return the LocalDate representation of this date
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45", "yyyy-MM-dd HH:mm:ss");
    * LocalDate localDate = date.toLocalTime();
    * System.out.println(localDate); // "2023-12-25"
@@ -1423,11 +1397,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Formats this date using the long date format with milliseconds (yyyy-MMM-dd HH:mm:ss:SSS).
-   * 
+   *
    * @return the formatted long date string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45.123", "yyyy-MM-dd HH:mm:ss.SSS");
    * String longDate = date.toLongDate();
    * System.out.println(longDate); // "2023-Dec-25 14:30:45:123"
@@ -1438,14 +1411,12 @@ public class CDate extends Date implements CDynamicDateExtension {
   }
 
   /**
-   * Formats this date using the specified format pattern.
-   * This is an alias for toFormat(String).
-   * 
+   * Formats this date using the specified format pattern. This is an alias for toFormat(String).
+   *
    * @param format the format pattern to use
    * @return the formatted date string
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = CDate.now();
    * String formatted = date.toString("yyyy-MM-dd HH:mm:ss");
    * System.out.println(formatted); // "2023-12-25 14:30:45"
@@ -1457,11 +1428,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Returns the string representation of this date using the long date format.
-   * 
+   *
    * @return the string representation in yyyy-MMM-dd HH:mm:ss:SSS format
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45.123", "yyyy-MM-dd HH:mm:ss.SSS");
    * System.out.println(date.toString()); // "2023-Dec-25 14:30:45:123"
    * </pre>
@@ -1473,11 +1443,10 @@ public class CDate extends Date implements CDynamicDateExtension {
 
   /**
    * Formats this date for use in file names using yyyyMMdd_HHmmss_SSS format.
-   * 
+   *
    * @return timestamp string suitable for file names
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45.123", "yyyy-MM-dd HH:mm:ss.SSS");
    * String filename = "log_" + date.toTimeStampForFileName() + ".txt";
    * System.out.println(filename); // "log_20231225_143045_123.txt"
@@ -1488,16 +1457,15 @@ public class CDate extends Date implements CDynamicDateExtension {
   }
 
   /**
-   * Removes the time portion from this date, keeping only the date part (sets time to 00:00:00.000).
-   * This method modifies the current instance.
-   * 
+   * Removes the time portion from this date, keeping only the date part (sets time to
+   * 00:00:00.000). This method modifies the current instance.
+   *
    * @return this CDate instance with time set to midnight
-   * 
    * @example
-   * <pre>
+   *     <pre>
    * CDate date = new CDate("2023-12-25 14:30:45.123", "yyyy-MM-dd HH:mm:ss.SSS");
    * System.out.println("Before: " + date); // "2023-Dec-25 14:30:45:123"
-   * 
+   *
    * date.trimTime();
    * System.out.println("After: " + date); // "2023-Dec-25 00:00:00:000"
    * </pre>
@@ -1517,7 +1485,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * @param field the field from {@code Calendar} or <code>SEMI_MONTH</code>
    * @return the different truncated date, not null
    * @throws IllegalArgumentException if the date is <code>null</code>
-   * @throws ArithmeticException      if the year is over 280 million
+   * @throws ArithmeticException if the year is over 280 million
    */
   public CDate truncate(final int field) {
     setTime(DateUtils.truncate(this, field).getTime());
@@ -1527,10 +1495,10 @@ public class CDate extends Date implements CDynamicDateExtension {
   /**
    * Determines how two dates compare up to no more than the specified most significant field.
    *
-   * @param date  the date, not <code>null</code>
+   * @param date the date, not <code>null</code>
    * @param field the field from <code>Calendar</code>
    * @return a negative integer, zero, or a positive integer as the first date is less than, equal
-   * to, or greater than the second.
+   *     to, or greater than the second.
    * @throws IllegalArgumentException if any argument is <code>null</code>
    */
   public int truncatedCompareTo(final Date date, final int field) {
@@ -1540,7 +1508,7 @@ public class CDate extends Date implements CDynamicDateExtension {
   /**
    * Determines if two dates are equal up to no more than the specified most significant field.
    *
-   * @param date  the date, not <code>null</code>
+   * @param date the date, not <code>null</code>
    * @param field the field from {@code Calendar}
    * @return <code>true</code> if equal; otherwise <code>false</code>
    * @throws IllegalArgumentException if any argument is <code>null</code>
@@ -1553,7 +1521,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * Adds to a date returning a new object. if
    *
    * @param calendarField the calendar field to add to
-   * @param amount        the amount to add, may be negative
+   * @param amount the amount to add, may be negative
    * @return current {@code CDate}
    * @throws IllegalArgumentException if the date is null
    */
@@ -1567,7 +1535,7 @@ public class CDate extends Date implements CDynamicDateExtension {
    * calendar.
    *
    * @param calendarField the {@code Calendar} field to set the amount to
-   * @param amount        the amount to set
+   * @param amount the amount to set
    * @return {@code CDate} set with the specified value
    * @throws IllegalArgumentException if the date is null
    */

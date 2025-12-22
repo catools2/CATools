@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  *
  * @param <T> the result of
  */
-public class CAutoResetMemoize<T> extends CMemoize<T> {
+public class CAutoResetMemoize<T> extends org.catools.common.functions.CMemoize<T> {
   private final Timer timer = new Timer();
   private final long resetIntervalInSecond;
 

@@ -28,18 +28,11 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * Verify that actual and expected value are equal objects.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyEquals(
-      final O expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o1, o2) -> _toState(o1).isEqual(o2),
-        message,
-        params);
+  default void verifyEquals(final O expected, final String message, final Object... params) {
+    _verify(expected, (o1, o2) -> _toState(o1).isEqual(o2), message, params);
   }
 
   /**
@@ -48,21 +41,17 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * @param expectedList a list of strings, may be {@code null}.
    */
   default void verifyEqualsAny(List<O> expectedList) {
-    verifyEqualsAny(
-        expectedList, getDefaultMessage("Is Equal To One Of Expected Values"));
+    verifyEqualsAny(expectedList, getDefaultMessage("Is Equal To One Of Expected Values"));
   }
 
   /**
    * Verify that actual value equals to at least one of expected value.
    *
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the purpose of this verification.
-   * @param params       parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification.
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyEqualsAny(
-      List<O> expectedList,
-      final String message,
-      final Object... params) {
+  default void verifyEqualsAny(List<O> expectedList, final String message, final Object... params) {
     _verify(
         expectedList,
         (a, b) -> a != null && b != null && new CList<>(b).has(b2 -> _toState(a).isEqual(b2)),
@@ -76,22 +65,18 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * @param expectedList a list of strings, may be {@code null}.
    */
   default void verifyEqualsNone(List<O> expectedList) {
-    verifyEqualsNone(
-        expectedList,
-        getDefaultMessage("Is Not Equal To Any Of Expected Values"));
+    verifyEqualsNone(expectedList, getDefaultMessage("Is Not Equal To Any Of Expected Values"));
   }
 
   /**
    * Verify that actual value does not equals to any expected value.
    *
    * @param expectedList a list of strings, may be {@code null}.
-   * @param message      information about the purpose of this verification.
-   * @param params       parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification.
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsNone(
-      List<O> expectedList,
-      final String message,
-      final Object... params) {
+      List<O> expectedList, final String message, final Object... params) {
     _verify(
         expectedList,
         (a, b) -> a != null && b != null && new CList<>(b).hasNot(b2 -> _toState(a).isEqual(b2)),
@@ -99,9 +84,7 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
         params);
   }
 
-  /**
-   * Verify that actual value is NOT null.
-   */
+  /** Verify that actual value is NOT null. */
   default void verifyIsNotNull() {
     verifyIsNotNull(getDefaultMessage("Is Not Null"));
   }
@@ -110,16 +93,13 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * Verify that actual value is NOT null.
    *
    * @param message information about the purpose of this verification
-   * @param params  parameters in case if message is a format {@link String#format}
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsNotNull(
-      final String message, final Object... params) {
+  default void verifyIsNotNull(final String message, final Object... params) {
     _verify(null, (o1, o2) -> o1 != o2, message, params);
   }
 
-  /**
-   * Verify that actual value is null.
-   */
+  /** Verify that actual value is null. */
   default void verifyIsNull() {
     verifyIsNull(getDefaultMessage("Is Null"));
   }
@@ -128,7 +108,7 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * Verify that actual value is null.
    *
    * @param message information about the purpose of this verification
-   * @param params  parameters in case if message is a format {@link String#format}
+   * @param params parameters in case if message is a format {@link String#format}
    */
   @SuppressWarnings("unchecked")
   default void verifyIsNull(final String message, final Object... params) {
@@ -148,17 +128,10 @@ public interface CObjectVerify<O, S extends CObjectState<O>> extends CBaseVerify
    * Verify that actual and expected value are not equal objects.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyNotEquals(
-      final O expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o1, o2) -> _toState(o1).isNotEqual(o2),
-        message,
-        params);
+  default void verifyNotEquals(final O expected, final String message, final Object... params) {
+    _verify(expected, (o1, o2) -> _toState(o1).isNotEqual(o2), message, params);
   }
 }

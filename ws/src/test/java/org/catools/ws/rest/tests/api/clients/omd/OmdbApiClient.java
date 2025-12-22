@@ -20,11 +20,10 @@ public abstract class OmdbApiClient<O> extends CHttpRestClient<O> {
     getRequest().addQueryParameter("apikey", API_KEY);
   }
 
-
   /**
    * method to verify error message from response
    *
-   * @param response     the rest response to read the message from
+   * @param response the rest response to read the message from
    * @param errorMessage the expected message
    */
   protected static void verifyErrorMessage(CHttpResponse response, String errorMessage) {
@@ -33,8 +32,8 @@ public abstract class OmdbApiClient<O> extends CHttpRestClient<O> {
   }
 
   /**
-   * method to check if response contains a "Response" element with "True"
-   * value which indicated if the final response has any value
+   * method to check if response contains a "Response" element with "True" value which indicated if
+   * the final response has any value
    *
    * @param response the rest response to read the message from
    */

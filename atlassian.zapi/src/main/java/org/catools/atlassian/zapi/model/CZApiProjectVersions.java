@@ -8,19 +8,15 @@ import java.util.Objects;
 /**
  * Represents the versions of a project in the ZAPI system.
  *
- * <p>This class provides methods to manage and retrieve both released and unreleased versions
- * of a project, as well as utility methods for equality checks and string representation.</p>
+ * <p>This class provides methods to manage and retrieve both released and unreleased versions of a
+ * project, as well as utility methods for equality checks and string representation.
  */
 public class CZApiProjectVersions {
 
-  /**
-   * A collection of unreleased versions associated with the project.
-   */
+  /** A collection of unreleased versions associated with the project. */
   private CZApiVersions unreleasedVersions;
 
-  /**
-   * A collection of released versions associated with the project.
-   */
+  /** A collection of released versions associated with the project. */
   private CZApiVersions releasedVersions;
 
   /**

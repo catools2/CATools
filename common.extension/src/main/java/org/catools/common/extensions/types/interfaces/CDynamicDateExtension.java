@@ -22,7 +22,8 @@ import org.catools.common.extensions.wait.interfaces.CDateWaiter;
  * }
  * </code> </strong>
  */
-public interface CDynamicDateExtension extends CStaticDateExtension, CDateWaiter, CDateWaitVerifier, CDateWaitVerify {
+public interface CDynamicDateExtension
+    extends CStaticDateExtension, CDateWaiter, CDateWaitVerifier, CDateWaitVerify {
   @Override
   default boolean withWaiter() {
     return true;

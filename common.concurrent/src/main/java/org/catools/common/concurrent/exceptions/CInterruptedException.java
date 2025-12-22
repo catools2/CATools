@@ -3,8 +3,8 @@ package org.catools.common.concurrent.exceptions;
 /**
  * Custom exception class for handling interrupted exceptions in concurrent operations.
  *
- * <p>This class extends {@link RuntimeException} and is used to wrap interrupted exceptions
- * with a custom message and cause.</p>
+ * <p>This class extends {@link RuntimeException} and is used to wrap interrupted exceptions with a
+ * custom message and cause.
  */
 public class CInterruptedException extends RuntimeException {
 

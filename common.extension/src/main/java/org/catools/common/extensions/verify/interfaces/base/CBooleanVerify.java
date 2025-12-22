@@ -10,11 +10,10 @@ import org.catools.common.extensions.states.interfaces.CBooleanState;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  */
-public interface CBooleanVerify extends CBaseBooleanExtension, CObjectVerify<Boolean, CBooleanState> {
+public interface CBooleanVerify
+    extends CBaseBooleanExtension, CObjectVerify<Boolean, CBooleanState> {
 
-  /**
-   * Verify that actual value is false
-   */
+  /** Verify that actual value is false */
   default void verifyIsFalse() {
     verifyIsFalse(getDefaultMessage("Is False"));
   }
@@ -23,15 +22,13 @@ public interface CBooleanVerify extends CBaseBooleanExtension, CObjectVerify<Boo
    * Verify that actual value is false
    *
    * @param message information about the purpose of this verification
-   * @param params  parameters in case if message is a format {@link String#format}
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyIsFalse(final String message, final Object... params) {
     _verify(false, (a, b) -> _toState(a).isFalse(), message, params);
   }
 
-  /**
-   * Verify that actual value is true
-   */
+  /** Verify that actual value is true */
   default void verifyIsTrue() {
     verifyIsTrue(getDefaultMessage("Is True"));
   }
@@ -40,7 +37,7 @@ public interface CBooleanVerify extends CBaseBooleanExtension, CObjectVerify<Boo
    * Verify that actual value is true
    *
    * @param message information about the purpose of this verification
-   * @param params  parameters in case if message is a format {@link String#format}
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyIsTrue(final String message, final Object... params) {
     _verify(true, (a, b) -> _toState(a).isTrue(), message, params);
@@ -59,10 +56,11 @@ public interface CBooleanVerify extends CBaseBooleanExtension, CObjectVerify<Boo
    * Verify that actual and expected has different boolean value
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyNotEquals(final Boolean expected, final String message, final Object... params) {
+  default void verifyNotEquals(
+      final Boolean expected, final String message, final Object... params) {
     _verify(expected, (a, b) -> _toState(a).isNotEqual(b), message, params);
   }
 }

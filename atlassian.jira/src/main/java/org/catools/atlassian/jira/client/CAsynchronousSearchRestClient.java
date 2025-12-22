@@ -22,9 +22,9 @@ import java.util.stream.Stream;
 import static com.atlassian.jira.rest.client.api.IssueRestClient.Expandos.*;
 
 /**
- * Custom implementation of the AsynchronousSearchRestClient.
- * This class extends the default AsynchronousSearchRestClient to provide
- * additional functionality for handling JQL queries with both GET and POST methods.
+ * Custom implementation of the AsynchronousSearchRestClient. This class extends the default
+ * AsynchronousSearchRestClient to provide additional functionality for handling JQL queries with
+ * both GET and POST methods.
  */
 public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient {
   // Function to convert Expandos to their lowercase string representation
@@ -79,10 +79,7 @@ public class CAsynchronousSearchRestClient extends AsynchronousSearchRestClient 
    */
   @Override
   public Promise<SearchResult> searchJql(
-      String jql,
-      Integer maxResults,
-      Integer startAt,
-      Set<String> fields) {
+      String jql, Integer maxResults, Integer startAt, Set<String> fields) {
     final Iterable<String> expandosValues =
         Stream.of(SCHEMA, NAMES, CHANGELOG, TRANSITIONS).map(EXPANDO_TO_PARAM).toList();
     final String notNullJql = StringUtils.defaultString(jql);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="T%ETT{%-4s} W%ETW{%-4s} R%ETR{%-4s} P%ETP{%-4s} F%ETF{%-4s} S%ETS{%-4s} %magenta{%d{yy-MM-dd HH:mm:ss:SSS}{America/New_York}} [%highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}] %msg%n%CEvnT"
+                    disableAnsi="false"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="Console" level="${sys:CATOOLS_LOGGER_CONSOLE_LOG_LEVEL:-trace}"/>
+        </Root>
+    </Loggers>
+</Configuration>

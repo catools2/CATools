@@ -1,10 +1,5 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.io.FileUtils;
-import org.catools.common.exception.CFileNotFoundException;
-import org.catools.common.exception.CFileOperationException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,6 +9,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.io.FileUtils;
+import org.catools.common.exception.CFileNotFoundException;
+import org.catools.common.exception.CFileOperationException;
 
 /**
  * Normally we should not extend Utility classes but this class is just an extension so we can have
@@ -110,7 +109,7 @@ public class CFileUtil extends FileUtils {
    * new&nbsp;File(this.{@see #getCanonicalPath})</code>.
    *
    * @return The canonical pathname string denoting the same file or directory as this abstract
-   * pathname
+   *     pathname
    */
   public static File getCanonicalFile(File file) {
     try {
@@ -132,7 +131,7 @@ public class CFileUtil extends FileUtils {
    * canonical form of the same pathname after the file or directory is deleted.
    *
    * @return The canonical pathname string denoting the same file or directory as this abstract
-   * pathname
+   *     pathname
    */
   public static String getCanonicalPath(File file) {
     try {
@@ -187,7 +186,7 @@ public class CFileUtil extends FileUtils {
    * in a single operation. It is not intended for reading in large files.
    *
    * @return the lines from the file as a {@code CList}; whether the {@code CList} is modifiable or
-   * not is implementation dependent and therefore not specified
+   *     not is implementation dependent and therefore not specified
    * @throws CFileOperationException if anything goes wrong
    * @see List contains all lines from the file
    */
@@ -213,7 +212,7 @@ public class CFileUtil extends FileUtils {
    *
    * @param charset the charset to use for decoding
    * @return the lines from the file as a {@code List}; whether the {@code List} is modifiable or
-   * not is implementation dependent and therefore not specified
+   *     not is implementation dependent and therefore not specified
    * @throws CFileOperationException if anything goes wrong
    * @see List contains all lines from the file
    */

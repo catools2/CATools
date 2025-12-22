@@ -1,5 +1,10 @@
 package org.catools.etl.k8s.model;
 
+import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -7,14 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-
-import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
-
-
-@NamedQuery(name = "getEtlKubePodStatus", query = "FROM CEtlKubePodStatus where status=:status and phase=:phase and message=:message and reason=:reason")
+@NamedQuery(
+    name = "getEtlKubePodStatus",
+    query =
+        "FROM CEtlKubePodStatus where status=:status and phase=:phase and message=:message and reason=:reason")
 @Entity
 @Table(name = "pod_status", schema = K8S_SCHEMA)
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "pod_status")
@@ -23,8 +24,7 @@ import static org.catools.etl.k8s.configs.CEtlKubeConfigs.K8S_SCHEMA;
 @Accessors(chain = true)
 public class CEtlKubePodStatus implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6867874018185613707L;
+  @Serial private static final long serialVersionUID = 6867874018185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

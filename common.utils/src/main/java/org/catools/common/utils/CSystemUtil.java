@@ -1,16 +1,13 @@
 package org.catools.common.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.enums.CPlatform;
 import org.catools.common.hocon.utils.CHoconUtils;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-/**
- * This is a tool for common System call we use.
- */
+/** This is a tool for common System call we use. */
 @UtilityClass
 public class CSystemUtil {
   private static String hostAddress;

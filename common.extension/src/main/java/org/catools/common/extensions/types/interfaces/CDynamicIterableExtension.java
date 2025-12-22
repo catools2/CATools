@@ -22,11 +22,11 @@ import org.catools.common.extensions.wait.interfaces.CIterableWaiter;
  * }
  * </code> </strong>
  */
-public interface CDynamicIterableExtension<E> extends
-    CStaticIterableExtension<E, Iterable<E>>,
-    CIterableWaiter<E, Iterable<E>>,
-    CIterableWaitVerifier<E, Iterable<E>>,
-    CIterableWaitVerify<E, Iterable<E>> {
+public interface CDynamicIterableExtension<E>
+    extends CStaticIterableExtension<E, Iterable<E>>,
+        CIterableWaiter<E, Iterable<E>>,
+        CIterableWaitVerifier<E, Iterable<E>>,
+        CIterableWaitVerify<E, Iterable<E>> {
   @Override
   default boolean withWaiter() {
     return true;

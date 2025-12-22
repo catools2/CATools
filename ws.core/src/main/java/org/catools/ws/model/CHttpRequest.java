@@ -11,10 +11,12 @@ import io.restassured.specification.RequestSpecification;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
+import org.catools.common.utils.CStringUtil;
+import org.catools.ws.config.CProxyConfigs;
 import org.catools.ws.enums.CHttpRequestType;
 import org.catools.ws.rest.CFilterListener;
 
@@ -22,6 +24,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 @Data
+@Slf4j
 @NoArgsConstructor
 @Accessors(chain = true)
 public class CHttpRequest {
@@ -35,10 +38,12 @@ public class CHttpRequest {
   private String path;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
+  private boolean useProxy;
+
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private ContentType contentType;
 
-  @JsonIgnore
-  private final CMap<String, CFilterListener> filterListener = new CHashMap<>();
+  @JsonIgnore private final CMap<String, CFilterListener> filterListener = new CHashMap<>();
 
   @JsonInclude(JsonInclude.Include.NON_EMPTY)
   private final CList<MultiPartSpecification> multiParts = new CList<>();
@@ -62,7 +67,7 @@ public class CHttpRequest {
   private Object entity;
 
   public CHttpRequest(CHttpRequest request) {
-    this(request.getRequestType(), request.getTarget(), request.getPath());
+    this(request.getRequestType(), request.getTarget(), request.getPath(), request.useProxy);
     this.setContentType(request.getContentType());
     this.filterListener.putAll(request.getFilterListener());
     this.multiParts.addAll(request.getMultiParts());
@@ -73,14 +78,15 @@ public class CHttpRequest {
     this.setEntity(request.getEntity());
   }
 
-  public CHttpRequest(CHttpRequestType requestType, String target) {
-    this(requestType, target, null);
+  public CHttpRequest(CHttpRequestType requestType, String target, boolean useProxy) {
+    this(requestType, target, null, useProxy);
   }
 
-  public CHttpRequest(CHttpRequestType requestType, String target, String path) {
+  public CHttpRequest(CHttpRequestType requestType, String target, String path, boolean useProxy) {
     this.requestType = requestType;
     this.target = target;
     this.path = path;
+    this.useProxy = useProxy;
   }
 
   public URI getUri() {
@@ -89,6 +95,10 @@ public class CHttpRequest {
       uriBuilder.path(getPath());
     }
     return uriBuilder.build();
+  }
+
+  public boolean useProxy() {
+    return useProxy;
   }
 
   public CHttpRequest addQueryParameter(String name, Object value) {
@@ -112,9 +122,9 @@ public class CHttpRequest {
   }
 
   public RequestSpecification toRequestSpecification(RestAssuredConfig config) {
-    RequestSpecification requestSpecification = RestAssured.given().config(config).baseUri(getTarget());
+    RequestSpecification requestSpecification = getRequestSpecification(config);
 
-    if (StringUtils.isNotBlank(getPath())) {
+    if (CStringUtil.isNotBlank(getPath())) {
       requestSpecification.basePath(getPath());
     }
 
@@ -138,5 +148,17 @@ public class CHttpRequest {
       requestSpecification.body(getEntity().toString());
     }
     return requestSpecification;
+  }
+
+  private RequestSpecification getRequestSpecification(RestAssuredConfig config) {
+    if (useProxy() && CProxyConfigs.isEnabled()) {
+      log.debug("{} uses proxy {} for request processing", getTarget(), CProxyConfigs.getProxy());
+      return RestAssured.given()
+          .proxy(CProxyConfigs.getProxy())
+          .config(config)
+          .baseUri(getTarget());
+    }
+
+    return RestAssured.given().config(config).baseUri(getTarget());
   }
 }

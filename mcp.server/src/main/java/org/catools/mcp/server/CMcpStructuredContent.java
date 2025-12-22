@@ -49,8 +49,8 @@ import org.catools.mcp.server.component.CMcpServerTool;
  * }</pre>
  *
  * <h2>MCP Response Format</h2>
- * <p>
- * When a tool returns an object implementing this interface, the MCP response will contain:
+ *
+ * <p>When a tool returns an object implementing this interface, the MCP response will contain:
  *
  * <pre>{@code
  * {
@@ -79,8 +79,8 @@ import org.catools.mcp.server.component.CMcpServerTool;
  * </ul>
  *
  * <h2>Default Implementation</h2>
- * <p>
- * The interface provides a default implementation of {@link #asTextContent()} that returns the
+ *
+ * <p>The interface provides a default implementation of {@link #asTextContent()} that returns the
  * result of {@link Object#toString()}. If the default implementation doesn't meet requirements,
  * implementing classes should override this method.
  *

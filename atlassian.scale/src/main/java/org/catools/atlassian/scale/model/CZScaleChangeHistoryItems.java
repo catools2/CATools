@@ -7,20 +7,18 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of change history items in the Scale system.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleChangeHistoryItem} objects. It includes constructors
- * for creating the collection from various input sources, such as arrays, streams,
- * or iterables.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleChangeHistoryItem} objects. It includes constructors for creating the collection
+ * from various input sources, such as arrays, streams, or iterables.
  */
 public class CZScaleChangeHistoryItems extends CSet<CZScaleChangeHistoryItem> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of change history items.</p>
+   * <p>Creates an empty collection of change history items.
    */
-  public CZScaleChangeHistoryItems() {
-  }
+  public CZScaleChangeHistoryItems() {}
 
   /**
    * Constructs a collection of change history items from an array of items.
@@ -34,7 +32,8 @@ public class CZScaleChangeHistoryItems extends CSet<CZScaleChangeHistoryItem> {
   /**
    * Constructs a collection of change history items from a stream of items.
    *
-   * @param stream a {@link Stream} of {@link CZScaleChangeHistoryItem} objects to initialize the collection
+   * @param stream a {@link Stream} of {@link CZScaleChangeHistoryItem} objects to initialize the
+   *     collection
    */
   public CZScaleChangeHistoryItems(Stream<CZScaleChangeHistoryItem> stream) {
     super(stream);
@@ -43,7 +42,8 @@ public class CZScaleChangeHistoryItems extends CSet<CZScaleChangeHistoryItem> {
   /**
    * Constructs a collection of change history items from an iterable of items.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleChangeHistoryItem} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleChangeHistoryItem} objects to initialize
+   *     the collection
    */
   public CZScaleChangeHistoryItems(Iterable<CZScaleChangeHistoryItem> iterable) {
     super(iterable);

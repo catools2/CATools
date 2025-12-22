@@ -1,13 +1,31 @@
 package org.catools.etl.tms.cache;
 
-import org.catools.common.collections.CHashMap;
-import org.catools.common.collections.interfaces.CMap;
-import org.catools.etl.tms.dao.*;
-import org.catools.etl.tms.model.*;
-
 import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.function.Supplier;
+import org.catools.common.collections.CHashMap;
+import org.catools.common.collections.interfaces.CMap;
+import org.catools.etl.tms.dao.CEtlCycleDao;
+import org.catools.etl.tms.dao.CEtlExecutionStatusDao;
+import org.catools.etl.tms.dao.CEtlItemDao;
+import org.catools.etl.tms.dao.CEtlItemTypeDao;
+import org.catools.etl.tms.dao.CEtlMetaDataDao;
+import org.catools.etl.tms.dao.CEtlPriorityDao;
+import org.catools.etl.tms.dao.CEtlProjectDao;
+import org.catools.etl.tms.dao.CEtlStatusDao;
+import org.catools.etl.tms.dao.CEtlUserDao;
+import org.catools.etl.tms.dao.CEtlVersionDao;
+import org.catools.etl.tms.model.CEtlCycle;
+import org.catools.etl.tms.model.CEtlExecutionStatus;
+import org.catools.etl.tms.model.CEtlItem;
+import org.catools.etl.tms.model.CEtlItemMetaData;
+import org.catools.etl.tms.model.CEtlItemMetaDatas;
+import org.catools.etl.tms.model.CEtlItemType;
+import org.catools.etl.tms.model.CEtlPriority;
+import org.catools.etl.tms.model.CEtlProject;
+import org.catools.etl.tms.model.CEtlStatus;
+import org.catools.etl.tms.model.CEtlUser;
+import org.catools.etl.tms.model.CEtlVersion;
 
 public class CEtlCacheManager {
   private static final CMap<String, CEtlUser> USERS = new CHashMap<>();
@@ -22,24 +40,30 @@ public class CEtlCacheManager {
   private static final CMap<String, CEtlItem> ITEMS = new CHashMap<>();
 
   public static synchronized CEtlItem readItem(String issueOd) {
-    return read(ITEMS, issueOd, () -> {
-      CEtlItem result = CEtlItemDao.getItemById(issueOd);
-      if (result == null) {
-        throw new InvalidParameterException("Item not found. Item Id: " + issueOd);
-      }
-      return result;
-    });
+    return read(
+        ITEMS,
+        issueOd,
+        () -> {
+          CEtlItem result = CEtlItemDao.getItemById(issueOd);
+          if (result == null) {
+            throw new InvalidParameterException("Item not found. Item Id: " + issueOd);
+          }
+          return result;
+        });
   }
 
   public static synchronized CEtlUser readUser(CEtlUser user) {
     String userName = user.getName();
-    return read(USERS, userName, () -> {
-      CEtlUser result = CEtlUserDao.getUserByName(userName);
-      if (result != null) {
-        return result;
-      }
-      return CEtlUserDao.merge(user);
-    });
+    return read(
+        USERS,
+        userName,
+        () -> {
+          CEtlUser result = CEtlUserDao.getUserByName(userName);
+          if (result != null) {
+            return result;
+          }
+          return CEtlUserDao.merge(user);
+        });
   }
 
   public static CEtlItemMetaDatas readMetaData(Collection<CEtlItemMetaData> data) {
@@ -51,87 +75,112 @@ public class CEtlCacheManager {
   }
 
   public static synchronized CEtlItemMetaData readMetaData(CEtlItemMetaData metaData) {
-    return read(METADATA, metaData.getName() + metaData.getValue(), () -> {
-      CEtlItemMetaData result = CEtlMetaDataDao.getMetaDataByNameAndValue(metaData);
-      if (result != null) {
-        return result;
-      }
-      return CEtlMetaDataDao.merge(metaData);
-    });
+    return read(
+        METADATA,
+        metaData.getName() + metaData.getValue(),
+        () -> {
+          CEtlItemMetaData result = CEtlMetaDataDao.getMetaDataByNameAndValue(metaData);
+          if (result != null) {
+            return result;
+          }
+          return CEtlMetaDataDao.merge(metaData);
+        });
   }
 
   public static synchronized CEtlProject readProject(CEtlProject project) {
-    return read(PROJECTS, project.getName(), () -> {
-      CEtlProject result = CEtlProjectDao.getProjectByName(project.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlProjectDao.merge(project);
-    });
+    return read(
+        PROJECTS,
+        project.getName(),
+        () -> {
+          CEtlProject result = CEtlProjectDao.getProjectByName(project.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlProjectDao.merge(project);
+        });
   }
 
   public static synchronized CEtlVersion readVersion(CEtlVersion version) {
-    return read(VERSIONS, version.getProject().getName() + version.getName(), () -> {
-      CEtlVersion result = CEtlVersionDao.getVersion(version.getProject(), version.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlVersionDao.merge(version);
-    });
+    return read(
+        VERSIONS,
+        version.getProject().getName() + version.getName(),
+        () -> {
+          CEtlVersion result = CEtlVersionDao.getVersion(version.getProject(), version.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlVersionDao.merge(version);
+        });
   }
 
   public static synchronized CEtlCycle readCycle(CEtlCycle cycle) {
-    return read(CYCLES, cycle.getId(), () -> {
-      CEtlCycle result = CEtlCycleDao.getCycleById(cycle.getId());
+    return read(
+        CYCLES,
+        cycle.getId(),
+        () -> {
+          CEtlCycle result = CEtlCycleDao.getCycleById(cycle.getId());
 
-      if (result != null) {
-        return result;
-      }
-      return CEtlCycleDao.merge(cycle);
-    });
+          if (result != null) {
+            return result;
+          }
+          return CEtlCycleDao.merge(cycle);
+        });
   }
 
   public static synchronized CEtlStatus readStatus(CEtlStatus status) {
-    return read(STATUSES, status.getName(), () -> {
-      CEtlStatus result = CEtlStatusDao.getStatusByName(status.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlStatusDao.merge(status);
-    });
+    return read(
+        STATUSES,
+        status.getName(),
+        () -> {
+          CEtlStatus result = CEtlStatusDao.getStatusByName(status.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlStatusDao.merge(status);
+        });
   }
 
   public static synchronized CEtlExecutionStatus readExecutionStatus(CEtlExecutionStatus status) {
-    return read(EXECUTION_STATUSES, status.getName(), () -> {
-      CEtlExecutionStatus result = CEtlExecutionStatusDao.getStatusByName(status.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlExecutionStatusDao.merge(status);
-    });
+    return read(
+        EXECUTION_STATUSES,
+        status.getName(),
+        () -> {
+          CEtlExecutionStatus result = CEtlExecutionStatusDao.getStatusByName(status.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlExecutionStatusDao.merge(status);
+        });
   }
 
   public static synchronized CEtlPriority readPriority(CEtlPriority priority) {
-    return read(PRIORITIES, priority.getName(), () -> {
-      CEtlPriority result = CEtlPriorityDao.getPriorityByName(priority.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlPriorityDao.merge(priority);
-    });
+    return read(
+        PRIORITIES,
+        priority.getName(),
+        () -> {
+          CEtlPriority result = CEtlPriorityDao.getPriorityByName(priority.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlPriorityDao.merge(priority);
+        });
   }
 
   public static synchronized CEtlItemType readType(CEtlItemType type) {
-    return read(ITEM_TYPES, type.getName(), () -> {
-      CEtlItemType result = CEtlItemTypeDao.getItemTypeByName(type.getName());
-      if (result != null) {
-        return result;
-      }
-      return CEtlItemTypeDao.merge(type);
-    });
+    return read(
+        ITEM_TYPES,
+        type.getName(),
+        () -> {
+          CEtlItemType result = CEtlItemTypeDao.getItemTypeByName(type.getName());
+          if (result != null) {
+            return result;
+          }
+          return CEtlItemTypeDao.merge(type);
+        });
   }
 
-  private static synchronized <T> T read(CMap<String, T> storage, String key, Supplier<T> getValue) {
+  private static synchronized <T> T read(
+      CMap<String, T> storage, String key, Supplier<T> getValue) {
     return storage.computeIfAbsent(key, k -> getValue.get());
   }
 }

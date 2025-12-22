@@ -12,8 +12,7 @@ import org.catools.mcp.configuration.CMcpServerConfiguration;
  */
 public class CConfigurableMcpStdioServer implements CConfigurableMcpServer {
 
-  @Getter
-  private final CMcpServerConfiguration configuration;
+  @Getter private final CMcpServerConfiguration configuration;
 
   /**
    * Creates a new instance of {@link CConfigurableMcpStdioServer} with the specified configuration.

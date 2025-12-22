@@ -6,9 +6,7 @@ import org.catools.mcp.configuration.CMcpServerCapabilities;
 import org.catools.mcp.configuration.CMcpServerChangeNotification;
 import org.catools.mcp.server.component.CMcpServerComponentRegister;
 
-/**
- * This abstract class is used to provide a base implementation for an MCP server.
- */
+/** This abstract class is used to provide a base implementation for an MCP server. */
 public abstract class CBaseMcpServer<S extends CMcpServerInfo> implements CMcpServer<S> {
 
   /**

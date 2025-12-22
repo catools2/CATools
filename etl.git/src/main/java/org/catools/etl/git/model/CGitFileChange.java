@@ -1,19 +1,17 @@
 package org.catools.etl.git.model;
 
+import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.catools.common.utils.CStringUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Objects;
-
-import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
-
 
 @Entity
 @Table(name = "file_change", schema = GIT_SCHEMA)
@@ -23,8 +21,7 @@ import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 @Accessors(chain = true)
 public class CGitFileChange implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 606744018185613707L;
+  @Serial private static final long serialVersionUID = 606744018185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,18 +67,31 @@ public class CGitFileChange implements Serializable {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     CGitFileChange that = (CGitFileChange) o;
-    return id == that.id && inserted == that.inserted && deleted == that.deleted && Objects.equals(getCommitId(), that.getCommitId()) && Objects.equals(path, that.path) && Objects.equals(newPath, that.newPath);
+    return id == that.id
+        && inserted == that.inserted
+        && deleted == that.deleted
+        && Objects.equals(getCommitId(), that.getCommitId())
+        && Objects.equals(path, that.path)
+        && Objects.equals(newPath, that.newPath);
   }
 
   @Override
   public String toString() {
-    return "CGitFileChange{" +
-        "id=" + id +
-        ", commitId=" + getCommitId() +
-        ", path='" + path + '\'' +
-        ", newPath='" + newPath + '\'' +
-        ", inserted=" + inserted +
-        ", deleted=" + deleted +
-        '}';
+    return "CGitFileChange{"
+        + "id="
+        + id
+        + ", commitId="
+        + getCommitId()
+        + ", path='"
+        + path
+        + '\''
+        + ", newPath='"
+        + newPath
+        + '\''
+        + ", inserted="
+        + inserted
+        + ", deleted="
+        + deleted
+        + '}';
   }
 }

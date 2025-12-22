@@ -22,11 +22,11 @@ import org.catools.common.extensions.wait.interfaces.CMapWaiter;
  * }
  * </code> </strong>
  */
-public interface CDynamicMapExtension<K, V> extends
-    CStaticMapExtension<K, V>,
-    CMapWaiter<K, V>,
-    CMapWaitVerifier<K, V>,
-    CMapWaitVerify<K, V> {
+public interface CDynamicMapExtension<K, V>
+    extends CStaticMapExtension<K, V>,
+        CMapWaiter<K, V>,
+        CMapWaitVerifier<K, V>,
+        CMapWaitVerify<K, V> {
   @Override
   default boolean withWaiter() {
     return true;

@@ -1,12 +1,11 @@
 package org.catools.common.utils;
 
+import java.io.FilterOutputStream;
+import java.lang.reflect.Field;
 import lombok.experimental.UtilityClass;
 import org.catools.common.configs.CAnsiConfigs;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
-
-import java.io.FilterOutputStream;
-import java.lang.reflect.Field;
 
 @UtilityClass
 public class CAnsiUtil {

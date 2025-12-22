@@ -36,18 +36,19 @@ import java.util.stream.StreamSupport;
  * @see CList
  */
 @JsonIgnoreProperties(value = {"empty"})
-public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CIterableVerify<E, C>, CIterableVerifier<E, C>, CIterableState<E, C> {
+public interface CIterable<E, C extends Iterable<E>>
+    extends Iterable<E>, CIterableVerify<E, C>, CIterableVerifier<E, C>, CIterableState<E, C> {
 
   /**
    * Returns {@code true} if this collection equals the specified collection.
    *
    * @param c collection to be checked for equality
    * @return {@code true} if this collection contains none of the elements in the specified
-   * collection
-   * @throws ClassCastException   if the collections of one or more elements in the specified
-   *                              collection are incompatible with this collection
+   *     collection
+   * @throws ClassCastException if the collections of one or more elements in the specified
+   *     collection are incompatible with this collection
    * @throws NullPointerException if the specified collection contains one or more null elements and
-   *                              this collection does not permit null elements , or if the specified collection is null.
+   *     this collection does not permit null elements , or if the specified collection is null.
    * @see #contains(Object)
    */
   boolean equals(Object c);
@@ -130,7 +131,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * #getFirstOrThrow(Predicate, Supplier)}.
    *
    * @param predicate to issue condition
-   * @param other     value to be turn if no matched found
+   * @param other value to be turn if no matched found
    * @return the non-{@code null} value described by this {@code Optional}
    */
   default E getFirstOrElse(Predicate<E> predicate, E other) {
@@ -157,7 +158,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * #getFirstOrThrow(Predicate, Supplier)}.
    *
    * @param predicate to issue condition
-   * @param other     value to be turn if no matched found
+   * @param other value to be turn if no matched found
    * @return the non-{@code null} value described by this {@code Optional}
    */
   default E getFirstOrElseGet(Predicate<E> predicate, Supplier<E> other) {
@@ -206,8 +207,8 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
   /**
    * Returns first element from list if the list is not empty otherwise throws {@code
    * RuntimeException}. The preferred alternative to this method is {@see #getFirst()}, {@see
-   * #getFirstOrElse(Object)}, {@see #getFirstOrElse(Predicate, Object)},
-   * {@see #getFirstOrThrow(RuntimeException)}, {@see #getFirstOrThrow(Predicate, Supplier)}.
+   * #getFirstOrElse(Object)}, {@see #getFirstOrElse(Predicate, Object)}, {@see
+   * #getFirstOrThrow(RuntimeException)}, {@see #getFirstOrThrow(Predicate, Supplier)}.
    *
    * @param e exception to be throws if no record found
    * @return the non-{@code null} value described by this {@code Optional}
@@ -223,7 +224,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * #getFirstOrElse(Object)}, {@see #getFirstOrElse(Predicate, Object)}, {@link
    * #getFirstOrThrow(RuntimeException)},
    *
-   * @param predicate         to issue condition
+   * @param predicate to issue condition
    * @param exceptionSupplier the supplying function that produces an exception to be thrown
    * @return the non-{@code null} value described by this {@code Optional}
    * @throws RuntimeException if no value is present
@@ -240,7 +241,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * #getFirstOrThrow(Predicate, Supplier)},
    *
    * @param predicate to issue condition
-   * @param other     supplier to be call if not match found
+   * @param other supplier to be call if not match found
    * @return the non-{@code null} value described by this {@code Optional}
    */
   @JsonIgnore
@@ -288,7 +289,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    *
    * <p>See the examples here: {@see #join(String)}.
    *
-   * @param mapper    the mapper to use, null treated as StringUtils.EMPTY
+   * @param mapper the mapper to use, null treated as StringUtils.EMPTY
    * @param separator the separator character to use, null treated as StringUtils.EMPTY
    * @return the joined String separated by separator
    */
@@ -300,7 +301,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * Returns stream consisting of the results of applying the given function to the elements of this
    * stream.
    *
-   * @param <R>    The element type of the new stream
+   * @param <R> The element type of the new stream
    * @param mapper function to apply to each element
    * @return the new stream
    */
@@ -312,7 +313,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * Returns {@code CList} consisting of the results of applying the given function to the elements
    * of the {@code CCollection}.
    *
-   * @param <R>    The element type of the new {@code CList}
+   * @param <R> The element type of the new {@code CList}
    * @param mapper function to apply to each element
    * @return the new {@code CList}
    */
@@ -324,7 +325,7 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * Returns {@code CSet} consisting of the results of applying the given function to the elements
    * of the {@code CCollection}.
    *
-   * @param <R>    The element type of the new {@code CSet}
+   * @param <R> The element type of the new {@code CSet}
    * @param mapper function to apply to each element
    * @return the new {@code CSet}
    */
@@ -366,8 +367,8 @@ public interface CIterable<E, C extends Iterable<E>> extends Iterable<E>, CItera
    * Returns sequential {@code Stream} with this collection as its source.
    *
    * <p>This method should be overridden when the {@see #spliterator()} method cannot return
-   * spliterator that is {@code IMMUTABLE}, {@code CONCURRENT}, or <em>late-binding</em>. (See
-   * {@see #spliterator()} for details.)
+   * spliterator that is {@code IMMUTABLE}, {@code CONCURRENT}, or <em>late-binding</em>. (See {@see
+   * #spliterator()} for details.)
    *
    * @return sequential {@code Stream} over the elements in this collection
    */

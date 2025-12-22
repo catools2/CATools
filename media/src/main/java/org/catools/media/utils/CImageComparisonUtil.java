@@ -1,6 +1,12 @@
 package org.catools.media.utils;
 
+import static org.catools.media.utils.CImageUtil.writePNG;
+
 import boofcv.struct.image.GrayF32;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.catools.common.collections.CList;
@@ -12,13 +18,6 @@ import org.catools.media.model.CDiffPoint;
 import org.catools.media.model.CDiffPoints;
 import org.testng.Assert;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Objects;
-
-import static org.catools.media.utils.CImageUtil.writePNG;
-
 @UtilityClass
 public class CImageComparisonUtil {
   /**
@@ -26,9 +25,9 @@ public class CImageComparisonUtil {
    * gray with one bound to improve match algorithm.
    *
    * @param comparisonType CImageComparisonType value which defines comparison type.
-   * @param img1           first image to compare
-   * @param img2           second image to compare
-   * @param diff           file to save diff in png format
+   * @param img1 first image to compare
+   * @param img2 second image to compare
+   * @param diff file to save diff in png format
    * @return {@link CDiffPoints} contains list of diff, empty if not diff found
    */
   public static CDiffPoints getDiffs(
@@ -48,8 +47,8 @@ public class CImageComparisonUtil {
    * Compare 2 images and return difference. We use bootcv library here to convert image to flat
    * gray with one bound to improve match algorithm.
    *
-   * @param img1           first image to compare
-   * @param img2           second image to compare
+   * @param img1 first image to compare
+   * @param img2 second image to compare
    * @param comparisonType CImageComparisonType value which defines comparison type.
    * @return {@link CDiffPoints} contains list of diff, empty if not diff found
    */

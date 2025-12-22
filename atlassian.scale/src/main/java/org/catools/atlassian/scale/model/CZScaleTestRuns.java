@@ -7,20 +7,19 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of test runs in the Scale system.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleTestRun} objects. It includes constructors for
- * creating the collection from various input sources, such as arrays, streams,
- * or iterables. Additionally, it provides a method to retrieve a test run by its key.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleTestRun} objects. It includes constructors for creating the collection from various
+ * input sources, such as arrays, streams, or iterables. Additionally, it provides a method to
+ * retrieve a test run by its key.
  */
 public class CZScaleTestRuns extends CSet<CZScaleTestRun> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of test runs.</p>
+   * <p>Creates an empty collection of test runs.
    */
-  public CZScaleTestRuns() {
-  }
+  public CZScaleTestRuns() {}
 
   /**
    * Constructs a collection of test runs from an array of test runs.
@@ -43,7 +42,8 @@ public class CZScaleTestRuns extends CSet<CZScaleTestRun> {
   /**
    * Constructs a collection of test runs from an iterable of test runs.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleTestRun} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleTestRun} objects to initialize the
+   *     collection
    */
   public CZScaleTestRuns(Iterable<CZScaleTestRun> iterable) {
     super(iterable);

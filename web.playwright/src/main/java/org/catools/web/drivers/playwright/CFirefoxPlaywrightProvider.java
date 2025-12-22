@@ -8,15 +8,14 @@ import org.catools.web.enums.CBrowser;
 
 /**
  * Firefox Playwright provider supporting headed and headless modes.
- * <p>
- * This provider is thread-safe, using ThreadLocal to ensure each thread has its own
- * Playwright and Browser instances as required by Playwright's architecture.
- * </p>
- * <p>
- * Configurable options: headless mode, viewport settings, custom launch arguments.
- * </p>
  *
- * <p>Example usage:</p>
+ * <p>This provider is thread-safe, using ThreadLocal to ensure each thread has its own Playwright
+ * and Browser instances as required by Playwright's architecture.
+ *
+ * <p>Configurable options: headless mode, viewport settings, custom launch arguments.
+ *
+ * <p>Example usage:
+ *
  * <pre>{@code
  * CFirefoxPlaywrightProvider provider = new CFirefoxPlaywrightProvider();
  * CDriverEngine engine = provider.build();
@@ -28,32 +27,43 @@ import org.catools.web.enums.CBrowser;
 @Slf4j
 public class CFirefoxPlaywrightProvider implements CPlaywrightProvider {
 
-  private final ThreadLocal<Playwright> playwrightThreadLocal = ThreadLocal.withInitial(() -> {
-    log.debug("Creating new Playwright instance for thread: {}", Thread.currentThread().getName());
-    return Playwright.create();
-  });
+  private final ThreadLocal<Playwright> playwrightThreadLocal =
+      ThreadLocal.withInitial(
+          () -> {
+            log.debug(
+                "Creating new Playwright instance for thread: {}",
+                Thread.currentThread().getName());
+            return Playwright.create();
+          });
 
-  private final ThreadLocal<Browser> browserThreadLocal = ThreadLocal.withInitial(() -> {
-    BrowserType.LaunchOptions launchOptions = getLaunchOptions();
-    if (launchOptions == null) {
-      launchOptions = new BrowserType.LaunchOptions();
-    }
+  private final ThreadLocal<Browser> browserThreadLocal =
+      ThreadLocal.withInitial(
+          () -> {
+            BrowserType.LaunchOptions launchOptions = getLaunchOptions();
+            if (launchOptions == null) {
+              launchOptions = new BrowserType.LaunchOptions();
+            }
 
-    Playwright playwright = playwrightThreadLocal.get();
-    Browser browser = playwright.firefox().launch(launchOptions);
+            Playwright playwright = playwrightThreadLocal.get();
+            Browser browser = playwright.firefox().launch(launchOptions);
 
-    log.info("Firefox browser initialized for thread: {}. Launch Options: {}",
-             Thread.currentThread().getName(), launchOptions);
+            log.info(
+                "Firefox browser initialized for thread: {}. Launch Options: {}",
+                Thread.currentThread().getName(),
+                launchOptions);
 
-    return browser;
-  });
+            return browser;
+          });
 
   protected CFirefoxPlaywrightProvider() {
     // Register shutdown hook to clean up ThreadLocal resources
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      playwrightThreadLocal.remove();
-      browserThreadLocal.remove();
-    }));
+    Runtime.getRuntime()
+        .addShutdownHook(
+            new Thread(
+                () -> {
+                  playwrightThreadLocal.remove();
+                  browserThreadLocal.remove();
+                }));
   }
 
   @Override
@@ -70,5 +80,4 @@ public class CFirefoxPlaywrightProvider implements CPlaywrightProvider {
   public CBrowser getBrowser() {
     return CBrowser.FIREFOX;
   }
-
 }

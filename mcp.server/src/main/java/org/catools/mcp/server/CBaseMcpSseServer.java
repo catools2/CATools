@@ -5,8 +5,8 @@ import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportPro
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class is used to create a new instance of {@link CBaseMcpSseServer} based on the specified {@link
- * CMcpSseServerInfo} in HTTP SSE mode.
+ * This class is used to create a new instance of {@link CBaseMcpSseServer} based on the specified
+ * {@link CMcpSseServerInfo} in HTTP SSE mode.
  */
 @Slf4j
 public class CBaseMcpSseServer extends CBaseMcpServer<CMcpSseServerInfo> {

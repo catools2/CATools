@@ -1,11 +1,10 @@
 package org.catools.k8s.model;
 
+import java.util.Date;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
-
-import java.util.Date;
 
 @Data
 @Accessors(chain = true)

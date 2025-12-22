@@ -1,13 +1,12 @@
 package org.catools.etl.k8s.dao;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CRetry;
-
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CRetry;
 
 @Slf4j
 public class CEtlKubeBaseDao {
@@ -22,18 +21,18 @@ public class CEtlKubeBaseDao {
   }
 
   public static void remove(Object record) {
-    doTransaction(session -> {
-      session.remove(record);
-      return true;
-    });
+    doTransaction(
+        session -> {
+          session.remove(record);
+          return true;
+        });
   }
-
 
   public static <T> T merge(T record) {
     return doTransaction(session -> session.merge(record));
   }
 
-  public synchronized static <T> T doTransaction(Function<EntityManager, T> action) {
+  public static synchronized <T> T doTransaction(Function<EntityManager, T> action) {
     EntityManager session = getEntityManager();
     EntityTransaction tx = null;
     try {
@@ -49,18 +48,21 @@ public class CEtlKubeBaseDao {
       }
       throw e;
     } finally {
-      if (session.isJoinedToTransaction())
-        session.flush();
+      if (session.isJoinedToTransaction()) session.flush();
       session.close();
     }
   }
 
   protected static synchronized EntityManagerFactory getEntityManagerFactory() {
     if (entityManagerFactory == null) {
-      entityManagerFactory = CRetry.retry(idx -> {
-        log.debug("Attempt {} to connect to create kube entity manager", idx + 1);
-        return Persistence.createEntityManagerFactory("CKubePersistence");
-      }, 10, 10);
+      entityManagerFactory =
+          CRetry.retry(
+              idx -> {
+                log.debug("Attempt {} to connect to create kube entity manager", idx + 1);
+                return Persistence.createEntityManagerFactory("CEtlKubePersistence");
+              },
+              10,
+              10);
     }
     return entityManagerFactory;
   }

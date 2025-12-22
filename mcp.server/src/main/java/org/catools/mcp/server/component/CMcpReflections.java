@@ -1,36 +1,31 @@
 package org.catools.mcp.server.component;
 
+import static java.util.stream.Collectors.toSet;
+import static org.reflections.scanners.Scanners.FieldsAnnotated;
+import static org.reflections.scanners.Scanners.MethodsAnnotated;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.mcp.annotation.CMcpServerApplication;
 import org.reflections.Reflections;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.stream.Collectors.toSet;
-import static org.reflections.scanners.Scanners.FieldsAnnotated;
-import static org.reflections.scanners.Scanners.MethodsAnnotated;
-
 /**
- * Registers MCP server components (resources, prompts, and tools) with the specified server.
- * Uses Lombok to reduce boilerplate code for field access.
+ * Registers MCP server components (resources, prompts, and tools) with the specified server. Uses
+ * Lombok to reduce boilerplate code for field access.
  */
 @Slf4j
 @UtilityClass
 public final class CMcpReflections {
-  /**
-   * The reflections instance for MCP server components.
-   */
-  @Getter
-  private final Set<Reflections> reflections = new HashSet<>();
+  /** The reflections instance for MCP server components. */
+  @Getter private final Set<Reflections> reflections = new HashSet<>();
 
   public void addReflections(Set<Reflections> reflections) {
     CMcpReflections.reflections.addAll(reflections);
   }
-
 
   /**
    * Provides a {@link Reflections} instance for the main class.
@@ -54,10 +49,11 @@ public final class CMcpReflections {
   private Set<String> determineBasePackage(Class<?> mainClass, CMcpServerApplication application) {
     if (application != null) {
       if (application.basePackages() != null && application.basePackages().length > 0) {
-        Set<String> basePackages = Arrays.stream(application.basePackages())
-            .map(String::trim)
-            .filter(pkg -> !pkg.isBlank())
-            .collect(toSet());
+        Set<String> basePackages =
+            Arrays.stream(application.basePackages())
+                .map(String::trim)
+                .filter(pkg -> !pkg.isBlank())
+                .collect(toSet());
         ;
         if (!basePackages.isEmpty()) {
           return basePackages;

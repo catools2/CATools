@@ -22,8 +22,4 @@ import org.catools.common.extensions.verify.interfaces.verifier.CFileVerifier;
  * }
  * </code> </strong>
  */
-public interface CStaticFileExtension extends
-    CFileVerify,
-    CFileVerifier,
-    CFileState {
-}
+public interface CStaticFileExtension extends CFileVerify, CFileVerifier, CFileState {}

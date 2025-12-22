@@ -6,12 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 
 /**
- * Utility class for handling exceptions and stack traces.
- * This class provides convenient methods for extracting and formatting
- * exception information, including stack traces and error messages.
- * 
+ * Utility class for handling exceptions and stack traces. This class provides convenient methods
+ * for extracting and formatting exception information, including stack traces and error messages.
+ *
  * <p>All methods in this class are static and the class cannot be instantiated.
- * 
+ *
  * @author CATools Team
  * @version 1.0
  * @since 1.0
@@ -21,17 +20,16 @@ import org.catools.common.collections.CList;
 public class CExceptionUtil {
   /**
    * Retrieves the complete exception message combined with its stack trace.
-   * 
-   * <p>This method returns a formatted string containing both the exception's
-   * toString() representation and its full stack trace separated by two newlines.
-   * If the provided throwable is null, an empty string is returned.
-   * 
+   *
+   * <p>This method returns a formatted string containing both the exception's toString()
+   * representation and its full stack trace separated by two newlines. If the provided throwable is
+   * null, an empty string is returned.
+   *
    * @param t the throwable to extract message and stack trace from
-   * @return a string containing the exception message and stack trace,
-   *         or an empty string if the throwable is null
-   * 
+   * @return a string containing the exception message and stack trace, or an empty string if the
+   *     throwable is null
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * try {
    *   int result = 10 / 0;
    * } catch (ArithmeticException e) {
@@ -44,7 +42,7 @@ public class CExceptionUtil {
    *   //     at com.example.MyClass.main(MyClass.java:10)
    *   System.out.println(fullError);
    * }
-   * 
+   *
    * // Null handling
    * String result = CExceptionUtil.getMessageAndStackTrace(null);
    * // result = ""
@@ -59,18 +57,16 @@ public class CExceptionUtil {
 
   /**
    * Extracts and formats the stack trace from a throwable as a string.
-   * 
-   * <p>This method converts the stack trace elements of the given throwable
-   * into a single string, with each stack trace element separated by the
-   * system's line separator. If the provided throwable is null, an empty
-   * string is returned.
-   * 
+   *
+   * <p>This method converts the stack trace elements of the given throwable into a single string,
+   * with each stack trace element separated by the system's line separator. If the provided
+   * throwable is null, an empty string is returned.
+   *
    * @param t the throwable to extract the stack trace from
-   * @return a formatted string representation of the stack trace,
-   *         or an empty string if the throwable is null
-   * 
+   * @return a formatted string representation of the stack trace, or an empty string if the
+   *     throwable is null
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * try {
    *   throw new IllegalArgumentException("Invalid input");
    * } catch (IllegalArgumentException e) {
@@ -82,7 +78,7 @@ public class CExceptionUtil {
    *   //     at com.example.MyClass.main(MyClass.java:10)
    *   System.out.println(stackTrace);
    * }
-   * 
+   *
    * // Null handling
    * String result = CExceptionUtil.getStackTrace(null);
    * // result = ""
@@ -96,17 +92,16 @@ public class CExceptionUtil {
 
   /**
    * Prints the current thread's stack trace to the trace log level.
-   * 
-   * <p>This method captures the current stack trace of the executing thread
-   * and logs it at the TRACE level using the configured logger. This is useful
-   * for debugging purposes to understand the execution path that led to a
-   * particular point in the code.
-   * 
-   * <p><strong>Note:</strong> The stack trace will only be visible if the
-   * logging level is set to TRACE or a more verbose level.
-   * 
+   *
+   * <p>This method captures the current stack trace of the executing thread and logs it at the
+   * TRACE level using the configured logger. This is useful for debugging purposes to understand
+   * the execution path that led to a particular point in the code.
+   *
+   * <p><strong>Note:</strong> The stack trace will only be visible if the logging level is set to
+   * TRACE or a more verbose level.
+   *
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * public void complexMethod() {
    *   // Some complex logic here
    *   if (someCondition) {
@@ -120,7 +115,7 @@ public class CExceptionUtil {
    *     //         com.example.MyClass.main(MyClass.java:XX)
    *   }
    * }
-   * 
+   *
    * // Usage in a test or debugging scenario
    * public void debugWorkflow() {
    *   step1();

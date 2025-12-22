@@ -1,7 +1,14 @@
 package org.catools.common.extensions.verify;
 
 import lombok.extern.slf4j.Slf4j;
-import org.catools.common.extensions.verify.hard.*;
+import org.catools.common.extensions.verify.hard.CBooleanVerification;
+import org.catools.common.extensions.verify.hard.CCollectionVerification;
+import org.catools.common.extensions.verify.hard.CDateVerification;
+import org.catools.common.extensions.verify.hard.CFileVerification;
+import org.catools.common.extensions.verify.hard.CMapVerification;
+import org.catools.common.extensions.verify.hard.CNumberVerification;
+import org.catools.common.extensions.verify.hard.CObjectVerification;
+import org.catools.common.extensions.verify.hard.CStringVerification;
 
 @Slf4j
 public class CVerify {
@@ -14,7 +21,8 @@ public class CVerify {
   public static final CStringVerification String = new CStringVerification();
   public static final CFileVerification File = new CFileVerification();
   public static final CNumberVerification<Long> Long = new CNumberVerification<>();
-  public static final CNumberVerification<java.math.BigDecimal> BigDecimal = new CNumberVerification<>();
+  public static final CNumberVerification<java.math.BigDecimal> BigDecimal =
+      new CNumberVerification<>();
   public static final CNumberVerification<Double> Double = new CNumberVerification<>();
   public static final CNumberVerification<Float> Float = new CNumberVerification<>();
   public static final CNumberVerification<Integer> Int = new CNumberVerification<>();

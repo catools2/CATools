@@ -19,16 +19,13 @@ package org.catools.web.selectors;
 
 import java.util.Objects;
 
-/**
- * Helper class for web selectors.
- */
+/** Helper class for web selectors. */
 public abstract class CWebSelectorHelper {
   /**
    * Escapes the given string value to be used as a string literal in an XPath expression.
-   * <p>
-   * This method handles cases where the string contains single quotes, double quotes, or both.
+   *
+   * <p>This method handles cases where the string contains single quotes, double quotes, or both.
    * It constructs an appropriate XPath string literal using the `concat` function if necessary.
-   * </p>
    *
    * @param value the string value to escape
    * @return the escaped XPath string literal
@@ -49,7 +46,8 @@ public abstract class CWebSelectorHelper {
 
     for (int i = 0; i < substringsWithoutQuotes.length; ++i) {
       quoted.append("\"").append(substringsWithoutQuotes[i]).append("\"");
-      quoted.append(i == substringsWithoutQuotes.length - 1 ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', ");
+      quoted.append(
+          i == substringsWithoutQuotes.length - 1 ? (quoteIsLast ? ", '\"')" : ")") : ", '\"', ");
     }
 
     return quoted.toString();

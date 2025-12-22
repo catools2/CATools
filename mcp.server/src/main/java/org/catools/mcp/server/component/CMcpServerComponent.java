@@ -1,9 +1,8 @@
 package org.catools.mcp.server.component;
 
+import java.lang.reflect.Method;
 import org.catools.mcp.di.CDependencyInjector;
 import org.catools.mcp.di.CDependencyInjectorProvider;
-
-import java.lang.reflect.Method;
 
 /**
  * This interface represents an MCP server component (resource/prompt/tool) that is responsible for

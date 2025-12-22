@@ -9,12 +9,11 @@ import boofcv.factory.template.TemplateScoreType;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.Match;
 import boofcv.struct.image.GrayF32;
-import lombok.experimental.UtilityClass;
-import org.catools.common.collections.CList;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import lombok.experimental.UtilityClass;
+import org.catools.common.collections.CList;
 
 @UtilityClass
 public class CTemplateMatchingUtil {
@@ -27,7 +26,13 @@ public class CTemplateMatchingUtil {
    * @param matchPrecision
    * @return
    */
-  public static BufferedImage getMatch(GrayF32 image, GrayF32 template, GrayF32 mask, TemplateScoreType scoreType, int maxMatches, float matchPrecision) {
+  public static BufferedImage getMatch(
+      GrayF32 image,
+      GrayF32 template,
+      GrayF32 mask,
+      TemplateScoreType scoreType,
+      int maxMatches,
+      float matchPrecision) {
     // create output image to show results
     CList<Match> found = findMatches(image, template, mask, scoreType, maxMatches, matchPrecision);
 
@@ -40,16 +45,23 @@ public class CTemplateMatchingUtil {
   /**
    * Demonstrates how to search for matches of a template inside an image
    *
-   * @param image          Image being searched
-   * @param template       Template being looked for
-   * @param mask           Mask which determines the weight of each template pixel in the match score
-   * @param maxMatches     Number of expected matches it hopes to find
+   * @param image Image being searched
+   * @param template Template being looked for
+   * @param mask Mask which determines the weight of each template pixel in the match score
+   * @param maxMatches Number of expected matches it hopes to find
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return List of match location and scores
    */
-  public static CList<Match> findMatches(GrayF32 image, GrayF32 template, GrayF32 mask, TemplateScoreType scoreType, int maxMatches, float matchPrecision) {
+  public static CList<Match> findMatches(
+      GrayF32 image,
+      GrayF32 template,
+      GrayF32 mask,
+      TemplateScoreType scoreType,
+      int maxMatches,
+      float matchPrecision) {
     // create template matcher.
-    TemplateMatching<GrayF32> matcher = FactoryTemplateMatching.createMatcher(scoreType, GrayF32.class);
+    TemplateMatching<GrayF32> matcher =
+        FactoryTemplateMatching.createMatcher(scoreType, GrayF32.class);
 
     // Find the points which match the template the best
     matcher.setImage(image);
@@ -59,10 +71,9 @@ public class CTemplateMatchingUtil {
     return CList.of(matcher.getResults().toList()).getAll(m -> m.score * 100 >= matchPrecision);
   }
 
-  /**
-   * Helper function will is finds matches and displays the results as colored rectangles
-   */
-  private static BufferedImage drawRectanglesForMatches(GrayF32 image, GrayF32 template, List<Match> found) {
+  /** Helper function will is finds matches and displays the results as colored rectangles */
+  private static BufferedImage drawRectanglesForMatches(
+      GrayF32 image, GrayF32 template, List<Match> found) {
     BufferedImage output = new BufferedImage(image.width, image.height, BufferedImage.TYPE_INT_BGR);
 
     ConvertBufferedImage.convertTo(image, output);
@@ -91,12 +102,14 @@ public class CTemplateMatchingUtil {
   }
 
   /**
-   * Computes the template match intensity image and displays the results. Brighter intensity indicates
-   * a better match to the template.
+   * Computes the template match intensity image and displays the results. Brighter intensity
+   * indicates a better match to the template.
    */
-  public static BufferedImage getMatchIntensity(GrayF32 image, GrayF32 template, GrayF32 mask, TemplateScoreType scoreType) {
+  public static BufferedImage getMatchIntensity(
+      GrayF32 image, GrayF32 template, GrayF32 mask, TemplateScoreType scoreType) {
     // create algorithm for computing intensity image
-    TemplateMatchingIntensity<GrayF32> matchIntensity = FactoryTemplateMatching.createIntensity(scoreType, GrayF32.class);
+    TemplateMatchingIntensity<GrayF32> matchIntensity =
+        FactoryTemplateMatching.createIntensity(scoreType, GrayF32.class);
 
     // apply the template to the image
     matchIntensity.setInputImage(image);

@@ -1,10 +1,9 @@
 package org.catools.mcp.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Set;
 import org.catools.mcp.enums.CServerMode;
 import org.catools.mcp.enums.CServerType;
-
-import java.util.Set;
 
 /**
  * This record represents the configuration of an MCP (Model Context Protocol) server.
@@ -25,5 +24,4 @@ public record CMcpServerConfiguration(
     @JsonProperty("capabilities") CMcpServerCapabilities capabilities,
     @JsonProperty("change-notification") CMcpServerChangeNotification changeNotification,
     @JsonProperty("sse") CMcpServerSSE sse,
-    @JsonProperty("streamable") CMcpServerStreamable streamable) {
-}
+    @JsonProperty("streamable") CMcpServerStreamable streamable) {}

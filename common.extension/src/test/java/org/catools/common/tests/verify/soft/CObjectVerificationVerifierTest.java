@@ -1,10 +1,9 @@
 package org.catools.common.tests.verify.soft;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.extensions.verify.hard.CObjectVerification;
 import org.catools.common.tests.verify.CObjectVerificationBaseTest;
-
-import java.util.function.Consumer;
 
 public class CObjectVerificationVerifierTest extends CObjectVerificationBaseTest {
   @Override

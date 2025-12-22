@@ -15,8 +15,7 @@ import org.catools.mcp.server.CEmbeddedJettyServer;
 @Slf4j
 public class CConfigurableMcpSseServer implements CConfigurableMcpServer {
 
-  @Getter
-  private final CMcpServerConfiguration configuration;
+  @Getter private final CMcpServerConfiguration configuration;
 
   /**
    * Creates a new instance of {@link CConfigurableMcpSseServer} with the specified configuration.

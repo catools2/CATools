@@ -1,8 +1,6 @@
 package org.catools.mcp.server;
 
-/**
- * This interface is used to define the contract for an MCP server.
- */
+/** This interface is used to define the contract for an MCP server. */
 public interface CMcpServer<S extends CMcpServerInfo> {
   /**
    * Returns the sync specification for the MCP server.

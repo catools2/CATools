@@ -22,8 +22,5 @@ import org.catools.common.extensions.verify.interfaces.verifier.CIterableVerifie
  * }
  * </code> </strong>
  */
-public interface CStaticIterableExtension<E, C extends Iterable<E>> extends
-    CIterableVerify<E, C>,
-    CIterableVerifier<E, C>,
-    CIterableState<E, C> {
-}
+public interface CStaticIterableExtension<E, C extends Iterable<E>>
+    extends CIterableVerify<E, C>, CIterableVerifier<E, C>, CIterableState<E, C> {}

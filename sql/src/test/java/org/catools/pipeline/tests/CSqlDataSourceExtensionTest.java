@@ -1,10 +1,9 @@
 package org.catools.pipeline.tests;
 
+import java.math.BigDecimal;
 import org.catools.sql.CSqlDataSourceExtension;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
 
 public class CSqlDataSourceExtensionTest extends CBaseTest {
 
@@ -12,8 +11,10 @@ public class CSqlDataSourceExtensionTest extends CBaseTest {
   public void testQueryObjectMapper() {
     String sql = "Select short_message " + VALID_FROM_COMMIT;
     SingleColumnRowMapper<String> rowMapper = new SingleColumnRowMapper<>();
-    CSqlDataSourceExtension.Object.query(sql, PRIMARY, 1, 100).verifyEquals(commit.getShortMessage());
-    CSqlDataSourceExtension.Object.query(sql, rowMapper, PRIMARY, 1, 100).verifyEquals(commit.getShortMessage());
+    CSqlDataSourceExtension.Object.query(sql, PRIMARY, 1, 100)
+        .verifyEquals(commit.getShortMessage());
+    CSqlDataSourceExtension.Object.query(sql, rowMapper, PRIMARY, 1, 100)
+        .verifyEquals(commit.getShortMessage());
   }
 
   @Test
@@ -38,7 +39,8 @@ public class CSqlDataSourceExtensionTest extends CBaseTest {
   @Test
   public void testQueryString() {
     String sql = "Select short_message " + VALID_FROM_COMMIT;
-    CSqlDataSourceExtension.String.query(sql, PRIMARY, 1, 100).verifyEquals(commit.getShortMessage());
+    CSqlDataSourceExtension.String.query(sql, PRIMARY, 1, 100)
+        .verifyEquals(commit.getShortMessage());
   }
 
   @Test
@@ -50,7 +52,8 @@ public class CSqlDataSourceExtensionTest extends CBaseTest {
   @Test
   public void testQueryDate() {
     String sql = "Select commit_time " + VALID_FROM_COMMIT;
-    CSqlDataSourceExtension.Date.query(sql, PRIMARY, 1, 100).verifyEqualsByFormat(commit.getCommitTime(), DATE_FORMAT);
+    CSqlDataSourceExtension.Date.query(sql, PRIMARY, 1, 100)
+        .verifyEqualsByFormat(commit.getCommitTime(), DATE_FORMAT);
   }
 
   @Test
@@ -66,7 +69,8 @@ public class CSqlDataSourceExtensionTest extends CBaseTest {
 
   @Test
   public void testQueryBigDecimal() {
-    CSqlDataSourceExtension.BigDecimal.query(SELECT_COUNT, PRIMARY, 1, 100).verifyGreaterOrEqual(new BigDecimal("70"));
+    CSqlDataSourceExtension.BigDecimal.query(SELECT_COUNT, PRIMARY, 1, 100)
+        .verifyGreaterOrEqual(new BigDecimal("70"));
   }
 
   @Test

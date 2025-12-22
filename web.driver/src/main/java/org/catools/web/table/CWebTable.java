@@ -11,6 +11,7 @@ import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.functions.CMemoize;
 import org.catools.web.collections.CWebIterable;
+import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.factory.CWebElementFactory;
@@ -27,21 +28,23 @@ import java.util.function.Supplier;
  * functionality for interacting with HTML tables in web applications.
  *
  * <p>This class extends CWebElement and implements CWebComponent and CWebIterable interfaces,
- * providing a rich set of methods for searching, filtering, and manipulating table data.
- * It supports both simple and complex search criteria, predicate-based filtering, and
- * various retrieval patterns.</p>
+ * providing a rich set of methods for searching, filtering, and manipulating table data. It
+ * supports both simple and complex search criteria, predicate-based filtering, and various
+ * retrieval patterns.
  *
- * <p><strong>Key Features:</strong></p>
+ * <p><strong>Key Features:</strong>
+ *
  * <ul>
- *   <li>Dynamic header mapping and column indexing</li>
- *   <li>Flexible search criteria with multiple column support</li>
- *   <li>Predicate-based filtering for complex queries</li>
- *   <li>Various retrieval patterns (first, any, all, etc.)</li>
- *   <li>Thread-safe search criteria management</li>
- *   <li>Configurable XPath expressions for different table structures</li>
+ *   <li>Dynamic header mapping and column indexing
+ *   <li>Flexible search criteria with multiple column support
+ *   <li>Predicate-based filtering for complex queries
+ *   <li>Various retrieval patterns (first, any, all, etc.)
+ *   <li>Thread-safe search criteria management
+ *   <li>Configurable XPath expressions for different table structures
  * </ul>
  *
- * <p><strong>Usage Example:</strong></p>
+ * <p><strong>Usage Example:</strong>
+ *
  * <pre>{@code
  * // Create a custom table implementation
  * public class ProductTable extends CWebTable<ChromeDriver, ProductRow> {
@@ -72,16 +75,16 @@ import java.util.function.Supplier;
  * CList<ProductRow> expensiveElectronics = table.getAll(criteria);
  * }</pre>
  *
- * @param <DR> the driver type that extends CDriver
- * @param <R>  the row type that extends CWebTableRow
+ * @param <EE> the driver type that extends CDriver
+ * @param <R> the row type that extends CWebTableRow
  * @author CATools Team
  * @since 1.0
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?>>
-    extends CWebElement<DR> implements CWebComponent<DR>, CWebIterable<R> {
+public abstract class CWebTable<EE extends CElementEngine<?>, R extends CWebTableRow<EE, ?>>
+    extends CWebElement implements CWebComponent, CWebIterable<R> {
 
   protected String searchCriteriaXpathFormat = "[%d][contains(.,%s)]/ancestor::tr[1]";
   protected String tHeadXpath = "/thead";
@@ -91,21 +94,24 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   protected String rowXpath = "/tr";
   protected String cellXpath = "/td";
   private String baseXpath;
-  @Getter(AccessLevel.NONE)
-  @Setter(AccessLevel.NONE)
-  private CMemoize<CWebTableHeaderInfo<DR>> memoizeHeadersMap = new CMemoize<>(this::readHeaders);
 
   @Getter(AccessLevel.NONE)
   @Setter(AccessLevel.NONE)
-  private final ThreadLocal<CMap<String, String>> searchCriteria = ThreadLocal.withInitial(CHashMap::new);
+  private CMemoize<CWebTableHeaderInfo> memoizeHeadersMap = new CMemoize<>(this::readHeaders);
+
+  @Getter(AccessLevel.NONE)
+  @Setter(AccessLevel.NONE)
+  private final ThreadLocal<CMap<String, String>> searchCriteria =
+      ThreadLocal.withInitial(CHashMap::new);
 
   /**
    * Constructs a CWebTable with the default timeout.
    *
-   * @param name      the name identifier for this table
-   * @param driver    the web driver instance
+   * @param name the name identifier for this table
+   * @param driver the web driver instance
    * @param baseXpath the base XPath expression to locate the table element
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * CWebTable<ChromeDriver, UserRow> userTable = new UserTableImpl(
    *     "Users Table",
    *     chromeDriver,
@@ -113,18 +119,19 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * );
    * }</pre>
    */
-  public CWebTable(String name, DR driver, String baseXpath) {
+  public CWebTable(String name, EE driver, String baseXpath) {
     this(name, driver, baseXpath, CDriver.DEFAULT_TIMEOUT);
   }
 
   /**
    * Constructs a CWebTable with a custom timeout.
    *
-   * @param name      the name identifier for this table
-   * @param driver    the web driver instance
+   * @param name the name identifier for this table
+   * @param driver the web driver instance
    * @param baseXpath the base XPath expression to locate the table element
-   * @param waitSec   the timeout in seconds to wait for elements
-   * @example <pre>{@code
+   * @param waitSec the timeout in seconds to wait for elements
+   * @example
+   *     <pre>{@code
    * CWebTable<ChromeDriver, ProductRow> productTable = new ProductTableImpl(
    *     "Products Table",
    *     chromeDriver,
@@ -133,7 +140,7 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * );
    * }</pre>
    */
-  public CWebTable(String name, DR driver, String baseXpath, int waitSec) {
+  public CWebTable(String name, EE driver, String baseXpath, int waitSec) {
     super(name, driver, CBy.xpath(baseXpath), waitSec);
     this.baseXpath = baseXpath;
     CWebElementFactory.initElements(this);
@@ -142,12 +149,13 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Abstract method to get a table row record at the specified index.
-   * Implementations must provide logic to create and return the appropriate row type.
+   * Abstract method to get a table row record at the specified index. Implementations must provide
+   * logic to create and return the appropriate row type.
    *
    * @param idx the zero-based index of the row to retrieve
    * @return the row record at the specified index
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * @Override
    * public UserRow getRecord(int idx) {
    *     return new UserRow(driver, getRowXpath(idx));
@@ -162,7 +170,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    *
    * @param idx the zero-based index of the row to check
    * @return true if the record exists and is visible, false otherwise
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * if (table.hasRecord(0)) {
    *     UserRow firstUser = table.getRecord(0);
    *     // Process first user
@@ -171,16 +180,18 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    */
   @Override
   public boolean hasRecord(int idx) {
-    return isDataAvailable() && driver.$(getRowXpath(idx)).isVisible(0);
+    return isDataAvailable()
+        && new CWebElement("Check Record", elementEngine, getRowXpath(idx)).isVisible(0);
   }
 
   /**
    * Retrieves all rows that match the specified header-value pair.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
+   * @param value the value to search for in the specified column
    * @return a list of all matching rows
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get all users with status "Active"
    * CList<UserRow> activeUsers = table.getAll("Status", "Active");
    *
@@ -193,12 +204,13 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves all rows that match the specified search criteria map.
-   * Multiple criteria are combined with AND logic.
+   * Retrieves all rows that match the specified search criteria map. Multiple criteria are combined
+   * with AND logic.
    *
    * @param searchCriteria a map of column headers to values for filtering
    * @return a list of all matching rows
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get all active premium users
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Status", "Active",
@@ -214,11 +226,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   /**
    * Retrieves all rows that match the header-value pair and satisfy the predicate.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
    * @return a list of all matching rows that satisfy the predicate
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get all active users whose names start with "John"
    * CList<UserRow> johnUsers = table.getAll("Status", "Active",
    *     user -> user.getName().startsWith("John"));
@@ -232,9 +245,10 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves all rows that match the search criteria and satisfy the predicate.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
+   * @param predicate additional filtering condition
    * @return a list of all matching rows that satisfy the predicate
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Department", "Engineering",
    *     "Location", "San Francisco"
@@ -250,13 +264,14 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves any (random) row that matches the specified header-value pair.
-   * Useful when you need any matching record rather than a specific one.
+   * Retrieves any (random) row that matches the specified header-value pair. Useful when you need
+   * any matching record rather than a specific one.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
+   * @param value the value to search for in the specified column
    * @return any matching row, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get any available product for testing
    * ProductRow anyProduct = table.getAny("Status", "Available");
    * }</pre>
@@ -270,7 +285,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    *
    * @param searchCriteria a map of column headers to values for filtering
    * @return any matching row, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Status", "Active",
    *     "Type", "Premium"
@@ -286,10 +302,11 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first row that matches the specified header-value pair.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
+   * @param value the value to search for in the specified column
    * @return the first matching row
    * @throws RuntimeException if no matching row is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get the first user with email "john@example.com"
    * UserRow john = table.getFirst("Email", "john@example.com");
    * }</pre>
@@ -304,7 +321,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * @param searchCriteria a map of column headers to values for filtering
    * @return the first matching row
    * @throws RuntimeException if no matching row is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Status", "Active",
    *     "Role", "Admin"
@@ -319,12 +337,13 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   /**
    * Retrieves the first row that matches the header-value pair and satisfies the predicate.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
    * @return the first matching row that satisfies the predicate
    * @throws RuntimeException if no matching row is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get first active user whose name contains "Smith"
    * UserRow smith = table.getFirst("Status", "Active",
    *     user -> user.getName().contains("Smith"));
@@ -338,10 +357,11 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first row that matches the search criteria and satisfies the predicate.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
+   * @param predicate additional filtering condition
    * @return the first matching row that satisfies the predicate
    * @throws RuntimeException if no matching row is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Department", "Sales",
    *     "Location", "New York"
@@ -359,10 +379,11 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row or returns the provided alternative if none found.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
-   * @param other  the alternative row to return if no match is found
+   * @param value the value to search for in the specified column
+   * @param other the alternative row to return if no match is found
    * @return the first matching row, or the alternative if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow defaultUser = new UserRow("Default User");
    * UserRow user = table.getFirstOrElse("Email", "test@example.com", defaultUser);
    * }</pre>
@@ -375,9 +396,10 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row or returns the provided alternative if none found.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param other          the alternative row to return if no match is found
+   * @param other the alternative row to return if no match is found
    * @return the first matching row, or the alternative if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Role", "SuperAdmin");
    * UserRow defaultAdmin = new UserRow("Default Admin");
    * UserRow admin = table.getFirstOrElse(criteria, defaultAdmin);
@@ -390,12 +412,13 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   /**
    * Retrieves the first matching row that satisfies the predicate, or returns the alternative.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
-   * @param other     the alternative row to return if no match is found
+   * @param other the alternative row to return if no match is found
    * @return the first matching row that satisfies the predicate, or the alternative
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow guestUser = new UserRow("Guest");
    * UserRow premiumUser = table.getFirstOrElse("Status", "Active",
    *     user -> user.isPremium(), guestUser);
@@ -409,10 +432,11 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row that satisfies the predicate, or returns the alternative.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
-   * @param other          the alternative row to return if no match is found
+   * @param predicate additional filtering condition
+   * @param other the alternative row to return if no match is found
    * @return the first matching row that satisfies the predicate, or the alternative
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Department", "IT");
    * EmployeeRow defaultIT = new EmployeeRow("Default IT");
    *
@@ -425,14 +449,15 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row or gets an alternative using the provided supplier.
-   * The supplier is only called if no match is found, providing lazy evaluation.
+   * Retrieves the first matching row or gets an alternative using the provided supplier. The
+   * supplier is only called if no match is found, providing lazy evaluation.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
-   * @param other  the supplier to provide an alternative row if no match is found
+   * @param value the value to search for in the specified column
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row, or the result of the supplier if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow user = table.getFirstOrElseGet("Email", "test@example.com",
    *     () -> createDefaultUser());
    * }</pre>
@@ -445,9 +470,10 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row or gets an alternative using the provided supplier.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param other          the supplier to provide an alternative row if no match is found
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row, or the result of the supplier if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Role", "Manager");
    * UserRow manager = table.getFirstOrElseGet(criteria,
    *     () -> createTemporaryManager());
@@ -458,15 +484,16 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or gets an alternative
-   * using the provided supplier.
+   * Retrieves the first matching row that satisfies the predicate, or gets an alternative using the
+   * provided supplier.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
-   * @param other     the supplier to provide an alternative row if no match is found
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row that satisfies the predicate, or the result of the supplier
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow activeUser = table.getFirstOrElseGet("Status", "Active",
    *     user -> user.getLastLogin().isAfter(yesterday),
    *     () -> findBackupUser());
@@ -478,14 +505,15 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or gets an alternative
-   * using the provided supplier.
+   * Retrieves the first matching row that satisfies the predicate, or gets an alternative using the
+   * provided supplier.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
-   * @param other          the supplier to provide an alternative row if no match is found
+   * @param predicate additional filtering condition
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row that satisfies the predicate, or the result of the supplier
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Department", "Sales");
    * EmployeeRow topSales = table.getFirstOrElseGet(criteria,
    *     emp -> emp.getSalesAmount() > 100000,
@@ -498,13 +526,14 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row or returns null if none found.
-   * Provides a null-safe way to search for rows without throwing exceptions.
+   * Retrieves the first matching row or returns null if none found. Provides a null-safe way to
+   * search for rows without throwing exceptions.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
+   * @param value the value to search for in the specified column
    * @return the first matching row, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow user = table.getFirstOrNull("Email", "unknown@example.com");
    * if (user != null) {
    *     // Process user
@@ -522,7 +551,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    *
    * @param searchCriteria a map of column headers to values for filtering
    * @return the first matching row, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of(
    *     "Status", "Inactive",
    *     "Type", "Trial"
@@ -537,11 +567,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   /**
    * Retrieves the first matching row that satisfies the predicate, or returns null.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
    * @return the first matching row that satisfies the predicate, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow recentUser = table.getFirstOrNull("Status", "Active",
    *     user -> user.getCreatedDate().isAfter(lastWeek));
    * }</pre>
@@ -554,9 +585,10 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row that satisfies the predicate, or returns null.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
+   * @param predicate additional filtering condition
    * @return the first matching row that satisfies the predicate, or null if none found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Role", "Manager");
    * EmployeeRow youngManager = table.getFirstOrNull(criteria,
    *     emp -> emp.getAge() < 35);
@@ -567,15 +599,16 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or any matching row
-   * if no row satisfies the predicate. This is useful when you prefer specific criteria
-   * but will accept any match as fallback.
+   * Retrieves the first matching row that satisfies the predicate, or any matching row if no row
+   * satisfies the predicate. This is useful when you prefer specific criteria but will accept any
+   * match as fallback.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate preferred filtering condition
    * @return the first matching row that satisfies the predicate, or any matching row as fallback
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Prefer active users, but accept any user with matching email
    * UserRow user = table.getFirstOrAny("Email", "test@example.com",
    *     u -> u.getStatus().equals("Active"));
@@ -586,13 +619,14 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or any matching row
-   * if no row satisfies the predicate.
+   * Retrieves the first matching row that satisfies the predicate, or any matching row if no row
+   * satisfies the predicate.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      preferred filtering condition
+   * @param predicate preferred filtering condition
    * @return the first matching row that satisfies the predicate, or any matching row as fallback
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Department", "Engineering");
    * // Prefer senior engineers, but accept any engineer
    * EmployeeRow engineer = table.getFirstOrAny(criteria,
@@ -607,11 +641,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row or throws the specified exception if none found.
    *
    * @param header the column header name to search in
-   * @param value  the value to search for in the specified column
-   * @param e      the exception to throw if no match is found
+   * @param value the value to search for in the specified column
+   * @param e the exception to throw if no match is found
    * @return the first matching row
    * @throws RuntimeException the provided exception if no match is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow admin = table.getFirstOrThrow("Role", "Admin",
    *     new IllegalStateException("No admin user found"));
    * }</pre>
@@ -624,10 +659,11 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * Retrieves the first matching row or throws the specified exception if none found.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param e              the exception to throw if no match is found
+   * @param e the exception to throw if no match is found
    * @return the first matching row
    * @throws RuntimeException the provided exception if no match is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Status", "SuperUser");
    * UserRow superUser = table.getFirstOrThrow(criteria,
    *     new SecurityException("SuperUser not found"));
@@ -638,17 +674,18 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or throws an exception
-   * generated by the supplier if none found.
+   * Retrieves the first matching row that satisfies the predicate, or throws an exception generated
+   * by the supplier if none found.
    *
-   * @param <X>               the exception type
-   * @param header            the column header name to search in
-   * @param value             the value to search for in the specified column
-   * @param predicate         additional filtering condition
+   * @param <X> the exception type
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
+   * @param predicate additional filtering condition
    * @param exceptionSupplier supplier that generates the exception to throw
    * @return the first matching row that satisfies the predicate
    * @throws X the generated exception if no match is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow premiumUser = table.getFirstOrThrow("Status", "Active",
    *     user -> user.isPremium(),
    *     () -> new BusinessException("No premium active users found"));
@@ -663,16 +700,17 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or throws an exception
-   * generated by the supplier if none found.
+   * Retrieves the first matching row that satisfies the predicate, or throws an exception generated
+   * by the supplier if none found.
    *
-   * @param <X>               the exception type
-   * @param searchCriteria    a map of column headers to values for filtering
-   * @param predicate         additional filtering condition
+   * @param <X> the exception type
+   * @param searchCriteria a map of column headers to values for filtering
+   * @param predicate additional filtering condition
    * @param exceptionSupplier supplier that generates the exception to throw
    * @return the first matching row that satisfies the predicate
    * @throws X the generated exception if no match is found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Department", "Finance");
    * EmployeeRow seniorFinance = table.getFirstOrThrow(criteria,
    *     emp -> emp.getExperience() > 10,
@@ -683,20 +721,21 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
       Map<String, String> searchCriteria,
       Predicate<R> predicate,
       Supplier<? extends X> exceptionSupplier) {
-    return performActionOnTable(searchCriteria, () -> getFirstOrThrow(predicate, exceptionSupplier));
+    return performActionOnTable(
+        searchCriteria, () -> getFirstOrThrow(predicate, exceptionSupplier));
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or gets an alternative
-   * using the provided supplier. This is an overloaded method providing flexibility
-   * in parameter ordering.
+   * Retrieves the first matching row that satisfies the predicate, or gets an alternative using the
+   * provided supplier. This is an overloaded method providing flexibility in parameter ordering.
    *
-   * @param header    the column header name to search in
-   * @param value     the value to search for in the specified column
+   * @param header the column header name to search in
+   * @param value the value to search for in the specified column
    * @param predicate additional filtering condition
-   * @param other     the supplier to provide an alternative row if no match is found
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row that satisfies the predicate, or the result of the supplier
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * UserRow recentActiveUser = table.getFirstOrElse("Status", "Active",
    *     user -> user.getLastLogin().isAfter(yesterday),
    *     () -> getDefaultUser());
@@ -707,14 +746,15 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Retrieves the first matching row that satisfies the predicate, or gets an alternative
-   * using the provided supplier.
+   * Retrieves the first matching row that satisfies the predicate, or gets an alternative using the
+   * provided supplier.
    *
    * @param searchCriteria a map of column headers to values for filtering
-   * @param predicate      additional filtering condition
-   * @param other          the supplier to provide an alternative row if no match is found
+   * @param predicate additional filtering condition
+   * @param other the supplier to provide an alternative row if no match is found
    * @return the first matching row that satisfies the predicate, or the result of the supplier
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Map<String, String> criteria = ImmutableMap.of("Team", "DevOps");
    * EmployeeRow leadDevOps = table.getFirstOrElse(criteria,
    *     emp -> emp.getRole().equals("Lead"),
@@ -732,14 +772,15 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * @param headerName the name of the header column
    * @return the header web element
    * @throws RuntimeException if the header is not found
-   * @example <pre>{@code
-   * CWebElement<DR> nameHeader = table.getHeader("Full Name");
+   * @example
+   *     <pre>{@code
+   * CWebElement nameHeader = table.getHeader("Full Name");
    * if (nameHeader.isVisible()) {
    *     nameHeader.click(); // Sort by name
    * }
    * }</pre>
    */
-  public CWebElement<DR> getHeader(String headerName) {
+  public CWebElement getHeader(String headerName) {
     return getHeader(getHeaderIndex(headerName));
   }
 
@@ -748,16 +789,17 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    *
    * @param idx the 1-based index of the header column
    * @return the header web element
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get the first header column
-   * CWebElement<DR> firstHeader = table.getHeader(1);
+   * CWebElement firstHeader = table.getHeader(1);
    * firstHeader.click(); // Sort by first column
    * }</pre>
    */
-  public CWebElement<DR> getHeader(int idx) {
-    return new CWebElement<>(
+  public CWebElement getHeader(int idx) {
+    return new CWebElement(
         "Header " + idx,
-        driver,
+        elementEngine,
         CBy.xpath(
             String.format(
                 "(%s)[%d]", baseXpath + tHeadXpath + headerRowXpath + headerCellXpath, idx)));
@@ -769,7 +811,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * @param header the header column name
    * @return the 1-based index of the header column
    * @throws RuntimeException if the header is not found
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * Integer emailIndex = table.getHeaderIndex("Email Address");
    * System.out.println("Email column is at position: " + emailIndex);
    * }</pre>
@@ -779,11 +822,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Gets a map of header indices to header names for all columns.
-   * This uses cached results for performance.
+   * Gets a map of header indices to header names for all columns. This uses cached results for
+   * performance.
    *
    * @return a map where keys are 1-based column indices and values are header names
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * CMap<Integer, String> headers = table.getHeadersMap();
    * headers.forEach((index, name) ->
    *     System.out.println("Column " + index + ": " + name));
@@ -798,7 +842,8 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    *
    * @param reset if true, clears the cached header information and re-reads from DOM
    * @return a map where keys are 1-based column indices and values are header names
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Force refresh of header information
    * CMap<Integer, String> freshHeaders = table.getHeadersMap(true);
    *
@@ -814,12 +859,13 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Gets a map of visible header indices to header names, with option to reset cache.
-   * Only includes headers that are currently visible in the DOM.
+   * Gets a map of visible header indices to header names, with option to reset cache. Only includes
+   * headers that are currently visible in the DOM.
    *
    * @param reset if true, clears the cached header information and re-reads from DOM
    * @return a map where keys are 1-based column indices and values are visible header names
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // Get only visible headers (useful for responsive tables)
    * CMap<Integer, String> visibleHeaders = table.getVisibleHeadersMap(true);
    * System.out.println("Visible columns: " + visibleHeaders.size());
@@ -833,11 +879,12 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
   }
 
   /**
-   * Checks if the table contains any data rows.
-   * This method verifies that at least one data row exists in the table body.
+   * Checks if the table contains any data rows. This method verifies that at least one data row
+   * exists in the table body.
    *
    * @return true if data is available in the table, false otherwise
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * if (table.isDataAvailable()) {
    *     CList<UserRow> users = table.getAll();
    *     processUsers(users);
@@ -847,17 +894,22 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
    * }</pre>
    */
   public boolean isDataAvailable() {
-    return driver.$(String.format("(%s)[1]", baseXpath + tBodyXpath + rowXpath)).Present.isFalse();
+    return new CWebElement(
+            "Check Data Availability",
+            elementEngine,
+            "(%s)[1]".formatted(baseXpath + tBodyXpath + rowXpath))
+        .Present.isFalse();
   }
 
   /**
-   * Generates the XPath for a specific table row based on current search criteria and index.
-   * This method constructs a dynamic XPath that incorporates any active search criteria
-   * to locate the exact row needed.
+   * Generates the XPath for a specific table row based on current search criteria and index. This
+   * method constructs a dynamic XPath that incorporates any active search criteria to locate the
+   * exact row needed.
    *
    * @param idx the zero-based index of the row within the filtered results
    * @return the complete XPath string to locate the specified row
-   * @example <pre>{@code
+   * @example
+   *     <pre>{@code
    * // With search criteria set for "Status" = "Active"
    * String rowXpath = table.getRowXpath(0); // Gets first active user row
    *
@@ -870,17 +922,19 @@ public abstract class CWebTable<DR extends CDriver, R extends CWebTableRow<DR, ?
     String rowCellLocatorByIndexAndText = cellXpath + searchCriteriaXpathFormat;
     if (searchCriteria.get() != null && searchCriteria.get().isNotEmpty()) {
       for (Map.Entry<String, String> entry : searchCriteria.get().entrySet()) {
-        searchXpath.append(String.format(
-            rowCellLocatorByIndexAndText,
-            getHeadersMap().getFirstKeyByValue(entry.getKey()),
-            CWebSelectorHelper.escape(entry.getValue())));
+        searchXpath.append(
+            String.format(
+                rowCellLocatorByIndexAndText,
+                getHeadersMap().getFirstKeyByValue(entry.getKey()),
+                CWebSelectorHelper.escape(entry.getValue())));
       }
     }
     return String.format("(%s)[%s]", baseXpath + tBodyXpath + rowXpath + searchXpath, idx + 1);
   }
 
-  protected CWebTableHeaderInfo<DR> readHeaders() {
-    return new CWebTableHeaderInfo<>(driver, baseXpath + tHeadXpath + headerRowXpath + headerCellXpath);
+  protected CWebTableHeaderInfo readHeaders() {
+    return new CWebTableHeaderInfo(
+        elementEngine, baseXpath + tHeadXpath + headerRowXpath + headerCellXpath);
   }
 
   protected <O> O performActionOnTable(Map<String, String> criteria, Supplier<O> supplier) {

@@ -1,5 +1,15 @@
 package org.catools.media.utils;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UncheckedIOException;
+import java.util.Base64;
+import javax.imageio.ImageIO;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.Level;
@@ -10,12 +20,6 @@ import org.catools.media.enums.CImageComparisonType;
 import org.catools.media.exception.CIOException;
 import org.catools.media.exception.CUnSupportedTypeException;
 import org.catools.reportportal.utils.CReportPortalUtil;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.*;
-import java.util.Base64;
 
 @UtilityClass
 @Slf4j
@@ -63,13 +67,14 @@ public class CImageUtil {
    * @return
    */
   public static BufferedImage readImage(CResource resource) {
-    return resource.performActionOnResource((s, inputStream) -> {
-      try {
-        return ImageIO.read(inputStream);
-      } catch (IOException e) {
-        throw new CIOException("Cannot read file " + s, e);
-      }
-    });
+    return resource.performActionOnResource(
+        (s, inputStream) -> {
+          try {
+            return ImageIO.read(inputStream);
+          } catch (IOException e) {
+            throw new CIOException("Cannot read file " + s, e);
+          }
+        });
   }
 
   /**
@@ -107,13 +112,14 @@ public class CImageUtil {
    * @return
    */
   public static BufferedImage readImageOrNull(CResource resource) {
-    return resource.performActionOnResource((s, inputStream) -> {
-      try {
-        return ImageIO.read(inputStream);
-      } catch (IOException e) {
-        return null;
-      }
-    });
+    return resource.performActionOnResource(
+        (s, inputStream) -> {
+          try {
+            return ImageIO.read(inputStream);
+          } catch (IOException e) {
+            return null;
+          }
+        });
   }
 
   /**
@@ -191,10 +197,9 @@ public class CImageUtil {
     return os.toString();
   }
 
-
   /**
-   * Save difference between 2 files in a file and return it back.
-   * If anything went wrong, method returns null.
+   * Save difference between 2 files in a file and return it back. If anything went wrong, method
+   * returns null.
    *
    * @param actual
    * @param expected

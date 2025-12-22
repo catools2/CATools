@@ -1,6 +1,13 @@
 package org.catools.mcp.server.component;
 
 import io.modelcontextprotocol.server.McpSyncServer;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,29 +19,17 @@ import org.catools.mcp.di.CDependencyInjector;
 import org.catools.mcp.di.CDependencyInjectorProvider;
 import org.reflections.Reflections;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-
 /**
- * Registers MCP server components (resources, prompts, and tools) with the specified server.
- * Uses Lombok to reduce boilerplate code for field access.
+ * Registers MCP server components (resources, prompts, and tools) with the specified server. Uses
+ * Lombok to reduce boilerplate code for field access.
  */
 @Slf4j
 @Getter
 public final class CMcpServerComponentRegister {
-  /**
-   * The dependency injector for MCP server components.
-   */
+  /** The dependency injector for MCP server components. */
   private final CDependencyInjector injector;
 
-  /**
-   * The MCP sync server to register components with.
-   */
+  /** The MCP sync server to register components with. */
   private final CImmutable<McpSyncServer> server;
 
   /**
@@ -58,11 +53,10 @@ public final class CMcpServerComponentRegister {
     return new CMcpServerComponentRegister(server);
   }
 
-  /**
-   * Registers MCP server components (resources, prompts, and tools) with the specified server.
-   */
+  /** Registers MCP server components (resources, prompts, and tools) with the specified server. */
   public void registerComponents(Set<String> groupsFilter) {
-    register(CMcpResource.class, groupsFilter, CMcpServerResource.class, McpSyncServer::addResource);
+    register(
+        CMcpResource.class, groupsFilter, CMcpServerResource.class, McpSyncServer::addResource);
     register(CMcpPrompt.class, groupsFilter, CMcpServerPrompt.class, McpSyncServer::addPrompt);
     register(CMcpTool.class, groupsFilter, CMcpServerTool.class, McpSyncServer::addTool);
   }
@@ -70,10 +64,10 @@ public final class CMcpServerComponentRegister {
   /**
    * Registers MCP server components with the specified server.
    *
-   * @param annotationClass    the annotation class to use for component discovery
-   * @param componentClass     the component class to use for component creation
+   * @param annotationClass the annotation class to use for component discovery
+   * @param componentClass the component class to use for component creation
    * @param serverAddComponent the method to use for adding components to the server
-   * @param <T>                the type of the component to register
+   * @param <T> the type of the component to register
    */
   private <T> void register(
       Class<? extends Annotation> annotationClass,
@@ -104,7 +98,8 @@ public final class CMcpServerComponentRegister {
     }
   }
 
-  private static Set<String> getGroupsFiledFromAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+  private static Set<String> getGroupsFiledFromAnnotation(
+      Method method, Class<? extends Annotation> annotationClass) {
     if (method == null || annotationClass == null) return Collections.emptySet();
     Annotation annotation = method.getAnnotation(annotationClass);
 
@@ -129,12 +124,18 @@ public final class CMcpServerComponentRegister {
 
       return Collections.emptySet();
     } catch (NoSuchMethodException e) {
-      log.debug("Annotation {} does not declare field '{}'", annotation.annotationType().getName(), fieldName);
+      log.debug(
+          "Annotation {} does not declare field '{}'",
+          annotation.annotationType().getName(),
+          fieldName);
       return Collections.emptySet();
     } catch (Throwable t) {
-      log.warn("Failed to read field '{}' from annotation {}", fieldName, annotation.annotationType().getName(), t);
+      log.warn(
+          "Failed to read field '{}' from annotation {}",
+          fieldName,
+          annotation.annotationType().getName(),
+          t);
       return Collections.emptySet();
     }
   }
 }
-

@@ -7,21 +7,19 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of script execution results in the Scale system.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleScriptResult} objects. It includes constructors
- * for creating the collection from various input sources, such as arrays, streams,
- * or iterables. Additionally, it provides a method to retrieve a script result
- * by its index.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleScriptResult} objects. It includes constructors for creating the collection from
+ * various input sources, such as arrays, streams, or iterables. Additionally, it provides a method
+ * to retrieve a script result by its index.
  */
 public class CZScaleScriptResults extends CSet<CZScaleScriptResult> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of script execution results.</p>
+   * <p>Creates an empty collection of script execution results.
    */
-  public CZScaleScriptResults() {
-  }
+  public CZScaleScriptResults() {}
 
   /**
    * Constructs a collection of script execution results from an array of results.
@@ -35,7 +33,8 @@ public class CZScaleScriptResults extends CSet<CZScaleScriptResult> {
   /**
    * Constructs a collection of script execution results from a stream of results.
    *
-   * @param stream a {@link Stream} of {@link CZScaleScriptResult} objects to initialize the collection
+   * @param stream a {@link Stream} of {@link CZScaleScriptResult} objects to initialize the
+   *     collection
    */
   public CZScaleScriptResults(Stream<CZScaleScriptResult> stream) {
     super(stream);
@@ -44,7 +43,8 @@ public class CZScaleScriptResults extends CSet<CZScaleScriptResult> {
   /**
    * Constructs a collection of script execution results from an iterable of results.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleScriptResult} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleScriptResult} objects to initialize the
+   *     collection
    */
   public CZScaleScriptResults(Iterable<CZScaleScriptResult> iterable) {
     super(iterable);

@@ -13,20 +13,18 @@ import java.util.Date;
 /**
  * Custom serializer for `Date` objects.
  *
- * <p>This class extends the Jackson `StdSerializer` to provide custom serialization
- * logic for `Date` objects. It uses a list of date formats defined in the `CZScaleConfigs`
- * to format the date strings.</p>
+ * <p>This class extends the Jackson `StdSerializer` to provide custom serialization logic for
+ * `Date` objects. It uses a list of date formats defined in the `CZScaleConfigs` to format the date
+ * strings.
  */
 public class CustomDateSerializer extends StdSerializer<Date> {
-  /**
-   * List of date formats used for formatting date strings.
-   */
+  /** List of date formats used for formatting date strings. */
   private static final CList<String> dateFormats = CZScaleConfigs.Scale.getDateFormats();
 
   /**
    * Default constructor.
    *
-   * <p>Initializes the serializer with no specific class type.</p>
+   * <p>Initializes the serializer with no specific class type.
    */
   public CustomDateSerializer() {
     this(null);
@@ -44,8 +42,8 @@ public class CustomDateSerializer extends StdSerializer<Date> {
   /**
    * Serializes a `Date` object into a JSON string.
    *
-   * <p>This method formats the `Date` object using the first date format
-   * from the predefined list of date formats.</p>
+   * <p>This method formats the `Date` object using the first date format from the predefined list
+   * of date formats.
    *
    * @param date the `Date` object to serialize
    * @param jsonGenerator the JSON generator
@@ -53,7 +51,9 @@ public class CustomDateSerializer extends StdSerializer<Date> {
    * @throws IOException if an error occurs during serialization
    */
   @Override
-  public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+  public void serialize(
+      Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+      throws IOException {
     jsonGenerator.writeString(CDate.valueOf(date).toFormat(dateFormats.getFirst()));
   }
 }

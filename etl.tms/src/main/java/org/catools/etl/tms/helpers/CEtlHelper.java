@@ -1,14 +1,17 @@
 package org.catools.etl.tms.helpers;
 
-import org.catools.common.utils.CRetry;
-import org.catools.etl.tms.cache.CEtlCacheManager;
-import org.catools.etl.tms.dao.CEtlItemStatusTransitionDao;
-import org.catools.etl.tms.model.*;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import org.catools.common.utils.CRetry;
+import org.catools.etl.tms.cache.CEtlCacheManager;
+import org.catools.etl.tms.dao.CEtlItemStatusTransitionDao;
+import org.catools.etl.tms.model.CEtlCycle;
+import org.catools.etl.tms.model.CEtlExecution;
+import org.catools.etl.tms.model.CEtlItem;
+import org.catools.etl.tms.model.CEtlItemStatusTransition;
+import org.catools.etl.tms.model.CEtlVersion;
 
 public class CEtlHelper {
 
@@ -24,13 +27,23 @@ public class CEtlHelper {
 
   public static void normalizeExecution(CEtlExecution execution) {
     // Related Project, Version and Item should already been merged to normalize execution
-    CRetry.retry(integer -> {
-      normalizeItem(execution.getItem());
-      execution.setCycle(execution.getCycle() == null ? null : normalizeCycle(execution.getCycle()));
-      execution.setExecutor(execution.getExecutor() == null ? null : CEtlCacheManager.readUser(execution.getExecutor()));
-      execution.setStatus(execution.getStatus() == null ? null : CEtlCacheManager.readExecutionStatus(execution.getStatus()));
-      return true;
-    }, 5, 2000);
+    CRetry.retry(
+        integer -> {
+          normalizeItem(execution.getItem());
+          execution.setCycle(
+              execution.getCycle() == null ? null : normalizeCycle(execution.getCycle()));
+          execution.setExecutor(
+              execution.getExecutor() == null
+                  ? null
+                  : CEtlCacheManager.readUser(execution.getExecutor()));
+          execution.setStatus(
+              execution.getStatus() == null
+                  ? null
+                  : CEtlCacheManager.readExecutionStatus(execution.getStatus()));
+          return true;
+        },
+        5,
+        2000);
   }
 
   private static Set<CEtlVersion> normalizeVersions(Collection<CEtlVersion> versions) {
@@ -58,7 +71,11 @@ public class CEtlHelper {
     for (CEtlItemStatusTransition statusTransition : item.getStatusTransitions()) {
       statusTransition.setFrom(CEtlCacheManager.readStatus(statusTransition.getFrom()));
       statusTransition.setTo(CEtlCacheManager.readStatus(statusTransition.getTo()));
-      transitions.add(Optional.ofNullable(CEtlItemStatusTransitionDao.getItemStatusTransition(item.getId(), statusTransition)).orElse(statusTransition));
+      transitions.add(
+          Optional.ofNullable(
+                  CEtlItemStatusTransitionDao.getItemStatusTransition(
+                      item.getId(), statusTransition))
+              .orElse(statusTransition));
     }
     item.setStatusTransitions(transitions);
   }

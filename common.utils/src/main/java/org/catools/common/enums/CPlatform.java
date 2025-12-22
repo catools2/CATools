@@ -1,13 +1,10 @@
 package org.catools.common.enums;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.EnumSet;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
-/**
- * Enum for common platforms.
- */
+/** Enum for common platforms. */
 public enum CPlatform {
   WINDOWS("^.*win.*$"),
   LINUX("^.*(nix|nux|aix).*$"),

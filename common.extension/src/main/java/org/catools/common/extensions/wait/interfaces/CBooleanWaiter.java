@@ -1,14 +1,12 @@
 package org.catools.common.extensions.wait.interfaces;
 
-/**
- * CBooleanWaiter is an interface for Boolean waiter related methods.
- */
+/** CBooleanWaiter is an interface for Boolean waiter related methods. */
 public interface CBooleanWaiter extends CObjectWaiter<Boolean> {
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * is false
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value is false
    *
    * @return true if wait operation succeed otherwise return false
    */
@@ -31,7 +29,7 @@ public interface CBooleanWaiter extends CObjectWaiter<Boolean> {
   /**
    * Wait for defined number of seconds till actual value is false
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
@@ -40,9 +38,9 @@ public interface CBooleanWaiter extends CObjectWaiter<Boolean> {
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * is true
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value is true
    *
    * @return true if wait operation succeed otherwise return false
    */
@@ -65,7 +63,7 @@ public interface CBooleanWaiter extends CObjectWaiter<Boolean> {
   /**
    * Wait for defined number of seconds till actual value is true
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */

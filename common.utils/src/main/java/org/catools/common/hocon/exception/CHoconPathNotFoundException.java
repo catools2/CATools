@@ -6,8 +6,12 @@ package org.catools.common.hocon.exception;
 public class CHoconPathNotFoundException extends RuntimeException {
 
   public CHoconPathNotFoundException(String content, String jsonPath, Throwable cause) {
-    super(String.format("Json path not found." +
-        "(see https://github.com/json-path/JsonPath for JsonPath expression)\n" +
-        "Path: %s\nJsonContent:%s\n", jsonPath, content), cause);
+    super(
+        String.format(
+            "Json path not found."
+                + "(see https://github.com/json-path/JsonPath for JsonPath expression)\n"
+                + "Path: %s\nJsonContent:%s\n",
+            jsonPath, content),
+        cause);
   }
 }

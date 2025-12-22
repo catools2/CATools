@@ -22,8 +22,4 @@ import org.catools.common.extensions.verify.interfaces.waitVerify.CDateWaitVerif
  * }
  * </code> </strong>
  */
-public interface CStaticDateExtension extends
-    CDateWaitVerify,
-    CDateWaitVerifier,
-    CDateState {
-}
+public interface CStaticDateExtension extends CDateWaitVerify, CDateWaitVerifier, CDateState {}

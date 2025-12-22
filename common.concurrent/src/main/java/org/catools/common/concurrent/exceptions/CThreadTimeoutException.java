@@ -4,7 +4,7 @@ package org.catools.common.concurrent.exceptions;
  * Exception thrown when a thread execution exceeds the expected time limit and is terminated.
  *
  * <p>This class extends {@link RuntimeException} and is used to signal that a thread has timed out
- * while performing a job.</p>
+ * while performing a job.
  */
 public class CThreadTimeoutException extends RuntimeException {
 

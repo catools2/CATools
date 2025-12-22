@@ -1,7 +1,5 @@
 package org.catools.ws.rest;
 
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.JsonConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.internal.print.RequestPrinter;
 import io.restassured.path.json.config.JsonPathConfig;
@@ -23,6 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import static io.restassured.config.JsonConfig.jsonConfig;
 import static io.restassured.filter.log.LogDetail.ALL;
 
 @Getter
@@ -30,20 +29,14 @@ import static io.restassured.filter.log.LogDetail.ALL;
 @Slf4j
 @Accessors(chain = true)
 public abstract class CHttpClient<O> {
-  private final CHttpRequest request;
-  private final int timeoutInSeconds;
+  private CHttpRequest request;
 
   public CHttpClient(CHttpRequestType requestType, String targetURI) {
     this(requestType, targetURI, null);
   }
 
   public CHttpClient(CHttpRequestType requestType, String targetURI, String targetPath) {
-    this(requestType, targetURI, targetPath, 10);
-  }
-
-  public CHttpClient(CHttpRequestType requestType, String targetURI, String targetPath, int timeoutInSeconds) {
-    this.request = new CHttpRequest(requestType, targetURI, targetPath);
-    this.timeoutInSeconds = timeoutInSeconds;
+    this.request = new CHttpRequest(requestType, targetURI, targetPath, useProxy());
   }
 
   public <R extends CHttpClient<O>> R setEntity(Object obj) {
@@ -52,7 +45,8 @@ public abstract class CHttpClient<O> {
   }
 
   public CHttpResponse send() {
-    CHttpResponse response = CRestAssuredUtil.send(getConfig(), beforeCall(request), getRequestLoggerFilterListener());
+    CHttpResponse response =
+        CRestAssuredUtil.send(getConfig(), beforeCall(request), getRequestLoggerFilterListener());
     log.debug("Response << {}", response);
     return response;
   }
@@ -61,7 +55,8 @@ public abstract class CHttpClient<O> {
     return send(expectedCode, (BiConsumer) null);
   }
 
-  public CHttpResponse send(CHttpStatusCode expectedCode, BiConsumer<CHttpResponse, CVerifier> afterCall) {
+  public CHttpResponse send(
+      CHttpStatusCode expectedCode, BiConsumer<CHttpResponse, CVerifier> afterCall) {
     CHttpResponse response = send();
     CVerifier verifier = new CVerifier();
     verifier.Object.equals(response.getStatusCode(), expectedCode);
@@ -76,15 +71,23 @@ public abstract class CHttpClient<O> {
     return send(expectedCode, entityKey, entityValue, null);
   }
 
-  public CHttpResponse send(CHttpStatusCode expectedCode, String entityKey, Object entityValue, BiConsumer<CHttpResponse, CVerifier> afterCall) {
+  public CHttpResponse send(
+      CHttpStatusCode expectedCode,
+      String entityKey,
+      Object entityValue,
+      BiConsumer<CHttpResponse, CVerifier> afterCall) {
     return send(expectedCode, new CList<>(Map.entry(entityKey, entityValue)), afterCall);
   }
 
-  public CHttpResponse send(CHttpStatusCode expectedCode, CList<Map.Entry<String, Object>> expectedEntityValues) {
+  public CHttpResponse send(
+      CHttpStatusCode expectedCode, CList<Map.Entry<String, Object>> expectedEntityValues) {
     return send(expectedCode, expectedEntityValues, null);
   }
 
-  public CHttpResponse send(CHttpStatusCode expectedCode, CList<Map.Entry<String, Object>> expectedEntityValues, BiConsumer<CHttpResponse, CVerifier> afterCall) {
+  public CHttpResponse send(
+      CHttpStatusCode expectedCode,
+      CList<Map.Entry<String, Object>> expectedEntityValues,
+      BiConsumer<CHttpResponse, CVerifier> afterCall) {
     CHttpResponse response = send();
     CVerifier verifier = new CVerifier();
     verifier.Object.equals(response.getStatusCode(), expectedCode);
@@ -104,29 +107,29 @@ public abstract class CHttpClient<O> {
     return request;
   }
 
+  protected boolean useProxy() {
+    return false;
+  }
+
   protected RestAssuredConfig getConfig() {
     return RestAssuredConfig.newConfig()
-        .jsonConfig(JsonConfig.jsonConfig().numberReturnType(JsonPathConfig.NumberReturnType.BIG_DECIMAL))
-        .httpClient(
-            HttpClientConfig.httpClientConfig()
-                .setParam("http.socket.timeout", timeoutInSeconds * 1000)
-                .setParam("http.connection.timeout", timeoutInSeconds * 1000)
-        );
+        .jsonConfig(jsonConfig().numberReturnType(JsonPathConfig.NumberReturnType.BIG_DECIMAL));
   }
 
   private CFilterListener getRequestLoggerFilterListener() {
     return (reqSpec, responseSpec, ctx) -> {
       if (log.isDebugEnabled()) {
         PrintStream printStream = new PrintStream(PrintStream.nullOutputStream());
-        log.debug("Request >> {}", RequestPrinter.print(
-            reqSpec,
-            reqSpec.getMethod(),
-            reqSpec.getURI(),
-            ALL,
-            new HashSet<>(),
-            printStream,
-            true
-        ));
+        log.debug(
+            "Request >> {}",
+            RequestPrinter.print(
+                reqSpec,
+                reqSpec.getMethod(),
+                reqSpec.getURI(),
+                ALL,
+                new HashSet<>(),
+                printStream,
+                true));
       }
     };
   }

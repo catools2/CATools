@@ -173,6 +173,7 @@ public class CSensitiveDataMaskingManagerTest extends CBaseUnitTest {
     String mask1 = RandomStringUtils.randomAlphabetic(10);
     CSensitiveDataMaskingManager.addMask(mask1, ignore1);
 
-    CVerify.String.equals(CSensitiveDataMaskingManager.mask(null), CStringUtil.EMPTY, "String masked correctly");
+    CVerify.String.equals(
+        CSensitiveDataMaskingManager.mask(null), CStringUtil.EMPTY, "String masked correctly");
   }
 }

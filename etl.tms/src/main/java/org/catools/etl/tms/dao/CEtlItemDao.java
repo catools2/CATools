@@ -16,20 +16,27 @@ public class CEtlItemDao extends CEtlBaseDao {
   }
 
   public static void mergeItem(CEtlItem item) {
-    // We should delete metadata relationship to replicate the effect of updating or changing when item update
+    // We should delete metadata relationship to replicate the effect of updating or changing when
+    // item update
     String itemId = item.getId();
     log.trace("Start mering {} item.", itemId);
 
-    CRetry.retry(integer -> {
-      CEtlHelper.normalizeItem(item);
-      doTransactions(
-          session -> session
-              .createNativeQuery("DELETE from tms.item_metadata where item_id=:itemId", CEtlItemMetaData.class)
-              .setParameter("itemId", itemId)
-              .executeUpdate(),
-          session -> session.merge(item));
-      return true;
-    }, 5, 15000);
+    CRetry.retry(
+        integer -> {
+          CEtlHelper.normalizeItem(item);
+          doTransactions(
+              session ->
+                  session
+                      .createNativeQuery(
+                          "DELETE from tms.item_metadata where item_id=:itemId",
+                          CEtlItemMetaData.class)
+                      .setParameter("itemId", itemId)
+                      .executeUpdate(),
+              session -> session.merge(item));
+          return true;
+        },
+        5,
+        15000);
     log.trace("Finish mering {} item.", itemId);
   }
 

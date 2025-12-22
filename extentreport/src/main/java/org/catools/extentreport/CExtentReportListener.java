@@ -1,5 +1,7 @@
 package org.catools.extentreport;
 
+import static org.catools.common.testng.utils.CTestClassUtil.noRetryLeft;
+
 import com.aventstack.extentreports.ExtentTest;
 import org.catools.common.collections.CSet;
 import org.catools.common.config.CTestManagementConfigs;
@@ -9,8 +11,6 @@ import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CFileUtil;
 import org.testng.ISuite;
 import org.testng.ITestResult;
-
-import static org.catools.common.testng.utils.CTestClassUtil.noRetryLeft;
 
 public class CExtentReportListener implements CITestNGListener {
   private static final ThreadLocal<ExtentTest> overallTest = new ThreadLocal<>();
@@ -58,10 +58,7 @@ public class CExtentReportListener implements CITestNGListener {
   public synchronized void onTestStart(ITestResult result) {
     String key =
         String.format(
-            "%s->%s->%s",
-            projectName,
-            versionName,
-            new CTestResult(result).getTestFullName());
+            "%s->%s->%s", projectName, versionName, new CTestResult(result).getTestFullName());
     if (suiteExtentReport != null && !startedTests.contains(key)) {
       startedTests.add(key);
       suiteTest.set(suiteExtentReport.createTest(result));

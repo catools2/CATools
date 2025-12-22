@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Translator class for converting ZScale test cases into ETL items.
- * Provides methods to map test case data to ETL-compatible objects.
+ * Translator class for converting ZScale test cases into ETL items. Provides methods to map test
+ * case data to ETL-compatible objects.
  */
 @Slf4j
 public class CEtlZScaleTestCaseTranslator {
@@ -30,7 +30,8 @@ public class CEtlZScaleTestCaseTranslator {
    * @param testCase The ZScale test case to be translated.
    * @return The translated ETL item.
    */
-  public static CEtlItem translateTestCase(CEtlProject project, CEtlVersions versions, CZScaleTestCase testCase) {
+  public static CEtlItem translateTestCase(
+      CEtlProject project, CEtlVersions versions, CZScaleTestCase testCase) {
     Objects.requireNonNull(project);
     Objects.requireNonNull(versions);
     Objects.requireNonNull(testCase);
@@ -81,7 +82,8 @@ public class CEtlZScaleTestCaseTranslator {
    */
   private static void addStatusTransition(CZScaleTestCase issue, CEtlItem item) {
     if (issue.getHistories() != null) {
-      CList<CEtlItemStatusTransition> statusTransitions = readStatusTransitionInfoFromResponse(issue, item);
+      CList<CEtlItemStatusTransition> statusTransitions =
+          readStatusTransitionInfoFromResponse(issue, item);
 
       if (statusTransitions.isNotEmpty()) {
         // Set from status to previous status for each transition
@@ -96,7 +98,8 @@ public class CEtlZScaleTestCaseTranslator {
    * @param item The ETL item to which transitions belong.
    * @param statusTransitions The list of status transitions.
    */
-  private static void setFromStatusToPreviousStatus(CEtlItem item, CList<CEtlItemStatusTransition> statusTransitions) {
+  private static void setFromStatusToPreviousStatus(
+      CEtlItem item, CList<CEtlItemStatusTransition> statusTransitions) {
     statusTransitions.sort(Comparator.comparing(CEtlItemStatusTransition::getOccurred));
     statusTransitions.get(0).setFrom(new CEtlStatus("Open"));
     for (int i = 1; i < statusTransitions.size(); i++) {
@@ -113,7 +116,8 @@ public class CEtlZScaleTestCaseTranslator {
    * @param item The ETL item to which transitions will be added.
    * @return A list of status transitions.
    */
-  private static CList<CEtlItemStatusTransition> readStatusTransitionInfoFromResponse(CZScaleTestCase issue, CEtlItem item) {
+  private static CList<CEtlItemStatusTransition> readStatusTransitionInfoFromResponse(
+      CZScaleTestCase issue, CEtlItem item) {
     CList<CEtlItemStatusTransition> statusTransitions = new CList<>();
     for (CZScaleChangeHistory changelog : issue.getHistories()) {
       if (changelog.getChangeHistoryItems() == null) continue;
@@ -169,8 +173,7 @@ public class CEtlZScaleTestCaseTranslator {
     }
 
     if (testCase.getCustomFields() != null) {
-      testCase.getCustomFields()
-          .forEach((k, v) -> item.addItemMetaData(getMetaData(k, v)));
+      testCase.getCustomFields().forEach((k, v) -> item.addItemMetaData(getMetaData(k, v)));
     }
   }
 
@@ -192,9 +195,9 @@ public class CEtlZScaleTestCaseTranslator {
    * @return The corresponding ETL status.
    */
   private static CEtlStatus getStatus(String statusName) {
-    return StringUtils.isBlank(statusName) ?
-        CEtlStatus.UNSET :
-        CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
+    return StringUtils.isBlank(statusName)
+        ? CEtlStatus.UNSET
+        : CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
   }
 
   /**
@@ -204,9 +207,9 @@ public class CEtlZScaleTestCaseTranslator {
    * @return The corresponding ETL priority.
    */
   private static CEtlPriority getPriority(String priorityName) {
-    return StringUtils.isBlank(priorityName) ?
-        CEtlPriority.UNSET :
-        CEtlCacheManager.readPriority(new CEtlPriority(priorityName.toUpperCase()));
+    return StringUtils.isBlank(priorityName)
+        ? CEtlPriority.UNSET
+        : CEtlCacheManager.readPriority(new CEtlPriority(priorityName.toUpperCase()));
   }
 
   /**
@@ -217,15 +220,17 @@ public class CEtlZScaleTestCaseTranslator {
    * @return The ETL versions associated with the test case.
    */
   private static CEtlVersions getIssueVersions(CEtlVersions versions, CZScaleTestCase testCase) {
-    if (testCase == null || testCase.getCustomFields() == null || testCase.getCustomFields().isEmpty()) {
+    if (testCase == null
+        || testCase.getCustomFields() == null
+        || testCase.getCustomFields().isEmpty()) {
       return new CEtlVersions();
     }
 
-    CList<String> potentialVersions = testCase
-        .getCustomFields()
-        .getAll((k, v) -> k.toLowerCase().contains("version")).values();
+    CList<String> potentialVersions =
+        testCase.getCustomFields().getAll((k, v) -> k.toLowerCase().contains("version")).values();
 
-    CList<CEtlVersion> versionsToAdd = versions.getAll(v -> potentialVersions.contains(v.getName()));
+    CList<CEtlVersion> versionsToAdd =
+        versions.getAll(v -> potentialVersions.contains(v.getName()));
 
     CEtlVersions etlVersions = new CEtlVersions();
     for (CEtlVersion version : versionsToAdd) {

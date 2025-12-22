@@ -1,11 +1,10 @@
 package org.catools.common.extensions.verify.soft;
 
+import java.util.Objects;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.hard.CObjectVerification;
 import org.catools.common.extensions.verify.interfaces.base.CObjectVerify;
-
-import java.util.Objects;
 
 /**
  * Object verification class contains all verification method which is related to Object

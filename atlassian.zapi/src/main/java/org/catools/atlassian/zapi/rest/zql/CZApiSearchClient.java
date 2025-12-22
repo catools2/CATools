@@ -19,14 +19,13 @@ import java.util.function.Consumer;
 /**
  * Client class for searching test executions in the ZAPI system using ZQL queries.
  *
- * <p>This class provides methods to execute ZQL queries and retrieve test executions with support for parallel processing.</p>
+ * <p>This class provides methods to execute ZQL queries and retrieve test executions with support
+ * for parallel processing.
  */
 @Slf4j
 public class CZApiSearchClient extends CZApiRestClient {
 
-  /**
-   * Default constructor for the CZApiSearchClient.
-   */
+  /** Default constructor for the CZApiSearchClient. */
   public CZApiSearchClient() {
     super();
   }
@@ -64,7 +63,8 @@ public class CZApiSearchClient extends CZApiRestClient {
   }
 
   /**
-   * Retrieves test executions based on the provided ZQL query, last synchronization date, and parallel input processing.
+   * Retrieves test executions based on the provided ZQL query, last synchronization date, and
+   * parallel input processing.
    *
    * @param zql the ZQL query string
    * @param lastSyncDate the date to filter executions created or executed after this date
@@ -76,7 +76,8 @@ public class CZApiSearchClient extends CZApiRestClient {
   }
 
   /**
-   * Retrieves test executions based on the provided ZQL query with parallel input and output processing.
+   * Retrieves test executions based on the provided ZQL query with parallel input and output
+   * processing.
    *
    * @param zql the ZQL query string
    * @param parallelInputCount the number of parallel input threads
@@ -93,7 +94,8 @@ public class CZApiSearchClient extends CZApiRestClient {
   }
 
   /**
-   * Retrieves test executions based on the provided ZQL query, last synchronization date, and parallel processing.
+   * Retrieves test executions based on the provided ZQL query, last synchronization date, and
+   * parallel processing.
    *
    * @param zql the ZQL query string
    * @param lastSyncDate the date to filter executions created or executed after this date
@@ -109,30 +111,35 @@ public class CZApiSearchClient extends CZApiRestClient {
       int parallelOutputCount,
       Consumer<CZApiExecutions> supplier) {
     CZApiExecutions executions = new CZApiExecutions();
-    CParallelIO<CZApiExecutions> parallelIO = new CParallelIO<>("Search ZApi Executions", parallelInputCount, parallelOutputCount);
+    CParallelIO<CZApiExecutions> parallelIO =
+        new CParallelIO<>("Search ZApi Executions", parallelInputCount, parallelOutputCount);
 
     int maxResult = CZApiConfigs.ZApi.getSearchBufferSize();
     AtomicInteger counter = new AtomicInteger(0);
 
-    parallelIO.setInputExecutor(eof -> {
-      int startAt = counter.getAndIncrement() * maxResult;
-      CZApiExecutions search = CRetry.retry(integer -> _getExecutions(zql, lastSyncDate, startAt, maxResult), 5, 5000);
+    parallelIO.setInputExecutor(
+        eof -> {
+          int startAt = counter.getAndIncrement() * maxResult;
+          CZApiExecutions search =
+              CRetry.retry(
+                  integer -> _getExecutions(zql, lastSyncDate, startAt, maxResult), 5, 5000);
 
-      if (search == null || search.isEmpty()) {
-        log.info("{} execution record returned for ZQL = {}", executions.size(), zql);
-        eof.set(true);
-      } else {
-        executions.addAll(search);
-        eof.set(false);
-      }
-      return search;
-    });
+          if (search == null || search.isEmpty()) {
+            log.info("{} execution record returned for ZQL = {}", executions.size(), zql);
+            eof.set(true);
+          } else {
+            executions.addAll(search);
+            eof.set(false);
+          }
+          return search;
+        });
 
-    parallelIO.setOutputExecutor((eof, issues) -> {
-      if (supplier != null && issues != null && issues.isNotEmpty()) {
-        supplier.accept(issues);
-      }
-    });
+    parallelIO.setOutputExecutor(
+        (eof, issues) -> {
+          if (supplier != null && issues != null && issues.isNotEmpty()) {
+            supplier.accept(issues);
+          }
+        });
 
     try {
       parallelIO.run();
@@ -144,7 +151,8 @@ public class CZApiSearchClient extends CZApiRestClient {
   }
 
   /**
-   * Executes the ZQL query and retrieves a subset of test executions based on the provided parameters.
+   * Executes the ZQL query and retrieves a subset of test executions based on the provided
+   * parameters.
    *
    * @param zql the ZQL query string
    * @param lastSyncDate the date to filter executions created or executed after this date
@@ -152,7 +160,8 @@ public class CZApiSearchClient extends CZApiRestClient {
    * @param maxResults the maximum number of results to retrieve
    * @return a {@link CZApiExecutions} object containing the test executions
    */
-  private CZApiExecutions _getExecutions(String zql, Date lastSyncDate, int offset, int maxResults) {
+  private CZApiExecutions _getExecutions(
+      String zql, Date lastSyncDate, int offset, int maxResults) {
     if (lastSyncDate != null) {
       zql +=
           String.format(

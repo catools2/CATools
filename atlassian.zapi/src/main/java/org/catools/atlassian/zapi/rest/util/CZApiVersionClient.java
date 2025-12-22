@@ -13,13 +13,12 @@ import org.catools.common.utils.CJsonUtil;
 /**
  * Client class for retrieving version information for a specific project in the ZAPI system.
  *
- * <p>This class provides methods to interact with the ZAPI REST API to fetch released and unreleased versions of a project.</p>
+ * <p>This class provides methods to interact with the ZAPI REST API to fetch released and
+ * unreleased versions of a project.
  */
 public class CZApiVersionClient extends CZApiRestClient {
 
-  /**
-   * Default constructor for the CZApiVersionClient.
-   */
+  /** Default constructor for the CZApiVersionClient. */
   public CZApiVersionClient() {
     super();
   }
@@ -28,10 +27,12 @@ public class CZApiVersionClient extends CZApiRestClient {
    * Retrieves the released and unreleased versions for a specific project.
    *
    * @param project the project for which versions are being retrieved
-   * @return a {@link CZApiProjectVersions} object containing the released and unreleased versions of the project
+   * @return a {@link CZApiProjectVersions} object containing the released and unreleased versions
+   *     of the project
    */
   public CZApiProjectVersions getProjectVersions(CZApiProject project) {
-    // Builds the request specification with the base URI, path, and query parameter for the project ID
+    // Builds the request specification with the base URI, path, and query parameter for the project
+    // ID
     RequestSpecification specification =
         RestAssured.given()
             .baseUri(CZApiConfigs.ZApi.getZApiUri())

@@ -8,5 +8,4 @@ import lombok.experimental.Accessors;
 public class CKubeContainerStateInfo {
   private String message;
   private String reason;
-
 }

@@ -8,13 +8,11 @@ import org.catools.common.utils.CJsonUtil;
 /**
  * Client class for retrieving project information in the ZAPI system.
  *
- * <p>This class provides methods to interact with the ZAPI REST API to fetch project details.</p>
+ * <p>This class provides methods to interact with the ZAPI REST API to fetch project details.
  */
 public class CZApiProjectClient extends CZApiRestClient {
 
-  /**
-   * Default constructor for the CZApiProjectClient.
-   */
+  /** Default constructor for the CZApiProjectClient. */
   public CZApiProjectClient() {
     super();
   }

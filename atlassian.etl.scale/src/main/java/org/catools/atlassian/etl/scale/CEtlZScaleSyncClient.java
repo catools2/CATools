@@ -29,8 +29,8 @@ import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTrans
 import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateTestRun;
 
 /**
- * Client class for synchronizing ZScale data with the ETL system.
- * Provides methods to synchronize test cases, test runs, and their executions.
+ * Client class for synchronizing ZScale data with the ETL system. Provides methods to synchronize
+ * test cases, test runs, and their executions.
  */
 @Slf4j
 @UtilityClass
@@ -44,13 +44,15 @@ public class CEtlZScaleSyncClient {
    * @param parallelOutputCount The number of parallel threads for output operations.
    * @throws Throwable If an error occurs during synchronization.
    */
-  public static void syncScale(String projectNameToSync, int parallelInputCount, int parallelOutputCount) throws Throwable {
+  public static void syncScale(
+      String projectNameToSync, int parallelInputCount, int parallelOutputCount) throws Throwable {
     BasicProject project = getProjectByName(projectNameToSync);
     CEtlProject etlProject = CEtlCacheManager.readProject(new CEtlProject(project.getName()));
 
     CEtlVersions versions = new CEtlVersions(getProjectVersions(project.getKey(), etlProject));
 
-    updateTestCases(project.getKey(), etlProject, versions, parallelInputCount, parallelOutputCount);
+    updateTestCases(
+        project.getKey(), etlProject, versions, parallelInputCount, parallelOutputCount);
     updateTestRuns(project.getKey(), versions, parallelOutputCount);
   }
 
@@ -62,7 +64,8 @@ public class CEtlZScaleSyncClient {
    * @param parallelOutputCount The number of parallel threads for output operations.
    * @throws Throwable If an error occurs during the update.
    */
-  private static void updateTestRuns(String projectKey, CEtlVersions versions, int parallelOutputCount) throws Throwable {
+  private static void updateTestRuns(
+      String projectKey, CEtlVersions versions, int parallelOutputCount) throws Throwable {
     for (String activeFolder : CEtlZScaleConfigs.Scale.getSyncTestRunsFolders()) {
       Date projectSyncStartTime = CDate.now();
       CZScaleTestRuns testRunsToSync = getTestRunsToSync(projectKey, activeFolder);
@@ -76,7 +79,8 @@ public class CEtlZScaleSyncClient {
 
         if (testRun.getItems().isNotEmpty()) {
           CEtlVersion version = getVersionForTestRun(versions, testRun);
-          updateTestRunExecutions(version, testRunInfoKey, runLastSync, testRun, parallelOutputCount);
+          updateTestRunExecutions(
+              version, testRunInfoKey, runLastSync, testRun, parallelOutputCount);
         }
 
         CEtlLastSyncDao.updateProjectLastSync(runDbSyncKey, projectKey, projectSyncStartTime);
@@ -96,7 +100,8 @@ public class CEtlZScaleSyncClient {
     if (testRun.getVersion() == null) {
       return null;
     }
-    return versions.getFirst(v -> CStringUtil.equalsAnyIgnoreCase(v.getName(), testRun.getVersion()));
+    return versions.getFirst(
+        v -> CStringUtil.equalsAnyIgnoreCase(v.getName(), testRun.getVersion()));
   }
 
   /**
@@ -109,36 +114,53 @@ public class CEtlZScaleSyncClient {
    * @param parallelOutputCount The number of parallel threads for output operations.
    * @throws Throwable If an error occurs during the update.
    */
-  private static void updateTestRunExecutions(CEtlVersion version, String testRunInfoKey, Date runLastSync, CZScaleTestRun testRun, int parallelOutputCount) throws Throwable {
-    log.info("Start updating {} run execution with {} items.", testRun.getKey(), testRun.getItems().size());
+  private static void updateTestRunExecutions(
+      CEtlVersion version,
+      String testRunInfoKey,
+      Date runLastSync,
+      CZScaleTestRun testRun,
+      int parallelOutputCount)
+      throws Throwable {
+    log.info(
+        "Start updating {} run execution with {} items.",
+        testRun.getKey(),
+        testRun.getItems().size());
     CEtlCycle cycle = translateTestRun(version, testRun);
     Stack<CZScaleTestExecution> executionsToSync = new Stack<>();
     executionsToSync.addAll(testRun.getItems().getAll(item -> itemShouldSync(runLastSync, item)));
 
     log.info("{} items need to be updated for {} run.", executionsToSync.size(), testRun.getKey());
-    new CParallelRunner<>(String.format("Update %s Test Run Executions", testRun.getKey()), parallelOutputCount, () -> {
-      while (true) {
-        CZScaleTestExecution testExecution;
-        synchronized (executionsToSync) {
-          if (executionsToSync.isEmpty()) break;
-          testExecution = executionsToSync.pop();
-        }
-        CEtlExecution execution = translateExecution(testRun, cycle, testExecution);
-        if (execution != null)
-          CEtlExecutionDao.mergeExecution(execution);
-      }
-      return true;
-    }).invokeAll();
+    new CParallelRunner<>(
+            String.format("Update %s Test Run Executions", testRun.getKey()),
+            parallelOutputCount,
+            () -> {
+              while (true) {
+                CZScaleTestExecution testExecution;
+                synchronized (executionsToSync) {
+                  if (executionsToSync.isEmpty()) break;
+                  testExecution = executionsToSync.pop();
+                }
+                CEtlExecution execution = translateExecution(testRun, cycle, testExecution);
+                if (execution != null) CEtlExecutionDao.mergeExecution(execution);
+              }
+              return true;
+            })
+        .invokeAll();
 
-    CSet<String> issueKeysFromScale = testRun.getItems().mapToSet(CZScaleTestExecution::getTestCaseKey);
+    CSet<String> issueKeysFromScale =
+        testRun.getItems().mapToSet(CZScaleTestExecution::getTestCaseKey);
     CSet<String> issueKeysFromDB = CEtlExecutionDao.getExecutionsByCycleId(testRunInfoKey);
-    CSet<String> idsToDeleteFromCycle = issueKeysFromDB.getAll(issueKeysFromScale::notContains).toSet();
+    CSet<String> idsToDeleteFromCycle =
+        issueKeysFromDB.getAll(issueKeysFromScale::notContains).toSet();
 
     if (idsToDeleteFromCycle.isNotEmpty()) {
       CEtlExecutionDao.deleteExecutions(testRunInfoKey, idsToDeleteFromCycle);
     }
 
-    log.info("Finish updating {} run execution with {} items.", testRun.getKey(), testRun.getItems().size());
+    log.info(
+        "Finish updating {} run execution with {} items.",
+        testRun.getKey(),
+        testRun.getItems().size());
   }
 
   /**
@@ -150,17 +172,30 @@ public class CEtlZScaleSyncClient {
    * @param parallelInputCount The number of parallel threads for input operations.
    * @param parallelOutputCount The number of parallel threads for output operations.
    */
-  private static void updateTestCases(String projectKey, CEtlProject project, CEtlVersions versions, int parallelInputCount, int parallelOutputCount) {
+  private static void updateTestCases(
+      String projectKey,
+      CEtlProject project,
+      CEtlVersions versions,
+      int parallelInputCount,
+      int parallelOutputCount) {
     Date projectSyncStartTime = CDate.now();
     Date projectLastSync = CEtlLastSyncDao.getProjectLastSync("SCALE_TEST_CYCLES", projectKey);
     for (String activeFolder : CEtlZScaleConfigs.Scale.getSyncTestCasesFolders()) {
-      CZScaleClient.TestCases.getProjectTestCases(projectKey, activeFolder, "createdOn,updatedOn,key", parallelInputCount, parallelOutputCount, testCase -> {
-        if (testCase != null && !testCaseIsSynced(projectLastSync, testCase)) {
-          CZScaleTestCase testCaseItem = CZScaleClient.TestCases.getTestCase(testCase.getKey());
-          if (testCaseItem != null)
-            CEtlItemDao.mergeItem(CEtlZScaleTestCaseTranslator.translateTestCase(project, versions, testCaseItem));
-        }
-      });
+      CZScaleClient.TestCases.getProjectTestCases(
+          projectKey,
+          activeFolder,
+          "createdOn,updatedOn,key",
+          parallelInputCount,
+          parallelOutputCount,
+          testCase -> {
+            if (testCase != null && !testCaseIsSynced(projectLastSync, testCase)) {
+              CZScaleTestCase testCaseItem = CZScaleClient.TestCases.getTestCase(testCase.getKey());
+              if (testCaseItem != null)
+                CEtlItemDao.mergeItem(
+                    CEtlZScaleTestCaseTranslator.translateTestCase(
+                        project, versions, testCaseItem));
+            }
+          });
     }
 
     CEtlLastSyncDao.updateProjectLastSync("SCALE_TEST_CYCLES", projectKey, projectSyncStartTime);
@@ -174,7 +209,8 @@ public class CEtlZScaleSyncClient {
    * @return The test runs to synchronize.
    */
   private static CZScaleTestRuns getTestRunsToSync(String projectKey, String activeFolder) {
-    return CZScaleClient.TestRuns.getAllTestRuns(projectKey, activeFolder, "createdOn,updatedOn,key");
+    return CZScaleClient.TestRuns.getAllTestRuns(
+        projectKey, activeFolder, "createdOn,updatedOn,key");
   }
 
   /**
@@ -185,7 +221,9 @@ public class CEtlZScaleSyncClient {
    * @return True if the item should be synchronized, false otherwise.
    */
   private static boolean itemShouldSync(Date runLastSync, CZScaleTestExecution item) {
-    return item.getExecutionDate() == null || runLastSync == null || item.getExecutionDate().after(runLastSync);
+    return item.getExecutionDate() == null
+        || runLastSync == null
+        || item.getExecutionDate().after(runLastSync);
   }
 
   /**
@@ -197,6 +235,8 @@ public class CEtlZScaleSyncClient {
    */
   private static boolean testCaseIsSynced(Date projectLastSync, CZScaleTestCase testcase) {
     if (projectLastSync == null) return false;
-    return testcase.getUpdatedOn() != null ? testcase.getUpdatedOn().before(projectLastSync) : testcase.getCreatedOn().before(projectLastSync);
+    return testcase.getUpdatedOn() != null
+        ? testcase.getUpdatedOn().before(projectLastSync)
+        : testcase.getCreatedOn().before(projectLastSync);
   }
 }

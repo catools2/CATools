@@ -3,7 +3,6 @@ package org.catools.mcp.server;
 import io.modelcontextprotocol.common.McpTransportContext;
 import io.modelcontextprotocol.server.McpTransportContextExtractor;
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.time.Duration;
 
 /**
@@ -13,29 +12,19 @@ import java.time.Duration;
  */
 public class CMcpStreamableServerInfo extends CMcpServerInfo {
 
-  /**
-   * The port of the MCP HTTP server.
-   */
+  /** The port of the MCP HTTP server. */
   private final int port;
 
-  /**
-   * The endpoint of the MCP server to send messages.
-   */
+  /** The endpoint of the MCP server to send messages. */
   private final String mcpEndpoint;
 
-  /**
-   * Whether to disallow http delete requests.
-   */
+  /** Whether to disallow http delete requests. */
   private final boolean disallowDelete;
 
-  /**
-   * The extractor to extract the transport context from the HTTP request.
-   */
+  /** The extractor to extract the transport context from the HTTP request. */
   private final McpTransportContextExtractor<HttpServletRequest> contextExtractor;
 
-  /**
-   * The interval to send keep-alive messages.
-   */
+  /** The interval to send keep-alive messages. */
   private final Duration keepAliveInterval;
 
   /**
@@ -113,19 +102,13 @@ public class CMcpStreamableServerInfo extends CMcpServerInfo {
    */
   public static class Builder extends CMcpServerInfo.Builder<Builder> {
 
-    /**
-     * The port of the MCP HTTP server. Default value is {@code 8080}.
-     */
+    /** The port of the MCP HTTP server. Default value is {@code 8080}. */
     private int port = 8080;
 
-    /**
-     * The endpoint of the MCP server to send messages. Default value is {@code /mcp}.
-     */
+    /** The endpoint of the MCP server to send messages. Default value is {@code /mcp}. */
     private String mcpEndpoint = "/mcp";
 
-    /**
-     * Whether to disallow http delete requests. Default value is {@code false}.
-     */
+    /** Whether to disallow http delete requests. Default value is {@code false}. */
     private boolean disallowDelete = false;
 
     /**

@@ -24,15 +24,20 @@ public class CRestAssuredUtil {
     return send(RestAssuredConfig.newConfig(), request, listener);
   }
 
-  public static CHttpResponse send(RestAssuredConfig config, CHttpRequest request, CFilterListener listener) {
+  public static CHttpResponse send(
+      RestAssuredConfig config, CHttpRequest request, CFilterListener listener) {
     RequestSpecification requestSpecification = request.toRequestSpecification(config);
 
     if (listener != null) {
-      requestSpecification.filter((requestSpec, responseSpec, ctx) -> {
-        request.getFilterListener().values().forEach(l -> l.invoke(requestSpec, responseSpec, ctx));
-        listener.invoke(requestSpec, responseSpec, ctx);
-        return ctx.next(requestSpec, responseSpec);
-      });
+      requestSpecification.filter(
+          (requestSpec, responseSpec, ctx) -> {
+            request
+                .getFilterListener()
+                .values()
+                .forEach(l -> l.invoke(requestSpec, responseSpec, ctx));
+            listener.invoke(requestSpec, responseSpec, ctx);
+            return ctx.next(requestSpec, responseSpec);
+          });
     }
 
     CDate startTime = CDate.now();
@@ -72,25 +77,26 @@ public class CRestAssuredUtil {
     throw new NotImplementedException("There is implementation for request " + request);
   }
 
-  private synchronized static void recordPerformanceMetrics(CHttpRequest request, CDate startTime) {
+  private static synchronized void recordPerformanceMetrics(CHttpRequest request, CDate startTime) {
     if (!CMetricsConfigs.isWebServiceRecorderEnabled()) return;
     try {
-      CList<CMetric> metrics = CList.of(
-          new CMetric("REQUEST_TYPE", request.getRequestType().name(), null),
-          new CMetric("TARGET", request.getTarget(), null)
-      );
+      CList<CMetric> metrics =
+          CList.of(
+              new CMetric("REQUEST_TYPE", request.getRequestType().name(), null),
+              new CMetric("TARGET", request.getTarget(), null));
 
-      if (request.getPath() != null)
-        metrics.add(new CMetric("PATH", request.getPath(), null));
+      if (request.getPath() != null) metrics.add(new CMetric("PATH", request.getPath(), null));
 
       if (request.getContentType() != null)
         metrics.add(new CMetric("CONTENT_TYPE", request.getContentType().toString(), null));
 
       if (request.getQueryParameter() != null)
-        metrics.add(new CMetric("QUERY_PARAMETERS", CJsonUtil.toString(request.getQueryParameter()), null));
+        metrics.add(
+            new CMetric("QUERY_PARAMETERS", CJsonUtil.toString(request.getQueryParameter()), null));
 
       if (request.getFormParameters() != null)
-        metrics.add(new CMetric("FORM_PARAMETERS", CJsonUtil.toString(request.getFormParameters()), null));
+        metrics.add(
+            new CMetric("FORM_PARAMETERS", CJsonUtil.toString(request.getFormParameters()), null));
 
       if (request.getParameters() != null)
         metrics.add(new CMetric("PARAMETERS", CJsonUtil.toString(request.getParameters()), null));
@@ -99,11 +105,7 @@ public class CRestAssuredUtil {
         metrics.add(new CMetric("HEADERS", CJsonUtil.toString(request.getHeaders()), null));
 
       CMetricsUtils.addMetric(
-          "ApiRequest",
-          startTime,
-          startTime.getDurationToNow().toNanos(),
-          metrics
-      );
+          "ApiRequest", startTime, startTime.getDurationToNow().toNanos(), metrics);
     } catch (Exception e) {
       log.warn("Failed to record performance metric.", e);
     }

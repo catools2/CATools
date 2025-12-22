@@ -1,14 +1,13 @@
 package org.catools.ws.soap;
 
-import lombok.extern.slf4j.Slf4j;
-
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.soap.*;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Very basic implementation to be used as a base for any other project specific soap client. Each

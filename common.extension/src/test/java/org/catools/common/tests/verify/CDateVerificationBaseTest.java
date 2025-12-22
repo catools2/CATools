@@ -1,19 +1,24 @@
 package org.catools.common.tests.verify;
 
+import java.util.function.Consumer;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.hard.CDateVerification;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
 
-import java.util.function.Consumer;
-
 public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualByFormat() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
     verify(date -> date.equalsByFormat(actual, actual.clone().addMinutes(10), "yyyy-MM-dd HH:ss"));
-    verify(date -> date.equalsByFormat(actual, actual.clone().addMinutes(10), "yyyy-MM-dd HH:ss", "DateExpectationTest ::> equalsByFormat "));
+    verify(
+        date ->
+            date.equalsByFormat(
+                actual,
+                actual.clone().addMinutes(10),
+                "yyyy-MM-dd HH:ss",
+                "DateExpectationTest ::> equalsByFormat "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -25,7 +30,10 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualByFormat_BothNull() {
     verify(date -> date.equalsByFormat(null, null, "yyyy-MM-dd HH:mm:ss"));
-    verify(date -> date.equalsByFormat(null, null, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> equalsByFormat "));
+    verify(
+        date ->
+            date.equalsByFormat(
+                null, null, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> equalsByFormat "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -37,15 +45,18 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualByFormat_NotEquals() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
-    verify(date -> date.equalsByFormat(actual, actual.clone().addMinutes(10), "yyyy-MM-dd HH:mm:ss"));
+    verify(
+        date -> date.equalsByFormat(actual, actual.clone().addMinutes(10), "yyyy-MM-dd HH:mm:ss"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualTimePortion() {
-    verify(date -> {
-      CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
-      date.equalsTimePortion(actual, actual.clone().addDays(10), "DateExpectationTest ::> equalsTimePortion ");
-    });
+    verify(
+        date -> {
+          CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
+          date.equalsTimePortion(
+              actual, actual.clone().addDays(10), "DateExpectationTest ::> equalsTimePortion ");
+        });
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -57,7 +68,8 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualTimePortion_BothNull() {
     verify(date -> date.equalsTimePortion(null, null));
-    verify(date -> date.equalsTimePortion(null, null, "DateExpectationTest ::> equalsDatePortion "));
+    verify(
+        date -> date.equalsTimePortion(null, null, "DateExpectationTest ::> equalsDatePortion "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -83,7 +95,12 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   public void testEqualsDatePortion() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
     verify(date -> date.equalsDatePortion(actual, actual.clone().addMinutes(10)));
-    verify(date -> date.equalsDatePortion(actual, actual.clone().addMinutes(10), "DateExpectationTest ::> equalsDatePortion "));
+    verify(
+        date ->
+            date.equalsDatePortion(
+                actual,
+                actual.clone().addMinutes(10),
+                "DateExpectationTest ::> equalsDatePortion "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -95,7 +112,8 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsDatePortion_BothNull() {
     verify(date -> date.equalsDatePortion(null, null));
-    verify(date -> date.equalsDatePortion(null, null, "DateExpectationTest ::> equalsDatePortion "));
+    verify(
+        date -> date.equalsDatePortion(null, null, "DateExpectationTest ::> equalsDatePortion "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -137,12 +155,26 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEqualByFormat() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
-    verify(date -> date.notEqualsByFormat(actual, actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm:ss"));
-    verify(date -> date.notEqualsByFormat(actual, actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> notEqualsByFormat "));
+    verify(
+        date ->
+            date.notEqualsByFormat(actual, actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm:ss"));
+    verify(
+        date ->
+            date.notEqualsByFormat(
+                actual,
+                actual.clone().addSeconds(10),
+                "yyyy-MM-dd HH:mm:ss",
+                "DateExpectationTest ::> notEqualsByFormat "));
     verify(date -> date.notEqualsByFormat(actual, null, "yyyy-MM-dd HH:mm:ss"));
-    verify(date -> date.notEqualsByFormat(actual, null, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> notEqualsByFormat "));
+    verify(
+        date ->
+            date.notEqualsByFormat(
+                actual, null, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> notEqualsByFormat "));
     verify(date -> date.notEqualsByFormat(null, actual, "yyyy-MM-dd HH:mm:ss"));
-    verify(date -> date.notEqualsByFormat(null, actual, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> notEqualsByFormat "));
+    verify(
+        date ->
+            date.notEqualsByFormat(
+                null, actual, "yyyy-MM-dd HH:mm:ss", "DateExpectationTest ::> notEqualsByFormat "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -153,18 +185,30 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEqualByFormat_Equals() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
-    verify(date -> date.notEqualsByFormat(actual, actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm"));
+    verify(
+        date -> date.notEqualsByFormat(actual, actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEqualDatePortion() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
     verify(date -> date.notEqualsDatePortion(actual, actual.clone().addDays(10)));
-    verify(date -> date.notEqualsDatePortion(actual, actual.clone().addDays(10), "DateExpectationTest ::> notEqualsDatePortion "));
+    verify(
+        date ->
+            date.notEqualsDatePortion(
+                actual,
+                actual.clone().addDays(10),
+                "DateExpectationTest ::> notEqualsDatePortion "));
     verify(date -> date.notEqualsDatePortion(actual, null));
-    verify(date -> date.notEqualsDatePortion(actual, null, "DateExpectationTest ::> notEqualsDatePortion "));
+    verify(
+        date ->
+            date.notEqualsDatePortion(
+                actual, null, "DateExpectationTest ::> notEqualsDatePortion "));
     verify(date -> date.notEqualsDatePortion(null, actual));
-    verify(date -> date.notEqualsDatePortion(null, actual, "DateExpectationTest ::> notEqualsDatePortion "));
+    verify(
+        date ->
+            date.notEqualsDatePortion(
+                null, actual, "DateExpectationTest ::> notEqualsDatePortion "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -182,11 +226,22 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   public void testNotEqualTimePortion() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
     verify(date -> date.notEqualsTimePortion(actual, actual.clone().addMinutes(10)));
-    verify(date -> date.notEqualsTimePortion(actual, actual.clone().addMinutes(10), "DateExpectationTest ::> notEqualsTimePortion "));
+    verify(
+        date ->
+            date.notEqualsTimePortion(
+                actual,
+                actual.clone().addMinutes(10),
+                "DateExpectationTest ::> notEqualsTimePortion "));
     verify(date -> date.notEqualsTimePortion(actual, null));
-    verify(date -> date.notEqualsTimePortion(actual, null, "DateExpectationTest ::> notEqualsTimePortion "));
+    verify(
+        date ->
+            date.notEqualsTimePortion(
+                actual, null, "DateExpectationTest ::> notEqualsTimePortion "));
     verify(date -> date.notEqualsTimePortion(null, actual));
-    verify(date -> date.notEqualsTimePortion(null, actual, "DateExpectationTest ::> notEqualsTimePortion "));
+    verify(
+        date ->
+            date.notEqualsTimePortion(
+                null, actual, "DateExpectationTest ::> notEqualsTimePortion "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -204,7 +259,10 @@ public abstract class CDateVerificationBaseTest extends CBaseUnitTest {
   public void testNotEquals() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
     verify(date -> date.notEquals(actual, actual.clone().addSeconds(10)));
-    verify(date -> date.notEquals(actual, actual.clone().addSeconds(10), "DateExpectationTest ::> verifyNotEquals "));
+    verify(
+        date ->
+            date.notEquals(
+                actual, actual.clone().addSeconds(10), "DateExpectationTest ::> verifyNotEquals "));
     verify(date -> date.notEquals(actual, null));
     verify(date -> date.notEquals(actual, null, "DateExpectationTest ::> verifyNotEquals "));
     verify(date -> date.notEquals(null, actual));

@@ -10,8 +10,7 @@ import java.util.Map;
 @JsonDeserialize(as = CLinkedMap.class)
 public class CLinkedMap<K, V> extends LinkedHashMap<K, V> implements CMap<K, V> {
 
-  public CLinkedMap() {
-  }
+  public CLinkedMap() {}
 
   public CLinkedMap(java.util.Map<K, V> m) {
     super(m);
@@ -88,5 +87,4 @@ public class CLinkedMap<K, V> extends LinkedHashMap<K, V> implements CMap<K, V> 
       return new CList<>(keySet().map(CJsonUtil::toString)).toString();
     }
   }
-
 }

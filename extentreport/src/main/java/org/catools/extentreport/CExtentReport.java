@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.config.CTestManagementConfigs;
@@ -12,8 +13,6 @@ import org.catools.common.testng.model.CTestResult;
 import org.catools.common.utils.CConfigUtil;
 import org.catools.common.utils.CStringUtil;
 import org.testng.ITestResult;
-
-import java.io.File;
 
 public class CExtentReport extends ExtentReports {
   private ExtentSparkReporter extentHtmlReporter;
@@ -83,7 +82,8 @@ public class CExtentReport extends ExtentReports {
 
   protected ExtentSparkReporter buildExtentHtmlReporter(
       String reportDir, String reportName, String reportFileName) {
-    File file = new File(reportDir, reportFileName.replaceAll(".html", CStringUtil.EMPTY) + ".html");
+    File file =
+        new File(reportDir, reportFileName.replaceAll(".html", CStringUtil.EMPTY) + ".html");
     if (file.exists()) {
       if (!file.delete()) {
         throw new CFileOperationException(file, "filed to delete file!");

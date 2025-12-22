@@ -1,11 +1,10 @@
 package org.catools.common.tests.waitVerifier;
 
+import java.math.BigDecimal;
 import org.catools.common.exception.CInvalidRangeException;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CNumberWaitVerifier;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
 
 public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
 
@@ -14,22 +13,38 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toIntWaitVerify(100).verifyBetweenExclusive(verifier, 99, 101, 1));
     verify(verifier -> toLongWaitVerify(100L).verifyBetweenExclusive(verifier, 99L, 101L));
     verify(verifier -> toDoubleWaitVerify(100.2D).verifyBetweenExclusive(verifier, 100.1D, 100.3D));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenExclusive(verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.124)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.124)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testBetweenExclusive_BigDecimal_ActualMatchHigherBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenExclusive(verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testBetweenExclusive_BigDecimal_ActualMatchLowerBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenExclusive(verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CInvalidRangeException.class)
   public void testBetweenExclusive_BigDecimal_LowerBoundIsGreaterThanHigherBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenExclusive(verifier, BigDecimal.valueOf(100.126), BigDecimal.valueOf(100.124), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.126), BigDecimal.valueOf(100.124), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -53,20 +68,37 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toIntWaitVerify(100).verifyBetweenInclusive(verifier, 100, 101));
     verify(verifier -> toLongWaitVerify(100L).verifyBetweenInclusive(verifier, 99L, 100L, 1));
     verify(verifier -> toLongWaitVerify(100L).verifyBetweenInclusive(verifier, 100L, 101L));
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyBetweenInclusive(verifier, 100.1D, 100.2D, 1));
+    verify(
+        verifier -> toDoubleWaitVerify(100.2D).verifyBetweenInclusive(verifier, 100.1D, 100.2D, 1));
     verify(verifier -> toDoubleWaitVerify(100.2D).verifyBetweenInclusive(verifier, 100.2D, 100.3D));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenInclusive(verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124)));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenInclusive(verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testBetweenInclusive_BigDecimal_ActualBiggerThanHigherBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenInclusive(verifier, BigDecimal.valueOf(100.121), BigDecimal.valueOf(100.122), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.121), BigDecimal.valueOf(100.122), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testBetweenInclusive_BigDecimal_ActualLessThanLowerBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyBetweenInclusive(verifier, BigDecimal.valueOf(100.124), BigDecimal.valueOf(100.125), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.124), BigDecimal.valueOf(100.125), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -87,9 +119,15 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
-    verify(verifier -> toIntWaitVerify(actual.intValue()).verifyEquals(verifier, actual.intValue(), 1));
-    verify(verifier -> toLongWaitVerify(actual.longValue()).verifyEquals(verifier, actual.longValue()));
-    verify(verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyEquals(verifier, actual.doubleValue()));
+    verify(
+        verifier ->
+            toIntWaitVerify(actual.intValue()).verifyEquals(verifier, actual.intValue(), 1));
+    verify(
+        verifier ->
+            toLongWaitVerify(actual.longValue()).verifyEquals(verifier, actual.longValue()));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(actual.doubleValue()).verifyEquals(verifier, actual.doubleValue()));
     verify(verifier -> toBigDecimalWaitVerify(actual).verifyEquals(verifier, actual));
   }
 
@@ -97,7 +135,10 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testEqualsBigDecimalWithPrecision_NotEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(100.123134);
-    verify(verifier -> toBigDecimalWaitVerify(actual).verifyEqualsP(verifier, expected, BigDecimal.valueOf(0.000009)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(actual)
+                .verifyEqualsP(verifier, expected, BigDecimal.valueOf(0.000009)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -116,21 +157,27 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testEqualsDouble_NotEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(101.123134);
-    verify(verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyEquals(verifier, expected.doubleValue()));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(actual.doubleValue())
+                .verifyEquals(verifier, expected.doubleValue()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsInt_NotEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(101.123134);
-    verify(verifier -> toIntWaitVerify(actual.intValue()).verifyEquals(verifier, expected.intValue()));
+    verify(
+        verifier -> toIntWaitVerify(actual.intValue()).verifyEquals(verifier, expected.intValue()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsLong_NotEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(101.123134);
-    verify(verifier -> toLongWaitVerify(actual.longValue()).verifyEquals(verifier, expected.longValue()));
+    verify(
+        verifier ->
+            toLongWaitVerify(actual.longValue()).verifyEquals(verifier, expected.longValue()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -141,8 +188,14 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toLongWaitVerify(2000L).verifyEqualsP(verifier, 1000L, 1000L));
     verify(verifier -> toDoubleWaitVerify(1000D).verifyEqualsP(verifier, 1001D, 1.0));
     verify(verifier -> toDoubleWaitVerify(1001D).verifyEqualsP(verifier, 1000D, 1.0));
-    verify(verifier -> toBigDecimalWaitVerify(actual).verifyEqualsP(verifier, actual, BigDecimal.valueOf(0.0)));
-    verify(verifier -> toBigDecimalWaitVerify(actual).verifyEqualsP(verifier, expected, BigDecimal.valueOf(0.00009)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(actual)
+                .verifyEqualsP(verifier, actual, BigDecimal.valueOf(0.0)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(actual)
+                .verifyEqualsP(verifier, expected, BigDecimal.valueOf(0.00009)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -195,11 +248,21 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(100.123134);
     verify(verifier -> toIntWaitVerify(101).verifyGreaterOrEqual(verifier, actual.intValue(), 1));
-    verify(verifier -> toIntWaitVerify(actual.intValue()).verifyGreaterOrEqual(verifier, actual.intValue()));
+    verify(
+        verifier ->
+            toIntWaitVerify(actual.intValue()).verifyGreaterOrEqual(verifier, actual.intValue()));
     verify(verifier -> toLongWaitVerify(101L).verifyGreaterOrEqual(verifier, actual.longValue()));
-    verify(verifier -> toLongWaitVerify(actual.longValue()).verifyGreaterOrEqual(verifier, actual.longValue()));
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyGreaterOrEqual(verifier, actual.doubleValue()));
-    verify(verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyGreaterOrEqual(verifier, actual.doubleValue()));
+    verify(
+        verifier ->
+            toLongWaitVerify(actual.longValue())
+                .verifyGreaterOrEqual(verifier, actual.longValue()));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(100.2D).verifyGreaterOrEqual(verifier, actual.doubleValue()));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(actual.doubleValue())
+                .verifyGreaterOrEqual(verifier, actual.doubleValue()));
     verify(verifier -> toBigDecimalWaitVerify(expected).verifyGreaterOrEqual(verifier, actual));
     verify(verifier -> toBigDecimalWaitVerify(actual).verifyGreaterOrEqual(verifier, actual));
   }
@@ -219,7 +282,9 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testGreaterOrEqual_N3() {
     BigDecimal actual = BigDecimal.valueOf(102.1231);
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyGreaterOrEqual(verifier, actual.doubleValue()));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(100.2D).verifyGreaterOrEqual(verifier, actual.doubleValue()));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -319,11 +384,19 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(100.123134);
     verify(verifier -> toIntWaitVerify(actual.intValue()).verifyLessOrEqual(verifier, 101, 1));
-    verify(verifier -> toIntWaitVerify(actual.intValue()).verifyLessOrEqual(verifier, actual.intValue()));
+    verify(
+        verifier ->
+            toIntWaitVerify(actual.intValue()).verifyLessOrEqual(verifier, actual.intValue()));
     verify(verifier -> toLongWaitVerify(actual.longValue()).verifyLessOrEqual(verifier, 101L));
-    verify(verifier -> toLongWaitVerify(actual.longValue()).verifyLessOrEqual(verifier, actual.longValue()));
-    verify(verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyLessOrEqual(verifier, 100.2D));
-    verify(verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyLessOrEqual(verifier, actual.doubleValue()));
+    verify(
+        verifier ->
+            toLongWaitVerify(actual.longValue()).verifyLessOrEqual(verifier, actual.longValue()));
+    verify(
+        verifier -> toDoubleWaitVerify(actual.doubleValue()).verifyLessOrEqual(verifier, 100.2D));
+    verify(
+        verifier ->
+            toDoubleWaitVerify(actual.doubleValue())
+                .verifyLessOrEqual(verifier, actual.doubleValue()));
     verify(verifier -> toBigDecimalWaitVerify(actual).verifyLessOrEqual(verifier, expected));
     verify(verifier -> toBigDecimalWaitVerify(actual).verifyLessOrEqual(verifier, actual));
   }
@@ -384,20 +457,38 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toIntWaitVerify(100).verifyNotBetweenExclusive(verifier, 100, 101, 1));
     verify(verifier -> toLongWaitVerify(100L).verifyNotBetweenExclusive(verifier, 99L, 100L));
     verify(verifier -> toLongWaitVerify(100L).verifyNotBetweenExclusive(verifier, 100L, 101L));
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenExclusive(verifier, 100.1D, 100.2D));
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenExclusive(verifier, 100.2D, 100.3D));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenExclusive(verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenExclusive(verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0, 100));
+    verify(
+        verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenExclusive(verifier, 100.1D, 100.2D));
+    verify(
+        verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenExclusive(verifier, 100.2D, 100.3D));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.123), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotBetweenExclusive_BigDecimal_InBetween() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenExclusive(verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.124), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.122), BigDecimal.valueOf(100.124), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CInvalidRangeException.class)
   public void testNotBetweenExclusive_BigDecimal_LowerBiggerThanHigher() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenExclusive(verifier, BigDecimal.valueOf(100.124), BigDecimal.valueOf(100.122), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenExclusive(
+                    verifier, BigDecimal.valueOf(100.124), BigDecimal.valueOf(100.122), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -414,18 +505,28 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   public void testNotBetweenInclusive() {
     verify(verifier -> toIntWaitVerify(101).verifyNotBetweenInclusive(verifier, 99, 100, 1));
     verify(verifier -> toLongWaitVerify(101L).verifyNotBetweenInclusive(verifier, 99L, 100L));
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenInclusive(verifier, 100.3D, 100.4D));
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenInclusive(verifier, BigDecimal.valueOf(100.120), BigDecimal.valueOf(100.121), 0, 100));
+    verify(
+        verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenInclusive(verifier, 100.3D, 100.4D));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.120), BigDecimal.valueOf(100.121), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotBetweenInclusive_BigDecimal_ActualEqualLowerBound() {
-    verify(verifier -> toBigDecimalWaitVerify(BigDecimal.valueOf(100.123)).verifyNotBetweenInclusive(verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(BigDecimal.valueOf(100.123))
+                .verifyNotBetweenInclusive(
+                    verifier, BigDecimal.valueOf(100.123), BigDecimal.valueOf(100.124), 0, 100));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CInvalidRangeException.class)
   public void testNotBetweenInclusive_Decimal_LowerBiggerHigherBound() {
-    verify(verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenInclusive(verifier, 100.3D, 100.2D));
+    verify(
+        verifier -> toDoubleWaitVerify(100.2D).verifyNotBetweenInclusive(verifier, 100.3D, 100.2D));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -455,14 +556,20 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
     verify(verifier -> toIntWaitVerify(1).verifyNotEqualsP(verifier, null, 2));
     verify(verifier -> toLongWaitVerify(2000L).verifyNotEqualsP(verifier, 1000L, 10L));
     verify(verifier -> toDoubleWaitVerify(1000D).verifyNotEqualsP(verifier, 1001D, 0.5));
-    verify(verifier -> toBigDecimalWaitVerify(actual).verifyNotEqualsP(verifier, expected, BigDecimal.valueOf(0.000001)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(actual)
+                .verifyNotEqualsP(verifier, expected, BigDecimal.valueOf(0.000001)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEqualsWithPrecision_BigDecimal_InRange() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
     BigDecimal expected = BigDecimal.valueOf(100.1231);
-    verify(verifier -> toBigDecimalWaitVerify(expected).verifyNotEqualsP(verifier, actual, BigDecimal.valueOf(0.001)));
+    verify(
+        verifier ->
+            toBigDecimalWaitVerify(expected)
+                .verifyNotEqualsP(verifier, actual, BigDecimal.valueOf(0.001)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -494,7 +601,9 @@ public class CNumberWaitVerifyTest extends CBaseWaitVerifyTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotEquals_IntEquals() {
     BigDecimal actual = BigDecimal.valueOf(100.1231);
-    verify(verifier -> toIntWaitVerify(actual.intValue()).verifyNotEquals(verifier, actual.intValue()));
+    verify(
+        verifier ->
+            toIntWaitVerify(actual.intValue()).verifyNotEquals(verifier, actual.intValue()));
   }
 
   private CNumberWaitVerifier<Integer> toIntWaitVerify(Integer val) {

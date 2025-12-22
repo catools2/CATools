@@ -1,17 +1,17 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.exception.CResourceNotFoundException;
+import static org.catools.common.utils.CSystemUtil.getPlatform;
 
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +19,12 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import static org.catools.common.utils.CSystemUtil.getPlatform;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.catools.common.configs.CPathConfigs;
+import org.catools.common.exception.CResourceNotFoundException;
 
 @UtilityClass
 public class CResourceUtil {
@@ -35,7 +39,8 @@ public class CResourceUtil {
 
   public static byte[] getByteArray(String resourceFullName, Class<?> clazz) {
     try {
-      return performActionOnResource(resourceFullName, clazz, (resourceName, is) -> CInputStreamUtil.toByteArray((is)));
+      return performActionOnResource(
+          resourceFullName, clazz, (resourceName, is) -> CInputStreamUtil.toByteArray((is)));
     } catch (Exception e) {
       throw new CResourceNotFoundException("Failed to read resource " + resourceFullName, e);
     }
@@ -64,7 +69,8 @@ public class CResourceUtil {
         });
   }
 
-  public static <T> T performActionOnResource(String resourceName, Class<?> clazz, BiFunction<String, InputStream, T> action) {
+  public static <T> T performActionOnResource(
+      String resourceName, Class<?> clazz, BiFunction<String, InputStream, T> action) {
     if (StringUtils.isBlank(resourceName)) {
       throw new CResourceNotFoundException("Resource name cannot be null or empty!");
     }
@@ -89,13 +95,19 @@ public class CResourceUtil {
           Path resourcePath = fs.getPath(resourceName);
           if (Files.isDirectory(resourcePath)) {
             try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(resourcePath)) {
-              Pair<InputStream, Path> res = getFirstAvailableResourceFromDirectoryStream(clazz, resourcePath, directoryStream);
-              return action.apply(Path.of(resourceName, res.getValue().getFileName().toString()).toString(), res.getKey());
+              Pair<InputStream, Path> res =
+                  getFirstAvailableResourceFromDirectoryStream(
+                      clazz, resourcePath, directoryStream);
+              return action.apply(
+                  Path.of(resourceName, res.getValue().getFileName().toString()).toString(),
+                  res.getKey());
             }
           } else {
-            try (JarFile jarFile = new JarFile(clazz.getProtectionDomain().getCodeSource().getLocation().getFile())) {
+            try (JarFile jarFile =
+                new JarFile(clazz.getProtectionDomain().getCodeSource().getLocation().getFile())) {
               JarEntry jarEntry = jarFile.getJarEntry(resourceName);
-              return action.apply(jarEntry.getName(), jarFile.getInputStream(jarFile.getEntry(resourceName)));
+              return action.apply(
+                  jarEntry.getName(), jarFile.getInputStream(jarFile.getEntry(resourceName)));
             }
           }
         }
@@ -103,11 +115,15 @@ public class CResourceUtil {
         Path path = Paths.get(uri);
         if (Files.isDirectory(path)) {
           try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
-            Pair<InputStream, Path> res = getFirstAvailableResourceFromDirectoryStream(clazz, path, directoryStream);
-            return action.apply(Path.of(resourceName, res.getValue().getFileName().toString()).toString(), FileUtils.openInputStream(res.getValue().toFile()));
+            Pair<InputStream, Path> res =
+                getFirstAvailableResourceFromDirectoryStream(clazz, path, directoryStream);
+            return action.apply(
+                Path.of(resourceName, res.getValue().getFileName().toString()).toString(),
+                FileUtils.openInputStream(res.getValue().toFile()));
           }
         } else {
-          return action.apply(path.getFileName().toString(), FileUtils.openInputStream(new File(uri)));
+          return action.apply(
+              path.getFileName().toString(), FileUtils.openInputStream(new File(uri)));
         }
       }
     } catch (Exception e) {
@@ -116,7 +132,8 @@ public class CResourceUtil {
     }
   }
 
-  private static Pair<InputStream, Path> getFirstAvailableResourceFromDirectoryStream(Class<?> clazz, Path resourcePath, DirectoryStream<Path> directoryStream) {
+  private static Pair<InputStream, Path> getFirstAvailableResourceFromDirectoryStream(
+      Class<?> clazz, Path resourcePath, DirectoryStream<Path> directoryStream) {
     InputStream is = null;
     for (Path p : directoryStream) {
       is = clazz.getResourceAsStream(p.toString());
@@ -143,7 +160,8 @@ public class CResourceUtil {
   }
 
   public static File saveToOutputAS(String resourceName, Class clazz, String resourceNewName) {
-    return saveToFile(resourceName, clazz, new File(CPathConfigs.getOutputFolder(), resourceNewName));
+    return saveToFile(
+        resourceName, clazz, new File(CPathConfigs.getOutputFolder(), resourceNewName));
   }
 
   public static URL getResource(String resource, Class<?> clazz) {
@@ -151,7 +169,9 @@ public class CResourceUtil {
   }
 
   public static InputStream getResourceAsStream(String resource, Class<?> clazz) {
-    return Objects.requireNonNull(getClassLoader(resource, clazz)).getValue().getResourceAsStream(resource);
+    return Objects.requireNonNull(getClassLoader(resource, clazz))
+        .getValue()
+        .getResourceAsStream(resource);
   }
 
   public static Pair<Class<?>, ClassLoader> getClassLoader(String resource, Class<?> clazz) {

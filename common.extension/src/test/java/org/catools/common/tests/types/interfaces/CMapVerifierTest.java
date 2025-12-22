@@ -32,7 +32,8 @@ public class CMapVerifierTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testVerifyContainsAll_CVerifier() {
     CVerifier verifier = new CVerifier();
-    verifier.Map.containsAll(getStringLinkedMap1(), getStringLinkedMap1()._get(), "%s#%s", getParams());
+    verifier.Map.containsAll(
+        getStringLinkedMap1(), getStringLinkedMap1()._get(), "%s#%s", getParams());
     verifier.verify();
   }
 
@@ -54,26 +55,30 @@ public class CMapVerifierTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testVerifyContainsNone() {
-    getStringLinkedMap1().verifyContainsNone(ImmutableMap.of("Z", "2", "Y", "5"), "%s#%s", getParams());
+    getStringLinkedMap1()
+        .verifyContainsNone(ImmutableMap.of("Z", "2", "Y", "5"), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testVerifyContainsNone_CVerifier() {
     CVerifier verifier = new CVerifier();
-    verifier.Map.containsNone(getStringLinkedMap1(), ImmutableMap.of("Z", "2", "Y", "5"), "%s#%s", getParams());
+    verifier.Map.containsNone(
+        getStringLinkedMap1(), ImmutableMap.of("Z", "2", "Y", "5"), "%s#%s", getParams());
     verifier.verify();
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testVerifyContainsNone_CVerifier_Contains_One() {
     CVerifier verifier = new CVerifier();
-    verifier.Map.containsNone(getStringLinkedMap1(), ImmutableMap.of("A", "1", "Y", "5"), "%s#%s", getParams());
+    verifier.Map.containsNone(
+        getStringLinkedMap1(), ImmutableMap.of("A", "1", "Y", "5"), "%s#%s", getParams());
     verifier.verify();
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testVerifyContainsNone_N() {
-    getStringLinkedMap1().verifyContainsNone(ImmutableMap.of("A", "1", "Y", "5"), "%s#%s", getParams());
+    getStringLinkedMap1()
+        .verifyContainsNone(ImmutableMap.of("A", "1", "Y", "5"), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -199,14 +204,16 @@ public class CMapVerifierTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testVerifyNotContainsAll_CVerifier() {
     CVerifier verifier = new CVerifier();
-    verifier.Map.notContainsAll(getStringLinkedMap1(), ImmutableMap.of("A", "2", "B", "1"), "%s#%s", getParams());
+    verifier.Map.notContainsAll(
+        getStringLinkedMap1(), ImmutableMap.of("A", "2", "B", "1"), "%s#%s", getParams());
     verifier.verify();
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testVerifyNotContainsAll_CVerifier_ContainsAll() {
     CVerifier verifier = new CVerifier();
-    verifier.Map.notContainsAll(getStringLinkedMap1(), getStringLinkedMap1()._get(), "%s#%s", getParams());
+    verifier.Map.notContainsAll(
+        getStringLinkedMap1(), getStringLinkedMap1()._get(), "%s#%s", getParams());
     verifier.verify();
   }
 

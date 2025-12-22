@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.utils.CSleeper;
+import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.selectors.CBy;
@@ -18,11 +19,12 @@ import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 /**
- * Abstract class for handling multi-page web tables with pagination controls.
- * This class extends {@link CWebTable} to provide functionality for navigating
- * through paginated table data using first, previous, next, and last page controls.
+ * Abstract class for handling multi-page web tables with pagination controls. This class extends
+ * {@link CWebTable} to provide functionality for navigating through paginated table data using
+ * first, previous, next, and last page controls.
  *
- * <p>Example usage:</p>
+ * <p>Example usage:
+ *
  * <pre>{@code
  * // Create a custom multi-page table implementation
  * public class MyMultiPageTable extends CWebMultiPageTable<MyDriver, MyTableRow> {
@@ -59,19 +61,20 @@ import java.util.function.Supplier;
  * int totalRecords = table.getTotalRecordCount();
  * }</pre>
  *
- * @param <DR> the driver type extending {@link CDriver}
- * @param <R>  the table row type extending {@link CWebTableRow}
+ * @param <EE> the driver type extending {@link CDriver}
+ * @param <R> the table row type extending {@link CWebTableRow}
  * @author CATools Team
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTableRow<DR, ?>>
-    extends CWebTable<DR, R> {
-  private final CWebElement<DR> firstLink;
-  private final CWebElement<DR> previousLink;
-  private final CWebElement<DR> nextLink;
-  private final CWebElement<DR> lastLink;
+public abstract class CWebMultiPageTable<
+        EE extends CElementEngine<?>, R extends CWebTableRow<EE, ?>>
+    extends CWebTable<EE, R> {
+  private final CWebElement firstLink;
+  private final CWebElement previousLink;
+  private final CWebElement nextLink;
+  private final CWebElement lastLink;
   private final int maxNumberOfPageToIterate;
 
   @Getter(AccessLevel.NONE)
@@ -81,7 +84,8 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   /**
    * Constructs a multi-page table with default timeout settings.
    *
-   * <p>Example:</p>
+   * <p>Example:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(
    *     "Users Table",
@@ -94,17 +98,17 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * );
    * }</pre>
    *
-   * @param name            the name of the table for logging purposes
-   * @param driver          the web driver instance
-   * @param baseXpath       the base XPath to locate the table
-   * @param firstLocator    locator for the "first page" button
+   * @param name the name of the table for logging purposes
+   * @param driver the web driver instance
+   * @param baseXpath the base XPath to locate the table
+   * @param firstLocator locator for the "first page" button
    * @param previousLocator locator for the "previous page" button
-   * @param nextLocator     locator for the "next page" button
-   * @param lastLocator     locator for the "last page" button
+   * @param nextLocator locator for the "next page" button
+   * @param lastLocator locator for the "last page" button
    */
   public CWebMultiPageTable(
       String name,
-      DR driver,
+      EE driver,
       String baseXpath,
       CBy firstLocator,
       CBy previousLocator,
@@ -124,7 +128,8 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   /**
    * Constructs a multi-page table with custom timeout settings.
    *
-   * <p>Example:</p>
+   * <p>Example:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(
    *     "Users Table",
@@ -138,18 +143,18 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * );
    * }</pre>
    *
-   * @param name            the name of the table for logging purposes
-   * @param driver          the web driver instance
-   * @param baseXpath       the base XPath to locate the table
-   * @param firstLocator    locator for the "first page" button
+   * @param name the name of the table for logging purposes
+   * @param driver the web driver instance
+   * @param baseXpath the base XPath to locate the table
+   * @param firstLocator locator for the "first page" button
    * @param previousLocator locator for the "previous page" button
-   * @param nextLocator     locator for the "next page" button
-   * @param lastLocator     locator for the "last page" button
-   * @param waitSec         timeout in seconds for element operations
+   * @param nextLocator locator for the "next page" button
+   * @param lastLocator locator for the "last page" button
+   * @param waitSec timeout in seconds for element operations
    */
   public CWebMultiPageTable(
       String name,
-      DR driver,
+      EE driver,
       String baseXpath,
       CBy firstLocator,
       CBy previousLocator,
@@ -171,7 +176,8 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   /**
    * Constructs a multi-page table with custom timeout and maximum page iteration settings.
    *
-   * <p>Example:</p>
+   * <p>Example:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(
    *     "Users Table",
@@ -186,19 +192,19 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * );
    * }</pre>
    *
-   * @param name                     the name of the table for logging purposes
-   * @param driver                   the web driver instance
-   * @param baseXpath                the base XPath to locate the table
-   * @param firstLocator             locator for the "first page" button
-   * @param previousLocator          locator for the "previous page" button
-   * @param nextLocator              locator for the "next page" button
-   * @param lastLocator              locator for the "last page" button
-   * @param waitSec                  timeout in seconds for element operations
+   * @param name the name of the table for logging purposes
+   * @param driver the web driver instance
+   * @param baseXpath the base XPath to locate the table
+   * @param firstLocator locator for the "first page" button
+   * @param previousLocator locator for the "previous page" button
+   * @param nextLocator locator for the "next page" button
+   * @param lastLocator locator for the "last page" button
+   * @param waitSec timeout in seconds for element operations
    * @param maxNumberOfPageToIterate maximum number of pages to iterate through
    */
   public CWebMultiPageTable(
       String name,
-      DR driver,
+      EE driver,
       String baseXpath,
       CBy firstLocator,
       CBy previousLocator,
@@ -207,21 +213,21 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
       int waitSec,
       int maxNumberOfPageToIterate) {
     super(name, driver, baseXpath, waitSec);
-    this.firstLink = new CWebElement<>("First", driver, firstLocator);
-    this.previousLink = new CWebElement<>("Previous", driver, previousLocator);
-    this.nextLink = new CWebElement<>("Next", driver, nextLocator);
-    this.lastLink = new CWebElement<>("Last", driver, lastLocator);
+    this.firstLink = new CWebElement("First", driver, firstLocator);
+    this.previousLink = new CWebElement("Previous", driver, previousLocator);
+    this.nextLink = new CWebElement("Next", driver, nextLocator);
+    this.lastLink = new CWebElement("Last", driver, lastLocator);
     this.maxNumberOfPageToIterate = maxNumberOfPageToIterate;
 
     Runtime.getRuntime().addShutdownHook(new Thread(singlePageMode::remove));
   }
 
   /**
-   * Gets the current page number as a string.
-   * This method must be implemented by subclasses to provide the current page number
-   * from the specific pagination control used by the table.
+   * Gets the current page number as a string. This method must be implemented by subclasses to
+   * provide the current page number from the specific pagination control used by the table.
    *
-   * <p>Example implementation:</p>
+   * <p>Example implementation:
+   *
    * <pre>{@code
    * @Override
    * public String getCurrentPageNumber() {
@@ -234,10 +240,11 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   public abstract String getCurrentPageNumber();
 
   /**
-   * Gets the total number of records across all pages of the table.
-   * This method navigates through all pages to count the total records.
+   * Gets the total number of records across all pages of the table. This method navigates through
+   * all pages to count the total records.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * int totalCount = table.getTotalRecordCount();
@@ -251,10 +258,11 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   }
 
   /**
-   * Gets the number of records on the current page only.
-   * This method does not navigate to other pages.
+   * Gets the number of records on the current page only. This method does not navigate to other
+   * pages.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * table.gotoFirstPage();
@@ -269,11 +277,12 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   }
 
   /**
-   * Navigates to the first page of the table.
-   * First attempts to click the "first page" button if available and clickable.
-   * If not available, it will repeatedly click "previous page" until reaching the first page.
+   * Navigates to the first page of the table. First attempts to click the "first page" button if
+   * available and clickable. If not available, it will repeatedly click "previous page" until
+   * reaching the first page.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * if (table.gotoFirstPage()) {
@@ -292,17 +301,19 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
       return true;
     } else {
       int counter = maxNumberOfPageToIterate;
-      while (gotoPreviousPage() && counter-- > 0) ;
+      while (gotoPreviousPage() && counter-- > 0)
+        ;
       return counter < maxNumberOfPageToIterate;
     }
   }
 
   /**
-   * Navigates to the previous page of the table.
-   * Checks if the "previous page" button is present and enabled before attempting to click it.
-   * Validates the navigation by comparing page numbers before and after the click.
+   * Navigates to the previous page of the table. Checks if the "previous page" button is present
+   * and enabled before attempting to click it. Validates the navigation by comparing page numbers
+   * before and after the click.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * while (table.gotoPreviousPage()) {
@@ -311,7 +322,8 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * System.out.println("Reached first page or no more previous pages available");
    * }</pre>
    *
-   * @return true if successfully navigated to the previous page, false if already on first page or navigation failed
+   * @return true if successfully navigated to the previous page, false if already on first page or
+   *     navigation failed
    */
   public boolean gotoPreviousPage() {
     if (previousLink.Present.isFalse() || previousLink.Enabled.isFalse()) {
@@ -331,11 +343,12 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
   }
 
   /**
-   * Navigates to the next page of the table.
-   * Checks if the "next page" button is present and enabled before attempting to click it.
-   * Validates the navigation by comparing page numbers before and after the click.
+   * Navigates to the next page of the table. Checks if the "next page" button is present and
+   * enabled before attempting to click it. Validates the navigation by comparing page numbers
+   * before and after the click.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * while (table.gotoNextPage()) {
@@ -348,28 +361,28 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * System.out.println("Reached last page or no more next pages available");
    * }</pre>
    *
-   * @return true if successfully navigated to the next page, false if already on last page or navigation failed
+   * @return true if successfully navigated to the next page, false if already on last page or
+   *     navigation failed
    */
   public boolean gotoNextPage() {
     if (nextLink.Present.isFalse() || nextLink.Enabled.isFalse()) {
       return false;
     }
     String currentPageNumber = getCurrentPageNumber();
-    if (StringUtils.isBlank(currentPageNumber))
-      logger.trace("Go to next page from current page.");
-    else
-      logger.trace("Go to next page from page {}.", currentPageNumber);
+    if (StringUtils.isBlank(currentPageNumber)) logger.trace("Go to next page from current page.");
+    else logger.trace("Go to next page from page {}.", currentPageNumber);
     nextLink.click();
     return StringUtils.isBlank(currentPageNumber)
         || !currentPageNumber.equals(getCurrentPageNumber());
   }
 
   /**
-   * Navigates to the last page of the table.
-   * First attempts to click the "last page" button if available and clickable.
-   * If not available, it will repeatedly click "next page" until reaching the last page.
+   * Navigates to the last page of the table. First attempts to click the "last page" button if
+   * available and clickable. If not available, it will repeatedly click "next page" until reaching
+   * the last page.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * if (table.gotoLastPage()) {
@@ -389,17 +402,19 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
       return true;
     } else {
       int counter = maxNumberOfPageToIterate;
-      while (gotoNextPage() && counter-- > 0) ;
+      while (gotoNextPage() && counter-- > 0)
+        ;
       return counter < maxNumberOfPageToIterate;
     }
   }
 
   /**
-   * Returns an iterator that automatically handles pagination.
-   * The iterator will navigate through all pages and return all rows across all pages.
-   * If in single page mode, it behaves like the parent class iterator (current page only).
+   * Returns an iterator that automatically handles pagination. The iterator will navigate through
+   * all pages and return all rows across all pages. If in single page mode, it behaves like the
+   * parent class iterator (current page only).
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    *
@@ -424,17 +439,17 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    */
   @Override
   public Iterator<R> iterator() {
-    if (singlePageMode.get())
-      return super.iterator();
+    if (singlePageMode.get()) return super.iterator();
     return iterateWithPagination();
   }
 
   /**
-   * Performs an action on the current page only without navigating to other pages.
-   * This method temporarily enables single page mode to ensure the action is performed
-   * only on the current page's data.
+   * Performs an action on the current page only without navigating to other pages. This method
+   * temporarily enables single page mode to ensure the action is performed only on the current
+   * page's data.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * CWebMultiPageTable table = new MyMultiPageTable(driver);
    * table.gotoFirstPage();
@@ -452,12 +467,13 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
    * System.out.println("Active records on current page: " + currentPageActiveCount);
    * }</pre>
    *
-   * @param <O>      the return type of the supplier
+   * @param <O> the return type of the supplier
    * @param criteria search criteria for filtering (can be empty)
    * @param supplier the action to perform on the current page
    * @return the result of the supplier action
    */
-  protected synchronized <O> O performActionOnCurrentPage(Map<String, String> criteria, Supplier<O> supplier) {
+  protected synchronized <O> O performActionOnCurrentPage(
+      Map<String, String> criteria, Supplier<O> supplier) {
     singlePageMode.set(true);
     O o = super.performActionOnTable(criteria, supplier);
     singlePageMode.set(false);
@@ -476,12 +492,14 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
         record = null;
         while (counter > 0) {
           // Read the record
-          boolean recordPresent = hasRecord(cursor) && (record = getRecord(cursor)) != null && record.Present.isTrue();
+          boolean recordPresent =
+              hasRecord(cursor) && (record = getRecord(cursor)) != null && record.Present.isTrue();
 
-          //if record available then we are good
+          // if record available then we are good
           if (recordPresent) break;
 
-          // if not record available, and we cannot move to the next page then set the record to null to end the iteration
+          // if not record available, and we cannot move to the next page then set the record to
+          // null to end the iteration
           if (!gotoNextPage()) {
             record = null;
             break;
@@ -496,8 +514,7 @@ public abstract class CWebMultiPageTable<DR extends CDriver, R extends CWebTable
       @SuppressWarnings("unchecked")
       @Override
       public R next() {
-        if (record == null || record.Present.isFalse())
-          throw new NoSuchElementException();
+        if (record == null || record.Present.isFalse()) throw new NoSuchElementException();
 
         cursor++;
         return record;

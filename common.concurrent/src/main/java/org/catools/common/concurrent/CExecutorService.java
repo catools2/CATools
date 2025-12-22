@@ -16,13 +16,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
- * A simple implementation of {@link ExecutorService} to simplify the interface for most
- * automation needs.
+ * A simple implementation of {@link ExecutorService} to simplify the interface for most automation
+ * needs.
  *
  * <p>Provides a lightweight wrapper around a fixed thread pool and a queue of {@link Callable}
- * tasks. Exceptions from tasks are captured and can optionally stop all processing.</p>
+ * tasks. Exceptions from tasks are captured and can optionally stop all processing.
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * // Create a service with 4 threads
  * CExecutorService<Integer> svc = new CExecutorService<>("MyService", 4);
@@ -41,7 +42,6 @@ import java.util.function.Supplier;
  *   // handle error
  * }
  * }</pre>
- * </p>
  *
  * @param <T> the type of the result produced by the tasks in the executor service
  */
@@ -60,10 +60,10 @@ public class CExecutorService<T> {
    * Constructs a new CExecutorService with the specified name and thread count.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CExecutorService<String> svc = new CExecutorService<>("svc", 2);
    * }</pre>
-   * </p>
    *
    * @param name the name of the executor service
    * @param threadCount the number of threads in the thread pool
@@ -73,14 +73,15 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Constructs a new CExecutorService with the specified name, thread count, and exception handling behavior.
+   * Constructs a new CExecutorService with the specified name, thread count, and exception handling
+   * behavior.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * // stopOnException = false allows other tasks to continue if one fails
    * CExecutorService<String> svc = new CExecutorService<>("svc", 4, false);
    * }</pre>
-   * </p>
    *
    * @param name the name of the executor service
    * @param threadCount the number of threads in the thread pool
@@ -91,14 +92,15 @@ public class CExecutorService<T> {
   }
 
   /**
-   * Constructs a new CExecutorService with the specified name, thread count, timeout, and time unit.
+   * Constructs a new CExecutorService with the specified name, thread count, timeout, and time
+   * unit.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * // tasks will be invoked with the provided timeout if not overridden
    * CExecutorService<Integer> svc = new CExecutorService<>("timed", 3, 30L, TimeUnit.SECONDS);
    * }</pre>
-   * </p>
    *
    * @param name the name of the executor service
    * @param threadCount the number of threads in the thread pool
@@ -167,13 +169,13 @@ public class CExecutorService<T> {
    * Adds a new task to the task queue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * svc.addCallable(() -> {
    *   // compute and return result
    *   return "result";
    * });
    * }</pre>
-   * </p>
    *
    * @param callable the task to be added to the queue
    */
@@ -196,9 +198,10 @@ public class CExecutorService<T> {
    * Executes all tasks in the queue, waiting for their completion.
    *
    * <p>Blocks until tasks complete or an exception occurs. If a timeout was configured in the
-   * constructor it will delegate to {@link #invokeAll(long, TimeUnit)}.</p>
+   * constructor it will delegate to {@link #invokeAll(long, TimeUnit)}.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * try {
    *   svc.invokeAll();
@@ -206,7 +209,6 @@ public class CExecutorService<T> {
    *   // handle task-level exception
    * }
    * }</pre>
-   * </p>
    *
    * @throws Throwable if an exception occurs during task execution
    */
@@ -230,6 +232,7 @@ public class CExecutorService<T> {
    * Executes all tasks in the queue, waiting for their completion or until the timeout expires.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * try {
    *   svc.invokeAll(10, TimeUnit.SECONDS);
@@ -237,7 +240,6 @@ public class CExecutorService<T> {
    *   // handle timeout or task exception
    * }
    * }</pre>
-   * </p>
    *
    * @param timeout the maximum time to wait
    * @param unit the time unit of the timeout argument
@@ -259,10 +261,10 @@ public class CExecutorService<T> {
    * Initiates an orderly shutdown of the executor service.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * svc.shutdown();
    * }</pre>
-   * </p>
    */
   public void shutdown() {
     executor.shutdown();
@@ -272,10 +274,10 @@ public class CExecutorService<T> {
    * Attempts to stop all actively executing tasks and halts the processing of waiting tasks.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * svc.shutdownNow();
    * }</pre>
-   * </p>
    */
   public void shutdownNow() {
     executor.shutdownNow();

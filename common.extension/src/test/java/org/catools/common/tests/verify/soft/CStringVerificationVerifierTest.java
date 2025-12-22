@@ -1,10 +1,9 @@
 package org.catools.common.tests.verify.soft;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.extensions.verify.hard.CStringVerification;
 import org.catools.common.tests.verify.CStringVerificationBaseTest;
-
-import java.util.function.Consumer;
 
 public class CStringVerificationVerifierTest extends CStringVerificationBaseTest {
   @Override

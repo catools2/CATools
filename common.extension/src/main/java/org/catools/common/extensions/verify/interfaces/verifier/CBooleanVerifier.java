@@ -11,7 +11,8 @@ import org.catools.common.extensions.verify.CVerificationQueue;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  */
-public interface CBooleanVerifier extends CBaseBooleanExtension, CObjectVerifier<Boolean, CBooleanState> {
+public interface CBooleanVerifier
+    extends CBaseBooleanExtension, CObjectVerifier<Boolean, CBooleanState> {
 
   /**
    * Verify that actual value is false
@@ -26,10 +27,11 @@ public interface CBooleanVerifier extends CBaseBooleanExtension, CObjectVerifier
    * Verify that actual value is false
    *
    * @param verifier CVerificationQueue instance
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsFalse(final CVerificationQueue verifier, final String message, final Object... params) {
+  default void verifyIsFalse(
+      final CVerificationQueue verifier, final String message, final Object... params) {
     _verify(verifier, false, (a, b) -> _toState(a).isFalse(), message, params);
   }
 
@@ -46,10 +48,11 @@ public interface CBooleanVerifier extends CBaseBooleanExtension, CObjectVerifier
    * Verify that actual value is true
    *
    * @param verifier CVerificationQueue instance
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsTrue(final CVerificationQueue verifier, final String message, final Object... params) {
+  default void verifyIsTrue(
+      final CVerificationQueue verifier, final String message, final Object... params) {
     _verify(verifier, true, (a, b) -> _toState(a).isTrue(), message, params);
   }
 
@@ -68,10 +71,14 @@ public interface CBooleanVerifier extends CBaseBooleanExtension, CObjectVerifier
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyNotEquals(final CVerificationQueue verifier, final Boolean expected, final String message, final Object... params) {
+  default void verifyNotEquals(
+      final CVerificationQueue verifier,
+      final Boolean expected,
+      final String message,
+      final Object... params) {
     _verify(verifier, expected, (a, b) -> _toState(a).isNotEqual(b), message, params);
   }
 }

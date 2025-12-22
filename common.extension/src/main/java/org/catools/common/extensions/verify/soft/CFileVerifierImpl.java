@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.soft;
 
+import java.io.File;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.hard.CFileVerification;
 import org.catools.common.extensions.verify.interfaces.base.CFileVerify;
-
-import java.io.File;
 
 /**
  * File Content verification class contains all verification method which is related to File and its

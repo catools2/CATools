@@ -1,14 +1,20 @@
 package org.catools.common.extensions.verify;
 
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.common.configs.CAnsiConfigs;
 import org.catools.common.extensions.CTypeExtensionConfigs;
-import org.catools.common.extensions.verify.soft.*;
+import org.catools.common.extensions.verify.soft.CBooleanVerifierImpl;
+import org.catools.common.extensions.verify.soft.CCollectionVerifierImpl;
+import org.catools.common.extensions.verify.soft.CDateVerifierImpl;
+import org.catools.common.extensions.verify.soft.CFileVerifierImpl;
+import org.catools.common.extensions.verify.soft.CMapVerifierImpl;
+import org.catools.common.extensions.verify.soft.CNumberVerifierImpl;
+import org.catools.common.extensions.verify.soft.CObjectVerifierImpl;
+import org.catools.common.extensions.verify.soft.CStringVerifierImpl;
 import org.catools.common.utils.CAnsiUtil;
-
-import java.util.function.Function;
 
 // We should not catch any exception here as based on strategy exception might have different
 // impact.
@@ -25,7 +31,8 @@ public class CVerifier implements CVerificationQueue {
   public final CStringVerifierImpl<?> String = new CStringVerifierImpl<>(this);
   public final CFileVerifierImpl<?> File = new CFileVerifierImpl<>(this);
   public final CNumberVerifierImpl<?, Long> Long = new CNumberVerifierImpl<>(this);
-  public final CNumberVerifierImpl<?, java.math.BigDecimal> BigDecimal = new CNumberVerifierImpl<>(this);
+  public final CNumberVerifierImpl<?, java.math.BigDecimal> BigDecimal =
+      new CNumberVerifierImpl<>(this);
   public final CNumberVerifierImpl<?, Double> Double = new CNumberVerifierImpl<>(this);
   public final CNumberVerifierImpl<?, Float> Float = new CNumberVerifierImpl<>(this);
   public final CNumberVerifierImpl<?, Integer> Int = new CNumberVerifierImpl<>(this);

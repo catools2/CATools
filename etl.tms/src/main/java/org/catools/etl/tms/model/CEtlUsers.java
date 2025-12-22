@@ -1,13 +1,11 @@
 package org.catools.etl.tms.model;
 
-import org.catools.common.collections.CSet;
-
 import java.util.Objects;
 import java.util.stream.Stream;
+import org.catools.common.collections.CSet;
 
 public class CEtlUsers extends CSet<CEtlUser> {
-  public CEtlUsers() {
-  }
+  public CEtlUsers() {}
 
   public CEtlUsers(CEtlUser... c) {
     super(c);

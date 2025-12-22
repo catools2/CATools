@@ -1,19 +1,15 @@
 package org.catools.mcp.di;
 
 /**
- * This enum provides a singleton instance of {@link CDependencyInjectorProvider} that can be used to
- * initialize and retrieve the {@link CDependencyInjector} instance.
+ * This enum provides a singleton instance of {@link CDependencyInjectorProvider} that can be used
+ * to initialize and retrieve the {@link CDependencyInjector} instance.
  */
 public enum CDependencyInjectorProvider {
 
-  /**
-   * The singleton instance of {@link CDependencyInjectorProvider}.
-   */
+  /** The singleton instance of {@link CDependencyInjectorProvider}. */
   INSTANCE;
 
-  /**
-   * The {@link CDependencyInjector} instance.
-   */
+  /** The {@link CDependencyInjector} instance. */
   private volatile CDependencyInjector injector;
 
   /**

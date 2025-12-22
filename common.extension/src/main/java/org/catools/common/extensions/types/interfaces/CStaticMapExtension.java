@@ -22,8 +22,5 @@ import org.catools.common.extensions.verify.interfaces.verifier.CMapVerifier;
  * }
  * </code> </strong>
  */
-public interface CStaticMapExtension<K, V> extends
-    CMapVerify<K, V>,
-    CMapVerifier<K, V>,
-    CMapState<K, V> {
-}
+public interface CStaticMapExtension<K, V>
+    extends CMapVerify<K, V>, CMapVerifier<K, V>, CMapState<K, V> {}

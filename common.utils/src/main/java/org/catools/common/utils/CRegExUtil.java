@@ -1,13 +1,12 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.RegExUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Normally we should not extend Utility classes but this class is just an extension so we can have

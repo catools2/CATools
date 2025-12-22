@@ -1,14 +1,11 @@
 package org.catools.common.testng.annotatoins;
 
+import static java.lang.annotation.ElementType.METHOD;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.METHOD;
-
-/**
- * FOR INTERNAL TESTING
- */
+/** FOR INTERNAL TESTING */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({METHOD})
-public @interface RANY1 {
-}
+public @interface RANY1 {}

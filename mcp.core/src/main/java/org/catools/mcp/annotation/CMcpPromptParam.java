@@ -1,11 +1,10 @@
 package org.catools.mcp.annotation;
 
-import org.catools.common.utils.CStringUtil;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.catools.common.utils.CStringUtil;
 
 /**
  * This annotation is used to mark a method parameter as an MCP (Model Context Protocol) prompt
@@ -25,8 +24,8 @@ import java.lang.annotation.Target;
  * }</pre>
  *
  * @see <a
- * href="https://modelcontextprotocol.io/docs/learn/server-concepts#core-server-features">MCP
- * Protocol Documentation</a>
+ *     href="https://modelcontextprotocol.io/docs/learn/server-concepts#core-server-features">MCP
+ *     Protocol Documentation</a>
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)

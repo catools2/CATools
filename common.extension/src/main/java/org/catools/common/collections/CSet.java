@@ -83,5 +83,4 @@ public class CSet<E> extends HashSet<E> implements CCollection<E, Collection<E>>
   public String toString() {
     return join(", ");
   }
-
 }

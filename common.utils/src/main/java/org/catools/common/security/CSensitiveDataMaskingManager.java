@@ -1,12 +1,11 @@
 package org.catools.common.security;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
+import org.apache.commons.lang3.StringUtils;
 
 public class CSensitiveDataMaskingManager {
   private static final List<String> maskList = new ArrayList<>();
@@ -30,7 +29,8 @@ public class CSensitiveDataMaskingManager {
               if (!ignoreList.contains(mask) && !maskList.contains(mask)) {
                 maskList.add(mask);
               }
-              // Sort by longest pattern first to not chop the mask in case if they are partially match
+              // Sort by longest pattern first to not chop the mask in case if they are partially
+              // match
               Collections.sort(maskList, (o1, o2) -> o2.length() - o1.length());
             }
           }

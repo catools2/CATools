@@ -1,32 +1,35 @@
 package org.catools.web.collections;
 
+import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
+import org.catools.web.selectors.CByXPath;
 
 /**
- * A specialized collection of web elements that provides indexed access to web components
- * found by XPath locators. This class extends {@link CWebList} to offer convenient methods
- * for interacting with multiple similar web elements on a page.
+ * A specialized collection of web elements that provides indexed access to web components found by
+ * XPath locators. This class extends {@link CWebList} to offer convenient methods for interacting
+ * with multiple similar web elements on a page.
  *
- * <p>CWebElements is particularly useful when dealing with collections of similar elements
- * such as table rows, list items, form fields, buttons, or any other repeating web components.
- * It uses XPath locators to find elements and provides various methods for iteration,
- * testing, and manipulation of the collection.
+ * <p>CWebElements is particularly useful when dealing with collections of similar elements such as
+ * table rows, list items, form fields, buttons, or any other repeating web components. It uses
+ * XPath locators to find elements and provides various methods for iteration, testing, and
+ * manipulation of the collection.
  *
- * <p>The class supports configurable wait times for element loading, which is essential
- * for dynamic web applications where elements may load asynchronously.
+ * <p>The class supports configurable wait times for element loading, which is essential for dynamic
+ * web applications where elements may load asynchronously.
  *
  * <p><strong>Common usage examples:</strong>
+ *
  * <pre>{@code
- * // Create a collection of table rows
- * CWebElements<ChromeDriver> tableRows = new CWebElements<>(
+ * // Create a collection of table rows using CDriver
+ * CWebElements tableRows = new CWebElements(
  *     "Product Table Rows",
  *     driver,
  *     "//table[@id='products']//tr[position()>1]"
  * );
  *
  * // Create a collection of navigation menu items
- * CWebElements<FirefoxDriver> menuItems = new CWebElements<>(
+ * CWebElements menuItems = new CWebElements(
  *     "Navigation Menu Items",
  *     driver,
  *     "//nav[@class='main-menu']//li//a",
@@ -34,7 +37,7 @@ import org.catools.web.drivers.CDriver;
  * );
  *
  * // Create a collection with different wait times for first and subsequent elements
- * CWebElements<EdgeDriver> productCards = new CWebElements<>(
+ * CWebElements productCards = new CWebElements(
  *     "Product Cards",
  *     driver,
  *     "//div[@class='product-card']",
@@ -44,19 +47,20 @@ import org.catools.web.drivers.CDriver;
  * }</pre>
  *
  * <p><strong>Element access patterns:</strong>
+ *
  * <pre>{@code
  * // Access specific elements by index
- * CWebElement<Driver> firstElement = elements.getRecord(0);
- * CWebElement<Driver> thirdElement = elements.getRecord(2);
+ * CWebElement firstElement = elements.getRecord(0);
+ * CWebElement thirdElement = elements.getRecord(2);
  *
  * // Safe element access with existence check
  * if (elements.hasRecord(5)) {
- *     CWebElement<Driver> sixthElement = elements.getRecord(5);
+ *     CWebElement sixthElement = elements.getRecord(5);
  *     sixthElement.click();
  * }
  *
  * // Iterate through all elements
- * for (CWebElement<Driver> element : elements) {
+ * for (CWebElement element : elements) {
  *     if (element.isDisplayed()) {
  *         element.click();
  *     }
@@ -64,6 +68,7 @@ import org.catools.web.drivers.CDriver;
  * }</pre>
  *
  * <p><strong>Collection operations:</strong>
+ *
  * <pre>{@code
  * // Get count of elements
  * int totalElements = elements.count();
@@ -84,75 +89,80 @@ import org.catools.web.drivers.CDriver;
  * );
  * }</pre>
  *
- * @param <DR> the type of web driver (must extend {@link CDriver})
  * @see CWebList
  * @see CWebElement
  * @see CDriver
  * @see CWebIterable
  */
-public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> {
+public class CWebElements extends CWebList<CWebElement> {
   /**
-   * Creates a new collection of web elements using the specified XPath locator with default wait time.
+   * Creates a new collection of web elements using the specified XPath locator with default wait
+   * time.
    *
-   * <p>This constructor uses the default timeout for waiting for elements to appear. The first element
-   * and subsequent elements will use the same default wait time defined by the driver configuration.
+   * <p>This constructor uses the default timeout for waiting for elements to appear. The first
+   * element and subsequent elements will use the same default wait time defined by the driver
+   * configuration.
    *
-   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that includes
-   * the base name and the element's index (e.g., "Button List[0]", "Button List[1]", etc.).
+   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that
+   * includes the base name and the element's index (e.g., "Button List[0]", "Button List[1]",
+   * etc.).
    *
    * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * // Create a collection of all buttons on the page
-   * CWebElements<ChromeDriver> buttons = new CWebElements<>(
+   * CWebElements<ChromeDriver> buttons = new CWebElements(
    *     "All Buttons",
    *     chromeDriver,
    *     "//button"
    * );
    *
    * // Create a collection of table cells in the first row
-   * CWebElements<FirefoxDriver> firstRowCells = new CWebElements<>(
+   * CWebElements<FirefoxDriver> firstRowCells = new CWebElements(
    *     "First Row Cells",
    *     firefoxDriver,
    *     "//table//tr[1]//td"
    * );
    *
    * // Create a collection of form input fields
-   * CWebElements<EdgeDriver> inputFields = new CWebElements<>(
+   * CWebElements<EdgeDriver> inputFields = new CWebElements(
    *     "Form Inputs",
    *     edgeDriver,
    *     "//form//input[@type='text' or @type='email' or @type='password']"
    * );
    * }</pre>
    *
-   * @param name         a descriptive name for this collection of elements, used for logging and debugging
-   * @param driver       the web driver instance to use for element interactions
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the web driver instance to use for element interactions
    * @param xpathLocator the XPath expression to locate elements in the collection
    * @throws IllegalArgumentException if name is null or empty
    * @throws IllegalArgumentException if driver is null
    * @throws IllegalArgumentException if xpathLocator is null or empty
    */
-  public CWebElements(String name, DR driver, String xpathLocator) {
+  public CWebElements(String name, CElementEngine<?> driver, String xpathLocator) {
     super(
         name,
         xpathLocator,
-        (idx, xpath) -> driver.$(name + "[" + idx + "]", xpath));
+        (idx, xpath) -> driver.$(name + "[" + idx + "]", CByXPath.xpath(xpath)));
   }
 
   /**
-   * Creates a new collection of web elements using the specified XPath locator with custom wait time.
+   * Creates a new collection of web elements using the specified XPath locator with custom wait
+   * time.
    *
-   * <p>This constructor allows you to specify a custom wait time for all elements in the collection.
-   * Both the first element and subsequent elements will use the same wait time. This is useful when
-   * you know that elements in this collection typically take longer or shorter to load than the
-   * default timeout.
+   * <p>This constructor allows you to specify a custom wait time for all elements in the
+   * collection. Both the first element and subsequent elements will use the same wait time. This is
+   * useful when you know that elements in this collection typically take longer or shorter to load
+   * than the default timeout.
    *
-   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that includes
-   * the base name and the element's index (e.g., "Menu Items[0]", "Menu Items[1]", etc.).
+   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that
+   * includes the base name and the element's index (e.g., "Menu Items[0]", "Menu Items[1]", etc.).
    *
    * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * // Create a collection of slow-loading images with 15-second wait
-   * CWebElements<ChromeDriver> images = new CWebElements<>(
+   * CWebElements<ChromeDriver> images = new CWebElements(
    *     "Product Images",
    *     chromeDriver,
    *     "//div[@class='gallery']//img",
@@ -160,7 +170,7 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    *
    * // Create a collection of fast-loading cached elements with 2-second wait
-   * CWebElements<FirefoxDriver> cachedItems = new CWebElements<>(
+   * CWebElements<FirefoxDriver> cachedItems = new CWebElements(
    *     "Cached Menu Items",
    *     firefoxDriver,
    *     "//nav[@class='cached-menu']//a",
@@ -168,7 +178,7 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    *
    * // Create a collection of dynamically loaded search results
-   * CWebElements<EdgeDriver> searchResults = new CWebElements<>(
+   * CWebElements<EdgeDriver> searchResults = new CWebElements(
    *     "Search Results",
    *     edgeDriver,
    *     "//div[@class='search-results']//div[@class='result-item']",
@@ -176,47 +186,51 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    * }</pre>
    *
-   * @param name         a descriptive name for this collection of elements, used for logging and debugging
-   * @param driver       the web driver instance to use for element interactions
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the web driver instance to use for element interactions
    * @param xpathLocator the XPath expression to locate elements in the collection
-   * @param waitSecs     the number of seconds to wait for elements to appear (must be positive)
+   * @param waitSecs the number of seconds to wait for elements to appear (must be positive)
    * @throws IllegalArgumentException if name is null or empty
    * @throws IllegalArgumentException if driver is null
    * @throws IllegalArgumentException if xpathLocator is null or empty
    * @throws IllegalArgumentException if waitSecs is less than or equal to 0
    */
-  public CWebElements(String name, DR driver, String xpathLocator, int waitSecs) {
+  public CWebElements(String name, CElementEngine<?> driver, String xpathLocator, int waitSecs) {
     super(
         name,
         xpathLocator,
         waitSecs,
-        (idx, xpath) -> driver.$(name + "[" + idx + "]", xpath));
+        (idx, xpath) -> driver.$(name + "[" + idx + "]", CByXPath.xpath(xpath)));
   }
 
   /**
-   * Creates a new collection of web elements using the specified XPath locator with different
-   * wait times for the first element and subsequent elements.
+   * Creates a new collection of web elements using the specified XPath locator with different wait
+   * times for the first element and subsequent elements.
    *
    * <p>This constructor provides fine-grained control over wait times, allowing you to specify
-   * different timeouts for the first element versus other elements. This is particularly useful
-   * in scenarios where the first element might take longer to load (e.g., triggering a lazy-loaded
+   * different timeouts for the first element versus other elements. This is particularly useful in
+   * scenarios where the first element might take longer to load (e.g., triggering a lazy-loaded
    * list), while subsequent elements appear more quickly.
    *
-   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that includes
-   * the base name and the element's index (e.g., "Data Rows[0]", "Data Rows[1]", etc.).
+   * <p>Each element in the collection will be created as a {@link CWebElement} with a name that
+   * includes the base name and the element's index (e.g., "Data Rows[0]", "Data Rows[1]", etc.).
    *
    * <p><strong>Common use cases:</strong>
+   *
    * <ul>
-   *   <li><strong>Lazy-loaded lists:</strong> First element triggers loading, others appear quickly</li>
-   *   <li><strong>Progressive loading:</strong> First element loads slowly, others are cached</li>
-   *   <li><strong>API-driven content:</strong> First element waits for API call, others use cached data</li>
-   *   <li><strong>Dynamic tables:</strong> First row triggers table population, other rows appear fast</li>
+   *   <li><strong>Lazy-loaded lists:</strong> First element triggers loading, others appear quickly
+   *   <li><strong>Progressive loading:</strong> First element loads slowly, others are cached
+   *   <li><strong>API-driven content:</strong> First element waits for API call, others use cached
+   *       data
+   *   <li><strong>Dynamic tables:</strong> First row triggers table population, other rows appear
+   *       fast
    * </ul>
    *
    * <p><strong>Example usage:</strong>
+   *
    * <pre>{@code
    * // Lazy-loaded product list - first product triggers loading, others appear quickly
-   * CWebElements<ChromeDriver> products = new CWebElements<>(
+   * CWebElements<ChromeDriver> products = new CWebElements(
    *     "Product List",
    *     chromeDriver,
    *     "//div[@class='product-grid']//div[@class='product-card']",
@@ -225,7 +239,7 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    *
    * // Dynamic search results - first result waits for search, others appear quickly
-   * CWebElements<FirefoxDriver> searchResults = new CWebElements<>(
+   * CWebElements<FirefoxDriver> searchResults = new CWebElements(
    *     "Search Results",
    *     firefoxDriver,
    *     "//div[@id='search-results']//div[@class='result']",
@@ -234,7 +248,7 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    *
    * // Infinite scroll content - first item loads content, others are immediate
-   * CWebElements<EdgeDriver> scrollItems = new CWebElements<>(
+   * CWebElements<EdgeDriver> scrollItems = new CWebElements(
    *     "Scroll Content Items",
    *     edgeDriver,
    *     "//div[@class='infinite-scroll']//div[@class='content-item']",
@@ -243,11 +257,13 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    * );
    * }</pre>
    *
-   * @param name                        a descriptive name for this collection of elements, used for logging and debugging
-   * @param driver                      the web driver instance to use for element interactions
-   * @param xpathLocator                the XPath expression to locate elements in the collection
-   * @param waitForFirstElementInSecond the number of seconds to wait for the first element to appear
-   * @param waitForOtherElementInSecond the number of seconds to wait for subsequent elements to appear
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the web driver instance to use for element interactions
+   * @param xpathLocator the XPath expression to locate elements in the collection
+   * @param waitForFirstElementInSecond the number of seconds to wait for the first element to
+   *     appear
+   * @param waitForOtherElementInSecond the number of seconds to wait for subsequent elements to
+   *     appear
    * @throws IllegalArgumentException if name is null or empty
    * @throws IllegalArgumentException if driver is null
    * @throws IllegalArgumentException if xpathLocator is null or empty
@@ -256,7 +272,7 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
    */
   public CWebElements(
       String name,
-      DR driver,
+      CElementEngine<?> driver,
       String xpathLocator,
       int waitForFirstElementInSecond,
       int waitForOtherElementInSecond) {
@@ -265,6 +281,115 @@ public class CWebElements<DR extends CDriver> extends CWebList<CWebElement<DR>> 
         xpathLocator,
         waitForFirstElementInSecond,
         waitForOtherElementInSecond,
-        (idx, xpath) -> driver.$(name + "[" + idx + "]", xpath));
+        (idx, xpath) -> driver.$(name + "[" + idx + "]", CByXPath.xpath(xpath)));
+  }
+
+  /**
+   * Creates a new collection of web elements using CDriver with default wait time.
+   *
+   * <p>This constructor provides a convenient way to create element collections when working
+   * directly with {@link CDriver} instances. It delegates to the CElementEngine constructor using
+   * the driver's element engine.
+   *
+   * <p><strong>Example usage:</strong>
+   *
+   * <pre>{@code
+   * CDriver driver = new CDriver();
+   * CWebElements buttons = new CWebElements(
+   *     "All Buttons",
+   *     driver,
+   *     "//button"
+   * );
+   * }</pre>
+   *
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the CDriver instance to use for element interactions
+   * @param xpathLocator the XPath expression to locate elements in the collection
+   * @throws IllegalArgumentException if name is null or empty
+   * @throws IllegalArgumentException if driver is null
+   * @throws IllegalArgumentException if xpathLocator is null or empty
+   */
+  public CWebElements(String name, CDriver driver, String xpathLocator) {
+    this(name, driver.getDriverSession().getEngine(), xpathLocator);
+  }
+
+  /**
+   * Creates a new collection of web elements using CDriver with custom wait time.
+   *
+   * <p>This constructor provides a convenient way to create element collections when working
+   * directly with {@link CDriver} instances, allowing you to specify a custom wait time for all
+   * elements in the collection.
+   *
+   * <p><strong>Example usage:</strong>
+   *
+   * <pre>{@code
+   * CDriver driver = new CDriver();
+   * CWebElements images = new CWebElements(
+   *     "Product Images",
+   *     driver,
+   *     "//div[@class='gallery']//img",
+   *     15  // Wait up to 15 seconds for images to load
+   * );
+   * }</pre>
+   *
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the CDriver instance to use for element interactions
+   * @param xpathLocator the XPath expression to locate elements in the collection
+   * @param waitSecs the number of seconds to wait for elements to appear (must be positive)
+   * @throws IllegalArgumentException if name is null or empty
+   * @throws IllegalArgumentException if driver is null
+   * @throws IllegalArgumentException if xpathLocator is null or empty
+   * @throws IllegalArgumentException if waitSecs is less than or equal to 0
+   */
+  public CWebElements(String name, CDriver driver, String xpathLocator, int waitSecs) {
+    this(name, driver.getDriverSession().getEngine(), xpathLocator, waitSecs);
+  }
+
+  /**
+   * Creates a new collection of web elements using CDriver with different wait times for the first
+   * element and subsequent elements.
+   *
+   * <p>This constructor provides a convenient way to create element collections when working
+   * directly with {@link CDriver} instances, with fine-grained control over wait times. This is
+   * particularly useful for lazy-loaded lists or progressive loading scenarios.
+   *
+   * <p><strong>Example usage:</strong>
+   *
+   * <pre>{@code
+   * CDriver driver = new CDriver();
+   * CWebElements products = new CWebElements(
+   *     "Product List",
+   *     driver,
+   *     "//div[@class='product-grid']//div[@class='product-card']",
+   *     30,  // Wait 30 seconds for first product (triggers lazy loading)
+   *     3    // Wait only 3 seconds for subsequent products
+   * );
+   * }</pre>
+   *
+   * @param name a descriptive name for this collection of elements, used for logging and debugging
+   * @param driver the CDriver instance to use for element interactions
+   * @param xpathLocator the XPath expression to locate elements in the collection
+   * @param waitForFirstElementInSecond the number of seconds to wait for the first element to
+   *     appear
+   * @param waitForOtherElementInSecond the number of seconds to wait for subsequent elements to
+   *     appear
+   * @throws IllegalArgumentException if name is null or empty
+   * @throws IllegalArgumentException if driver is null
+   * @throws IllegalArgumentException if xpathLocator is null or empty
+   * @throws IllegalArgumentException if waitForFirstElementInSecond is less than or equal to 0
+   * @throws IllegalArgumentException if waitForOtherElementInSecond is less than or equal to 0
+   */
+  public CWebElements(
+      String name,
+      CDriver driver,
+      String xpathLocator,
+      int waitForFirstElementInSecond,
+      int waitForOtherElementInSecond) {
+    this(
+        name,
+        driver.getDriverSession().getEngine(),
+        xpathLocator,
+        waitForFirstElementInSecond,
+        waitForOtherElementInSecond);
   }
 }

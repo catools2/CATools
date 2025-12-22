@@ -18,13 +18,12 @@ import org.apache.commons.lang3.StringUtils;
 @UtilityClass
 public class CStringUtil extends StringUtils {
 
-  /**
-   * Dot character constant commonly used in property paths and qualified names.
-   */
+  /** Dot character constant commonly used in property paths and qualified names. */
   public static final String DOT = ".";
 
   /**
-   * Retrun substring with max length of maxLength. If string length is less than maxLength then return full string.
+   * Retrun substring with max length of maxLength. If string length is less than maxLength then
+   * return full string.
    *
    * @param input
    * @param maxLength
@@ -43,7 +42,9 @@ public class CStringUtil extends StringUtils {
    * @return
    */
   public static String format(String format, Object... parameters) {
-    return parameters == null || parameters.length == 0 ? format : String.format(format, parameters);
+    return parameters == null || parameters.length == 0
+        ? format
+        : String.format(format, parameters);
   }
 
   /**
@@ -67,7 +68,8 @@ public class CStringUtil extends StringUtils {
   }
 
   /**
-   * return true if the initial sequence equals to any of search values NOT ignoring case sensitivity
+   * return true if the initial sequence equals to any of search values NOT ignoring case
+   * sensitivity
    *
    * @param sequence
    * @param searchValues
@@ -148,8 +150,7 @@ public class CStringUtil extends StringUtils {
    * @param searchValues
    * @return
    */
-  public static boolean containsAnyIgnoreCase(
-      CharSequence sequence, CharSequence... searchValues) {
+  public static boolean containsAnyIgnoreCase(CharSequence sequence, CharSequence... searchValues) {
     if (!isEmpty(sequence) && !ArrayUtils.isEmpty(searchValues)) {
       CharSequence[] var2 = searchValues;
       int var3 = searchValues.length;

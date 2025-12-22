@@ -5,18 +5,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * A utility class for generating random dates within specified ranges.
- * This class provides a fluent API for configuring date ranges and generating
- * random dates within those ranges.
- * 
+ * A utility class for generating random dates within specified ranges. This class provides a fluent
+ * API for configuring date ranges and generating random dates within those ranges.
+ *
  * <p>Example usage:
+ *
  * <pre>{@code
  * // Generate a random date between two years
  * CDate randomDate = CRandomDateGenerator.instance(2020, 2023).getDate();
- * 
+ *
  * // Generate a formatted random date string
  * String formattedDate = CRandomDateGenerator.getFormattedDate(2020, 2023, "yyyy-MM-dd");
- * 
+ *
  * // Using fluent API to configure specific date range
  * CDate specificDate = CRandomDateGenerator.instance()
  *     .setFromYear(2022)
@@ -30,16 +30,14 @@ public class CRandomDateGenerator {
   private Calendar from = Calendar.getInstance();
   private Calendar to = Calendar.getInstance();
 
-  private CRandomDateGenerator() {
-  }
+  private CRandomDateGenerator() {}
 
   /**
    * Creates a new instance of CRandomDateGenerator with default date range (current time).
-   * 
+   *
    * @return a new CRandomDateGenerator instance
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CRandomDateGenerator generator = CRandomDateGenerator.instance();
    * CDate randomDate = generator.setFromYear(2020).setToYear(2023).getDate();
    * }</pre>
@@ -50,18 +48,17 @@ public class CRandomDateGenerator {
 
   /**
    * Creates a new instance of CRandomDateGenerator with specified Calendar date range.
-   * 
+   *
    * @param from the start date of the range (inclusive)
    * @param to the end date of the range (inclusive)
    * @return a new CRandomDateGenerator instance configured with the specified range
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Calendar startCal = Calendar.getInstance();
    * startCal.set(2020, Calendar.JANUARY, 1);
    * Calendar endCal = Calendar.getInstance();
    * endCal.set(2023, Calendar.DECEMBER, 31);
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance(startCal, endCal).getDate();
    * }</pre>
    */
@@ -71,16 +68,15 @@ public class CRandomDateGenerator {
 
   /**
    * Creates a new instance of CRandomDateGenerator with specified Date range.
-   * 
+   *
    * @param from the start date of the range (inclusive)
    * @param to the end date of the range (inclusive)
    * @return a new CRandomDateGenerator instance configured with the specified range
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Date startDate = new Date(120, 0, 1); // January 1, 2020
    * Date endDate = new Date(123, 11, 31); // December 31, 2023
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance(startDate, endDate).getDate();
    * }</pre>
    */
@@ -90,13 +86,12 @@ public class CRandomDateGenerator {
 
   /**
    * Creates a new instance of CRandomDateGenerator with specified year range.
-   * 
+   *
    * @param fromYear the start year of the range (inclusive)
    * @param toYear the end year of the range (inclusive)
    * @return a new CRandomDateGenerator instance configured with the specified year range
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Generate random date between 2020 and 2023
    * CDate randomDate = CRandomDateGenerator.instance(2020, 2023).getDate();
    * }</pre>
@@ -107,19 +102,18 @@ public class CRandomDateGenerator {
 
   /**
    * Generates a formatted random date string within the specified Calendar range.
-   * 
+   *
    * @param from the start date of the range (inclusive)
    * @param to the end date of the range (inclusive)
    * @param format the date format string (e.g., "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss")
    * @return a formatted random date string
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Calendar startCal = Calendar.getInstance();
    * startCal.set(2020, Calendar.JANUARY, 1);
    * Calendar endCal = Calendar.getInstance();
    * endCal.set(2023, Calendar.DECEMBER, 31);
-   * 
+   *
    * String formattedDate = CRandomDateGenerator.getFormattedDate(startCal, endCal, "yyyy-MM-dd");
    * // Output: "2022-07-15" (example)
    * }</pre>
@@ -130,17 +124,16 @@ public class CRandomDateGenerator {
 
   /**
    * Generates a formatted random date string within the specified Date range.
-   * 
+   *
    * @param from the start date of the range (inclusive)
    * @param to the end date of the range (inclusive)
    * @param format the date format string (e.g., "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss")
    * @return a formatted random date string
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Date startDate = new Date(120, 0, 1); // January 1, 2020
    * Date endDate = new Date(123, 11, 31); // December 31, 2023
-   * 
+   *
    * String formattedDate = CRandomDateGenerator.getFormattedDate(startDate, endDate, "MM/dd/yyyy");
    * // Output: "07/15/2022" (example)
    * }</pre>
@@ -151,17 +144,16 @@ public class CRandomDateGenerator {
 
   /**
    * Generates a formatted random date string within the specified year range.
-   * 
+   *
    * @param fromYear the start year of the range (inclusive)
    * @param toYear the end year of the range (inclusive)
    * @param format the date format string (e.g., "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss")
    * @return a formatted random date string
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * String formattedDate = CRandomDateGenerator.getFormattedDate(2020, 2023, "yyyy-MM-dd");
    * // Output: "2022-07-15" (example)
-   * 
+   *
    * // Different format
    * String customFormat = CRandomDateGenerator.getFormattedDate(2020, 2023, "dd/MM/yyyy HH:mm:ss");
    * // Output: "15/07/2022 14:32:18" (example)
@@ -173,15 +165,14 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start Calendar for the date range.
-   * 
+   *
    * @param from the Calendar representing the start date of the range (inclusive)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Calendar startCal = Calendar.getInstance();
    * startCal.set(2020, Calendar.JANUARY, 1);
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFrom(startCal)
    *     .setToYear(2023)
@@ -195,14 +186,13 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start Date for the date range.
-   * 
+   *
    * @param from the Date representing the start date of the range (inclusive)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Date startDate = new Date(120, 0, 1); // January 1, 2020
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFrom(startDate)
    *     .setToYear(2023)
@@ -216,12 +206,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start year for the date range.
-   * 
+   *
    * @param amount the year to set as the start of the range
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setToYear(2023)
@@ -235,12 +224,12 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start month for the date range.
-   * 
-   * @param amount the month to set as the start of the range (Calendar.JANUARY, Calendar.FEBRUARY, etc.)
+   *
+   * @param amount the month to set as the start of the range (Calendar.JANUARY, Calendar.FEBRUARY,
+   *     etc.)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -256,12 +245,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start day of year for the date range.
-   * 
+   *
    * @param amount the day of year to set as the start of the range (1-366)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromDayOfYear(100) // April 9th in a leap year
@@ -277,12 +265,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start day of month for the date range.
-   * 
+   *
    * @param amount the day of month to set as the start of the range (1-31)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -300,12 +287,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start hour for the date range.
-   * 
+   *
    * @param amount the hour to set as the start of the range (0-23)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -322,12 +308,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start minute for the date range.
-   * 
+   *
    * @param amount the minute to set as the start of the range (0-59)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -345,12 +330,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start second for the date range.
-   * 
+   *
    * @param amount the second to set as the start of the range (0-59)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -369,12 +353,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the start millisecond for the date range.
-   * 
+   *
    * @param amount the millisecond to set as the start of the range (0-999)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -394,15 +377,14 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end Calendar for the date range.
-   * 
+   *
    * @param to the Calendar representing the end date of the range (inclusive)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Calendar endCal = Calendar.getInstance();
    * endCal.set(2023, Calendar.DECEMBER, 31);
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setTo(endCal)
@@ -416,14 +398,13 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end Date for the date range.
-   * 
+   *
    * @param to the Date representing the end date of the range (inclusive)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Date endDate = new Date(123, 11, 31); // December 31, 2023
-   * 
+   *
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setTo(endDate)
@@ -437,12 +418,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end year for the date range.
-   * 
+   *
    * @param amount the year to set as the end of the range
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setToYear(2023)
@@ -456,12 +436,12 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end month for the date range.
-   * 
-   * @param amount the month to set as the end of the range (Calendar.JANUARY, Calendar.FEBRUARY, etc.)
+   *
+   * @param amount the month to set as the end of the range (Calendar.JANUARY, Calendar.FEBRUARY,
+   *     etc.)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -477,12 +457,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end day of year for the date range.
-   * 
+   *
    * @param amount the day of year to set as the end of the range (1-366)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromDayOfYear(100) // April 9th in a leap year
@@ -498,12 +477,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end day of month for the date range.
-   * 
+   *
    * @param amount the day of month to set as the end of the range (1-31)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -521,12 +499,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end hour for the date range.
-   * 
+   *
    * @param amount the hour to set as the end of the range (0-23)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -543,12 +520,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end minute for the date range.
-   * 
+   *
    * @param amount the minute to set as the end of the range (0-59)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -566,12 +542,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end second for the date range.
-   * 
+   *
    * @param amount the second to set as the end of the range (0-59)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -590,12 +565,11 @@ public class CRandomDateGenerator {
 
   /**
    * Sets the end millisecond for the date range.
-   * 
+   *
    * @param amount the millisecond to set as the end of the range (0-999)
    * @return this CRandomDateGenerator instance for method chaining
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CDate randomDate = CRandomDateGenerator.instance()
    *     .setFromYear(2020)
    *     .setFromMonth(Calendar.MARCH)
@@ -615,14 +589,13 @@ public class CRandomDateGenerator {
 
   /**
    * Generates a random CDate within the configured date range.
-   * 
+   *
    * @return a CDate object representing a random date within the specified range
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Simple usage with year range
    * CDate randomDate = CRandomDateGenerator.instance(2020, 2023).getDate();
-   * 
+   *
    * // Complex usage with precise range
    * CDate preciseDate = CRandomDateGenerator.instance()
    *     .setFromYear(2022)
@@ -634,7 +607,7 @@ public class CRandomDateGenerator {
    *     .setToDayOfMonth(20)
    *     .setToHour(17)
    *     .getDate();
-   * 
+   *
    * System.out.println("Random date: " + randomDate);
    * }</pre>
    */
@@ -646,19 +619,18 @@ public class CRandomDateGenerator {
 
   /**
    * Generates a formatted random date string within the configured date range.
-   * 
+   *
    * @param format the date format string (e.g., "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss")
    * @return a formatted string representation of a random date within the specified range
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Generate formatted date with specific format
    * String isoDate = CRandomDateGenerator.instance(2020, 2023).getDate("yyyy-MM-dd");
    * // Output: "2022-07-15" (example)
-   * 
+   *
    * String customFormat = CRandomDateGenerator.instance(2020, 2023).getDate("EEEE, MMMM dd, yyyy 'at' HH:mm:ss");
    * // Output: "Friday, July 15, 2022 at 14:32:18" (example)
-   * 
+   *
    * // Using with precise range
    * String timeRange = CRandomDateGenerator.instance()
    *     .setFromYear(2022)

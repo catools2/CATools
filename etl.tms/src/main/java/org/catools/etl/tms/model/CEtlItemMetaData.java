@@ -1,5 +1,8 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -7,12 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-
-
-@NamedQuery(name = "getEtlMetaDataByNameAndValue", query = "FROM CEtlItemMetaData where name=:name and value=:value")
+@NamedQuery(
+    name = "getEtlMetaDataByNameAndValue",
+    query = "FROM CEtlItemMetaData where name=:name and value=:value")
 @Entity
 @Table(name = "metadata", schema = "tms")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "metadata")
@@ -21,8 +21,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class CEtlItemMetaData implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6067874018185613707L;
+  @Serial private static final long serialVersionUID = 6067874018185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

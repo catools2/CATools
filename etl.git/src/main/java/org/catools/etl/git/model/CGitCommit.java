@@ -1,19 +1,21 @@
 package org.catools.etl.git.model;
 
+import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.catools.common.utils.CStringUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.*;
-
-import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
-
 
 @Entity
 @NamedQuery(name = "getGitCommitByHash", query = "FROM CGitCommit where hash=:hash")
@@ -24,8 +26,7 @@ import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 @Accessors(chain = true)
 public class CGitCommit implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 8406787401185613707L;
+  @Serial private static final long serialVersionUID = 8406787401185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,15 +60,14 @@ public class CGitCommit implements Serializable {
       cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
       targetEntity = CGitUser.class,
       fetch = FetchType.LAZY)
-  @JoinColumn(name = "committer_id",
+  @JoinColumn(
+      name = "committer_id",
       referencedColumnName = "id",
       nullable = false,
       foreignKey = @ForeignKey(name = "FK_COMMIT_COMMITTER"))
   private CGitUser committer;
 
-  @OneToMany(
-      cascade = CascadeType.ALL,
-      fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "commit_id", referencedColumnName = "id")
   private Set<CGitFileChange> fileChanges = new HashSet<>();
 
@@ -79,15 +79,15 @@ public class CGitCommit implements Serializable {
       schema = GIT_SCHEMA,
       name = "commit_branch_mid",
       joinColumns = {@JoinColumn(name = "commit_id")},
-      inverseJoinColumns = {@JoinColumn(name = "branch_id")}
-  )
+      inverseJoinColumns = {@JoinColumn(name = "branch_id")})
   private List<CGitBranch> branches = new ArrayList<>();
 
   @ManyToOne(
       cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
       targetEntity = CGitRepository.class,
       fetch = FetchType.LAZY)
-  @JoinColumn(name = "repository_id",
+  @JoinColumn(
+      name = "repository_id",
       referencedColumnName = "id",
       nullable = false,
       foreignKey = @ForeignKey(name = "FK_COMMIT_REPOSITORY"))
@@ -101,8 +101,7 @@ public class CGitCommit implements Serializable {
       schema = GIT_SCHEMA,
       name = "commit_tag_mid",
       joinColumns = {@JoinColumn(name = "commit_id")},
-      inverseJoinColumns = {@JoinColumn(name = "tag_id")}
-  )
+      inverseJoinColumns = {@JoinColumn(name = "tag_id")})
   private List<CGitTag> tags = new ArrayList<>();
 
   public CGitCommit setHash(String hash) {

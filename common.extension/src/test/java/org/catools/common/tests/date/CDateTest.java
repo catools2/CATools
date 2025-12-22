@@ -1,5 +1,10 @@
 package org.catools.common.tests.date;
 
+import java.time.Month;
+import java.time.chrono.IsoEra;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
@@ -7,12 +12,6 @@ import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CDateUtil;
 import org.catools.common.utils.CSleeper;
 import org.testng.annotations.Test;
-
-import java.time.Month;
-import java.time.chrono.IsoEra;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class CDateTest extends CBaseUnitTest {
 
@@ -570,7 +569,8 @@ public class CDateTest extends CBaseUnitTest {
   public void testToLocalTime() {
     String format = "yyyy-MM-dd HH:mm:ss:SSS";
     CDate date1 = CDate.valueOf("2012-07-21 12:12:12:000", Locale.US, format);
-    CVerify.String.equals(date1.toLocalTime().toString(), "2012-07-21", "CDateTest ::> toLocalTime");
+    CVerify.String.equals(
+        date1.toLocalTime().toString(), "2012-07-21", "CDateTest ::> toLocalTime");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

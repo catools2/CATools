@@ -1,5 +1,9 @@
 package org.catools.k8s.utils;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.V1PodList;
@@ -9,10 +13,6 @@ import org.catools.common.utils.CResourceUtil;
 import org.catools.k8s.model.CKubePods;
 import org.testng.annotations.Test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class CKubeUtilTest {
 
   @Test
@@ -20,7 +20,8 @@ public class CKubeUtilTest {
     CoreV1Api api = mock(CoreV1Api.class);
     String podListData = CResourceUtil.getString("podList.json", CKubeUtilTest.class);
     V1PodList read = CJsonUtil.read(podListData, V1PodList.class);
-    when(api.listNamespacedPod(any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any()))
+    when(api.listNamespacedPod(
+            any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any()))
         .thenReturn(read);
     CKubePods pods = CKubeUtil.getNamespacePods(api, "default");
     CVerify.Int.equals(pods.size(), 1, "Pod size is correct");

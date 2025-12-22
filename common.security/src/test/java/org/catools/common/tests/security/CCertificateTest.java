@@ -1,5 +1,7 @@
 package org.catools.common.tests.security;
 
+import java.security.cert.X509Certificate;
+import javax.net.ssl.SSLContext;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CResourceNotFoundException;
 import org.catools.common.extensions.verify.CVerify;
@@ -8,9 +10,6 @@ import org.catools.common.security.CCertificate;
 import org.catools.common.security.CCertificateException;
 import org.catools.common.tests.CBaseUnitTest;
 import org.testng.annotations.Test;
-
-import javax.net.ssl.SSLContext;
-import java.security.cert.X509Certificate;
 
 public class CCertificateTest extends CBaseUnitTest {
 
@@ -23,8 +22,12 @@ public class CCertificateTest extends CBaseUnitTest {
 
   public CCertificateTest() {
     super();
-    VALID_FROM_FILE = new CCertificate(VALID_RESOURCCE.saveToFolder(CPathConfigs.getTempFolder()).getCanonicalPath());
-    INVALID_FROM_FILE = new CCertificate(INVALID_RESOURCCE.saveToFolder(CPathConfigs.getTempFolder()).getCanonicalPath());
+    VALID_FROM_FILE =
+        new CCertificate(
+            VALID_RESOURCCE.saveToFolder(CPathConfigs.getTempFolder()).getCanonicalPath());
+    INVALID_FROM_FILE =
+        new CCertificate(
+            INVALID_RESOURCCE.saveToFolder(CPathConfigs.getTempFolder()).getCanonicalPath());
   }
 
   @Test

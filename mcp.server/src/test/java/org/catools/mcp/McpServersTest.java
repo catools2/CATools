@@ -1,5 +1,10 @@
 package org.catools.mcp;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
@@ -8,6 +13,11 @@ import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.spec.McpSchema;
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import org.catools.common.exception.CInvalidYamlFileFormatException;
 import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.configuration.CMcpServerConfiguration;
@@ -20,14 +30,6 @@ import org.catools.mcp.server.CMcpStructuredContent;
 import org.catools.mcp.test.TestMcpToolsStructuredContent;
 import org.catools.mcp.test.TestSimpleMcpStdioServer;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-import static org.testng.Assert.*;
 
 @Test(singleThreaded = true)
 public class McpServersTest {
@@ -254,13 +256,20 @@ public class McpServersTest {
     verifyPromptRegistered(prompts, "promptWithDefaultName", "title", "description", 0);
     verifyPromptRegistered(prompts, "promptWithDefaultTitle", CStringUtil.EMPTY, "description", 0);
     verifyPromptRegistered(prompts, "promptWithDefaultDescription", "title", CStringUtil.EMPTY, 0);
-    verifyPromptRegistered(prompts, "promptWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
-    verifyPromptRegistered(prompts, "promptWithOptionalParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
-    verifyPromptRegistered(prompts, "promptWithRequiredParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
-    verifyPromptRegistered(prompts, "promptWithMultiParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 2);
-    verifyPromptRegistered(prompts, "promptWithMixedParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
-    verifyPromptRegistered(prompts, "promptWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
-    verifyPromptRegistered(prompts, "promptWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(
+        prompts, "promptWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(
+        prompts, "promptWithOptionalParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(
+        prompts, "promptWithRequiredParam", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(
+        prompts, "promptWithMultiParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 2);
+    verifyPromptRegistered(
+        prompts, "promptWithMixedParams", CStringUtil.EMPTY, CStringUtil.EMPTY, 1);
+    verifyPromptRegistered(
+        prompts, "promptWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
+    verifyPromptRegistered(
+        prompts, "promptWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, 0);
   }
 
   private void verifyPromptRegistered(
@@ -335,7 +344,8 @@ public class McpServersTest {
     verifyToolRegistered(tools, "toolWithDefaultName", "title", "description", Map.of());
     verifyToolRegistered(tools, "toolWithDefaultTitle", CStringUtil.EMPTY, "description", Map.of());
     verifyToolRegistered(tools, "toolWithDefaultDescription", "title", CStringUtil.EMPTY, Map.of());
-    verifyToolRegistered(tools, "toolWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
+    verifyToolRegistered(
+        tools, "toolWithAllDefault", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
     verifyToolRegistered(
         tools,
         "toolWithOptionalParam",
@@ -360,10 +370,16 @@ public class McpServersTest {
         CStringUtil.EMPTY,
         CStringUtil.EMPTY,
         Map.of("mcpParam", String.class));
-    verifyToolRegistered(tools, "toolWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
-    verifyToolRegistered(tools, "toolWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
     verifyToolRegistered(
-        tools, "toolWithIntParam", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of("param", int.class));
+        tools, "toolWithVoidReturn", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
+    verifyToolRegistered(
+        tools, "toolWithReturnNull", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of());
+    verifyToolRegistered(
+        tools,
+        "toolWithIntParam",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
+        Map.of("param", int.class));
     verifyToolRegistered(
         tools,
         "toolWithIntegerParam",
@@ -371,7 +387,11 @@ public class McpServersTest {
         CStringUtil.EMPTY,
         Map.of("param", Integer.class));
     verifyToolRegistered(
-        tools, "toolWithLongParam", CStringUtil.EMPTY, CStringUtil.EMPTY, Map.of("param", long.class));
+        tools,
+        "toolWithLongParam",
+        CStringUtil.EMPTY,
+        CStringUtil.EMPTY,
+        Map.of("param", long.class));
     verifyToolRegistered(
         tools,
         "toolWithLongClassParam",
@@ -447,7 +467,8 @@ public class McpServersTest {
             (name, property) -> {
               Map<String, String> props = (Map<String, String>) property;
               Class<?> javaClass = inputSchemaPropertiesTypes.get(name);
-              final String jsonSchemaType = CJavaTypeToJsonSchemaMapper.getJsonSchemaType(javaClass);
+              final String jsonSchemaType =
+                  CJavaTypeToJsonSchemaMapper.getJsonSchemaType(javaClass);
               assertEquals(props.get("type"), jsonSchemaType);
             });
   }

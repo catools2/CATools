@@ -1,5 +1,6 @@
 package org.catools.common.tests.verify.interfaces.verifier;
 
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.interfaces.base.CStringVerify;
@@ -7,8 +8,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
-
-import java.util.regex.Pattern;
 
 @Slf4j
 @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -21,15 +20,28 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class CenterPadEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testVerifyEquals() {
-      toCS("  some string ").verifyCenterPadEquals(40, CStringUtil.EMPTY, "               some string              ", "%s#%s", getParams());
+      toCS("  some string ")
+          .verifyCenterPadEquals(
+              40,
+              CStringUtil.EMPTY,
+              "               some string              ",
+              "%s#%s",
+              getParams());
       toCS("  SOM@#$%^& o ").verifyCenterPadEquals(29, "&%", "&%&%&%&  SOM@#$%^& o &%&%&%&%");
-      toCS("  SOM@#$%^& o ").verifyCenterPadEquals(20, "#$%^", "#$%  SOM@#$%^& o #$%", "%s#%s", getParams());
+      toCS("  SOM@#$%^& o ")
+          .verifyCenterPadEquals(20, "#$%^", "#$%  SOM@#$%^& o #$%", "%s#%s", getParams());
       toCS("  SOM@#$%^& o ").verifyCenterPadEquals(10, CStringUtil.EMPTY, "  SOM@#$%^& o ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyCenterPadEquals(40, CStringUtil.EMPTY, "               some string              ", "%s#%s", getParams());
+      toCS(null)
+          .verifyCenterPadEquals(
+              40,
+              CStringUtil.EMPTY,
+              "               some string              ",
+              "%s#%s",
+              getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -39,21 +51,36 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string ").verifyCenterPadEquals(40, CStringUtil.EMPTY, "             some string              ", "%s#%s", getParams());
+      toCS("  some string ")
+          .verifyCenterPadEquals(
+              40,
+              CStringUtil.EMPTY,
+              "             some string              ",
+              "%s#%s",
+              getParams());
     }
   }
 
   public static class CenterPadNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string ").verifyCenterPadNotEquals(40, CStringUtil.EMPTY, "              some string              ");
-      toCS("  SOM@#$%^& o ").verifyCenterPadNotEquals(20, "#$%^", "#$%  SOM@$%^& o #$%", "%s#%s", getParams());
+      toCS("  some string ")
+          .verifyCenterPadNotEquals(
+              40, CStringUtil.EMPTY, "              some string              ");
+      toCS("  SOM@#$%^& o ")
+          .verifyCenterPadNotEquals(20, "#$%^", "#$%  SOM@$%^& o #$%", "%s#%s", getParams());
       toCS("  SOM@#$%^& o ").verifyCenterPadNotEquals(10, CStringUtil.EMPTY, "  SOM@#$%^& o");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyCenterPadNotEquals(40, CStringUtil.EMPTY, "              some string              ", "%s#%s", getParams());
+      toCS(null)
+          .verifyCenterPadNotEquals(
+              40,
+              CStringUtil.EMPTY,
+              "              some string              ",
+              "%s#%s",
+              getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -63,7 +90,13 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string ").verifyCenterPadNotEquals(40, CStringUtil.EMPTY, "               some string              ", "%s#%s", getParams());
+      toCS("  some string ")
+          .verifyCenterPadNotEquals(
+              40,
+              CStringUtil.EMPTY,
+              "               some string              ",
+              "%s#%s",
+              getParams());
     }
   }
 
@@ -97,7 +130,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class CompareIgnoreCase {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyCompareIgnoreCase("  SOME string    ", 0, "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyCompareIgnoreCase("  SOME string    ", 0, "%s#%s", getParams());
       toCS("  SOME string    ").verifyCompareIgnoreCase("  some string    ", 0);
       toCS(null).verifyCompareIgnoreCase(null, 0, "%s#%s", getParams());
       toCS("  some string    ").verifyCompareIgnoreCase("  some xtring    ", -5);
@@ -191,7 +225,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class EndsWithAny {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyEndsWithAny(new CList<>("A", null, " s "), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyEndsWithAny(new CList<>("A", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -235,12 +270,14 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class EqualsAnyIgnoreCase {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS(" soMe s ").verifyEqualsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
+      toCS(" soMe s ")
+          .verifyEqualsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyEqualsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
+      toCS(null)
+          .verifyEqualsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -250,14 +287,16 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS(" soMe s ").verifyEqualsAnyIgnoreCase(new CList<>("some s ", null, " s "), "%s#%s", getParams());
+      toCS(" soMe s ")
+          .verifyEqualsAnyIgnoreCase(new CList<>("some s ", null, " s "), "%s#%s", getParams());
     }
   }
 
   public static class ContainsAny {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS(" some s ").verifyContainsAny(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
+      toCS(" some s ")
+          .verifyContainsAny(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -279,12 +318,14 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class ContainsAnyIgnoreCase {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS(" SoMe S ").verifyContainsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
+      toCS(" SoMe S ")
+          .verifyContainsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyContainsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
+      toCS(null)
+          .verifyContainsAnyIgnoreCase(new CList<>(" some s ", null, " s "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -294,7 +335,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS(" SoMeS ").verifyContainsAnyIgnoreCase(new CList<>("some s ", null, " s "), "%s#%s", getParams());
+      toCS(" SoMeS ")
+          .verifyContainsAnyIgnoreCase(new CList<>("some s ", null, " s "), "%s#%s", getParams());
     }
   }
 
@@ -339,7 +381,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyEndsWithNone(new CList<>("A", null, " s "), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyEndsWithNone(new CList<>("A", null, " s "), "%s#%s", getParams());
     }
   }
 
@@ -369,7 +412,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyEqualsAny {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyEqualsAny(new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyEqualsAny(
+              new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -391,13 +436,18 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyEqualsAnyIgnoreCase {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
-      toCS("  some STRING    ").verifyEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  SOME string    "));
+      toCS("  some string    ")
+          .verifyEqualsAnyIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
+      toCS("  some STRING    ")
+          .verifyEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  SOME string    "));
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
+      toCS(null)
+          .verifyEqualsAnyIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  some string    "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -407,7 +457,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifyEqualsAnyIgnoreCase(new CList<>(CStringUtil.EMPTY, "  somestring    "), "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyEqualsAnyIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  somestring    "), "%s#%s", getParams());
     }
   }
 
@@ -452,15 +504,19 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  SOME string    ").verifyEqualsIgnoreWhiteSpaces("SME st ring    ", "%s#%s", getParams());
+      toCS("  SOME string    ")
+          .verifyEqualsIgnoreWhiteSpaces("SME st ring    ", "%s#%s", getParams());
     }
   }
 
   public static class VerifyEqualsNone {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyEqualsNone(new CList<>(CStringUtil.EMPTY, "  some", "string    "));
-      toCS("  some STRING    ").verifyEqualsNone(new CList<>(CStringUtil.EMPTY, "  SOME string    "), "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyEqualsNone(new CList<>(CStringUtil.EMPTY, "  some", "string    "));
+      toCS("  some STRING    ")
+          .verifyEqualsNone(
+              new CList<>(CStringUtil.EMPTY, "  SOME string    "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -475,20 +531,26 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifyEqualsNone(new CList<>(CStringUtil.EMPTY, "some", "  some string    "));
+      toCS("  some string    ")
+          .verifyEqualsNone(new CList<>(CStringUtil.EMPTY, "some", "  some string    "));
     }
   }
 
   public static class VerifyEqualsNoneIgnoreCase {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  some", "string    "), "%s#%s", getParams());
-      toCS("  some STRING    ").verifyEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  $OME string    "));
+      toCS("  some string    ")
+          .verifyEqualsNoneIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  some", "string    "), "%s#%s", getParams());
+      toCS("  some STRING    ")
+          .verifyEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  $OME string    "));
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  some", "string    "), "%s#%s", getParams());
+      toCS(null)
+          .verifyEqualsNoneIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  some", "string    "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -498,7 +560,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifyEqualsNoneIgnoreCase(new CList<>(CStringUtil.EMPTY, "  some", "  some string    "), "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyEqualsNoneIgnoreCase(
+              new CList<>(CStringUtil.EMPTY, "  some", "  some string    "), "%s#%s", getParams());
     }
   }
 
@@ -985,14 +1049,19 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyLeftPadEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyLeftPadEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ");
-      toCS("  some string   s ").verifyLeftPadEquals(30, CStringUtil.EMPTY, "              some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyLeftPadEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ");
+      toCS("  some string   s ")
+          .verifyLeftPadEquals(
+              30, CStringUtil.EMPTY, "              some string   s ", "%s#%s", getParams());
       toCS("  some string   s ").verifyLeftPadEquals(10, null, "  some string   s ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyLeftPadEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ", "%s#%s", getParams());
+      toCS(null)
+          .verifyLeftPadEquals(
+              40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1002,15 +1071,19 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyLeftPadEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxx  some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyLeftPadEquals(
+              40, "x", "xxxxxxxxxxxxxxxxxxxxx  some string   s ", "%s#%s", getParams());
     }
   }
 
   public static class VerifyLeftPadNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyLeftPadNotEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxx  some string   s ");
-      toCS("  some string   s ").verifyLeftPadNotEquals(10, null, "  some string  s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyLeftPadNotEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxx  some string   s ");
+      toCS("  some string   s ")
+          .verifyLeftPadNotEquals(10, null, "  some string  s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1025,7 +1098,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyLeftPadNotEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ");
+      toCS("  some string   s ")
+          .verifyLeftPadNotEquals(40, "x", "xxxxxxxxxxxxxxxxxxxxxx  some string   s ");
     }
   }
 
@@ -1238,7 +1312,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifyNotEqualsIgnoreCase("  some STRING    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyNotEqualsIgnoreCase("  some STRING    ", "%s#%s", getParams());
     }
   }
 
@@ -1260,7 +1335,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifyNotEqualsIgnoreWhiteSpaces("  some string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyNotEqualsIgnoreWhiteSpaces("  some string    ", "%s#%s", getParams());
     }
   }
 
@@ -1382,11 +1458,14 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRemoveEndEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRemoveEndEquals("  some ", "  some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndEquals("  some ", "  some string   s ", "%s#%s", getParams());
       toCS("  some string   s ").verifyRemoveEndEquals("some string   s ", "  ");
-      toCS("  some string   s ").verifyRemoveEndEquals("  some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndEquals("  some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveEndEquals(null, "  some String   s ");
-      toCS("  some String   s ").verifyRemoveEndEquals("tring   s ", "  some S", "%s#%s", getParams());
+      toCS("  some String   s ")
+          .verifyRemoveEndEquals("tring   s ", "  some S", "%s#%s", getParams());
       toCS("  some $tring   s ").verifyRemoveEndEquals("tring   s ", "  some $");
     }
 
@@ -1402,7 +1481,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveEndEquals("  some ", "some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndEquals("  some ", "some string   s ", "%s#%s", getParams());
     }
   }
 
@@ -1410,11 +1490,15 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveEndIgnoreCaseEquals("  Some ", "  some string   s ");
-      toCS("  some string   s ").verifyRemoveEndIgnoreCaseEquals("some String   s ", "  ", "%s#%s", getParams());
-      toCS("  some string   s ").verifyRemoveEndIgnoreCaseEquals("  sOME string   s ", CStringUtil.EMPTY);
-      toCS("  some String   s ").verifyRemoveEndIgnoreCaseEquals(null, "  some String   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndIgnoreCaseEquals("some String   s ", "  ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndIgnoreCaseEquals("  sOME string   s ", CStringUtil.EMPTY);
+      toCS("  some String   s ")
+          .verifyRemoveEndIgnoreCaseEquals(null, "  some String   s ", "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveEndIgnoreCaseEquals("tring   S ", "  some S");
-      toCS("  some $tring   s ").verifyRemoveEndIgnoreCaseEquals("TRING   s ", "  some $", "%s#%s", getParams());
+      toCS("  some $tring   s ")
+          .verifyRemoveEndIgnoreCaseEquals("TRING   s ", "  some $", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1424,7 +1508,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some string   s ").verifyRemoveEndIgnoreCaseEquals("  Some ", null, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndIgnoreCaseEquals("  Some ", null, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1436,13 +1521,17 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRemoveEndIgnoreCaseNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRemoveEndIgnoreCaseNotEquals("  Some ", "  some String   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndIgnoreCaseNotEquals(
+              "  Some ", "  some String   s ", "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveEndIgnoreCaseNotEquals(null, "  some string   s ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyRemoveEndIgnoreCaseNotEquals("  Some ", "  some String   s ", "%s#%s", getParams());
+      toCS(null)
+          .verifyRemoveEndIgnoreCaseNotEquals(
+              "  Some ", "  some String   s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1452,7 +1541,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveEndIgnoreCaseNotEquals("  some ", "  some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndIgnoreCaseNotEquals(
+              "  some ", "  some string   s ", "%s#%s", getParams());
     }
   }
 
@@ -1460,7 +1551,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveEndNotEquals("  some ", "ome string   s ");
-      toCS("  some String   s ").verifyRemoveEndNotEquals(null, "  some String   S", "%s#%s", getParams());
+      toCS("  some String   s ")
+          .verifyRemoveEndNotEquals(null, "  some String   S", "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveEndNotEquals("tring   S ", "  some s");
     }
 
@@ -1476,7 +1568,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveEndNotEquals("  some ", "  some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveEndNotEquals("  some ", "  some string   s ", "%s#%s", getParams());
     }
   }
 
@@ -1484,7 +1577,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveIgnoreCaseEquals("s", "  ome tring    ");
-      toCS("  some String   so ").verifyRemoveIgnoreCaseEquals("SO", "  me String    ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyRemoveIgnoreCaseEquals("SO", "  me String    ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1506,7 +1600,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRemoveIgnoreCaseNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRemoveIgnoreCaseNotEquals("s", "  ome Tring    ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveIgnoreCaseNotEquals("s", "  ome Tring    ", "%s#%s", getParams());
       toCS("  some String   so ").verifyRemoveIgnoreCaseNotEquals("SO", "  me String    x");
     }
 
@@ -1522,7 +1617,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveIgnoreCaseNotEquals("s", "  ome tring    ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveIgnoreCaseNotEquals("s", "  ome tring    ", "%s#%s", getParams());
     }
   }
 
@@ -1530,7 +1626,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveNotEquals("s", "  ome Tring    ");
-      toCS("  some String   so ").verifyRemoveNotEquals(null, "  me String    ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyRemoveNotEquals(null, "  me String    ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1552,11 +1649,14 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRemoveStartEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRemoveStartEquals("  some ", "string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartEquals("  some ", "string   s ", "%s#%s", getParams());
       toCS("  some string   s ").verifyRemoveStartEquals("some string   s ", "  some string   s ");
-      toCS("  some string   s ").verifyRemoveStartEquals("  some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartEquals("  some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveStartEquals(null, "  some String   s ");
-      toCS("  some String   s ").verifyRemoveStartEquals("  some S", "tring   s ", "%s#%s", getParams());
+      toCS("  some String   s ")
+          .verifyRemoveStartEquals("  some S", "tring   s ", "%s#%s", getParams());
       toCS("  some $tring   s ").verifyRemoveStartEquals("  some $", "tring   s ");
     }
 
@@ -1572,7 +1672,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveStartEquals("  some ", "string s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartEquals("  some ", "string s ", "%s#%s", getParams());
     }
   }
 
@@ -1580,11 +1681,16 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveStartIgnoreCaseEquals("  some ", "string   s ");
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseEquals("  Some ", "string   s ", "%s#%s", getParams());
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseEquals("Some string   s ", "  some string   s ");
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseEquals("  Some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseEquals("  Some ", "string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseEquals("Some string   s ", "  some string   s ");
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseEquals(
+              "  Some string   s ", CStringUtil.EMPTY, "%s#%s", getParams());
       toCS("  some String   s ").verifyRemoveStartIgnoreCaseEquals(null, "  some String   s ");
-      toCS("  some String   s ").verifyRemoveStartIgnoreCaseEquals("  some s", "tring   s ", "%s#%s", getParams());
+      toCS("  some String   s ")
+          .verifyRemoveStartIgnoreCaseEquals("  some s", "tring   s ", "%s#%s", getParams());
       toCS("  some $tring   s ").verifyRemoveStartIgnoreCaseEquals("  some $", "tring   s ");
     }
 
@@ -1600,7 +1706,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseEquals("  some ", "string s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseEquals("  some ", "string s ", "%s#%s", getParams());
     }
   }
 
@@ -1608,7 +1715,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveStartIgnoreCaseNotEquals("  some ", "String   s ");
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseNotEquals("  Some ", "string  s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseNotEquals("  Some ", "string  s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1618,7 +1726,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testRemoveNull() {
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseNotEquals(null, "string  s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseNotEquals(null, "string  s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1628,7 +1737,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRemoveStartIgnoreCaseNotEquals("  some ", "string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartIgnoreCaseNotEquals("  some ", "string   s ", "%s#%s", getParams());
     }
   }
 
@@ -1636,7 +1746,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyRemoveStartNotEquals("  some", "string   s ");
-      toCS("  some string   s ").verifyRemoveStartNotEquals(null, " Some string   s", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRemoveStartNotEquals(null, " Some string   s", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1658,7 +1769,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyReplaceEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyReplaceEquals("s", CStringUtil.EMPTY, "  ome tring    ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceEquals("s", CStringUtil.EMPTY, "  ome tring    ", "%s#%s", getParams());
       toCS("  some String   so ").verifyReplaceEquals("so", "XX", "  XXme String   XX ");
     }
 
@@ -1674,7 +1786,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some String   so ").verifyReplaceEquals("so", "XX", "  XXme String   S ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceEquals("so", "XX", "  XXme String   S ", "%s#%s", getParams());
     }
   }
 
@@ -1682,7 +1795,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyReplaceIgnoreCaseEquals("s", "|", "  |ome |tring   | ");
-      toCS("  some String   so ").verifyReplaceIgnoreCaseEquals("SO", "x", "  xme String   x ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceIgnoreCaseEquals("SO", "x", "  xme String   x ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1692,7 +1806,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some String   so ").verifyReplaceIgnoreCaseEquals("SO", "x", null, "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceIgnoreCaseEquals("SO", "x", null, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1704,13 +1819,15 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyReplaceIgnoreCaseNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyReplaceIgnoreCaseNotEquals("s", "|", "  |ome string   | ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceIgnoreCaseNotEquals("s", "|", "  |ome string   | ", "%s#%s", getParams());
       toCS("  some String   so ").verifyReplaceIgnoreCaseNotEquals("SO", "x", "  xme tring   x ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyReplaceIgnoreCaseNotEquals("SO", "x", "  xme tring   x ", "%s#%s", getParams());
+      toCS(null)
+          .verifyReplaceIgnoreCaseNotEquals("SO", "x", "  xme tring   x ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1720,7 +1837,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyReplaceIgnoreCaseNotEquals("s", "|", "  |ome |tring   | ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceIgnoreCaseNotEquals("s", "|", "  |ome |tring   | ", "%s#%s", getParams());
     }
   }
 
@@ -1728,7 +1846,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyReplaceNotEquals("s", CStringUtil.EMPTY, "  ome String    ");
-      toCS("  some String   so ").verifyReplaceNotEquals("so", "XX", "  XXme XXtring   XX ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceNotEquals("so", "XX", "  XXme XXtring   XX ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1750,7 +1869,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyReplaceOnceEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyReplaceOnceEquals("s", CStringUtil.EMPTY, "  ome string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceOnceEquals(
+              "s", CStringUtil.EMPTY, "  ome string   s ", "%s#%s", getParams());
       toCS("  some String   so ").verifyReplaceOnceEquals("so", "XX", "  XXme String   so ");
     }
 
@@ -1766,7 +1887,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some String   so ").verifyReplaceOnceEquals("so", "XX", "  Xome String   so ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceOnceEquals("so", "XX", "  Xome String   so ", "%s#%s", getParams());
     }
   }
 
@@ -1774,7 +1896,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyReplaceOnceIgnoreCaseEquals("s", "|", "  |ome string   s ");
-      toCS("  some String   so ").verifyReplaceOnceIgnoreCaseEquals("SO", "x", "  xme String   so ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceOnceIgnoreCaseEquals("SO", "x", "  xme String   so ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1784,7 +1907,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some string   s ").verifyReplaceOnceIgnoreCaseEquals("s", "|", null, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceOnceIgnoreCaseEquals("s", "|", null, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1796,13 +1920,18 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyReplaceOnceIgnoreCaseNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyReplaceOnceIgnoreCaseNotEquals("s", "|", "  \\|ome string   s ", "%s#%s", getParams());
-      toCS("  some String   so ").verifyReplaceOnceIgnoreCaseNotEquals("SO", "x", "  .*e String   so ");
+      toCS("  some string   s ")
+          .verifyReplaceOnceIgnoreCaseNotEquals(
+              "s", "|", "  \\|ome string   s ", "%s#%s", getParams());
+      toCS("  some String   so ")
+          .verifyReplaceOnceIgnoreCaseNotEquals("SO", "x", "  .*e String   so ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyReplaceOnceIgnoreCaseNotEquals("SO", "x", "  .*e String   so ", "%s#%s", getParams());
+      toCS(null)
+          .verifyReplaceOnceIgnoreCaseNotEquals(
+              "SO", "x", "  .*e String   so ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1812,15 +1941,19 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyReplaceOnceIgnoreCaseNotEquals("s", "|", "  |ome string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceOnceIgnoreCaseNotEquals(
+              "s", "|", "  |ome string   s ", "%s#%s", getParams());
     }
   }
 
   public static class VerifyReplaceOnceNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, "  ome String   s ");
-      toCS("  some String   so ").verifyReplaceOnceNotEquals("so", "XX", "  XXme String   XX ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, "  ome String   s ");
+      toCS("  some String   so ")
+          .verifyReplaceOnceNotEquals("so", "XX", "  XXme String   XX ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1830,12 +1963,14 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some string   s ").verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, null, "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, null, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, "  ome string   s ");
+      toCS("  some string   s ")
+          .verifyReplaceOnceNotEquals("s", CStringUtil.EMPTY, "  ome string   s ");
     }
   }
 
@@ -1858,7 +1993,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some @#$%^&*.   so ").verifyReverseEquals(" os   .*&^%# emos  ", "%s#%s", getParams());
+      toCS("  some @#$%^&*.   so ")
+          .verifyReverseEquals(" os   .*&^%# emos  ", "%s#%s", getParams());
     }
   }
 
@@ -1866,7 +2002,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string   s ").verifyReverseNotEquals(" s   gnirt emos  ");
-      toCS("  some @#$%^&*.   so ").verifyReverseNotEquals(" os   .*%$#@ emos  ", "%s#%s", getParams());
+      toCS("  some @#$%^&*.   so ")
+          .verifyReverseNotEquals(" os   .*%$#@ emos  ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1932,9 +2069,13 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRightPadEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRightPadEquals(40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
-      toCS("  some string   s ").verifyRightPadEquals(30, CStringUtil.EMPTY, "  some string   s             ");
-      toCS("  some string   s ").verifyRightPadEquals(10, null, "  some string   s ", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRightPadEquals(
+              40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRightPadEquals(30, CStringUtil.EMPTY, "  some string   s             ");
+      toCS("  some string   s ")
+          .verifyRightPadEquals(10, null, "  some string   s ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1956,13 +2097,17 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyRightPadNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyRightPadNotEquals(40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRightPadNotEquals(
+              40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
       toCS("  some string   s ").verifyRightPadNotEquals(10, null, "  some string    ");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifyRightPadNotEquals(40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
+      toCS(null)
+          .verifyRightPadNotEquals(
+              40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1972,7 +2117,9 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyRightPadNotEquals(40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyRightPadNotEquals(
+              40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx", "%s#%s", getParams());
     }
   }
 
@@ -2016,7 +2163,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifyStartsWithAny(new CList<>("A", null, "some"), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyStartsWithAny(new CList<>("A", null, "some"), "%s#%s", getParams());
     }
   }
 
@@ -2046,7 +2194,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyStartsWithNone {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifyStartsWithNone(new CList<>("A", null, "  Some"), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifyStartsWithNone(new CList<>("A", null, "  Some"), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2094,9 +2243,11 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifyStripedEndValueNot(" ", "  ome string");
-      toCS("  some string    ").verifyStripedEndValueNot(null, "  ome string", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyStripedEndValueNot(null, "  ome string", "%s#%s", getParams());
       toCS("|some string||||").verifyStripedEndValueNot("|", "|som string");
-      toCS("|some string||||").verifyStripedEndValueNot(null, "|soe string||||", "%s#%s", getParams());
+      toCS("|some string||||")
+          .verifyStripedEndValueNot(null, "|soe string||||", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2118,9 +2269,11 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifyStripedStartValue {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifyStripedStartValue(" ", "some string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyStripedStartValue(" ", "some string    ", "%s#%s", getParams());
       toCS("  some string    ").verifyStripedStartValue(null, "some string    ");
-      toCS("|some string||||").verifyStripedStartValue("|", "some string||||", "%s#%s", getParams());
+      toCS("|some string||||")
+          .verifyStripedStartValue("|", "some string||||", "%s#%s", getParams());
       toCS("|some string||||").verifyStripedStartValue(null, "|some string||||");
     }
 
@@ -2144,9 +2297,11 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifyStripedStartValueNot(" ", "ome string    ");
-      toCS("  some string    ").verifyStripedStartValueNot(null, "ome string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifyStripedStartValueNot(null, "ome string    ", "%s#%s", getParams());
       toCS("|some string||||").verifyStripedStartValueNot("|", "ome string||||");
-      toCS("|some string||||").verifyStripedStartValueNot(null, "|ome string||||", "%s#%s", getParams());
+      toCS("|some string||||")
+          .verifyStripedStartValueNot(null, "|ome string||||", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2264,7 +2419,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifySubstringAfterEquals(" s", "ome string    ");
-      toCS("  some string    ").verifySubstringAfterEquals(null, CStringUtil.EMPTY, "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterEquals(null, CStringUtil.EMPTY, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2286,7 +2442,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifySubstringAfterLastEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifySubstringAfterLastEquals(" s", "tring    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterLastEquals(" s", "tring    ", "%s#%s", getParams());
       toCS("  some string    ").verifySubstringAfterLastEquals(null, CStringUtil.EMPTY);
     }
 
@@ -2302,7 +2459,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifySubstringAfterLastEquals(" s", "String    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterLastEquals(" s", "String    ", "%s#%s", getParams());
     }
   }
 
@@ -2310,7 +2468,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifySubstringAfterLastNotEquals(" s", "trng    ");
-      toCS("  some string    ").verifySubstringAfterLastNotEquals(null, "something", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterLastNotEquals(null, "something", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2332,7 +2491,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifySubstringAfterNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifySubstringAfterNotEquals(" s", "ome string   ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterNotEquals(" s", "ome string   ", "%s#%s", getParams());
       toCS("  some string    ").verifySubstringAfterNotEquals(null, "X");
     }
 
@@ -2348,7 +2508,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifySubstringAfterNotEquals(" s", "ome string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringAfterNotEquals(" s", "ome string    ", "%s#%s", getParams());
     }
   }
 
@@ -2356,7 +2517,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifySubstringBeforeEquals(" st", "  some");
-      toCS("  some string    ").verifySubstringBeforeEquals(null, "  some string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeEquals(null, "  some string    ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2378,7 +2540,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifySubstringBeforeLastEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifySubstringBeforeLastEquals(" s", "  some", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeLastEquals(" s", "  some", "%s#%s", getParams());
       toCS("  some string    ").verifySubstringBeforeLastEquals(null, "  some string    ");
     }
 
@@ -2402,7 +2565,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
       toCS("  some string    ").verifySubstringBeforeLastNotEquals(" s", " some");
-      toCS("  some string    ").verifySubstringBeforeLastNotEquals(null, " some string    ", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeLastNotEquals(null, " some string    ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2412,7 +2576,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some string    ").verifySubstringBeforeLastNotEquals("S ", null, "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeLastNotEquals("S ", null, "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2424,7 +2589,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class VerifySubstringBeforeNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string    ").verifySubstringBeforeNotEquals(" st", " some", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeNotEquals(" st", " some", "%s#%s", getParams());
       toCS("  some string    ").verifySubstringBeforeNotEquals(null, "  some string   ");
     }
 
@@ -2440,7 +2606,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifySubstringBeforeNotEquals(" st", "  some", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBeforeNotEquals(" st", "  some", "%s#%s", getParams());
     }
   }
 
@@ -2462,7 +2629,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testCloseNull() {
-      toCS("  some string    ").verifySubstringBetweenEquals("  ", null, "some string", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBetweenEquals("  ", null, "some string", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2472,7 +2640,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifySubstringBetweenEquals("  ", "    ", "sme string", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBetweenEquals("  ", "    ", "sme string", "%s#%s", getParams());
     }
   }
 
@@ -2494,7 +2663,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string    ").verifySubstringBetweenNotEquals("  ", "    ", "some string", "%s#%s", getParams());
+      toCS("  some string    ")
+          .verifySubstringBetweenNotEquals("  ", "    ", "some string", "%s#%s", getParams());
     }
   }
 
@@ -2547,22 +2717,28 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class SubstringsBetweenEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "%s#%s", getParams());
+      toCS(null)
+          .verifySubstringsBetweenEquals(
+              " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testOpenNull() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(null, "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(null, "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testCloseNull() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(" ", null, new CList<>(" ", CStringUtil.EMPTY, "  "), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(
+              " ", null, new CList<>(" ", CStringUtil.EMPTY, "  "), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2572,17 +2748,22 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegativeOnSize() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(
+              " ", "s", new CList<>(" ", CStringUtil.EMPTY), "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, " "));
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, " "));
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative2() {
-      toCS("  some string   s ").verifySubstringsBetweenEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ", " "), "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenEquals(
+              " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ", " "), "%s#%s", getParams());
     }
   }
 
@@ -2604,7 +2785,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testCloseNull() {
-      toCS("  some string   s ").verifySubstringsBetweenContains(" ", null, "some string", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenContains(" ", null, "some string", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2614,52 +2796,66 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifySubstringsBetweenContains(" ", "s", "some string", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenContains(" ", "s", "some string", "%s#%s", getParams());
     }
   }
 
   public static class SubstringsBetweenNotEquals {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifySubstringsBetweenNotEquals(" ", "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals#");
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotEquals(
+              " ", "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals#");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifySubstringsBetweenNotEquals(" ", "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals#");
+      toCS(null)
+          .verifySubstringsBetweenNotEquals(
+              " ", "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals#");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testOpenNull() {
-      toCS("  some string   s ").verifySubstringsBetweenNotEquals(null, "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals #");
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotEquals(
+              null, "s", new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals #");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testCloseNull() {
-      toCS("  some string   s ").verifySubstringsBetweenNotEquals(" ", null, new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals #");
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotEquals(
+              " ", null, new CList<>(" ", "  "), "some string", "SubstringsBetweenNotEquals #");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testExpectedNull() {
-      toCS("  some string   s ").verifySubstringsBetweenNotEquals(" ", "s", null, "some string", "SubstringsBetweenNotEquals #");
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotEquals(
+              " ", "s", null, "some string", "SubstringsBetweenNotEquals #");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifySubstringsBetweenNotEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotEquals(" ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "));
     }
   }
 
   public static class SubstringsBetweenNotContains {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("  some string   s ").verifySubstringsBetweenNotContains(" ", "s", "some string", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotContains(" ", "s", "some string", "%s#%s", getParams());
       toCS("  some string   s ").verifySubstringsBetweenNotContains("some ", "ing", "some string");
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testActualNull() {
-      toCS(null).verifySubstringsBetweenNotContains("some ", "ing", "some string", "%s#%s", getParams());
+      toCS(null)
+          .verifySubstringsBetweenNotContains("some ", "ing", "some string", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -2669,7 +2865,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testCloseNull() {
-      toCS("  some string   s ").verifySubstringsBetweenNotContains(" ", null, "some string", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotContains(" ", null, "some string", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -2679,7 +2876,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
     public void testNegative() {
-      toCS("  some string   s ").verifySubstringsBetweenNotContains("some ", "ing", "str", "%s#%s", getParams());
+      toCS("  some string   s ")
+          .verifySubstringsBetweenNotContains("some ", "ing", "str", "%s#%s", getParams());
     }
   }
 
@@ -2796,7 +2994,8 @@ public class CStringVerifierTest extends CBaseUnitTest {
   public static class TruncatedValueNotEqualsWithEnd {
     @Test(retryAnalyzer = CTestRetryAnalyzer.class)
     public void testPositive() {
-      toCS("some string    ").verifyTruncatedValueNotEquals(4, 10, " tring   ", "%s#%s", getParams());
+      toCS("some string    ")
+          .verifyTruncatedValueNotEquals(4, 10, " tring   ", "%s#%s", getParams());
     }
 
     @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

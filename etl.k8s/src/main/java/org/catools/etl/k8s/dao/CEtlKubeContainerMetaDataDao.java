@@ -11,12 +11,14 @@ public class CEtlKubeContainerMetaDataDao extends CEtlKubeBaseDao {
    * @return
    */
   public static CEtlKubeContainerMetaData getKubeContainerMetaData(String name, String value) {
-    return doTransaction(entityManager -> entityManager
-        .createNamedQuery("getEtlKubeContainerMetaData", CEtlKubeContainerMetaData.class)
-        .setParameter("name", name)
-        .setParameter("value", value)
-        .getResultStream()
-        .findFirst()
-        .orElse(null));
+    return doTransaction(
+        entityManager ->
+            entityManager
+                .createNamedQuery("getEtlKubeContainerMetaData", CEtlKubeContainerMetaData.class)
+                .setParameter("name", name)
+                .setParameter("value", value)
+                .getResultStream()
+                .findFirst()
+                .orElse(null));
   }
 }

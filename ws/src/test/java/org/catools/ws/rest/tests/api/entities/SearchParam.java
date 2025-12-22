@@ -14,8 +14,7 @@ public enum SearchParam {
   SEARCH("s"),
   PAGE("page");
 
-  @Getter
-  private String queryParam;
+  @Getter private String queryParam;
 
   SearchParam(String queryParam) {
     this.queryParam = queryParam;

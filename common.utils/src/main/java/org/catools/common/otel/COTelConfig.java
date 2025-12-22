@@ -1,5 +1,7 @@
 package org.catools.common.otel;
 
+import static io.opentelemetry.semconv.ServiceAttributes.SERVICE_NAME;
+
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
@@ -11,8 +13,6 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-
-import static io.opentelemetry.semconv.ServiceAttributes.SERVICE_NAME;
 
 @UtilityClass
 public class COTelConfig {
@@ -35,7 +35,6 @@ public class COTelConfig {
     return CHocon.asBoolean(Configs.CATOOLS_OTEL_ENABLE);
   }
 
-
   /**
    * The endpoint to send data to
    *
@@ -45,7 +44,6 @@ public class COTelConfig {
     return CHocon.asString(Configs.CATOOLS_OTEL_ENDPOINT);
   }
 
-
   /**
    * The service name to use for otel
    *
@@ -54,7 +52,6 @@ public class COTelConfig {
   public static String getServiceName() {
     return CHocon.asString(Configs.CATOOLS_OTEL_SERVICE_NAME);
   }
-
 
   @Getter
   @AllArgsConstructor
@@ -67,20 +64,22 @@ public class COTelConfig {
   }
 
   public static void buildOTel() {
-    Resource resource = Resource.getDefault()
-        .merge(Resource.create(io.opentelemetry.api.common.Attributes.of(SERVICE_NAME, getServiceName())));
+    Resource resource =
+        Resource.getDefault()
+            .merge(
+                Resource.create(
+                    io.opentelemetry.api.common.Attributes.of(SERVICE_NAME, getServiceName())));
 
-    OtlpGrpcSpanExporter exporter = OtlpGrpcSpanExporter.builder()
-        .setEndpoint(getEndpoint())
-        .build();
+    OtlpGrpcSpanExporter exporter =
+        OtlpGrpcSpanExporter.builder().setEndpoint(getEndpoint()).build();
 
-    SdkTracerProvider tracerProvider = SdkTracerProvider.builder()
-        .setResource(resource)
-        .addSpanProcessor(BatchSpanProcessor.builder(exporter).build())
-        .build();
+    SdkTracerProvider tracerProvider =
+        SdkTracerProvider.builder()
+            .setResource(resource)
+            .addSpanProcessor(BatchSpanProcessor.builder(exporter).build())
+            .build();
 
-    openTelemetry = OpenTelemetrySdk.builder()
-        .setTracerProvider(tracerProvider)
-        .buildAndRegisterGlobal();
+    openTelemetry =
+        OpenTelemetrySdk.builder().setTracerProvider(tracerProvider).buildAndRegisterGlobal();
   }
 }

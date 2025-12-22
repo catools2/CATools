@@ -1,5 +1,8 @@
 package org.catools.common.tests.serialization;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.Objects;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CRuntimeException;
 import org.catools.common.extensions.verify.CVerify;
@@ -8,10 +11,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CJsonUtil;
 import org.testng.annotations.Test;
-
-import java.io.File;
-import java.io.Serializable;
-import java.util.Objects;
 
 public class CObjectSerializationUtilTest extends CBaseUnitTest {
 

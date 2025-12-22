@@ -1,5 +1,7 @@
 package org.catools.common.logger;
 
+import static org.catools.common.configs.CPathConfigs.getOutputChildFolder;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -7,8 +9,6 @@ import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.utils.CAnsiUtil;
 import org.catools.common.utils.CFileUtil;
-
-import static org.catools.common.configs.CPathConfigs.getOutputChildFolder;
 
 @UtilityClass
 public class CLoggerConfigs {

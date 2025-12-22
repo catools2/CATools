@@ -9,8 +9,8 @@ import lombok.experimental.Accessors;
 /**
  * Represents a project in the ZAPI system.
  *
- * <p>This class models the structure of a project, including its unique identifier
- * and name. It uses Jackson annotations for JSON serialization and deserialization.</p>
+ * <p>This class models the structure of a project, including its unique identifier and name. It
+ * uses Jackson annotations for JSON serialization and deserialization.
  */
 @Data
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class CZApiProject {
   /**
    * Unique identifier for the project.
    *
-   * <p>Mapped to the JSON property "value".</p>
+   * <p>Mapped to the JSON property "value".
    */
   @JsonProperty("value")
   private Long id;
@@ -29,7 +29,7 @@ public class CZApiProject {
   /**
    * Name of the project.
    *
-   * <p>Mapped to the JSON property "label".</p>
+   * <p>Mapped to the JSON property "label".
    */
   @JsonProperty("label")
   private String name;

@@ -3,46 +3,40 @@ package org.catools.common.hocon;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigValue;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 import org.catools.common.hocon.exception.CHoconException;
 import org.catools.common.hocon.model.CHoconConfig;
 import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.hocon.utils.CHoconUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
-/**
- * A class to work safe with Type Safe Configuration
- */
+/** A class to work safe with Type Safe Configuration */
 public class CHocon {
   private static Config CONFIG;
 
   public static final String CONFIGS_TO_LOAD = "CONFIGS_TO_LOAD";
 
-  /**
-   * Load configuration and set them in System.properties
-   */
-  public synchronized static void reload() {
+  /** Load configuration and set them in System.properties */
+  static synchronized void reload() {
     ConfigFactory.invalidateCaches();
     String configToLoad = CHoconUtils.getProperty(CONFIGS_TO_LOAD);
     CONFIG = configToLoad != null ? ConfigFactory.load(configToLoad) : ConfigFactory.load();
-    getUserDefinedSettings().forEach(entry -> {
-      String key = entry.getKey();
-      if (key.toLowerCase().startsWith("catools")) {
-        String propName = CHoconUtils.pathToEnvVariableName(key);
-        if (CHoconUtils.getProperty(propName) == null) {
-          System.setProperty(propName, CONFIG.getValue(key).unwrapped().toString());
-        }
-      }
-    });
+    getUserDefinedSettings()
+        .forEach(
+            entry -> {
+              String key = entry.getKey();
+              if (key.toLowerCase().startsWith("catools")) {
+                String propName = CHoconUtils.pathToEnvVariableName(key);
+                if (CHoconUtils.getProperty(propName) == null) {
+                  System.setProperty(propName, CONFIG.getValue(key).unwrapped().toString());
+                }
+              }
+            });
   }
 
   public static Stream<Map.Entry<String, ConfigValue>> getUserDefinedSettings() {
-    return CONFIG
-        .entrySet()
-        .stream()
-        .filter(entry -> entry.getValue().origin().resource() != null);
+    return CONFIG.entrySet().stream().filter(entry -> entry.getValue().origin().resource() != null);
   }
 
   public static Config getConfig() {
@@ -185,11 +179,13 @@ public class CHocon {
     return get(config).asStrings();
   }
 
-  public static <T extends CHoconPath, E extends Enum<E>> List<E> asEnums(String path, Class<E> aClass) {
+  public static <T extends CHoconPath, E extends Enum<E>> List<E> asEnums(
+      String path, Class<E> aClass) {
     return get(path).asEnums(aClass);
   }
 
-  public static <T extends CHoconPath, E extends Enum<E>> List<E> asEnums(T config, Class<E> aClass) {
+  public static <T extends CHoconPath, E extends Enum<E>> List<E> asEnums(
+      T config, Class<E> aClass) {
     return get(config).asEnums(aClass);
   }
 
@@ -205,7 +201,7 @@ public class CHocon {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   public static <T extends CHoconPath, M> M asModel(String path, Class<M> clazz) {
@@ -216,7 +212,7 @@ public class CHocon {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   public static <T extends CHoconPath, M> M asModel(T config, Class<M> clazz) {
@@ -227,7 +223,7 @@ public class CHocon {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   public static <T extends CHoconPath, M> List<M> asList(T config, Class<M> clazz) {
