@@ -1,5 +1,6 @@
 package org.catools.common.tests.waitVerify;
 
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.verify.interfaces.waitVerify.CMapWaitVerify;
@@ -7,8 +8,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
-
-import java.util.Map;
 
 public class CMapWaitVerifyTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

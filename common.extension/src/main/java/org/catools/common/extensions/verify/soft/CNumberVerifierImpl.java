@@ -10,7 +10,8 @@ import org.catools.common.extensions.verify.interfaces.base.CNumberVerify;
  *
  * @param <T> represent any classes which extent {@link CVerificationQueue}.
  */
-public class CNumberVerifierImpl<T extends CVerificationQueue, N extends Number & Comparable<N>> extends CNumberVerification<N> {
+public class CNumberVerifierImpl<T extends CVerificationQueue, N extends Number & Comparable<N>>
+    extends CNumberVerification<N> {
 
   private final T verifier;
 

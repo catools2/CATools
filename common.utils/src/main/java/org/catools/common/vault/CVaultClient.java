@@ -2,6 +2,8 @@ package org.catools.common.vault;
 
 import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultException;
+import java.util.Map;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.configs.CVaultConfigs;
@@ -9,9 +11,6 @@ import org.catools.common.exception.CVaultOperationException;
 import org.catools.common.exception.CVaultSecretNotFoundException;
 import org.catools.common.security.CSensitiveDataMaskingManager;
 import org.catools.common.utils.CStringUtil;
-
-import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 public class CVaultClient {
@@ -57,9 +56,7 @@ public class CVaultClient {
     return kVData;
   }
 
-  /**
-   * User CATOOLS_VAULT_KEY_PREFIX to differentiate group of keys on the same path
-   */
+  /** User CATOOLS_VAULT_KEY_PREFIX to differentiate group of keys on the same path */
   private static String getFullKey(String key) {
     return StringUtils.isBlank(key) ? CStringUtil.EMPTY : CVaultConfigs.getKeyPrefix() + key;
   }

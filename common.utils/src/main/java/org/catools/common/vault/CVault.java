@@ -4,18 +4,17 @@ import com.bettercloud.vault.SslConfig;
 import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultConfig;
 import com.bettercloud.vault.VaultException;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.configs.CVaultConfigs;
 import org.catools.common.exception.CVaultAuthenticationException;
 import org.catools.common.exception.CVaultOperationException;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @UtilityClass
@@ -35,7 +34,7 @@ public class CVault {
   /**
    * Get value from vault by key or return default value if not found
    *
-   * @param key       lookup key
+   * @param key lookup key
    * @param defaultTo default value if not found
    * @return value
    */
@@ -59,7 +58,8 @@ public class CVault {
     }
     List<String> paths = CVaultConfigs.getPaths();
     if (paths == null || paths.isEmpty()) {
-      throw new CVaultOperationException("Failed to initialize vault clients. No vault paths configured.");
+      throw new CVaultOperationException(
+          "Failed to initialize vault clients. No vault paths configured.");
     }
 
     VaultConfig token = getVaultBaseConfig().token(getAuthClientToken());
@@ -81,13 +81,19 @@ public class CVault {
       return switch (authType) {
         case TOKEN -> CVaultConfigs.getAuthToken();
 
-        case LDAP -> new Vault(getVaultBaseConfig()).auth()
-            .loginByLDAP(CVaultConfigs.getAuthLdapUsername(), CVaultConfigs.getAuthLdapPassword())
-            .getAuthClientToken();
+        case LDAP ->
+            new Vault(getVaultBaseConfig())
+                .auth()
+                .loginByLDAP(
+                    CVaultConfigs.getAuthLdapUsername(), CVaultConfigs.getAuthLdapPassword())
+                .getAuthClientToken();
 
-        case APP_ROLE -> new Vault(getVaultBaseConfig()).auth()
-            .loginByAppRole(CVaultConfigs.getAuthAppRoleRoleId(), CVaultConfigs.getAuthAppRoleSecretId())
-            .getAuthClientToken();
+        case APP_ROLE ->
+            new Vault(getVaultBaseConfig())
+                .auth()
+                .loginByAppRole(
+                    CVaultConfigs.getAuthAppRoleRoleId(), CVaultConfigs.getAuthAppRoleSecretId())
+                .getAuthClientToken();
 
         default -> throw new CVaultAuthenticationException(authType.name());
       };
@@ -98,7 +104,8 @@ public class CVault {
 
   private static VaultConfig getVaultBaseConfig() {
     try {
-      return new VaultConfig().address(CVaultConfigs.getUrl())
+      return new VaultConfig()
+          .address(CVaultConfigs.getUrl())
           .openTimeout(CVaultConfigs.getOpenTimeout())
           .readTimeout(CVaultConfigs.getReadTimeout())
           .sslConfig(getSslConfig())
@@ -121,6 +128,4 @@ public class CVault {
       throw new CVaultOperationException("Build ssl config.", e);
     }
   }
-
-
 }

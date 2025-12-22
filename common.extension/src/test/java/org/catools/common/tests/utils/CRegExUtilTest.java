@@ -1,13 +1,12 @@
 package org.catools.common.tests.utils;
 
+import java.util.regex.Pattern;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CRegExUtil;
 import org.testng.annotations.Test;
-
-import java.util.regex.Pattern;
 
 public class CRegExUtilTest extends CBaseUnitTest {
 

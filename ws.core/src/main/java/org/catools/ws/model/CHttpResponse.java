@@ -16,23 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Response with all information returns from http server after call
- */
+/** Response with all information returns from http server after call */
 public class CHttpResponse {
-  @JsonIgnore
-  @Getter
-  private final CHttpRequest request;
+  @JsonIgnore @Getter private final CHttpRequest request;
 
-  @JsonIgnore
-  @Getter
-  private final Response response;
+  @JsonIgnore @Getter private final Response response;
 
-  @Getter
-  private final byte[] content;
+  @Getter private final byte[] content;
 
-  @Getter
-  private final long contentLength;
+  @Getter private final long contentLength;
 
   public CHttpResponse(CHttpRequest request, Response response) {
     try {
@@ -68,14 +60,11 @@ public class CHttpResponse {
   }
 
   // Extensions
-  @Getter
-  public final CResponseHeaders Headers = new CResponseHeaders();
+  @Getter public final CResponseHeaders Headers = new CResponseHeaders();
 
-  @Getter
-  public final CMap<String, Object> ContentMap = new CHashMap<>();
+  @Getter public final CMap<String, Object> ContentMap = new CHashMap<>();
 
-  @Getter
-  public final CMap<String, String> Cookies = new CHashMap<>();
+  @Getter public final CMap<String, String> Cookies = new CHashMap<>();
 
   public final CStaticObjectExtension<CHttpStatusCode> StatusCode =
       new CStaticObjectExtension<>() {

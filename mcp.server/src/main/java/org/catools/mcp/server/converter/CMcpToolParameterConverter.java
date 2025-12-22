@@ -1,22 +1,21 @@
 package org.catools.mcp.server.converter;
 
+import java.lang.reflect.Parameter;
+import java.util.Map;
 import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.mcp.util.CTypeConverter;
 
-import java.lang.reflect.Parameter;
-import java.util.Map;
-
 /**
- * This class is used to convert the value of a parameter annotated with {@link CMcpToolParam} to the
- * required type.
+ * This class is used to convert the value of a parameter annotated with {@link CMcpToolParam} to
+ * the required type.
  */
 public class CMcpToolParameterConverter implements CParameterConverter<CMcpToolParam> {
   /**
    * Converts the value of the parameter annotated with {@link CMcpToolParam} to the required type.
    *
-   * @param parameter  the parameter annotated with {@link CMcpToolParam}
+   * @param parameter the parameter annotated with {@link CMcpToolParam}
    * @param annotation the annotation instance
-   * @param args       the arguments passed to the method
+   * @param args the arguments passed to the method
    * @return the converted value of the parameter
    */
   @Override

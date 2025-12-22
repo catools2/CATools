@@ -1,13 +1,12 @@
 package org.catools.common.tests.utils;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CRetry;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CRetryTest extends CBaseUnitTest {
 

@@ -24,7 +24,8 @@ import java.util.Map;
  * @see CSet
  * @see CList
  */
-public interface CCollectionVerify<E, C extends Collection<E>> extends CBaseCollectionExtension<E, C>, CIterableVerify<E, C> {
+public interface CCollectionVerify<E, C extends Collection<E>>
+    extends CBaseCollectionExtension<E, C>, CIterableVerify<E, C> {
 
   /**
    * Verify the map size is equal to expected value.
@@ -39,13 +40,10 @@ public interface CCollectionVerify<E, C extends Collection<E>> extends CBaseColl
    * Verify the map size is equal to expected value.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeEquals(
-      int expected,
-      final String message,
-      final Object... params) {
+  default void verifySizeEquals(int expected, final String message, final Object... params) {
     _verify(expected, (o, o2) -> _toState(o).sizeEquals(o2), message, params);
   }
 
@@ -62,18 +60,11 @@ public interface CCollectionVerify<E, C extends Collection<E>> extends CBaseColl
    * Verify that actual has value greater than expected.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeIsGreaterThan(
-      int expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).sizeIsGreaterThan(o2),
-        message,
-        params);
+  default void verifySizeIsGreaterThan(int expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).sizeIsGreaterThan(o2), message, params);
   }
 
   /**
@@ -89,17 +80,10 @@ public interface CCollectionVerify<E, C extends Collection<E>> extends CBaseColl
    * Verify that actual has value less than expected.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeIsLessThan(
-      int expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).sizeIsLessThan(o2),
-        message,
-        params);
+  default void verifySizeIsLessThan(int expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).sizeIsLessThan(o2), message, params);
   }
 }

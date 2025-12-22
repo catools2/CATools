@@ -19,44 +19,95 @@ package org.catools.web.selectors;
 
 import org.jspecify.annotations.NullMarked;
 
+import java.util.Arrays;
+
 /**
- * Mechanism used to locate elements within a document. Factory methods return
- * lightweight `CBy` implementations located in separate files.
+ * Mechanism used to locate elements within a document. Factory methods return lightweight `CBy`
+ * implementations located in separate files.
  */
 @NullMarked
 public abstract class CBy {
 
   public abstract String getSelector();
 
-  public static CBy id(String id) {
-    return new ById(id);
+  public static CById id(String id) {
+    return new CById(id);
   }
 
-  public static CBy name(String name) {
-    return new ByName(name);
+  public static CByName name(String name) {
+    return new CByName(name);
   }
 
-  public static CBy linkText(String linkText) {
-    return new ByLinkText(linkText);
+  public static CByLinkText linkText(String linkText) {
+    return new CByLinkText(linkText);
   }
 
-  public static CBy partialLinkText(String partialLinkText) {
-    return new ByPartialLinkText(partialLinkText);
+  public static CByPartialLinkText partialLinkText(String partialLinkText) {
+    return new CByPartialLinkText(partialLinkText);
   }
 
-  public static CBy tagName(String tagName) {
-    return new ByTagName(tagName);
+  public static CByTagName tagName(String tagName) {
+    return new CByTagName(tagName);
   }
 
-  public static CBy xpath(String xpathExpression) {
-    return new ByXPath(xpathExpression);
+  public static CByXPath xpath(String xpathExpression) {
+    return new CByXPath(xpathExpression);
   }
 
-  public static CBy className(String className) {
-    return new ByClassName(className);
+  public static CByClassName className(String className) {
+    return new CByClassName(className);
   }
 
-  public static CBy cssSelector(String cssSelector) {
-    return new ByCssSelector(cssSelector);
+  public static CByCssSelector cssSelector(String cssSelector) {
+    return new CByCssSelector(cssSelector);
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <B extends CBy> B chain(CBy... paths) {
+    boolean hasCssSelector = Arrays.stream(paths).anyMatch(path -> path instanceof CByCssSelector);
+    boolean hasNoneCssSelector =
+        Arrays.stream(paths).anyMatch(path -> !(path instanceof CByCssSelector));
+
+    if (hasCssSelector && hasNoneCssSelector) {
+      throw new IllegalArgumentException("Cannot chain CSS selectors with non-CSS selectors.");
+    }
+
+    if (hasCssSelector) {
+      CByCssSelector[] cssPaths =
+          Arrays.stream(paths).map(path -> (CByCssSelector) path).toArray(CByCssSelector[]::new);
+      return (B) chainCssSelectors(cssPaths);
+    } else {
+      CByXPath[] xpathPaths =
+          Arrays.stream(paths).map(path -> (CByXPath) path).toArray(CByXPath[]::new);
+      return (B) chainXPaths(xpathPaths);
+    }
+  }
+
+  private static CByXPath chainXPaths(CByXPath... paths) {
+    StringBuilder chainedXPath = new StringBuilder();
+    for (CByXPath path : paths) {
+      if (chainedXPath.isEmpty()) {
+        chainedXPath.append(path.getSelector());
+      } else {
+        String xpath = path.getSelector();
+        if (xpath.startsWith(".")) {
+          xpath = xpath.substring(1);
+        }
+        chainedXPath.append(xpath);
+      }
+    }
+    return new CByXPath(chainedXPath.toString());
+  }
+
+  private static CByCssSelector chainCssSelectors(CByCssSelector... paths) {
+    StringBuilder chainedXPath = new StringBuilder();
+    for (CByCssSelector path : paths) {
+      if (chainedXPath.isEmpty()) {
+        chainedXPath.append(path.getSelector());
+      } else {
+        chainedXPath.append(" >> ").append(path.getSelector());
+      }
+    }
+    return new CByCssSelector(chainedXPath.toString());
   }
 }

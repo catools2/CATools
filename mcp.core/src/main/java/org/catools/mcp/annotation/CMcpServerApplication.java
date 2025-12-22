@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * }</pre>
  *
  * @see <a href="https://modelcontextprotocol.io/docs/learn/server-concepts">MCP Protocol
- * Documentation</a>
+ *     Documentation</a>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

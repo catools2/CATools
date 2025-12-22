@@ -10,6 +10,4 @@ import org.catools.common.extensions.verify.interfaces.CBaseVerify;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  */
-public interface CBaseObjectExtension<O, S extends CObjectState<O>> extends CBaseVerify<O, S> {
-
-}
+public interface CBaseObjectExtension<O, S extends CObjectState<O>> extends CBaseVerify<O, S> {}

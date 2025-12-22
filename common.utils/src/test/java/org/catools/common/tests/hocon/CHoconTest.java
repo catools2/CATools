@@ -33,7 +33,6 @@ public class CHoconTest {
     assert CHocon.asEnums("validList.enum", CPlatform.class).get(0) == CPlatform.MAC;
   }
 
-
   @Test
   public void testStringValid() {
     assert CHocon.asString("stringValid.str").equals("str");

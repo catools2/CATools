@@ -24,7 +24,8 @@ import java.util.Map;
  * @see CSet
  * @see CList
  */
-public interface CBaseCollectionExtension<E, C extends Collection<E>> extends CBaseIterableExtension<E, C> {
+public interface CBaseCollectionExtension<E, C extends Collection<E>>
+    extends CBaseIterableExtension<E, C> {
 
   default CCollectionState<E, C> _toState(C e) {
     return () -> e;

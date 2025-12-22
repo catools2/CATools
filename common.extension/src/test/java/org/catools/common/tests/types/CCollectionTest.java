@@ -1,5 +1,7 @@
 package org.catools.common.tests.types;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.collections.interfaces.CCollection;
@@ -7,9 +9,6 @@ import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class CCollectionTest extends CBaseUnitTest {
 
@@ -387,7 +386,9 @@ public class CCollectionTest extends CBaseUnitTest {
   public void testMapToList() {
     CVerifier verifier = new CVerifier();
     verifier.String.equals(
-        ((CCollection<String, Collection<String>>) new CList<>("A", "B")).mapToList(s -> s.toLowerCase()).join(),
+        ((CCollection<String, Collection<String>>) new CList<>("A", "B"))
+            .mapToList(s -> s.toLowerCase())
+            .join(),
         "ab",
         "CCollectionTest ::> mapToList");
     verifier.verify();

@@ -3,9 +3,8 @@ package org.catools.media.utils;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageBase;
-import lombok.experimental.UtilityClass;
-
 import java.awt.image.BufferedImage;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class CBoofCVUtil {

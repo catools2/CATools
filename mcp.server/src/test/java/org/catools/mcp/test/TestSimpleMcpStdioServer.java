@@ -1,10 +1,9 @@
 package org.catools.mcp.test;
 
-import org.catools.mcp.CMcpServers;
-import org.catools.mcp.server.CMcpServerInfo;
-
 import java.time.Duration;
 import java.util.Set;
+import org.catools.mcp.CMcpServers;
+import org.catools.mcp.server.CMcpServerInfo;
 
 public class TestSimpleMcpStdioServer {
 

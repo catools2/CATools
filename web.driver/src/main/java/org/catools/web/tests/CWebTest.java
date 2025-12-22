@@ -1,5 +1,7 @@
 package org.catools.web.tests;
 
+import java.awt.image.BufferedImage;
+import java.util.function.Supplier;
 import org.apache.logging.log4j.Level;
 import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
@@ -17,9 +19,6 @@ import org.catools.web.drivers.CDriverSession;
 import org.catools.web.pages.CWebPage;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-
-import java.awt.image.BufferedImage;
-import java.util.function.Supplier;
 
 public abstract class CWebTest<DR extends CDriver> extends CTest {
 
@@ -75,7 +74,9 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     }
     String fileName = getName() + "-" + filename + "-" + CDate.now().toTimeStampForFileName();
     try {
-      CFile output = CBrowserConfigs.getScreenShotsFolder().getChildFile(fileName.replaceAll("\\W", "_") + ".png");
+      CFile output =
+          CBrowserConfigs.getScreenShotsFolder()
+              .getChildFile(fileName.replaceAll("\\W", "_") + ".png");
       BufferedImage baseValue = driver.getScreenShot();
       if (baseValue != null) {
         CImageUtil.writePNG(baseValue, output);
@@ -112,8 +113,7 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
       groups = {"web", "driver"},
       name = "driver_close",
       title = "Close Page",
-      description = "Close active driver using by CATools"
-  )
+      description = "Close active driver using by CATools")
   public void quit() {
     try {
       DR currentDriver = driver.get();
@@ -122,10 +122,13 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
           tryLogOut();
         } finally {
           try {
-            CRetry.retry(idx -> {
-              currentDriver.quit();
-              return true;
-            }, 2, 1000);
+            CRetry.retry(
+                idx -> {
+                  currentDriver.quit();
+                  return true;
+                },
+                2,
+                1000);
           } catch (Exception e) {
             logger.debug("Exception while retrying driver.quit()", e);
           }
@@ -144,9 +147,9 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
       groups = {"web", "driver"},
       name = "driver_open_url",
       title = "Open URL",
-      description = "Open URL using CATools Page"
-  )
-  public void open(@CMcpToolParam(name = "url", description = "The URL to navigate to") String url) {
+      description = "Open URL using CATools Page")
+  public void open(
+      @CMcpToolParam(name = "url", description = "The URL to navigate to") String url) {
     open(url, !isCurrentSessionActive());
   }
 
@@ -158,7 +161,8 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     return open(url, !isCurrentSessionActive(), expectedPage);
   }
 
-  public <P extends CWebPage<DR>> P open(String url, boolean restartSession, Supplier<P> expectedPage) {
+  public <P extends CWebPage<DR>> P open(
+      String url, boolean restartSession, Supplier<P> expectedPage) {
     if (restartSession) {
       logger.trace("start new session");
       getDriver().startSession();
@@ -168,8 +172,7 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     return expectedPage == null ? null : expectedPage.get();
   }
 
-  public void tryLogOut() {
-  }
+  public void tryLogOut() {}
 
   protected CDriverSession getDriverSession() {
     return getDriver().getDriverSession();

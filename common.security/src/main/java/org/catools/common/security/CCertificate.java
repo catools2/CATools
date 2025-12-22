@@ -1,16 +1,15 @@
 package org.catools.common.security;
 
-import org.catools.common.io.CFile;
-import org.catools.common.io.CResource;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManagerFactory;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.function.BiFunction;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+import org.catools.common.io.CFile;
+import org.catools.common.io.CResource;
 
 public class CCertificate {
   private CResource resource;
@@ -25,14 +24,15 @@ public class CCertificate {
   }
 
   public Certificate getCertificate() {
-    return performActionOnResource((s, inputStream) -> {
-      try {
-        CertificateFactory fact = CertificateFactory.getInstance("X.509");
-        return fact.generateCertificate(inputStream);
-      } catch (Exception e) {
-        throw new CCertificateException("Failed to get Certification", e);
-      }
-    });
+    return performActionOnResource(
+        (s, inputStream) -> {
+          try {
+            CertificateFactory fact = CertificateFactory.getInstance("X.509");
+            return fact.generateCertificate(inputStream);
+          } catch (Exception e) {
+            throw new CCertificateException("Failed to get Certification", e);
+          }
+        });
   }
 
   public X509Certificate getX509Certificate() {

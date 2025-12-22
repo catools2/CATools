@@ -8,8 +8,8 @@ import lombok.experimental.Accessors;
 /**
  * Represents a version in the ZAPI system.
  *
- * <p>This class models the structure of a version, including its unique identifier
- * and name. It uses Jackson annotations for JSON serialization and deserialization.</p>
+ * <p>This class models the structure of a version, including its unique identifier and name. It
+ * uses Jackson annotations for JSON serialization and deserialization.
  */
 @Data
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class CZApiVersion {
   /**
    * Unique identifier for the version.
    *
-   * <p>Mapped to the JSON property "value".</p>
+   * <p>Mapped to the JSON property "value".
    */
   @JsonProperty("value")
   private Long id;
@@ -27,7 +27,7 @@ public class CZApiVersion {
   /**
    * Name of the version.
    *
-   * <p>Mapped to the JSON property "label".</p>
+   * <p>Mapped to the JSON property "label".
    */
   @JsonProperty("label")
   private String name;

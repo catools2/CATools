@@ -1,10 +1,5 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.time.DateUtils;
-import org.catools.common.configs.CDateConfigs;
-import org.catools.common.exception.CInvalidDateFormatException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -16,6 +11,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.time.DateUtils;
+import org.catools.common.configs.CDateConfigs;
+import org.catools.common.exception.CInvalidDateFormatException;
 
 @UtilityClass
 public class CDateUtil {
@@ -42,7 +41,7 @@ public class CDateUtil {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
+   * @param str the date to parse, not null
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    * @throws {@code CInvalidDateFormatException} if the date string or pattern array is null
@@ -59,9 +58,9 @@ public class CDateUtil {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
-   * @param locale        the locale whose date format symbols should be used. If <code>null</code>, the
-   *                      system locale is used (as per {@see #valueOf(String, String...)}).
+   * @param str the date to parse, not null
+   * @param locale the locale whose date format symbols should be used. If <code>null</code>, the
+   *     system locale is used (as per {@see #valueOf(String, String...)}).
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date
    * @throws {@code CInvalidDateFormatException} if anything goes wrong
@@ -82,7 +81,7 @@ public class CDateUtil {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
+   * @param str the date to parse, not null
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date or null if could not parse
    */
@@ -98,9 +97,9 @@ public class CDateUtil {
    * parses the whole of the input string. If no parse patterns match, a ParseException is thrown.
    * The parser parses strictly - it does not allow for dates such as "February 942, 1996".
    *
-   * @param str           the date to parse, not null
-   * @param locale        the locale whose date format symbols should be used. If <code>null</code>, the
-   *                      system locale is used (as per {@see #valueOf(String, String...)}).
+   * @param str the date to parse, not null
+   * @param locale the locale whose date format symbols should be used. If <code>null</code>, the
+   *     system locale is used (as per {@see #valueOf(String, String...)}).
    * @param parsePatterns the date format patterns to use, see SimpleDateFormat, not null
    * @return the parsed date or null if could not parse
    */
@@ -127,11 +126,11 @@ public class CDateUtil {
    * we convert date values to formatted string using provided format and then compare then using
    * string compression.
    *
-   * @param date1  first date to compare current value against
-   * @param date2  second date to compare current value against
+   * @param date1 first date to compare current value against
+   * @param date2 second date to compare current value against
    * @param format the format which should be used during compression.
    * @return the value {@code 0} if the argument Date is equal to date Date; a value less than
-   * {@code 0} if date Date is before the Date argument; and a value greater than
+   *     {@code 0} if date Date is before the Date argument; and a value greater than
    */
   public static int compareDateByFormat(final Date date1, final Date date2, String format) {
     if (date1 == null && date2 == null) {
@@ -156,7 +155,7 @@ public class CDateUtil {
    * @param date1 first date to compare current value against
    * @param date2 second date to compare current value against
    * @return the value {@code 0} if the values are equal; the value less than {@code 0} if the
-   * string value is less and greater than {@code 0} if it is bigger
+   *     string value is less and greater than {@code 0} if it is bigger
    * @see #compareDateByFormat(Date, Date, String)
    * @see #compareTimePortion(Date, Date)
    */
@@ -172,7 +171,7 @@ public class CDateUtil {
    * @param date1 first date to compare current value against
    * @param date2 second date to compare current value against
    * @return the value {@code 0} if the values are equal; the value less than {@code 0} if the
-   * string value is less and greater than {@code 0} if it is bigger
+   *     string value is less and greater than {@code 0} if it is bigger
    * @see #compareDateByFormat(Date, Date, String)
    * @see #compareDatePortion(Date, Date)
    */
@@ -184,7 +183,7 @@ public class CDateUtil {
    * Get diff between from and to in ChronoUnit
    *
    * @param from date
-   * @param to   date
+   * @param to date
    * @return time diff
    */
   public static long getDiff(final Date from, final Date to, final ChronoUnit unit) {
@@ -215,7 +214,7 @@ public class CDateUtil {
    * Get durarion between from and to (to.getTime() - from.getTime())
    *
    * @param from date
-   * @param to   date
+   * @param to date
    * @return to.getTime() - from.getTime()
    */
   public static Duration getDuration(final Date from, final Date to) {
@@ -577,7 +576,7 @@ public class CDateUtil {
    * Adds to a date returning a new object. if
    *
    * @param calendarField the calendar field to add to
-   * @param amount        the amount to add, may be negative
+   * @param amount the amount to add, may be negative
    * @return current {@code Date}
    * @throws IllegalArgumentException if the date is null
    */

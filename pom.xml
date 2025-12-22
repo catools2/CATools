@@ -12,6 +12,7 @@
     <properties>
         <revision>2.0.0-SNAPSHOT</revision>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <spotless.skip>true</spotless.skip>
 
         <!-- Sonar -->
         <sonar.organization>catools2</sonar.organization>

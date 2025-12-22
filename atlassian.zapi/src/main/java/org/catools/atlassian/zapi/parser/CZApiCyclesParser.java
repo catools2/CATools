@@ -12,8 +12,8 @@ import org.json.JSONObject;
 /**
  * Utility class for parsing cycle data in the ZAPI system.
  *
- * <p>This class provides methods to parse {@link CZApiCycles} objects from JSON responses.
- * It supports parsing cycles for a single project or multiple projects.</p>
+ * <p>This class provides methods to parse {@link CZApiCycles} objects from JSON responses. It
+ * supports parsing cycles for a single project or multiple projects.
  */
 @UtilityClass
 public class CZApiCyclesParser {

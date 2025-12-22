@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
-  public CHashMap() {
-  }
+  public CHashMap() {}
 
   public CHashMap(int initialCapacity, float loadFactor) {
     super(initialCapacity, loadFactor);
@@ -76,5 +75,4 @@ public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
       return keySet().mapToList(CJsonUtil::toString).toString();
     }
   }
-
 }

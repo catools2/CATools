@@ -1,17 +1,17 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-
-
-@NamedQuery(name = "getEtlExecutionStatusByName", query = "FROM CEtlExecutionStatus where name=:name")
+@NamedQuery(
+    name = "getEtlExecutionStatusByName",
+    query = "FROM CEtlExecutionStatus where name=:name")
 @Entity
 @Table(name = "execution_status", schema = "tms")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "execution_status")
@@ -21,8 +21,8 @@ import java.io.Serializable;
 public class CEtlExecutionStatus implements Serializable {
 
   public static final CEtlExecutionStatus UNSET = new CEtlExecutionStatus("UNSET");
-  @Serial
-  private static final long serialVersionUID = 6867874018185613707L;
+  @Serial private static final long serialVersionUID = 6867874018185613707L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

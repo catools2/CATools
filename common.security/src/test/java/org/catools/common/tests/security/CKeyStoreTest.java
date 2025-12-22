@@ -1,5 +1,9 @@
 package org.catools.common.tests.security;
 
+import java.security.cert.X509Certificate;
+import java.security.interfaces.DSAParams;
+import java.security.interfaces.DSAPrivateKey;
+import java.security.interfaces.DSAPublicKey;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.io.CFile;
@@ -8,11 +12,6 @@ import org.catools.common.security.CKeyStore;
 import org.catools.common.security.CKeyStoreException;
 import org.catools.common.tests.CBaseUnitTest;
 import org.testng.annotations.Test;
-
-import java.security.cert.X509Certificate;
-import java.security.interfaces.DSAParams;
-import java.security.interfaces.DSAPrivateKey;
-import java.security.interfaces.DSAPublicKey;
 
 public class CKeyStoreTest extends CBaseUnitTest {
   private final String PASSWORD = "passw0rd";

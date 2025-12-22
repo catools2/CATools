@@ -24,8 +24,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#center(String, int, String)} is equals to expected
    * value.
    *
-   * @param size     the int size of new String, negative treated as zero
-   * @param padStr   the String to pad the new String with, must not be null or empty
+   * @param size the int size of new String, negative treated as zero
+   * @param padStr the String to pad the new String with, must not be null or empty
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -39,8 +39,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#center(String, int, String)} is NOT equals to expected
    * value.
    *
-   * @param size     the int size of new String, negative treated as zero
-   * @param padStr   the String to pad the new String with, must not be null or empty
+   * @param size the int size of new String, negative treated as zero
+   * @param padStr the String to pad the new String with, must not be null or empty
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -54,7 +54,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#compare(String, String)} equals to the expected value.
    *
    * @param stringToCompare the string value to compare against
-   * @param expected        the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean compare(String stringToCompare, int expected) {
@@ -66,7 +66,7 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param stringToCompare the string value to compare against
-   * @param expected        the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean compareIgnoreCase(String stringToCompare, int expected) {
@@ -95,7 +95,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, String)}
+   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, CharSequence...)}
    * (CharSequence, CharSequence)} is true, ignoring case.
    *
    * @param expected the expected result.
@@ -108,7 +108,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, String)}
+   * Verify if result of {@link StringUtils#containsAnyIgnoreCase(CharSequence, CharSequence...)}
    * (CharSequence, CharSequence)} is true, ignoring case.
    *
    * @param expected the expected result.
@@ -131,10 +131,10 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, String)} is true.
+   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, CharSequence...)} is true.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
-   *                     null}
+   *     null}
    * @return execution boolean result
    */
   default boolean endsWithAny(Iterable<String> searchInputs) {
@@ -154,10 +154,10 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, String)} is false.
+   * Verify if result of {@link StringUtils#endsWithAny(CharSequence, CharSequence...)} is false.
    *
    * @param searchInputs the case-sensitive CharSequences to find, may be empty or contain {@code
-   *                     null}
+   *     null}
    * @return execution boolean result
    */
   default boolean endsWithNone(Iterable<String> searchInputs) {
@@ -178,7 +178,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAny(CharSequence, String)} is true
+   * Verify if result of {@link StringUtils#equalsAny(CharSequence, CharSequence...)} is true
    *
    * @param expectedList a list of strings, may be {@code null}.
    * @return execution boolean result
@@ -190,7 +190,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, String)} is
+   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
    * true, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -224,7 +224,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAny(CharSequence, String)} is false
+   * Verify if result of {@link StringUtils#equalsAny(CharSequence, CharSequence...)} is false
    *
    * @param expectedList a list of strings, may be {@code null}.
    * @return execution boolean result
@@ -236,7 +236,7 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, String)} is
+   * Verify if result of {@link StringUtils#equalsAnyIgnoreCase(CharSequence, CharSequence...)} is
    * false, ignoring case.
    *
    * @param expectedList a list of strings, may be {@code null}.
@@ -345,9 +345,9 @@ public interface CStringState extends CObjectState<String> {
     String a = _get();
     return a != null
         && (StringUtils.isBlank(a)
-        || (StringUtils.isAlphanumeric(a)
-        && a.length() >= minLength
-        && a.length() <= maxLength));
+            || (StringUtils.isAlphanumeric(a)
+                && a.length() >= minLength
+                && a.length() <= maxLength));
   }
 
   /**
@@ -409,7 +409,7 @@ public interface CStringState extends CObjectState<String> {
     String a = _get();
     return a != null
         && (StringUtils.isBlank(a)
-        || (StringUtils.isNumeric(a) && a.length() >= minLength && a.length() <= maxLength));
+            || (StringUtils.isNumeric(a) && a.length() >= minLength && a.length() <= maxLength));
   }
 
   /**
@@ -459,9 +459,9 @@ public interface CStringState extends CObjectState<String> {
     String a = _get();
     return a != null
         && (StringUtils.isEmpty(a)
-        || (StringUtils.isAlphanumeric(a)
-        && a.length() >= minLength
-        && a.length() <= maxLength));
+            || (StringUtils.isAlphanumeric(a)
+                && a.length() >= minLength
+                && a.length() <= maxLength));
   }
 
   /**
@@ -524,7 +524,7 @@ public interface CStringState extends CObjectState<String> {
     String a = _get();
     return a != null
         && (StringUtils.isEmpty(a)
-        || (StringUtils.isNumeric(a) && a.length() >= minLength && a.length() <= maxLength));
+            || (StringUtils.isNumeric(a) && a.length() >= minLength && a.length() <= maxLength));
   }
 
   /**
@@ -658,8 +658,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#leftPad(String, int, String)} is equals to expected
    * value.
    *
-   * @param size     the size to pad to
-   * @param padStr   the String to pad with, null or empty treated as single space
+   * @param size the size to pad to
+   * @param padStr the String to pad with, null or empty treated as single space
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -673,8 +673,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#leftPad(String, int, String)} is NOT equals to expected
    * value.
    *
-   * @param size     the size to pad to
-   * @param padStr   the String to pad with, null or empty treated as single space
+   * @param size the size to pad to
+   * @param padStr the String to pad with, null or empty treated as single space
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -688,7 +688,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#left(String, int)} equals to expected value.
    *
    * @param expected the expected result.
-   * @param len      the length of the required String
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean leftValueEquals(int len, String expected) {
@@ -701,7 +701,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#left(String, int)} NOT equals to expected value.
    *
    * @param expected the expected result.
-   * @param len      the length of the required String
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean leftValueNotEquals(int len, String expected) {
@@ -766,8 +766,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#mid(String, int, int)} equals to expected value.
    *
    * @param expected the expected result.
-   * @param pos      the position to start from, negative treated as zero
-   * @param len      the length of the required String
+   * @param pos the position to start from, negative treated as zero
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean midValueEquals(int pos, int len, String expected) {
@@ -780,8 +780,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#mid(String, int, int)} NOT equals to expected value.
    *
    * @param expected the expected result.
-   * @param pos      the position to start from, negative treated as zero
-   * @param len      the length of the required String
+   * @param pos the position to start from, negative treated as zero
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean midValueNotEquals(int pos, int len, String expected) {
@@ -914,7 +914,9 @@ public interface CStringState extends CObjectState<String> {
    * @return execution boolean result
    */
   default boolean notStartsWithIgnoreCase(String expected) {
-    return _get() != null && expected != null && !StringUtils.startsWithIgnoreCase(_get(), expected);
+    return _get() != null
+        && expected != null
+        && !StringUtils.startsWithIgnoreCase(_get(), expected);
   }
 
   /**
@@ -922,7 +924,7 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param subString the substring to count, may be null
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean numberOfMatchesEquals(String subString, int expected) {
@@ -934,7 +936,7 @@ public interface CStringState extends CObjectState<String> {
    * to expected value.
    *
    * @param subString the substring to count, may be null
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean numberOfMatchesNotEquals(String subString, int expected) {
@@ -944,7 +946,7 @@ public interface CStringState extends CObjectState<String> {
   /**
    * Verify if result of {@link StringUtils#removeEnd(String, String)} is equals to expected value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -958,7 +960,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeEndIgnoreCase(String, String)} is equals to
    * expected value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -972,7 +974,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeEndIgnoreCase(String, String)} is NOT equals to
    * expected value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -986,7 +988,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeEnd(String, String)} is NOT equals to expected
    * value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -999,7 +1001,7 @@ public interface CStringState extends CObjectState<String> {
   /**
    * Verify if result of {@link StringUtils#remove(String, String)} is equals to expected value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1013,7 +1015,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeIgnoreCase(String, String)} is equals to expected
    * value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1027,7 +1029,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeIgnoreCase(String, String)} is NOT equals to
    * expected value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1040,7 +1042,7 @@ public interface CStringState extends CObjectState<String> {
   /**
    * Verify if result of {@link StringUtils#remove(String, String)} is NOT equals to expected value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1054,7 +1056,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeStart(String, String)} is equals to expected
    * value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1068,7 +1070,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeStartIgnoreCase(String, String)} is equals to
    * expected value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1082,7 +1084,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeStartIgnoreCase(String, String)} is NOT equals to
    * expected value.
    *
-   * @param remove   the String to search for (case insensitive) and remove, may be null
+   * @param remove the String to search for (case insensitive) and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1096,7 +1098,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#removeStart(String, String)} is NOT equals to expected
    * value.
    *
-   * @param remove   the String to search for and remove, may be null
+   * @param remove the String to search for and remove, may be null
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1111,8 +1113,8 @@ public interface CStringState extends CObjectState<String> {
    * value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace it with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace it with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceEquals(String searchString, String replacement, String expected) {
@@ -1126,8 +1128,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace it with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace it with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceIgnoreCaseEquals(
@@ -1135,7 +1137,7 @@ public interface CStringState extends CObjectState<String> {
     return _get() != null
         && expected != null
         && Strings.CS.equals(
-        StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
+            StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1143,8 +1145,8 @@ public interface CStringState extends CObjectState<String> {
    * to expected value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace it with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace it with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceIgnoreCaseNotEquals(
@@ -1152,7 +1154,7 @@ public interface CStringState extends CObjectState<String> {
     return _get() != null
         && expected != null
         && !Strings.CS.equals(
-        StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
+            StringUtils.replaceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1160,8 +1162,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace it with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace it with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceNotEquals(String searchString, String replacement, String expected) {
@@ -1175,8 +1177,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param searchString the String to search for, may be null
-   * @param replacement  the String to replace with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceOnceEquals(String searchString, String replacement, String expected) {
@@ -1190,8 +1192,8 @@ public interface CStringState extends CObjectState<String> {
    * to expected value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceOnceIgnoreCaseEquals(
@@ -1199,7 +1201,7 @@ public interface CStringState extends CObjectState<String> {
     return _get() != null
         && expected != null
         && Strings.CS.equals(
-        StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
+            StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1207,8 +1209,8 @@ public interface CStringState extends CObjectState<String> {
    * equals to expected value.
    *
    * @param searchString the String to search for (case insensitive), may be null
-   * @param replacement  the String to replace with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceOnceIgnoreCaseNotEquals(
@@ -1216,7 +1218,7 @@ public interface CStringState extends CObjectState<String> {
     return _get() != null
         && expected != null
         && !Strings.CS.equals(
-        StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
+            StringUtils.replaceOnceIgnoreCase(_get(), searchString, replacement), expected);
   }
 
   /**
@@ -1224,8 +1226,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param searchString the String to search for, may be null
-   * @param replacement  the String to replace with, may be null
-   * @param expected     the expected result.
+   * @param replacement the String to replace with, may be null
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean replaceOnceNotEquals(String searchString, String replacement, String expected) {
@@ -1260,8 +1262,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#rightPad(String, int, String)} is equals to expected
    * value.
    *
-   * @param size     the size to pad to
-   * @param padStr   the String to pad with, null or empty treated as single space
+   * @param size the size to pad to
+   * @param padStr the String to pad with, null or empty treated as single space
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1275,8 +1277,8 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#rightPad(String, int, String)} is NOT equals to expected
    * value.
    *
-   * @param size     the size to pad to
-   * @param padStr   the String to pad with, null or empty treated as single space
+   * @param size the size to pad to
+   * @param padStr the String to pad with, null or empty treated as single space
    * @param expected the expected result.
    * @return execution boolean result
    */
@@ -1290,7 +1292,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#right(String, int)} equals to expected value.
    *
    * @param expected the expected result.
-   * @param len      the length of the required String
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean rightValueEquals(int len, String expected) {
@@ -1303,7 +1305,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#right(String, int)} NOT equals to expected value.
    *
    * @param expected the expected result.
-   * @param len      the length of the required String
+   * @param len the length of the required String
    * @return execution boolean result
    */
   default boolean rightValueNotEquals(int len, String expected) {
@@ -1323,10 +1325,10 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, String)} is true
+   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, CharSequence...)} is true
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
-   *                     null}
+   *     null}
    * @return execution boolean result
    */
   default boolean startsWithAny(Iterable<String> searchInputs) {
@@ -1347,10 +1349,10 @@ public interface CStringState extends CObjectState<String> {
   }
 
   /**
-   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, String)} is false
+   * Verify if result of {@link StringUtils#startsWithAny(CharSequence, CharSequence...)} is false
    *
    * @param searchInputs the case-sensitive CharSequence prefixes, may be empty or contain {@code
-   *                     null}
+   *     null}
    * @return execution boolean result
    */
   default boolean startsWithNone(Iterable<String> searchInputs) {
@@ -1363,7 +1365,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#stripEnd(String, String)} value equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedEndValue(String stripChars, String expected) {
@@ -1376,7 +1378,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#stripEnd(String, String)} value NOT equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedEndValueNot(String stripChars, String expected) {
@@ -1389,7 +1391,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#stripStart(String, String)} value equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedStartValue(String stripChars, String expected) {
@@ -1402,7 +1404,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#stripStart(String, String)} value NOT equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedStartValueNot(String stripChars, String expected) {
@@ -1415,7 +1417,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#strip(String)} value equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedValue(String stripChars, String expected) {
@@ -1428,7 +1430,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if {@link StringUtils#strip(String)} value NOT equals the expected value.
    *
    * @param stripChars the characters to remove, null treated as whitespace
-   * @param expected   the expected result.
+   * @param expected the expected result.
    * @return execution boolean result
    */
   default boolean stripedValueNot(String stripChars, String expected) {
@@ -1441,7 +1443,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringAfter(String, String)} equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1455,7 +1457,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringAfterLast(String, String)} equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1469,7 +1471,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringAfterLast(String, String)} NOT equals to
    * expected value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1483,7 +1485,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringAfter(String, String)} NOT equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1497,7 +1499,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringBefore(String, String)} equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1511,7 +1513,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringBeforeLast(String, String)} equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1525,7 +1527,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringBeforeLast(String, String)} NOT equals to
    * expected value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1539,7 +1541,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substringBefore(String, String)} NOT equals to expected
    * value.
    *
-   * @param expected  the expected result.
+   * @param expected the expected result.
    * @param separator the String to search for, may be {@code null}
    * @return execution boolean result
    */
@@ -1554,8 +1556,8 @@ public interface CStringState extends CObjectState<String> {
    * value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringBetweenEquals(String open, String close, String expected) {
@@ -1569,8 +1571,8 @@ public interface CStringState extends CObjectState<String> {
    * value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringBetweenNotEquals(String open, String close, String expected) {
@@ -1583,7 +1585,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substring(String, int)} equals to expected value.
    *
    * @param expected the expected result.
-   * @param start    the position to start from, negative means count back from the end of the String
+   * @param start the position to start from, negative means count back from the end of the String
    * @return execution boolean result
    */
   default boolean substringEquals(int start, String expected) {
@@ -1596,9 +1598,9 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substring(String, int, int)} equals to expected value.
    *
    * @param expected the expected result.
-   * @param start    the position to start from, negative means count back from the end of the String
-   * @param end      the position to end at (exclusive), negative means count back from the end of the
-   *                 String
+   * @param start the position to start from, negative means count back from the end of the String
+   * @param end the position to end at (exclusive), negative means count back from the end of the
+   *     String
    * @return execution boolean result
    */
   default boolean substringEquals(int start, int end, String expected) {
@@ -1611,7 +1613,7 @@ public interface CStringState extends CObjectState<String> {
    * Verify if result of {@link StringUtils#substring(String, int)} NOT equals to expected value.
    *
    * @param expected the expected result.
-   * @param start    the position to start from, negative means count back from the end of the String
+   * @param start the position to start from, negative means count back from the end of the String
    * @return execution boolean result
    */
   default boolean substringNotEquals(int start, String expected) {
@@ -1625,9 +1627,9 @@ public interface CStringState extends CObjectState<String> {
    * value.
    *
    * @param expected the expected result.
-   * @param start    the position to start from, negative means count back from the end of the String
-   * @param end      the position to end at (exclusive), negative means count back from the end of the
-   *                 String
+   * @param start the position to start from, negative means count back from the end of the String
+   * @param end the position to end at (exclusive), negative means count back from the end of the
+   *     String
    * @return execution boolean result
    */
   default boolean substringNotEquals(int start, int end, String expected) {
@@ -1641,8 +1643,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringsBetweenContains(String open, String close, String expected) {
@@ -1656,8 +1658,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringsBetweenEquals(String open, String close, Iterable<String> expected) {
@@ -1674,8 +1676,8 @@ public interface CStringState extends CObjectState<String> {
    * to expected value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringsBetweenNotContains(String open, String close, String expected) {
@@ -1689,8 +1691,8 @@ public interface CStringState extends CObjectState<String> {
    * expected value.
    *
    * @param expected the expected result.
-   * @param open     the String identifying the start of the substring, empty returns null
-   * @param close    the String identifying the end of the substring, empty returns null
+   * @param open the String identifying the start of the substring, empty returns null
+   * @param close the String identifying the end of the substring, empty returns null
    * @return execution boolean result
    */
   default boolean substringsBetweenNotEquals(String open, String close, Iterable<String> expected) {
@@ -1742,7 +1744,7 @@ public interface CStringState extends CObjectState<String> {
   /**
    * Verify if {@link StringUtils#truncate(String, int, int)} value equals the expected value.
    *
-   * @param offset   left edge of string to start truncate from
+   * @param offset left edge of string to start truncate from
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
    * @return execution boolean result
@@ -1769,7 +1771,7 @@ public interface CStringState extends CObjectState<String> {
   /**
    * Verify if {@link StringUtils#truncate(String, int, int)} value NOT equals the expected value.
    *
-   * @param offset   left edge of string to start truncate from
+   * @param offset left edge of string to start truncate from
    * @param maxWidth maximum length of truncated string, must be positive
    * @param expected the expected result.
    * @return execution boolean result

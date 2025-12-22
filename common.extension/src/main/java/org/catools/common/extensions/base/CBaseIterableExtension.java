@@ -23,7 +23,8 @@ import java.util.Map;
  * @see CSet
  * @see CList
  */
-public interface CBaseIterableExtension<E, C extends Iterable<E>> extends CBaseObjectExtension<C, CIterableState<E, C>> {
+public interface CBaseIterableExtension<E, C extends Iterable<E>>
+    extends CBaseObjectExtension<C, CIterableState<E, C>> {
 
   @Override
   default CIterableState<E, C> _toState(C e) {

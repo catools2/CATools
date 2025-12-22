@@ -4,14 +4,10 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
-/**
- * This class implements the {@link CDependencyInjector} interface using Google Guice.
- */
+/** This class implements the {@link CDependencyInjector} interface using Google Guice. */
 public final class CDependencyInjector {
 
-  /**
-   * The Guice {@link Injector} used for dependency injection.
-   */
+  /** The Guice {@link Injector} used for dependency injection. */
   private final Injector injector;
 
   /**

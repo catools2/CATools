@@ -1,5 +1,10 @@
 package org.catools.etl.git.model;
 
+import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +12,6 @@ import lombok.experimental.Accessors;
 import org.catools.common.utils.CStringUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-
-import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 
 @Entity
 @NamedQuery(name = "getGitBranchByHash", query = "FROM CGitBranch where hash=:hash")
@@ -24,8 +23,7 @@ import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 @Accessors(chain = true)
 public class CGitBranch implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 41874058561307260L;
+  @Serial private static final long serialVersionUID = 41874058561307260L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

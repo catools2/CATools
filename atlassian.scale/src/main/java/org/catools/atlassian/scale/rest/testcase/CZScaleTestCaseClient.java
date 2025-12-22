@@ -18,9 +18,9 @@ import java.util.function.Consumer;
 /**
  * Client for managing test cases in the Scale system.
  *
- * <p>This class provides methods to interact with the Scale system's test case API,
- * including retrieving, creating, and updating test cases. It supports parallel
- * processing for fetching large datasets and handles API requests using RestAssured.</p>
+ * <p>This class provides methods to interact with the Scale system's test case API, including
+ * retrieving, creating, and updating test cases. It supports parallel processing for fetching large
+ * datasets and handles API requests using RestAssured.
  */
 @Slf4j
 public class CZScaleTestCaseClient extends CZScaleRestClient {
@@ -28,7 +28,7 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
   /**
    * Default constructor.
    *
-   * <p>Initializes the client with default configurations.</p>
+   * <p>Initializes the client with default configurations.
    */
   public CZScaleTestCaseClient() {
     super();
@@ -57,22 +57,17 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param onAction a consumer to process each test case
    * @return a collection of test cases
    */
-  public CZScaleTestCases getProjectTestCases(String project,
-                                              String folder,
-                                              String fields,
-                                              int parallelInputCount,
-                                              int parallelOutputCount,
-                                              Consumer<CZScaleTestCase> onAction) {
+  public CZScaleTestCases getProjectTestCases(
+      String project,
+      String folder,
+      String fields,
+      int parallelInputCount,
+      int parallelOutputCount,
+      Consumer<CZScaleTestCase> onAction) {
     String query = String.format("projectKey = \"%s\"", project);
-    if (StringUtils.isNotBlank(folder))
-      query += String.format(" AND folder = \"%s\"", folder);
+    if (StringUtils.isNotBlank(folder)) query += String.format(" AND folder = \"%s\"", folder);
 
-    return getAllTestCases(
-        query,
-        fields,
-        parallelInputCount,
-        parallelOutputCount,
-        onAction);
+    return getAllTestCases(query, fields, parallelInputCount, parallelOutputCount, onAction);
   }
 
   /**
@@ -98,12 +93,13 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param onAction a consumer to process each test case
    * @return a collection of test cases
    */
-  public CZScaleTestCases getAllTestCases(String project,
-                                          String status,
-                                          String fields,
-                                          int parallelInputCount,
-                                          int parallelOutputCount,
-                                          Consumer<CZScaleTestCase> onAction) {
+  public CZScaleTestCases getAllTestCases(
+      String project,
+      String status,
+      String fields,
+      int parallelInputCount,
+      int parallelOutputCount,
+      Consumer<CZScaleTestCase> onAction) {
     return getAllTestCases(
         String.format("projectKey = \"%s\" AND status = \"%s\"", project, status),
         fields,
@@ -121,7 +117,8 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param fields the fields to include in the response
    * @return a collection of test cases
    */
-  public CZScaleTestCases getAllTestCases(String project, String status, String folder, String fields) {
+  public CZScaleTestCases getAllTestCases(
+      String project, String status, String folder, String fields) {
     return getAllTestCases(project, status, fields, folder, 1, 1, null);
   }
 
@@ -137,20 +134,21 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param onAction a consumer to process each test case
    * @return a collection of test cases
    */
-  public CZScaleTestCases getAllTestCases(String project,
-                                          String status,
-                                          String folder,
-                                          String fields,
-                                          int parallelInputCount,
-                                          int parallelOutputCount,
-                                          Consumer<CZScaleTestCase> onAction) {
+  public CZScaleTestCases getAllTestCases(
+      String project,
+      String status,
+      String folder,
+      String fields,
+      int parallelInputCount,
+      int parallelOutputCount,
+      Consumer<CZScaleTestCase> onAction) {
     return getAllTestCases(
-        String.format("projectKey = \"%s\" AND status = \"%s\" AND folder = \"%s\"", project, status, folder),
+        String.format(
+            "projectKey = \"%s\" AND status = \"%s\" AND folder = \"%s\"", project, status, folder),
         fields,
         parallelInputCount,
         parallelOutputCount,
-        onAction
-    );
+        onAction);
   }
 
   /**
@@ -163,17 +161,19 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param onAction a consumer to process each test case
    * @return a collection of test cases
    */
-  public CZScaleTestCases getAllTestCases(String query,
-                                          String fields,
-                                          int parallelInputCount,
-                                          int parallelOutputCount,
-                                          Consumer<CZScaleTestCase> onAction) {
-    Set<CZScaleTestCase> result = readAllInParallel(
-        "Get Test Results",
-        parallelInputCount,
-        parallelOutputCount,
-        (start, max) -> _getAllTestCases(query, fields, start, max),
-        onAction);
+  public CZScaleTestCases getAllTestCases(
+      String query,
+      String fields,
+      int parallelInputCount,
+      int parallelOutputCount,
+      Consumer<CZScaleTestCase> onAction) {
+    Set<CZScaleTestCase> result =
+        readAllInParallel(
+            "Get Test Results",
+            parallelInputCount,
+            parallelOutputCount,
+            (start, max) -> _getAllTestCases(query, fields, start, max),
+            onAction);
     return new CZScaleTestCases(result);
   }
 
@@ -216,9 +216,16 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
    * @param maxResults the maximum number of results to retrieve
    * @return a collection of test cases
    */
-  private CZScaleTestCases _getAllTestCases(String query, String fields, int startAt, int maxResults) {
+  private CZScaleTestCases _getAllTestCases(
+      String query, String fields, int startAt, int maxResults) {
     String homeUri = CZScaleConfigs.Scale.getAtmUri();
-    log.trace("Send Request to {}, query: {}, fields: {}, startAT: {}, maxResult: {}", homeUri, query, fields, startAt, maxResults);
+    log.trace(
+        "Send Request to {}, query: {}, fields: {}, startAT: {}, maxResult: {}",
+        homeUri,
+        query,
+        fields,
+        startAt,
+        maxResults);
     RequestSpecification specification =
         getRequestSpecification(homeUri, "/testcase/search")
             .queryParam("startAt", startAt)
@@ -231,8 +238,7 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
 
     Response response = get(specification);
 
-    if (response.statusCode() != 200)
-      log.warn("Response::\n{}", response.body().asString());
+    if (response.statusCode() != 200) log.warn("Response::\n{}", response.body().asString());
 
     response.then().statusCode(200);
     return response.body().as(CZScaleTestCases.class);
@@ -250,12 +256,12 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
 
     Integer id = _getTestId(testCaseKey);
 
-    RequestSpecification specification = getRequestSpecification(homeUri, "/testcase/" + id + "/history");
+    RequestSpecification specification =
+        getRequestSpecification(homeUri, "/testcase/" + id + "/history");
 
     Response response = get(specification);
 
-    if (response.statusCode() != 200)
-      log.warn("Response::\n{}", response.body().asString());
+    if (response.statusCode() != 200) log.warn("Response::\n{}", response.body().asString());
 
     response.then().statusCode(200);
     return response.body().as(CZScaleChangeHistories.class);
@@ -276,8 +282,7 @@ public class CZScaleTestCaseClient extends CZScaleRestClient {
 
     Response response = get(specification);
 
-    if (response.statusCode() != 200)
-      log.warn("Response::\n{}", response.body().asString());
+    if (response.statusCode() != 200) log.warn("Response::\n{}", response.body().asString());
 
     response.then().statusCode(200);
     return response.jsonPath().get("id[0]");

@@ -13,14 +13,16 @@ import java.util.Objects;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extend cross all other objects:
  *
- * <p>Please Note that we should extend manually other verify and verifier classes for each new added verification here</p>
+ * <p>Please Note that we should extend manually other verify and verifier classes for each new
+ * added verification here
  */
-public interface CBooleanWaitVerifier extends CObjectWaitVerifier<Boolean, CBooleanState>, CBooleanVerifier {
+public interface CBooleanWaitVerifier
+    extends CObjectWaitVerifier<Boolean, CBooleanState>, CBooleanVerifier {
 
   /**
    * Verify that actual value is false
    *
-   * @param verifier      CTest, CVerifier or any other verification queue instance
+   * @param verifier CTest, CVerifier or any other verification queue instance
    * @param waitInSeconds maximum wait time
    */
   default void verifyIsFalse(final CVerificationQueue verifier, final int waitInSeconds) {
@@ -30,43 +32,54 @@ public interface CBooleanWaitVerifier extends CObjectWaitVerifier<Boolean, CBool
   /**
    * Verify that actual value is false
    *
-   * @param verifier      CTest, CVerifier or any other verification queue instance
+   * @param verifier CTest, CVerifier or any other verification queue instance
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsFalse(CVerificationQueue verifier, final int waitInSeconds, final String message, final Object... params) {
+  default void verifyIsFalse(
+      CVerificationQueue verifier,
+      final int waitInSeconds,
+      final String message,
+      final Object... params) {
     verifyIsFalse(verifier, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
    * Verify that actual value is false
    *
-   * @param verifier               CTest, CVerifier or any other verification queue instance
-   * @param waitInSeconds          maximum wait time
+   * @param verifier CTest, CVerifier or any other verification queue instance
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
-  default void verifyIsFalse(CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default void verifyIsFalse(
+      CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyIsFalse(verifier, waitInSeconds, intervalInMilliSeconds, getDefaultMessage("Is False"));
   }
 
   /**
    * Verify that actual value is false
    *
-   * @param verifier               CTest, CVerifier or any other verification queue instance
-   * @param waitInSeconds          maximum wait time
+   * @param verifier CTest, CVerifier or any other verification queue instance
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsFalse(CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, false, Objects::equals, waitInSeconds, intervalInMilliSeconds, message, params);
+  default void verifyIsFalse(
+      CVerificationQueue verifier,
+      final int waitInSeconds,
+      final int intervalInMilliSeconds,
+      final String message,
+      final Object... params) {
+    _verify(
+        verifier, false, Objects::equals, waitInSeconds, intervalInMilliSeconds, message, params);
   }
 
   /**
    * Verify that actual value is true
    *
-   * @param verifier      CTest, CVerifier or any other verification queue instance
+   * @param verifier CTest, CVerifier or any other verification queue instance
    * @param waitInSeconds maximum wait time
    */
   default void verifyIsTrue(final CVerificationQueue verifier, final int waitInSeconds) {
@@ -76,36 +89,47 @@ public interface CBooleanWaitVerifier extends CObjectWaitVerifier<Boolean, CBool
   /**
    * Verify that actual value is true
    *
-   * @param verifier      CTest, CVerifier or any other verification queue instance
+   * @param verifier CTest, CVerifier or any other verification queue instance
    * @param waitInSeconds maximum wait time
-   * @param message       information about the purpose of this verification
-   * @param params        parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsTrue(CVerificationQueue verifier, final int waitInSeconds, final String message, final Object... params) {
+  default void verifyIsTrue(
+      CVerificationQueue verifier,
+      final int waitInSeconds,
+      final String message,
+      final Object... params) {
     verifyIsTrue(verifier, waitInSeconds, getDefaultWaitIntervalInMilliSeconds(), message, params);
   }
 
   /**
    * Verify that actual value is true
    *
-   * @param verifier               CTest, CVerifier or any other verification queue instance
-   * @param waitInSeconds          maximum wait time
+   * @param verifier CTest, CVerifier or any other verification queue instance
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    */
-  default void verifyIsTrue(CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default void verifyIsTrue(
+      CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds) {
     verifyIsTrue(verifier, waitInSeconds, intervalInMilliSeconds, getDefaultMessage("Is True"));
   }
 
   /**
    * Verify that actual value is true
    *
-   * @param verifier               CTest, CVerifier or any other verification queue instance
-   * @param waitInSeconds          maximum wait time
+   * @param verifier CTest, CVerifier or any other verification queue instance
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
-   * @param message                information about the purpose of this verification
-   * @param params                 parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsTrue(CVerificationQueue verifier, final int waitInSeconds, final int intervalInMilliSeconds, final String message, final Object... params) {
-    _verify(verifier, true, Objects::equals, waitInSeconds, intervalInMilliSeconds, message, params);
+  default void verifyIsTrue(
+      CVerificationQueue verifier,
+      final int waitInSeconds,
+      final int intervalInMilliSeconds,
+      final String message,
+      final Object... params) {
+    _verify(
+        verifier, true, Objects::equals, waitInSeconds, intervalInMilliSeconds, message, params);
   }
 }

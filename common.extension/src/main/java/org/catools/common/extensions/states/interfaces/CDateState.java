@@ -25,7 +25,7 @@ public interface CDateState extends CObjectState<Date> {
    * <p>Please note that verification consider as passe if both value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    * @return execution boolean result
    */
   default boolean equalsByFormat(final Date expected, final String format) {
@@ -75,7 +75,7 @@ public interface CDateState extends CObjectState<Date> {
    * <p>Please note that verification consider as passe if expected value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    * @return execution boolean result
    */
   default boolean notEqualsByFormat(final Date expected, final String format) {

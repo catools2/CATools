@@ -25,9 +25,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Utility class for interacting with the Jira REST API.
- * Provides methods for retrieving projects, issues, users, and performing operations such as creating issues,
- * linking issues, transitioning issues, and executing JQL searches.
+ * Utility class for interacting with the Jira REST API. Provides methods for retrieving projects,
+ * issues, users, and performing operations such as creating issues, linking issues, transitioning
+ * issues, and executing JQL searches.
  */
 @Slf4j
 @UtilityClass
@@ -40,12 +40,13 @@ public class CJiraClient {
           IssueRestClient.Expandos.NAMES);
 
   private static final CMemoize<JiraRestClient> restClient =
-      new CMemoize<>(() ->
-          new CAsynchronousJiraRestClientFactory()
-              .createWithBasicHttpAuthentication(
-                  CJiraConfigs.Jira.getHomeUri(),
-                  CJiraConfigs.Jira.getUserName(),
-                  CJiraConfigs.Jira.getPassword()));
+      new CMemoize<>(
+          () ->
+              new CAsynchronousJiraRestClientFactory()
+                  .createWithBasicHttpAuthentication(
+                      CJiraConfigs.Jira.getHomeUri(),
+                      CJiraConfigs.Jira.getUserName(),
+                      CJiraConfigs.Jira.getPassword()));
 
   /**
    * Retrieves all projects from the Jira instance.
@@ -93,7 +94,8 @@ public class CJiraClient {
     return doAction(
         restClient -> {
           log.info("Request all versions for {} project from jira client.", projectName);
-          return new CSet<>(restClient.getProjectClient().getProject(projectName).claim().getVersions());
+          return new CSet<>(
+              restClient.getProjectClient().getProject(projectName).claim().getVersions());
         });
   }
 
@@ -107,7 +109,8 @@ public class CJiraClient {
     return doAction(
         restClient -> {
           log.info("Request all Issue Types for {} project from jira client.", projectName);
-          return new CSet<>(restClient.getProjectClient().getProject(projectName).claim().getIssueTypes());
+          return new CSet<>(
+              restClient.getProjectClient().getProject(projectName).claim().getIssueTypes());
         });
   }
 
@@ -315,7 +318,8 @@ public class CJiraClient {
           SearchResult searchResult =
               CRetry.retry(
                   integer -> {
-                    log.info("Search JQL '{}' with maxResults:{}, startAt:{}, fields:{}, attempt: {}",
+                    log.info(
+                        "Search JQL '{}' with maxResults:{}, startAt:{}, fields:{}, attempt: {}",
                         jql,
                         maxResults,
                         startAt,

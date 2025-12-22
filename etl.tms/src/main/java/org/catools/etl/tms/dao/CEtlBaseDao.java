@@ -1,21 +1,20 @@
 package org.catools.etl.tms.dao;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.collections.interfaces.CCollection;
-import org.catools.common.utils.CRetry;
-import org.catools.etl.tms.configs.CEtlConfigs;
-
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.collections.interfaces.CCollection;
+import org.catools.common.utils.CRetry;
+import org.catools.etl.tms.configs.CEtlConfigs;
 
 @Slf4j
 public class CEtlBaseDao {
@@ -26,19 +25,21 @@ public class CEtlBaseDao {
   }
 
   public static <T> List<T> find(Class<T> entityClass) {
-    return getTransactionResult(session -> {
-      CriteriaBuilder builder = session.getCriteriaBuilder();
-      CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-      criteria.from(entityClass);
-      return session.createQuery(criteria).getResultList();
-    });
+    return getTransactionResult(
+        session -> {
+          CriteriaBuilder builder = session.getCriteriaBuilder();
+          CriteriaQuery<T> criteria = builder.createQuery(entityClass);
+          criteria.from(entityClass);
+          return session.createQuery(criteria).getResultList();
+        });
   }
 
   public static <T> void persist(T record) {
-    doTransaction(session -> {
-      session.persist(record);
-      return true;
-    });
+    doTransaction(
+        session -> {
+          session.persist(record);
+          return true;
+        });
   }
 
   public static <T> void persist(CCollection<T, Collection<T>> records) {
@@ -64,20 +65,31 @@ public class CEtlBaseDao {
     bulk(records, (session, record) -> session.remove(session.merge(record)));
   }
 
-  protected static <T> void bulk(CCollection<T, Collection<T>> records, BiConsumer<EntityManager, T> action) {
+  protected static <T> void bulk(
+      CCollection<T, Collection<T>> records, BiConsumer<EntityManager, T> action) {
     int partitionSize = CEtlConfigs.getEtlBulkTransactionPartitionSize();
-    records.partition(partitionSize).forEach(partition -> {
-      doTransaction(session -> {
-        String currentThreadName = Thread.currentThread().getName();
-        log.trace("thread {} started processing {} records.", currentThreadName, partition.size());
-        for (T record : partition) {
-          action.accept(session, record);
-        }
-        flashAndClear(session);
-        log.trace("thread {} finished processing {} records.", currentThreadName, partition.size());
-        return true;
-      });
-    });
+    records
+        .partition(partitionSize)
+        .forEach(
+            partition -> {
+              doTransaction(
+                  session -> {
+                    String currentThreadName = Thread.currentThread().getName();
+                    log.trace(
+                        "thread {} started processing {} records.",
+                        currentThreadName,
+                        partition.size());
+                    for (T record : partition) {
+                      action.accept(session, record);
+                    }
+                    flashAndClear(session);
+                    log.trace(
+                        "thread {} finished processing {} records.",
+                        currentThreadName,
+                        partition.size());
+                    return true;
+                  });
+            });
   }
 
   protected static <T> T getTransactionResult(Function<EntityManager, T> action) {
@@ -97,7 +109,7 @@ public class CEtlBaseDao {
     }
   }
 
-  protected synchronized static <T> T doTransaction(Function<EntityManager, T> action) {
+  protected static synchronized <T> T doTransaction(Function<EntityManager, T> action) {
     EntityManager em = getEntityManager();
     EntityTransaction tx = null;
     try {
@@ -145,10 +157,14 @@ public class CEtlBaseDao {
 
   protected static synchronized EntityManagerFactory getEntityManagerFactory() {
     if (entityManagerFactory == null) {
-      entityManagerFactory = CRetry.retry(idx -> {
-        log.debug("Attempt {} to connect to create etl entity manager", idx + 1);
-        return Persistence.createEntityManagerFactory("CEtlPersistence");
-      }, 10, 10);
+      entityManagerFactory =
+          CRetry.retry(
+              idx -> {
+                log.debug("Attempt {} to connect to create etl entity manager", idx + 1);
+                return Persistence.createEntityManagerFactory("CEtlTmsPersistence");
+              },
+              10,
+              10);
     }
     return entityManagerFactory;
   }

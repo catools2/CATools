@@ -1,50 +1,35 @@
 package org.catools.mcp.server;
 
 import jakarta.servlet.http.HttpServlet;
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.concurrent.CNamedThread;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.server.Server;
 
-import java.time.Duration;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-/**
- * Embedded Jetty HTTP server implementation.
- */
+/** Embedded Jetty HTTP server implementation. */
 @Slf4j
 public class CEmbeddedJettyServer {
 
-  /**
-   * Default servlet context path.
-   */
+  /** Default servlet context path. */
   private static final String DEFAULT_SERVLET_CONTEXT_PATH = "/";
 
-  /**
-   * Default servlet path.
-   */
+  /** Default servlet path. */
   private static final String DEFAULT_SERVLET_PATH = "/*";
 
-  /**
-   * Thread pool for Jetty HTTP server.
-   */
+  /** Thread pool for Jetty HTTP server. */
   private final ExecutorService threadPool;
 
-  /**
-   * Servlet to be registered in Jetty HTTP server.
-   */
+  /** Servlet to be registered in Jetty HTTP server. */
   private HttpServlet servlet;
 
-  /**
-   * Port to bind Jetty HTTP server.
-   */
+  /** Port to bind Jetty HTTP server. */
   private int port;
 
-  /**
-   * Constructor to initialize Jetty HTTP server with a single thread.
-   */
+  /** Constructor to initialize Jetty HTTP server with a single thread. */
   public CEmbeddedJettyServer() {
     this.threadPool = Executors.newSingleThreadExecutor(new CNamedThread("mcp-http-server"));
   }
@@ -71,9 +56,7 @@ public class CEmbeddedJettyServer {
     return this;
   }
 
-  /**
-   * Start Jetty HTTP server and bind it to the specified port.
-   */
+  /** Start Jetty HTTP server and bind it to the specified port. */
   public void start() {
     ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
     handler.setContextPath(DEFAULT_SERVLET_CONTEXT_PATH);

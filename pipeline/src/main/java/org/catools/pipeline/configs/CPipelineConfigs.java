@@ -1,5 +1,8 @@
 package org.catools.pipeline.configs;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -12,10 +15,6 @@ import org.catools.pipeline.model.CPipelineEnvironment;
 import org.catools.pipeline.model.CPipelineMetaData;
 import org.catools.pipeline.model.CPipelineProject;
 import org.catools.pipeline.model.CPipelineUser;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @UtilityClass
 public class CPipelineConfigs {
@@ -39,15 +38,18 @@ public class CPipelineConfigs {
 
   public static List<CPipelineMetaData> getPipelineMetaData() {
     List<CPipelineMetaData> metaData = new ArrayList<>();
-    for (Object object : CHocon.get(Configs.CATOOLS_PIPELINE_METADATA).asObjects(new ArrayList<>())) {
+    for (Object object :
+        CHocon.get(Configs.CATOOLS_PIPELINE_METADATA).asObjects(new ArrayList<>())) {
       Map<Object, Object> map = (Map<Object, Object>) object;
-      metaData.add(new CPipelineMetaData(String.valueOf(map.get("name")), String.valueOf(map.get("value"))));
+      metaData.add(
+          new CPipelineMetaData(String.valueOf(map.get("name")), String.valueOf(map.get("value"))));
     }
     return metaData;
   }
 
   public static CPipelineMetaData getPipelineMetaData(String metadataName) {
-    return CList.of(getPipelineMetaData()).getFirstOrNull(m -> StringUtils.equalsAnyIgnoreCase(m.getName(), metadataName));
+    return CList.of(getPipelineMetaData())
+        .getFirstOrNull(m -> StringUtils.equalsAnyIgnoreCase(m.getName(), metadataName));
   }
 
   public static String getPipelineMetaData(String metadataName, String defaultValue) {
@@ -84,7 +86,8 @@ public class CPipelineConfigs {
   }
 
   public static String getExecutorName() {
-    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME) && StringUtils.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
+    if (CHocon.has(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME)
+        && StringUtils.isNotBlank(CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME))) {
       return CHocon.asString(Configs.CATOOLS_PIPELINE_EXECUTOR_NAME);
     }
 

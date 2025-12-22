@@ -1,5 +1,6 @@
 package org.catools.common.tests.utils;
 
+import java.util.stream.Stream;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
@@ -12,8 +13,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CJsonUtil;
 import org.testng.annotations.Test;
-
-import java.util.stream.Stream;
 
 @Test(singleThreaded = true, priority = 100)
 public class CJsonUtilTest extends CBaseUnitTest {
@@ -148,15 +147,12 @@ public class CJsonUtilTest extends CBaseUnitTest {
       retryAnalyzer = CTestRetryAnalyzer.class,
       expectedExceptions = CJsonGenerationException.class)
   public void testWriteToFile_BadFormat() {
-    CFile file =
-        CFile.fromTmp(
-            RandomStringUtils.randomAlphabetic(10) + '\u0000' + ".file");
+    CFile file = CFile.fromTmp(RandomStringUtils.randomAlphabetic(10) + '\u0000' + ".file");
     CJsonUtil.write(file, badJsonInfo);
   }
 
   public static class ASet extends CList<A> {
-    public ASet() {
-    }
+    public ASet() {}
 
     public ASet(A... c) {
       super(c);
@@ -176,8 +172,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
     private B a2;
     private int a3;
 
-    public A() {
-    }
+    public A() {}
 
     public A(String a1, B a2, int a3) {
       this.a1 = a1;
@@ -218,8 +213,7 @@ public class CJsonUtilTest extends CBaseUnitTest {
     private CSet<String> b2;
     private int b3;
 
-    public B() {
-    }
+    public B() {}
 
     public B(CList<String> b1, CSet<String> b2, int b3) {
       this.b1 = b1;

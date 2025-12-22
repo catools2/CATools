@@ -34,32 +34,35 @@ public class CEtlTest {
 
     int max = 5;
     while (max-- > 0) {
-      CEtlItem item = new CEtlItem(
-          "T-1" + max,
-          "Item " + max,
-          CDate.now().addMonths(-2),
-          CDate.now().addMonths(-1),
-          project,
-          new CEtlItemType("Test"),
-          new CEtlVersions(version1, version2),
-          new CEtlStatus("Start"),
-          new CEtlPriority("Highest"));
+      CEtlItem item =
+          new CEtlItem(
+              "T-1" + max,
+              "Item " + max,
+              CDate.now().addMonths(-2),
+              CDate.now().addMonths(-1),
+              project,
+              new CEtlItemType("Test"),
+              new CEtlVersions(version1, version2),
+              new CEtlStatus("Start"),
+              new CEtlPriority("Highest"));
 
       item.addItemMetaData(new CEtlItemMetaData("K1", "V1"));
-      item.addStatusTransition(new CEtlItemStatusTransition(CDate.now().addMonths(-1), new CEtlStatus("Open"), new CEtlStatus("New"), item));
+      item.addStatusTransition(
+          new CEtlItemStatusTransition(
+              CDate.now().addMonths(-1), new CEtlStatus("Open"), new CEtlStatus("New"), item));
 
       CEtlUser user = new CEtlUser("akeshmiri" + max);
       int max2 = 2;
       while (max2-- > 0) {
-        CEtlExecutionDao.mergeExecution(new CEtlExecution(
-            max + CStringUtil.EMPTY + max2,
-            item,
-            cycle,
-            CDate.now().addMonths(-2),
-            CDate.now().addMonths(-1),
-            user,
-            new CEtlExecutionStatus("Passed")
-        ));
+        CEtlExecutionDao.mergeExecution(
+            new CEtlExecution(
+                max + CStringUtil.EMPTY + max2,
+                item,
+                cycle,
+                CDate.now().addMonths(-2),
+                CDate.now().addMonths(-1),
+                user,
+                new CEtlExecutionStatus("Passed")));
       }
 
       CEtlExecutionDao.getExecutionsByCycleId(cycle.getId()).verifyIsNotEmpty();

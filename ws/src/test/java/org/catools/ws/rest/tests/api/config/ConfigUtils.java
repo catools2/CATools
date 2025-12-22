@@ -4,9 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import lombok.experimental.UtilityClass;
 
-/**
- * A utility class for configuration related method like load configuration and read values
- */
+/** A utility class for configuration related method like load configuration and read values */
 @UtilityClass
 public class ConfigUtils {
   private static Config CONFIG = ConfigFactory.load();

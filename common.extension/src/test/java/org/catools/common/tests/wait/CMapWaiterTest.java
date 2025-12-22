@@ -1,5 +1,6 @@
 package org.catools.common.tests.wait;
 
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.extensions.types.interfaces.CDynamicMapExtension;
@@ -8,8 +9,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
-
-import java.util.Map;
 
 public class CMapWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -21,7 +20,8 @@ public class CMapWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsAll() {
-    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitContainsAll(toMap(1, 3)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(toMap(1, 2, 3)).waitContainsAll(toMap(1, 3)), "%s#%s", getParams());
     CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitContainsAll(toMap()), "%s#%s", getParams());
   }
 
@@ -115,13 +115,16 @@ public class CMapWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEmptyOrContainsWithEntry() {
-    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("1", 1)), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter(toMap()).waitEmptyOrContains(Map.entry("5", 5)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("1", 1)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(toMap()).waitEmptyOrContains(Map.entry("5", 5)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrContainsWithEntry_N() {
-    CVerify.Bool.isTrue(toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("6", 6)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(toMap(1, 2, 3)).waitEmptyOrContains(Map.entry("6", 6)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

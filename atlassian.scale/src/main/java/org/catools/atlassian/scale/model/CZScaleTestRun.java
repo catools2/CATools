@@ -15,10 +15,9 @@ import org.catools.common.date.CDate;
 /**
  * Represents a test run in the Scale system.
  *
- * <p>This class models the details of a test run, including its metadata,
- * associated project and issue information, planned dates, and execution details.
- * It supports JSON serialization/deserialization and uses custom serializers/deserializers
- * for date handling.</p>
+ * <p>This class models the details of a test run, including its metadata, associated project and
+ * issue information, planned dates, and execution details. It supports JSON
+ * serialization/deserialization and uses custom serializers/deserializers for date handling.
  */
 @Data
 @NoArgsConstructor
@@ -27,50 +26,34 @@ import org.catools.common.date.CDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CZScaleTestRun {
 
-  /**
-   * The unique key of the test run.
-   */
+  /** The unique key of the test run. */
   private String key;
 
-  /**
-   * The name of the test run.
-   */
+  /** The name of the test run. */
   private String name;
 
-  /**
-   * The key of the issue associated with the test run.
-   */
+  /** The key of the issue associated with the test run. */
   private String issueKey;
 
-  /**
-   * A description of the test run.
-   */
+  /** A description of the test run. */
   private String description;
 
-  /**
-   * The version associated with the test run.
-   */
+  /** The version associated with the test run. */
   private String version;
 
-  /**
-   * The key of the project associated with the test run.
-   */
+  /** The key of the project associated with the test run. */
   private String projectKey;
 
-  /**
-   * The owner of the test run.
-   */
+  /** The owner of the test run. */
   private String owner;
 
-  /**
-   * The user who last updated the test run.
-   */
+  /** The user who last updated the test run. */
   private String updatedBy;
 
   /**
    * The date and time when the test run was last updated.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -79,31 +62,25 @@ public class CZScaleTestRun {
   /**
    * The date and time when the test run was created.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
   private CDate createdOn;
 
-  /**
-   * The user who created the test run.
-   */
+  /** The user who created the test run. */
   private String createdBy;
 
-  /**
-   * The folder in which the test run is organized.
-   */
+  /** The folder in which the test run is organized. */
   private String folder;
 
-  /**
-   * The status of the test run.
-   */
+  /** The status of the test run. */
   private String status;
 
   /**
    * The planned end date and time for the test run.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -112,41 +89,31 @@ public class CZScaleTestRun {
   /**
    * The planned start date and time for the test run.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
   private CDate plannedStartDate;
 
-  /**
-   * The number of issues associated with the test run.
-   */
+  /** The number of issues associated with the test run. */
   private Integer issueCount;
 
-  /**
-   * The total execution time for the test run, in seconds.
-   */
+  /** The total execution time for the test run, in seconds. */
   private Integer executionTime;
 
-  /**
-   * The estimated time for the test run, in seconds.
-   */
+  /** The estimated time for the test run, in seconds. */
   private Integer estimatedTime;
 
-  /**
-   * The number of test cases in the test run.
-   */
+  /** The number of test cases in the test run. */
   private Integer testCaseCount;
 
   /**
    * A summary of the execution results for the test run.
    *
-   * <p>Maps execution statuses to their respective counts.</p>
+   * <p>Maps execution statuses to their respective counts.
    */
   private CHashMap<String, Integer> executionSummary;
 
-  /**
-   * The collection of test executions associated with the test run.
-   */
+  /** The collection of test executions associated with the test run. */
   private CZScaleTestExecutions items;
 }

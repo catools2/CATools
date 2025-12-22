@@ -19,6 +19,5 @@ public class CObjectUtilTest extends CBaseUnitTest {
     CVerify.Object.notEquals(a, CObjectUtil.clone(a), "Objects are equal.");
   }
 
-  public static class A {
-  }
+  public static class A {}
 }

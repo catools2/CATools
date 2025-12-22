@@ -2,95 +2,60 @@ package org.catools.mcp.enums;
 
 import lombok.Getter;
 
-/**
- * This enum is used to map Java types to JSON schema data types.
- */
+/** This enum is used to map Java types to JSON schema data types. */
 public enum CJavaTypeToJsonSchemaMapper {
 
-  /**
-   * Java {@code String} is mapped to JSON schema data type {@code string}.
-   */
+  /** Java {@code String} is mapped to JSON schema data type {@code string}. */
   STRING(String.class, "string"),
 
-  /**
-   * Java {@code Number} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code Number} is mapped to JSON schema data type {@code number}. */
   NUMBER(Number.class, "number"),
 
-  /**
-   * Java {@code long} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code long} is mapped to JSON schema data type {@code number}. */
   LONG(long.class, "number"),
 
-  /**
-   * Java {@code Long} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code Long} is mapped to JSON schema data type {@code number}. */
   LONG_CLASS(Long.class, "number"),
 
-  /**
-   * Java {@code float} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code float} is mapped to JSON schema data type {@code number}. */
   FLOAT(float.class, "number"),
 
-  /**
-   * Java {@code Float} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code Float} is mapped to JSON schema data type {@code number}. */
   FLOAT_CLASS(Float.class, "number"),
 
-  /**
-   * Java {@code double} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code double} is mapped to JSON schema data type {@code number}. */
   DOUBLE(double.class, "number"),
 
-  /**
-   * Java {@code Double} is mapped to JSON schema data type {@code number}.
-   */
+  /** Java {@code Double} is mapped to JSON schema data type {@code number}. */
   DOUBLE_CLASS(Double.class, "number"),
 
-  /**
-   * Java {@code int} is mapped to JSON schema data type {@code integer}.
-   */
+  /** Java {@code int} is mapped to JSON schema data type {@code integer}. */
   INT(int.class, "integer"),
 
-  /**
-   * Java {@code Integer} is mapped to JSON schema data type {@code integer}.
-   */
+  /** Java {@code Integer} is mapped to JSON schema data type {@code integer}. */
   INTEGER(Integer.class, "integer"),
 
-  /**
-   * Java {@code boolean} is mapped to JSON schema data type {@code boolean}.
-   */
+  /** Java {@code boolean} is mapped to JSON schema data type {@code boolean}. */
   BOOLEAN(boolean.class, "boolean"),
 
-  /**
-   * Java {@code Boolean} is mapped to JSON schema data type {@code boolean}.
-   */
+  /** Java {@code Boolean} is mapped to JSON schema data type {@code boolean}. */
   BOOLEAN_CLASS(Boolean.class, "boolean"),
 
-  /**
-   * Java {@code Object} is mapped to JSON schema data type {@code object}.
-   */
+  /** Java {@code Object} is mapped to JSON schema data type {@code object}. */
   OBJECT(Object.class, "object"),
   ;
 
-  /**
-   * The Java class that is mapped to the JSON schema data type.
-   */
+  /** The Java class that is mapped to the JSON schema data type. */
   private final Class<?> javaType;
 
-  /**
-   * The JSON schema data type.
-   * -- GETTER --
-   * Returns the JSON schema data type.
-   */
-  @Getter
-  private final String jsonSchemaType;
+  /** The JSON schema data type. -- GETTER -- Returns the JSON schema data type. */
+  @Getter private final String jsonSchemaType;
 
   /**
    * Creates a new instance of {@code JsonSchemaDataType} with the specified Java class and JSON
    * schema data type.
    *
-   * @param javaType       the Java class that is mapped to the JSON schema data type
+   * @param javaType the Java class that is mapped to the JSON schema data type
    * @param jsonSchemaType the JSON schema data type
    */
   CJavaTypeToJsonSchemaMapper(Class<?> javaType, String jsonSchemaType) {

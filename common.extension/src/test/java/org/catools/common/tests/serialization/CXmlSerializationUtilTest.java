@@ -1,5 +1,9 @@
 package org.catools.common.tests.serialization;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.catools.common.configs.CPathConfigs;
 import org.catools.common.exception.CResourceNotFoundException;
 import org.catools.common.exception.CRuntimeException;
@@ -9,11 +13,6 @@ import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CJsonUtil;
 import org.testng.annotations.Test;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.File;
-import java.io.Serializable;
-import java.util.Objects;
 
 public class CXmlSerializationUtilTest extends CBaseUnitTest {
 
@@ -26,8 +25,7 @@ public class CXmlSerializationUtilTest extends CBaseUnitTest {
     CVerify.Object.equals(CXmlSerializationUtil.read(file, A.class), a, "Deserialization worked.");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class,
-      expectedExceptions = CRuntimeException.class)
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CRuntimeException.class)
   public void testWrite_N() {
     File file = CPathConfigs.fromTmp("CXmlSerializationUtilTest");
     CXmlSerializationUtil.write(null, file);
@@ -37,17 +35,23 @@ public class CXmlSerializationUtilTest extends CBaseUnitTest {
   public void testRead() {
     A a = new A();
     a.field1 = "FIELD1";
-    CVerify.Object.equals(CXmlSerializationUtil.read("testData/CResourceTest/A.xml", CBaseUnitTest.class, A.class), a, "Deserialization worked.");
+    CVerify.Object.equals(
+        CXmlSerializationUtil.read("testData/CResourceTest/A.xml", CBaseUnitTest.class, A.class),
+        a,
+        "Deserialization worked.");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class,
+  @Test(
+      retryAnalyzer = CTestRetryAnalyzer.class,
       expectedExceptions = CResourceNotFoundException.class)
   public void testRead_N1() {
-    CVerify.Object.isNull(CXmlSerializationUtil.read("testData/CResourceTest/BaD_A.xml", CBaseUnitTest.class, A.class), "Deserialization worked.");
+    CVerify.Object.isNull(
+        CXmlSerializationUtil.read(
+            "testData/CResourceTest/BaD_A.xml", CBaseUnitTest.class, A.class),
+        "Deserialization worked.");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class,
-      expectedExceptions = CRuntimeException.class)
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CRuntimeException.class)
   public void testRead_N() {
     CXmlSerializationUtil.read((File) null, A.class);
   }
@@ -56,11 +60,11 @@ public class CXmlSerializationUtilTest extends CBaseUnitTest {
   public void testToXml() {
     A a = new A();
     a.field1 = "FIELD1";
-    CVerify.String.equals(CXmlSerializationUtil.toXml(a), "<A><field1>FIELD1</field1></A>", "To Xml worked.");
+    CVerify.String.equals(
+        CXmlSerializationUtil.toXml(a), "<A><field1>FIELD1</field1></A>", "To Xml worked.");
   }
 
-  @Test(retryAnalyzer = CTestRetryAnalyzer.class,
-      expectedExceptions = CRuntimeException.class)
+  @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = CRuntimeException.class)
   public void testToXml_N() {
     CXmlSerializationUtil.toXml(null);
   }

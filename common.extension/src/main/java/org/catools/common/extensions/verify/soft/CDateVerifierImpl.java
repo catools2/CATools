@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.soft;
 
+import java.util.Date;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.hard.CDateVerification;
 import org.catools.common.extensions.verify.interfaces.base.CDateVerify;
-
-import java.util.Date;
 
 /**
  * Date verification class contains all verification method which is related to Date

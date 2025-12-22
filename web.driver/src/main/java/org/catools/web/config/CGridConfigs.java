@@ -1,5 +1,9 @@
 package org.catools.web.config;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.logging.Level;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -7,33 +11,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.util.logging.Level;
-
 /**
  * Utility class for managing Selenium Grid configuration settings.
- * <p>
- * This class provides static methods to access various configuration parameters
- * for Selenium Grid setup, including remote driver settings, hub connection details,
- * and various grid-specific options.
- * </p>
- * 
+ *
+ * <p>This class provides static methods to access various configuration parameters for Selenium
+ * Grid setup, including remote driver settings, hub connection details, and various grid-specific
+ * options.
+ *
  * <h3>Configuration Examples:</h3>
+ *
  * <pre>{@code
  * // Check if remote driver should be used
  * if (CGridConfigs.isUseRemoteDriver()) {
  *     URL hubUrl = CGridConfigs.getHubURL();
  *     // Initialize remote Page with hub URL
  * }
- * 
+ *
  * // Get CDP URL for debugging
  * String sessionId = "abc123-def456";
  * String cdpUrl = CGridConfigs.getCdpURL(sessionId);
  * // Use CDP URL for Chrome DevTools Protocol connection
  * }</pre>
- * 
+ *
  * @author CATools Team
  * @since 1.0
  */
@@ -43,15 +42,13 @@ public class CGridConfigs {
 
   /**
    * Determines whether remote Page should be used instead of local Page.
-   * <p>
-   * This setting controls whether tests should connect to a remote Selenium Grid
-   * or use local browser drivers.
-   * </p>
-   * 
+   *
+   * <p>This setting controls whether tests should connect to a remote Selenium Grid or use local
+   * browser drivers.
+   *
    * @return {@code true} if remote driver should be used, {@code false} for local driver
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * if (CGridConfigs.isUseRemoteDriver()) {
    *     // Configure Page
    *     Page driver = new Page(CGridConfigs.getHubURL(), capabilities);
@@ -67,15 +64,13 @@ public class CGridConfigs {
 
   /**
    * Determines whether to use TestContainers for browser automation.
-   * <p>
-   * TestContainers allows running browser instances in Docker containers,
-   * providing isolated and reproducible test environments.
-   * </p>
-   * 
+   *
+   * <p>TestContainers allows running browser instances in Docker containers, providing isolated and
+   * reproducible test environments.
+   *
    * @return {@code true} if TestContainers should be used, {@code false} otherwise
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * if (CGridConfigs.isUseTestContainer()) {
    *     // Set up TestContainers with Selenium
    *     BrowserWebDriverContainer<?> container = new BrowserWebDriverContainer<>()
@@ -90,23 +85,20 @@ public class CGridConfigs {
 
   /**
    * Constructs the Chrome DevTools Protocol (CDP) WebSocket URL for a given session.
-   * <p>
-   * The CDP URL allows direct communication with Chrome DevTools for advanced
-   * browser automation, network monitoring, and debugging capabilities.
-   * The protocol scheme is automatically determined based on the grid hub schema
-   * (https → wss, http → ws).
-   * </p>
-   * 
+   *
+   * <p>The CDP URL allows direct communication with Chrome DevTools for advanced browser
+   * automation, network monitoring, and debugging capabilities. The protocol scheme is
+   * automatically determined based on the grid hub schema (https → wss, http → ws).
+   *
    * @param sessionId the Page session ID to connect to
    * @return the CDP WebSocket URL if remote driver is enabled, {@code null} otherwise
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // After creating a Page session
    * Page driver = new Page(hubUrl, capabilities);
    * String sessionId = driver.getSessionId().toString();
    * String cdpUrl = CGridConfigs.getCdpURL(sessionId);
-   * 
+   *
    * // Use CDP URL with Chrome DevTools
    * if (cdpUrl != null) {
    *     // Example: "wss://grid.example.com:4444/session/abc123/se/cdp"
@@ -117,24 +109,22 @@ public class CGridConfigs {
   public static String getCdpURL(String sessionId) {
     if (isUseRemoteDriver()) {
       String schema = "https".equals(getGridHubSchema()) ? "wss" : "ws";
-      return "%s://%s:%s/session/%s/se/cdp".formatted(schema, getGridHubIP(), getGridHubPort(), sessionId);
+      return "%s://%s:%s/session/%s/se/cdp"
+          .formatted(schema, getGridHubIP(), getGridHubPort(), sessionId);
     }
     return null;
   }
 
   /**
    * Constructs the Selenium Grid Hub URL for Page connections.
-   * <p>
-   * This URL is used to initialize Page instances that connect
-   * to the Selenium Grid hub. The URL is constructed using the configured
-   * schema, IP address, and port.
-   * </p>
-   * 
+   *
+   * <p>This URL is used to initialize Page instances that connect to the Selenium Grid hub. The URL
+   * is constructed using the configured schema, IP address, and port.
+   *
    * @return the complete Hub URL if remote driver is enabled, {@code null} otherwise
    * @throws RuntimeException if the constructed URL is malformed
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * URL hubUrl = CGridConfigs.getHubURL();
    * if (hubUrl != null) {
    *     // Example URL: "http://selenium-hub:4444/wd/hub"
@@ -146,7 +136,9 @@ public class CGridConfigs {
   public static URL getHubURL() {
     if (isUseRemoteDriver()) {
       try {
-        return URI.create("%s://%s:%s/wd/hub".formatted(getGridHubSchema(), getGridHubIP(), getGridHubPort())).toURL();
+        return URI.create(
+                "%s://%s:%s/wd/hub".formatted(getGridHubSchema(), getGridHubIP(), getGridHubPort()))
+            .toURL();
       } catch (MalformedURLException e) {
         throw new RuntimeException(e);
       }
@@ -156,18 +148,16 @@ public class CGridConfigs {
 
   /**
    * Retrieves the protocol schema for connecting to the Selenium Grid hub.
-   * <p>
-   * Common values are "http" for standard connections or "https" for
-   * secure connections. This affects both the hub URL and CDP URL generation.
-   * </p>
-   * 
+   *
+   * <p>Common values are "http" for standard connections or "https" for secure connections. This
+   * affects both the hub URL and CDP URL generation.
+   *
    * @return the protocol schema (e.g., "http", "https")
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * String schema = CGridConfigs.getGridHubSchema();
    * // Typical values: "http" or "https"
-   * 
+   *
    * // Used internally to construct URLs like:
    * // "https://grid.example.com:4444/wd/hub"
    * }</pre>
@@ -178,15 +168,13 @@ public class CGridConfigs {
 
   /**
    * Retrieves the IP address or hostname of the Selenium Grid hub.
-   * <p>
-   * This can be a numeric IP address (e.g., "192.168.1.100") or a hostname
-   * (e.g., "selenium-hub", "grid.example.com").
-   * </p>
-   * 
+   *
+   * <p>This can be a numeric IP address (e.g., "192.168.1.100") or a hostname (e.g.,
+   * "selenium-hub", "grid.example.com").
+   *
    * @return the IP address or hostname of the grid hub
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * String hubIP = CGridConfigs.getGridHubIP();
    * // Examples:
    * // "localhost" - for local development
@@ -201,21 +189,19 @@ public class CGridConfigs {
 
   /**
    * Retrieves the port number for connecting to the Selenium Grid hub.
-   * <p>
-   * The default port for Selenium Grid hub is typically 4444, but this
-   * can be customized based on your infrastructure setup.
-   * </p>
-   * 
+   *
+   * <p>The default port for Selenium Grid hub is typically 4444, but this can be customized based
+   * on your infrastructure setup.
+   *
    * @return the port number of the grid hub
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * int hubPort = CGridConfigs.getGridHubPort();
    * // Common values:
    * // 4444 - standard Selenium Grid port
    * // 4443 - alternative port for SSL
    * // 8080 - custom port configuration
-   * 
+   *
    * // Used to construct full URLs like:
    * // "http://selenium-hub:4444/wd/hub"
    * }</pre>
@@ -226,16 +212,14 @@ public class CGridConfigs {
 
   /**
    * Determines whether hub folder mode is enabled for the Selenium Grid.
-   * <p>
-   * Hub folder mode affects how the grid organizes and manages browser
-   * sessions and associated resources. When enabled, the hub may create
-   * separate folders for different sessions or test runs.
-   * </p>
-   * 
+   *
+   * <p>Hub folder mode affects how the grid organizes and manages browser sessions and associated
+   * resources. When enabled, the hub may create separate folders for different sessions or test
+   * runs.
+   *
    * @return {@code true} if hub folder mode is enabled, {@code false} otherwise
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * if (CGridConfigs.isUseHubFolderModeIsOn()) {
    *     // Configure session with folder organization
    *     // Grid will manage files in organized folder structure
@@ -249,23 +233,20 @@ public class CGridConfigs {
 
   /**
    * Determines whether local file detector should be enabled for remote Page.
-   * <p>
-   * The local file detector allows Page to handle file uploads
-   * by automatically detecting local file paths and transferring files
-   * to the remote browser session. This is essential for file upload
-   * functionality in remote grid environments.
-   * </p>
-   * 
+   *
+   * <p>The local file detector allows Page to handle file uploads by automatically detecting local
+   * file paths and transferring files to the remote browser session. This is essential for file
+   * upload functionality in remote grid environments.
+   *
    * @return {@code true} if local file detector should be enabled, {@code false} otherwise
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Page driver = new Page(hubUrl, capabilities);
-   * 
+   *
    * if (CGridConfigs.isUseLocalFileDetectorInOn()) {
    *     // Enable file upload capability for remote sessions
    *     driver.setFileDetector(new LocalFileDetector());
-   *     
+   *
    *     // Now file uploads will work:
    *     WebElement uploadElement = driver.$(By.id("file-upload"));
    *     uploadElement.sendKeys("/path/to/local/file.txt");
@@ -278,29 +259,26 @@ public class CGridConfigs {
 
   /**
    * Retrieves the logging level for Selenium Grid operations.
-   * <p>
-   * This controls the verbosity of logging output from Page and
-   * grid-related operations. The level affects both local and remote
-   * driver logging behavior.
-   * </p>
-   * 
+   *
+   * <p>This controls the verbosity of logging output from Page and grid-related operations. The
+   * level affects both local and remote driver logging behavior.
+   *
    * @return the configured {@link Level} for logging (e.g., INFO, DEBUG, WARNING)
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * Level logLevel = CGridConfigs.getLogLevel();
-   * 
+   *
    * // Apply to Page logging
    * LoggingPreferences loggingPrefs = new LoggingPreferences();
    * loggingPrefs.enable(LogType.BROWSER, logLevel);
    * loggingPrefs.enable(LogType.DRIVER, logLevel);
-   * 
+   *
    * ChromeOptions options = new ChromeOptions();
    * options.setCapability(CapabilityType.LOGGING_PREFS, loggingPrefs);
-   * 
+   *
    * // Common levels:
    * // Level.INFO - standard information logging
-   * // Level.DEBUG - detailed debugging information  
+   * // Level.DEBUG - detailed debugging information
    * // Level.WARNING - only warnings and errors
    * // Level.SEVERE - only severe errors
    * }</pre>

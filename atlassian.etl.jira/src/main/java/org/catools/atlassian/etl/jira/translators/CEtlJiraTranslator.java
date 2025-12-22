@@ -22,11 +22,11 @@ import java.util.Objects;
  * Translator class for converting Jira issues into {@link CEtlItem} objects.
  *
  * <p>Example:
+ *
  * <pre>{@code
  * Issue issue = ...; // fetched from Jira REST client
  * CEtlItem item = CEtlJiraTranslator.translateIssue(issue);
  * }</pre>
- * </p>
  */
 @Slf4j
 @UtilityClass
@@ -36,11 +36,11 @@ public class CEtlJiraTranslator {
    * Translates a set of Jira issues into a {@link CEtlItems} collection.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CSet<Issue> issues = ...;
    * CEtlItems items = CEtlJiraTranslator.translateIssues(issues);
    * }</pre>
-   * </p>
    *
    * @param issues the set of Jira issues to be translated
    * @return a CEtlItems collection containing the translated items
@@ -53,12 +53,12 @@ public class CEtlJiraTranslator {
    * Translates a single Jira issue into a {@link CEtlItem} object.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * Issue issue = ...;
    * CEtlItem item = CEtlJiraTranslator.translateIssue(issue);
    * System.out.println(item.getId());
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue to be translated
    * @return the translated CEtlItem object
@@ -100,11 +100,11 @@ public class CEtlJiraTranslator {
    * Adds status transitions to the {@link CEtlItem} based on the changelog of the Jira issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * Issue issue = ...; CEtlItem item = new CEtlItem();
    * CEtlJiraTranslator.addStatusTransition(issue, item);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the changelog
    * @param item the CEtlItem to which status transitions will be added
@@ -116,8 +116,9 @@ public class CEtlJiraTranslator {
           continue;
         }
 
-        CList<ChangelogItem> transitions = new CSet<>(changelog.getItems())
-            .getAll(f -> f != null && StringUtils.equalsIgnoreCase(f.getField(), "status"));
+        CList<ChangelogItem> transitions =
+            new CSet<>(changelog.getItems())
+                .getAll(f -> f != null && StringUtils.equalsIgnoreCase(f.getField(), "status"));
 
         for (ChangelogItem statusChangelog : transitions) {
           if (statusChangelog == null) continue;
@@ -135,11 +136,11 @@ public class CEtlJiraTranslator {
    * Adds metadata to the {@link CEtlItem} based on various fields of the Jira issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * Issue issue = ...; CEtlItem item = new CEtlItem();
    * CEtlJiraTranslator.addIssueMetaData(issue, item);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the fields
    * @param item the CEtlItem to which metadata will be added
@@ -162,7 +163,8 @@ public class CEtlJiraTranslator {
 
     if (issue.getFields() != null) {
       List<String> fieldsToRead = CEtlJiraConfigs.JiraSync.getFieldsToRead();
-      CList<IssueField> noneNull = new CSet<>(issue.getFields()).getAll(CEtlJiraTranslator::valueIsNotNull);
+      CList<IssueField> noneNull =
+          new CSet<>(issue.getFields()).getAll(CEtlJiraTranslator::valueIsNotNull);
       for (IssueField field : noneNull) {
         CHashMap<String, String> fieldsToSync = CEtlJiraParser.parserJiraField(field);
 
@@ -179,30 +181,31 @@ public class CEtlJiraTranslator {
    * Translates a Jira {@link Version} into a {@link CEtlVersion} object.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * Version v = ...;
    * CEtlVersion cv = CEtlJiraTranslator.translateVersion(project, v);
    * }</pre>
-   * </p>
    *
    * @param project the CEtlProject associated with the version
    * @param version the Jira version to be translated
    * @return the translated CEtlVersion object
    */
   public static CEtlVersion translateVersion(CEtlProject project, Version version) {
-    return version == null || StringUtils.isBlank(version.getName()) ?
-        CEtlVersion.UNSET :
-        CEtlCacheManager.readVersion(new CEtlVersion(version.getName(), project));
+    return version == null || StringUtils.isBlank(version.getName())
+        ? CEtlVersion.UNSET
+        : CEtlCacheManager.readVersion(new CEtlVersion(version.getName(), project));
   }
 
   /**
-   * Extracts and translates the fix and affected versions from a Jira issue into a {@link CEtlVersions} collection.
+   * Extracts and translates the fix and affected versions from a Jira issue into a {@link
+   * CEtlVersions} collection.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlVersions versions = CEtlJiraTranslator.getIssueVersions(issue, project);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the versions
    * @param project the CEtlProject associated with the versions
@@ -230,10 +233,10 @@ public class CEtlJiraTranslator {
    * Retrieves or creates a {@link CEtlItemMetaData} object based on the provided name and value.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlItemMetaData meta = CEtlJiraTranslator.getMetaData("Priority", "High");
    * }</pre>
-   * </p>
    *
    * @param name the name of the metadata
    * @param value the value of the metadata
@@ -244,103 +247,105 @@ public class CEtlJiraTranslator {
   }
 
   /**
-   * Retrieves or creates a {@link CEtlProject} object based on the project information from a Jira issue.
+   * Retrieves or creates a {@link CEtlProject} object based on the project information from a Jira
+   * issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlProject project = CEtlJiraTranslator.getProject(issue);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the project information
    * @return the CEtlProject object
    */
   private static CEtlProject getProject(Issue issue) {
-    return issue.getProject() == null || StringUtils.isBlank(issue.getProject().getName()) ?
-        CEtlProject.UNSET :
-        CEtlCacheManager.readProject(new CEtlProject(issue.getProject().getName()));
+    return issue.getProject() == null || StringUtils.isBlank(issue.getProject().getName())
+        ? CEtlProject.UNSET
+        : CEtlCacheManager.readProject(new CEtlProject(issue.getProject().getName()));
   }
 
   /**
    * Retrieves or creates a {@link CEtlItemType} object based on the issue type from a Jira issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlItemType type = CEtlJiraTranslator.getItemType(issue);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the issue type information
    * @return the CEtlItemType object
    */
   private static CEtlItemType getItemType(Issue issue) {
-    return issue.getIssueType() == null || StringUtils.isBlank(issue.getIssueType().getName()) ?
-        CEtlItemType.UNSET :
-        CEtlCacheManager.readType(new CEtlItemType(issue.getIssueType().getName()));
+    return issue.getIssueType() == null || StringUtils.isBlank(issue.getIssueType().getName())
+        ? CEtlItemType.UNSET
+        : CEtlCacheManager.readType(new CEtlItemType(issue.getIssueType().getName()));
   }
 
   /**
    * Retrieves or creates a {@link CEtlPriority} object based on the priority from a Jira issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlPriority priority = CEtlJiraTranslator.getPriority(issue);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the priority information
    * @return the CEtlPriority object
    */
   private static CEtlPriority getPriority(Issue issue) {
-    return issue.getPriority() == null || StringUtils.isBlank(issue.getPriority().getName()) ?
-        CEtlPriority.UNSET :
-        CEtlCacheManager.readPriority(new CEtlPriority(issue.getPriority().getName().toUpperCase()));
+    return issue.getPriority() == null || StringUtils.isBlank(issue.getPriority().getName())
+        ? CEtlPriority.UNSET
+        : CEtlCacheManager.readPriority(
+            new CEtlPriority(issue.getPriority().getName().toUpperCase()));
   }
 
   /**
    * Retrieves or creates a {@link CEtlStatus} object based on the provided status name.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlStatus status = CEtlJiraTranslator.getStatus("IN PROGRESS");
    * }</pre>
-   * </p>
    *
    * @param statusName the name of the status
    * @return the CEtlStatus object
    */
   private static CEtlStatus getStatus(String statusName) {
-    return StringUtils.isBlank(statusName) ?
-        CEtlStatus.UNSET :
-        CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
+    return StringUtils.isBlank(statusName)
+        ? CEtlStatus.UNSET
+        : CEtlCacheManager.readStatus(new CEtlStatus(statusName.toUpperCase()));
   }
 
   /**
    * Retrieves or creates a {@link CEtlStatus} object based on the status from a Jira issue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CEtlStatus status = CEtlJiraTranslator.getStatus(issue);
    * }</pre>
-   * </p>
    *
    * @param issue the Jira issue containing the status information
    * @return the CEtlStatus object
    */
   private static CEtlStatus getStatus(Issue issue) {
-    return issue.getStatus() == null || StringUtils.isBlank(issue.getStatus().getName()) ?
-        CEtlStatus.UNSET :
-        CEtlCacheManager.readStatus(new CEtlStatus(issue.getStatus().getName().toUpperCase()));
+    return issue.getStatus() == null || StringUtils.isBlank(issue.getStatus().getName())
+        ? CEtlStatus.UNSET
+        : CEtlCacheManager.readStatus(new CEtlStatus(issue.getStatus().getName().toUpperCase()));
   }
 
   /**
    * Checks if the value of an {@link IssueField} is not null or a JSON null representation.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * boolean ok = CEtlJiraTranslator.valueIsNotNull(issueField);
    * }</pre>
-   * </p>
    *
    * @param f the IssueField to be checked
    * @return true if the value is not null, false otherwise

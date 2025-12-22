@@ -31,7 +31,8 @@ public class CReportPortalAttributeUtilTest extends CTest {
 
   @Test
   public void testGetComplexAttributes1() {
-    CSet<ItemAttributesRQ> evn = CReportPortalAttributeUtil.getAttributes("k1:v1;k2:v21,v22;k3;k4:v4;");
+    CSet<ItemAttributesRQ> evn =
+        CReportPortalAttributeUtil.getAttributes("k1:v1;k2:v21,v22;k3;k4:v4;");
     evn.verifySizeEquals(4);
     evn.verifyContains(new ItemAttributesRQ("k1", "v1"));
     evn.verifyContains(new ItemAttributesRQ("k2", "v21,v22"));
@@ -41,7 +42,8 @@ public class CReportPortalAttributeUtilTest extends CTest {
 
   @Test
   public void testGetComplexAttributes2() {
-    CSet<ItemAttributesRQ> evn = CReportPortalAttributeUtil.getAttributes("k1:v1;k2:v21,v22;k3;k4:v4;");
+    CSet<ItemAttributesRQ> evn =
+        CReportPortalAttributeUtil.getAttributes("k1:v1;k2:v21,v22;k3;k4:v4;");
     evn.verifySizeEquals(4);
     evn.verifyContains(new ItemAttributesRQ("k1", "v1"));
     evn.verifyContains(new ItemAttributesRQ("k2", "v21,v22"));

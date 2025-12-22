@@ -14,7 +14,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
   /**
    * Check if actual value is between lower and higher bound values (exclusive).
    *
-   * @param lowerBound  lower bound inclusive
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    * @return execution boolean result
    */
@@ -33,7 +33,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
   /**
    * Check if actual value is between lower and higher bound values (Inclusive).
    *
-   * @param lowerBound  lower bound inclusive
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    * @return execution boolean result
    */
@@ -75,7 +75,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
    * Check if actual and expected have the exact same value or their difference is less than
    * precision value.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
    * @return execution boolean result
    */
@@ -150,7 +150,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
   /**
    * Check if actual value is NOT between lower and higher bound values (Exclusive).
    *
-   * @param lowerBound  lower bound inclusive
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    * @return execution boolean result
    */
@@ -161,7 +161,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
   /**
    * Check if actual value is NOT between lower and higher bound values (Inclusive).
    *
-   * @param lowerBound  lower bound inclusive
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    * @return execution boolean result
    */
@@ -174,7 +174,7 @@ public interface CNumberState<N extends Number & Comparable<N>> extends CObjectS
    *
    * <p>Please note that verification consider as passe if one value is null
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
    * @return execution boolean result
    */

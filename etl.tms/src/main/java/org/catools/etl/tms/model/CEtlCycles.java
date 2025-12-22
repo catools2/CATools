@@ -1,14 +1,12 @@
 package org.catools.etl.tms.model;
 
+import java.util.Objects;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
 
-import java.util.Objects;
-import java.util.stream.Stream;
-
 public class CEtlCycles extends CSet<CEtlCycle> {
-  public CEtlCycles() {
-  }
+  public CEtlCycles() {}
 
   public CEtlCycles(CEtlCycle... c) {
     super(c);

@@ -1,11 +1,10 @@
 package org.catools.common.annotations;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import static java.lang.annotation.ElementType.METHOD;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.METHOD;
 
 /**
  * This annotation {@link CDefects} is used to link test methods to related defects that have been
@@ -13,22 +12,25 @@ import static java.lang.annotation.ElementType.METHOD;
  * from bug tracking systems.
  *
  * <p>This annotation is typically used in test automation frameworks to:
+ *
  * <ul>
- *   <li>Document historical defects that were fixed and verify they don't regress</li>
- *   <li>Maintain traceability between test cases and resolved bug reports</li>
- *   <li>Provide context for regression testing scenarios</li>
- *   <li>Track defect resolution validation in test reports</li>
+ *   <li>Document historical defects that were fixed and verify they don't regress
+ *   <li>Maintain traceability between test cases and resolved bug reports
+ *   <li>Provide context for regression testing scenarios
+ *   <li>Track defect resolution validation in test reports
  * </ul>
  *
  * <p><strong>Usage Guidelines:</strong>
+ *
  * <ul>
- *   <li>Use this annotation when defects have been resolved and tests should pass</li>
- *   <li>If test fails due to known defect, use {@link COpenDefects} annotation instead</li>
- *   <li>If defect is deferred, use {@link CDeferred} annotation instead</li>
- *   <li>Include specific defect IDs from your bug tracking system (e.g., JIRA, GitHub Issues)</li>
+ *   <li>Use this annotation when defects have been resolved and tests should pass
+ *   <li>If test fails due to known defect, use {@link COpenDefects} annotation instead
+ *   <li>If defect is deferred, use {@link CDeferred} annotation instead
+ *   <li>Include specific defect IDs from your bug tracking system (e.g., JIRA, GitHub Issues)
  * </ul>
  *
  * <p><strong>Examples:</strong>
+ *
  * <pre>{@code
  * // Single fixed defect - test should now pass
  * @CDefects(ids = {"BUG-1234"})
@@ -63,6 +65,7 @@ import static java.lang.annotation.ElementType.METHOD;
  * }</pre>
  *
  * <p><strong>Migration Examples:</strong>
+ *
  * <pre>{@code
  * // Before: Test was failing due to open defect
  * @COpenDefects(ids = {"BUG-1234"})
@@ -84,5 +87,6 @@ import static java.lang.annotation.ElementType.METHOD;
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({METHOD})
 public @interface CDefects {
-  @JsonProperty("ids") String[] ids();
+  @JsonProperty("ids")
+  String[] ids();
 }

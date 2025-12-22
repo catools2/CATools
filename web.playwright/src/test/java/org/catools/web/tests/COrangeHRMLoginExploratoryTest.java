@@ -9,11 +9,11 @@ import org.testng.annotations.Test;
 
 /**
  * OrangeHRM Login Exploratory Test - CATools Web Style
- * <p>
- * This test class demonstrates comprehensive login functionality testing
- * including invalid credentials, error messages, and successful authentication.
- * <p>
- * Generated from MCP exploratory testing session on December 14, 2025
+ *
+ * <p>This test class demonstrates comprehensive login functionality testing including invalid
+ * credentials, error messages, and successful authentication.
+ *
+ * <p>Generated from MCP exploratory testing session on December 14, 2025
  */
 public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
 
@@ -24,8 +24,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   private static final String VALID_PASSWORD = "admin123";
 
   /**
-   * Test 1: Verify login page loads and elements are present
-   * Tests that all login form elements are visible and accessible
+   * Test 1: Verify login page loads and elements are present Tests that all login form elements are
+   * visible and accessible
    */
   @Test(description = "Verify login page loads with all required elements")
   public void testLoginPageElementsPresent() {
@@ -50,12 +50,11 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 2: Verify invalid credentials show error message
-   * Tests that entering wrong credentials displays appropriate error
+   * Test 2: Verify invalid credentials show error message Tests that entering wrong credentials
+   * displays appropriate error
    */
   @Test(description = "Verify invalid credentials display error message")
   public void testInvalidCredentialsShowError() {
-    // Step 1: Navigate to login page
     open(ORANGEHRM_URL);
 
     // Step 2: Enter invalid username
@@ -74,12 +73,13 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
     var errorAlert = getDriver().$(".oxd-alert", 10);
     CVerify.Object.isNotNull(errorAlert, "Error alert should be present");
     errorAlert.Visible.verifyIsTrue("Error alert should be visible");
-    errorAlert.Text.verifyEquals("Invalid credentials", "Error message should indicate invalid credentials");
+    errorAlert.Text.verifyEquals(
+        "Invalid credentials", "Error message should indicate invalid credentials");
   }
 
   /**
-   * Test 3: Verify successful login with valid credentials
-   * Tests that valid credentials allow access to the system
+   * Test 3: Verify successful login with valid credentials Tests that valid credentials allow
+   * access to the system
    */
   @Test(description = "Verify successful login with valid credentials")
   public void testSuccessfulLoginWithValidCredentials() {
@@ -105,8 +105,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 4: Verify credentials hint is displayed on login page
-   * Tests that the page provides helpful credential information
+   * Test 4: Verify credentials hint is displayed on login page Tests that the page provides helpful
+   * credential information
    */
   @Test(description = "Verify login page displays credential hints")
   public void testCredentialHintsDisplayed() {
@@ -123,8 +123,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 5: End-to-end login scenario with navigation
-   * Complete workflow from login page to dashboard
+   * Test 5: End-to-end login scenario with navigation Complete workflow from login page to
+   * dashboard
    */
   @Test(description = "Verify complete end-to-end login workflow")
   public void testEndToEndLoginScenario() {
@@ -160,8 +160,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 6: Verify login button properties and interactions
-   * Tests login button state and clickability
+   * Test 6: Verify login button properties and interactions Tests login button state and
+   * clickability
    */
   @Test(description = "Verify login button is clickable and has correct properties")
   public void testLoginButtonProperties() {
@@ -183,8 +183,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 7: Verify multiple invalid login attempts
-   * Tests that multiple failed attempts continue to show error
+   * Test 7: Verify multiple invalid login attempts Tests that multiple failed attempts continue to
+   * show error
    */
   @Test(description = "Verify multiple invalid login attempts show consistent errors")
   public void testMultipleInvalidLoginAttempts() {
@@ -219,13 +219,11 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
     // Verify second error
     errorAlert = getDriver().$(".oxd-alert", 10);
     errorAlert.Visible.verifyIsTrue("Second error should be visible");
-    errorAlert.Text.verifyEquals("Invalid credentials", "Should show invalid credentials message again");
+    errorAlert.Text.verifyEquals(
+        "Invalid credentials", "Should show invalid credentials message again");
   }
 
-  /**
-   * Test 8: Verify field clearing functionality
-   * Tests that fields can be cleared and refilled
-   */
+  /** Test 8: Verify field clearing functionality Tests that fields can be cleared and refilled */
   @Test(description = "Verify login fields can be cleared and refilled")
   public void testFieldClearingFunctionality() {
     // Step 1: Navigate to login page
@@ -254,8 +252,7 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 9: Verify login form field attributes
-   * Tests that form fields have correct HTML attributes
+   * Test 9: Verify login form field attributes Tests that form fields have correct HTML attributes
    */
   @Test(description = "Verify login form fields have correct attributes")
   public void testLoginFormFieldAttributes() {
@@ -280,8 +277,8 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
   }
 
   /**
-   * Test 10: Verify page title and branding
-   * Tests that the login page displays correct branding information
+   * Test 10: Verify page title and branding Tests that the login page displays correct branding
+   * information
    */
   @Test(description = "Verify login page displays OrangeHRM branding")
   public void testLoginPageBrandingAndTitle() {
@@ -316,4 +313,3 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
     }
   }
 }
-

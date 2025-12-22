@@ -1,6 +1,20 @@
 package org.catools.common.hocon.model;
 
-import com.typesafe.config.*;
+import static org.catools.common.hocon.utils.CHoconUtils.SENSITIVE_PATH;
+import static org.catools.common.hocon.utils.CHoconUtils.VALUE_PATH;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigBeanFactory;
+import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigList;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigValueFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiFunction;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,15 +24,6 @@ import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
 import org.catools.common.vault.CVault;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.BiFunction;
-
-import static org.catools.common.hocon.utils.CHoconUtils.SENSITIVE_PATH;
-import static org.catools.common.hocon.utils.CHoconUtils.VALUE_PATH;
-
 @Slf4j
 @NoArgsConstructor
 public class CHoconConfig implements CConfig {
@@ -26,8 +31,7 @@ public class CHoconConfig implements CConfig {
   private static final String VALUE = "value";
   private Config config;
 
-  @Getter
-  private String name;
+  @Getter private String name;
   private String valuePath;
   private String path;
 
@@ -68,7 +72,7 @@ public class CHoconConfig implements CConfig {
 
   @Override
   public String asString(String defaultValue) {
-    return asT(defaultValue, (c, path) -> c.getString(valuePath));
+    return asT(defaultValue, Config::getString);
   }
 
   @Override
@@ -230,7 +234,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   public <T> List<T> asList(Class<T> clazz) {
@@ -246,7 +250,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   @Override
@@ -269,7 +273,8 @@ public class CHoconConfig implements CConfig {
     // 2- Case when value setup value using environmental variables.
     // In the second scenario we need to read and parse the string value and process it.
     // 3- If the value is not defined in configuration then try to read value
-    // from Environmental Variables or System Properties, considering that value should parse as yaml
+    // from Environmental Variables or System Properties, considering that value should parse as
+    // yaml
     // property so we try to read value as is and if conversion failed, then try quoted value
     if (isDefined()) {
       return getDefinedValue(fuc);
@@ -284,10 +289,16 @@ public class CHoconConfig implements CConfig {
     if (StringUtils.isNotBlank(value)) {
       try {
         // Try to parse value as is in a case of complex structure like list or object
-        return printPathValue(path, Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+        return printPathValue(
+            path,
+            Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
       } catch (ConfigException ignored) {
         // build valid json format for string value to read it properly
-        return printPathValue(path, Optional.of(parseString(String.format("\"%s\"", value))).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
+        return printPathValue(
+            path,
+            Optional.of(parseString(String.format("\"%s\"", value)))
+                .map(c -> fuc.apply(c, VALUE))
+                .orElse(defaultValue));
       }
     }
 
@@ -302,7 +313,6 @@ public class CHoconConfig implements CConfig {
       if (StringUtils.isNotBlank(vaultValueByProperty)) {
         value = vaultValueByProperty;
       }
-
 
       // If value is still blank return default value
       if (StringUtils.isBlank(value)) {
@@ -365,7 +375,7 @@ public class CHoconConfig implements CConfig {
   }
 
   private static Config parseString(String input) {
-    return ConfigFactory.parseString(VALUE + " = " + input);
+    return ConfigFactory.parseString("%s=%s".formatted(VALUE, input));
   }
 
   private static String readPropertyOrEnv(String property) {

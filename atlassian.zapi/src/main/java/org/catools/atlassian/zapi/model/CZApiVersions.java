@@ -7,17 +7,14 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of versions in the ZAPI system.
  *
- * <p>This class extends {@link CSet} to provide additional functionality for managing
- * a set of {@link CZApiVersion} objects, including constructors for various input types
- * and a method to retrieve a version by its unique identifier.</p>
+ * <p>This class extends {@link CSet} to provide additional functionality for managing a set of
+ * {@link CZApiVersion} objects, including constructors for various input types and a method to
+ * retrieve a version by its unique identifier.
  */
 public class CZApiVersions extends CSet<CZApiVersion> {
 
-  /**
-   * Default constructor for creating an empty collection of versions.
-   */
-  public CZApiVersions() {
-  }
+  /** Default constructor for creating an empty collection of versions. */
+  public CZApiVersions() {}
 
   /**
    * Constructs a collection of versions from an array of {@link CZApiVersion} objects.

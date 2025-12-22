@@ -2,6 +2,11 @@ package org.catools.mcp.server.component;
 
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
@@ -12,26 +17,15 @@ import org.catools.mcp.reflect.CMethodCache;
 import org.catools.mcp.server.converter.CMcpPromptParameterConverter;
 import org.catools.mcp.util.CReflectionUtil;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-/**
- * This class represents an MCP server prompt component.
- */
+/** This class represents an MCP server prompt component. */
 @Slf4j
-public class CMcpServerPrompt implements CMcpServerComponent<McpServerFeatures.SyncPromptSpecification> {
+public class CMcpServerPrompt
+    implements CMcpServerComponent<McpServerFeatures.SyncPromptSpecification> {
 
-  /**
-   * The converter for MCP prompt parameters.
-   */
+  /** The converter for MCP prompt parameters. */
   private final CMcpPromptParameterConverter parameterConverter;
 
-  /**
-   * Creates a new instance of {@code McpServerPrompt}.
-   */
+  /** Creates a new instance of {@code McpServerPrompt}. */
   public CMcpServerPrompt() {
     this.parameterConverter = getInjector().getInstance(CMcpPromptParameterConverter.class);
   }
@@ -60,10 +54,10 @@ public class CMcpServerPrompt implements CMcpServerComponent<McpServerFeatures.S
   /**
    * Invokes the prompt method with the specified arguments.
    *
-   * @param instance    the instance of the class that declares the prompt method
+   * @param instance the instance of the class that declares the prompt method
    * @param methodCache the cached method information
    * @param description the description of the prompt
-   * @param request     the request for the prompt
+   * @param request the request for the prompt
    * @return the result of the prompt invocation
    */
   private McpSchema.GetPromptResult invoke(

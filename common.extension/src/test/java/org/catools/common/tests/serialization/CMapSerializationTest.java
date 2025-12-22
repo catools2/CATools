@@ -1,14 +1,13 @@
 package org.catools.common.tests.serialization;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CJsonUtil;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CMapSerializationTest extends CBaseUnitTest {
 

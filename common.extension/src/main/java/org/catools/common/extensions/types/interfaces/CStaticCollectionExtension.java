@@ -24,8 +24,5 @@ import java.util.Collection;
  * }
  * </code> </strong>
  */
-public interface CStaticCollectionExtension<E, C extends Collection<E>> extends
-    CCollectionVerify<E, C>,
-    CCollectionVerifier<E, C>,
-    CCollectionState<E, C> {
-}
+public interface CStaticCollectionExtension<E, C extends Collection<E>>
+    extends CCollectionVerify<E, C>, CCollectionVerifier<E, C>, CCollectionState<E, C> {}

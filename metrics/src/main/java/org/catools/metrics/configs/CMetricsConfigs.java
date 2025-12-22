@@ -27,21 +27,20 @@ public class CMetricsConfigs {
   public static CMetricProject getProject() {
     return new CMetricProject(
         CHocon.asString(Configs.CATOOLS_PERFMETRIC_PROJECT_CODE),
-        CHocon.asString(Configs.CATOOLS_PERFMETRIC_PROJECT_NAME)
-    );
+        CHocon.asString(Configs.CATOOLS_PERFMETRIC_PROJECT_NAME));
   }
 
   public static CMetricEnvironment getEnvironment() {
     return new CMetricEnvironment(
         CHocon.asString(Configs.CATOOLS_PERFMETRIC_ENVIRONMENT_CODE),
-        CHocon.asString(Configs.CATOOLS_PERFMETRIC_ENVIRONMENT_NAME)
-    );
+        CHocon.asString(Configs.CATOOLS_PERFMETRIC_ENVIRONMENT_NAME));
   }
 
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
-    CATOOLS_PERFMETRIC_WEB_SERVICE_RECORDER_ENABLED("catools.perfmetric.web_service_recorder_enabled"),
+    CATOOLS_PERFMETRIC_WEB_SERVICE_RECORDER_ENABLED(
+        "catools.perfmetric.web_service_recorder_enabled"),
     CATOOLS_PERFMETRIC_WEB_RECORDER_ENABLED("catools.perfmetric.web_recorder_enabled"),
     CATOOLS_PERFMETRIC_SQL_RECORDER_ENABLED("catools.perfmetric.sql_recorder_enabled"),
     CATOOLS_PERFMETRIC_PROJECT_CODE("catools.perfmetric.project.code"),
@@ -50,4 +49,5 @@ public class CMetricsConfigs {
     CATOOLS_PERFMETRIC_ENVIRONMENT_NAME("catools.perfmetric.environment.name");
 
     private final String path;
-  }}
+  }
+}

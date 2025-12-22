@@ -1,20 +1,17 @@
 package org.catools.common.extensions.wait.interfaces;
 
-import org.catools.common.extensions.states.interfaces.CObjectState;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import org.catools.common.extensions.states.interfaces.CObjectState;
 
-/**
- * CObjectWaiter is an interface for Object waiter related methods.
- */
+/** CObjectWaiter is an interface for Object waiter related methods. */
 public interface CObjectWaiter<O> extends CBaseWaiter<O> {
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till predicate
-   * returns the true result
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till
+   * predicate returns the true result
    *
    * @param predicate predicate to test.
    * @return true if wait operation succeed otherwise return false
@@ -28,7 +25,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
    * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} interval till predicate returns
    * the true result
    *
-   * @param predicate     predicate to test.
+   * @param predicate predicate to test.
    * @param waitInSeconds maximum wait time.
    * @return true if wait operation succeed otherwise return false
    */
@@ -39,19 +36,20 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds till predicate returns the true result
    *
-   * @param predicate              predicate to test.
-   * @param waitInSeconds          maximum wait time.
+   * @param predicate predicate to test.
+   * @param waitInSeconds maximum wait time.
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean wait(final Predicate<O> predicate, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean wait(
+      final Predicate<O> predicate, final int waitInSeconds, final int intervalInMilliSeconds) {
     return _waiter(o -> toState(o).test(predicate), waitInSeconds, intervalInMilliSeconds);
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * is null.
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value is null.
    *
    * @return true if wait operation succeed otherwise return false
    */
@@ -74,7 +72,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds till actual value is null.
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
@@ -83,9 +81,9 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * is NOT null.
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value is NOT null.
    *
    * @return true if wait operation succeed otherwise return false
    */
@@ -108,7 +106,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds till actual value is NOT null.
    *
-   * @param waitInSeconds          maximum wait time
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
@@ -117,9 +115,9 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * equals to expected value.
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value equals to expected value.
    *
    * @param expected value to compare
    * @return true if wait operation succeed otherwise return false
@@ -133,7 +131,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
    * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} interval till actual value equals
    * to expected value.
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    * @return true if wait operation succeed otherwise return false
    */
@@ -144,19 +142,20 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds till actual value equals to expected value.
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitEquals(final O expected, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean waitEquals(
+      final O expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     return _waiter(o -> Objects.equals(o, expected), waitInSeconds, intervalInMilliSeconds);
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with
-   * {@code CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual value
-   * does not equal to expected value.
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds with {@code
+   * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} milliseconds interval till actual
+   * value does not equal to expected value.
    *
    * @param expected value to compare
    * @return true if wait operation succeed otherwise return false
@@ -170,7 +169,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
    * CTypeExtensionConfigs.getDefaultWaitIntervalInMilliSeconds()} interval till actual value does
    * not equal to expected value.
    *
-   * @param expected      value to compare
+   * @param expected value to compare
    * @param waitInSeconds maximum wait time
    * @return true if wait operation succeed otherwise return false
    */
@@ -181,18 +180,19 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds till actual value does not equal to expected value.
    *
-   * @param expected               value to compare
-   * @param waitInSeconds          maximum wait time
+   * @param expected value to compare
+   * @param waitInSeconds maximum wait time
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitNotEquals(final O expected, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean waitNotEquals(
+      final O expected, final int waitInSeconds, final int intervalInMilliSeconds) {
     return _waiter(o -> !Objects.equals(o, expected), waitInSeconds, intervalInMilliSeconds);
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * actual value equals to any of the expected values.
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until actual
+   * value equals to any of the expected values.
    *
    * @param expectedList a list of values, may be {@code null}.
    * @return true if wait operation succeed otherwise return false
@@ -204,7 +204,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds until actual value equals to any of the expected values.
    *
-   * @param expectedList  a list of values, may be {@code null}.
+   * @param expectedList a list of values, may be {@code null}.
    * @param waitInSeconds maximum wait time.
    * @return true if wait operation succeed otherwise return false
    */
@@ -215,18 +215,19 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds until actual value equals to any of the expected values.
    *
-   * @param expectedList           a list of values, may be {@code null}.
-   * @param waitInSeconds          maximum wait time.
+   * @param expectedList a list of values, may be {@code null}.
+   * @param waitInSeconds maximum wait time.
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitEqualsAny(List<O> expectedList, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean waitEqualsAny(
+      List<O> expectedList, final int waitInSeconds, final int intervalInMilliSeconds) {
     return _waiter(a -> toState(a).equalsAny(expectedList), waitInSeconds, intervalInMilliSeconds);
   }
 
   /**
-   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until
-   * actual value equals none of the expected values
+   * Wait for {@code CTypeExtensionConfigs.getDefaultWaitInSeconds()} number of seconds until actual
+   * value equals none of the expected values
    *
    * @param expectedList a list of values, may be {@code null}.
    * @return true if wait operation succeed otherwise return false
@@ -238,7 +239,7 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds until actual value equals none of the expected values.
    *
-   * @param expectedList  a list of values, may be {@code null}.
+   * @param expectedList a list of values, may be {@code null}.
    * @param waitInSeconds maximum wait time.
    * @return true if wait operation succeed otherwise return false
    */
@@ -249,12 +250,13 @@ public interface CObjectWaiter<O> extends CBaseWaiter<O> {
   /**
    * Wait for defined number of seconds until actual value equals none of the expected values.
    *
-   * @param expectedList           a list of values, may be {@code null}.
-   * @param waitInSeconds          maximum wait time.
+   * @param expectedList a list of values, may be {@code null}.
+   * @param waitInSeconds maximum wait time.
    * @param intervalInMilliSeconds interval between retries in milliseconds
    * @return true if wait operation succeed otherwise return false
    */
-  default boolean waitEqualsNone(List<O> expectedList, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean waitEqualsNone(
+      List<O> expectedList, final int waitInSeconds, final int intervalInMilliSeconds) {
     return _waiter(a -> toState(a).equalsNone(expectedList), waitInSeconds, intervalInMilliSeconds);
   }
 

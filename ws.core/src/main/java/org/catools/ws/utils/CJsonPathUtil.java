@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import java.io.IOException;
+import java.util.Collection;
 import lombok.experimental.UtilityClass;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
@@ -13,9 +15,6 @@ import org.catools.common.extensions.types.CStaticBooleanExtension;
 import org.catools.common.extensions.types.CStaticNumberExtension;
 import org.catools.common.extensions.types.CStaticObjectExtension;
 import org.catools.common.extensions.types.CStaticStringExtension;
-
-import java.io.IOException;
-import java.util.Collection;
 
 @UtilityClass
 public class CJsonPathUtil {

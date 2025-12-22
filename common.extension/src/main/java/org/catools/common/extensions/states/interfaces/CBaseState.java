@@ -7,16 +7,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
-/**
- * CBaseExtension is an interface to hold shared method between all extensions.
- */
+/** CBaseExtension is an interface to hold shared method between all extensions. */
 public interface CBaseState<O> extends Serializable {
   long serialVersionUID = 6067874018185613757L;
   Logger logger = LoggerFactory.getLogger(CBaseVerify.class);
 
-  /**
-   * For internal use only
-   */
+  /** For internal use only */
   @JsonIgnore
   O _get();
 }

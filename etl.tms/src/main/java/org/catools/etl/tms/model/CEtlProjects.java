@@ -1,13 +1,11 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlProjects extends CSet<CEtlProject> {
-  public CEtlProjects() {
-  }
+  public CEtlProjects() {}
 
   public CEtlProjects(CEtlProject... c) {
     super(c);

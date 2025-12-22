@@ -1,10 +1,9 @@
 package org.catools.mcp.server.converter;
 
-import org.catools.mcp.annotation.CMcpPromptParam;
-import org.catools.mcp.util.CTypeConverter;
-
 import java.lang.reflect.Parameter;
 import java.util.Map;
+import org.catools.mcp.annotation.CMcpPromptParam;
+import org.catools.mcp.util.CTypeConverter;
 
 /**
  * This class is used to convert the value of a parameter annotated with {@link CMcpPromptParam} to
@@ -12,11 +11,12 @@ import java.util.Map;
  */
 public class CMcpPromptParameterConverter implements CParameterConverter<CMcpPromptParam> {
   /**
-   * Converts the value of the parameter annotated with {@link CMcpPromptParam} to the required type.
+   * Converts the value of the parameter annotated with {@link CMcpPromptParam} to the required
+   * type.
    *
-   * @param parameter  the parameter annotated with {@link CMcpPromptParam}
+   * @param parameter the parameter annotated with {@link CMcpPromptParam}
    * @param annotation the annotation instance
-   * @param args       the arguments passed to the method
+   * @param args the arguments passed to the method
    * @return the converted value of the parameter
    */
   @Override

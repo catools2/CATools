@@ -1,6 +1,7 @@
 package org.catools.common.extensions.wait.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.CTypeExtensionConfigs;
@@ -8,11 +9,7 @@ import org.catools.common.extensions.states.interfaces.CBaseState;
 import org.catools.common.utils.CSleeper;
 import org.catools.common.utils.CStringUtil;
 
-import java.util.function.Predicate;
-
-/**
- * CBaseWaiter is an interface to hold shared method between all waiter classes.
- */
+/** CBaseWaiter is an interface to hold shared method between all waiter classes. */
 public interface CBaseWaiter<O> extends CBaseState<O> {
 
   /**
@@ -73,8 +70,8 @@ public interface CBaseWaiter<O> extends CBaseState<O> {
     return CStringUtil.EMPTY;
   }
 
-
-  default boolean _waiter(Predicate<O> waitMethod, final int waitInSeconds, final int intervalInMilliSeconds) {
+  default boolean _waiter(
+      Predicate<O> waitMethod, final int waitInSeconds, final int intervalInMilliSeconds) {
     boolean isTimeOuted = false;
     Throwable lastException = null;
 

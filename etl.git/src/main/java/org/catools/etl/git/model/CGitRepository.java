@@ -1,18 +1,17 @@
 package org.catools.etl.git.model;
 
+import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.catools.common.utils.CStringUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
-import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 
 @Entity
 @NamedQuery(name = "getGitRepositoryByName", query = "FROM CGitRepository where name=:name")
@@ -23,8 +22,7 @@ import static org.catools.etl.git.configs.CGitConfigs.GIT_SCHEMA;
 @Accessors(chain = true)
 public class CGitRepository implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 41874058561307260L;
+  @Serial private static final long serialVersionUID = 41874058561307260L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,16 +7,17 @@ import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
 import org.catools.common.utils.CStringUtil;
 import org.catools.web.collections.CWebElements;
-import org.catools.web.drivers.CDriver;
+import org.catools.web.controls.CElementEngine;
 
 /**
- * Represents header information for web tables, providing functionality to parse and manage
- * table header elements with their associated metadata such as index, text content, and visibility.
+ * Represents header information for web tables, providing functionality to parse and manage table
+ * header elements with their associated metadata such as index, text content, and visibility.
  *
- * <p>This class is designed to work with web tables by extracting header information from
- * web elements and providing convenient methods to access header data.</p>
+ * <p>This class is designed to work with web tables by extracting header information from web
+ * elements and providing convenient methods to access header data.
  *
- * <p><strong>Example usage:</strong></p>
+ * <p><strong>Example usage:</strong>
+ *
  * <pre>{@code
  * // Create a web driver instance
  * CDriver driver = new CWebDriver();
@@ -37,26 +38,26 @@ import org.catools.web.drivers.CDriver;
  * // Output: {1="Name", 2="Email", 3="Status"} (assuming "Actions" column is hidden)
  * }</pre>
  *
- * @param <DR> the type of web driver extending CDriver
  * @author CATools Team
  * @since 1.0
  */
 @Getter
-public class CWebTableHeaderInfo<DR extends CDriver> {
+public class CWebTableHeaderInfo {
 
-  private CList<Header> headers = new CList<>();
+  private final CList<Header> headers = new CList<>();
 
   /**
    * Constructs a new CWebTableHeaderInfo instance by parsing header elements from the web page.
    *
    * <p>This constructor locates all header elements using the provided CSS selector or XPath,
-   * extracts their text content, determines their visibility, and creates Header objects
-   * with sequential indices starting from 1.</p>
+   * extracts their text content, determines their visibility, and creates Header objects with
+   * sequential indices starting from 1.
    *
-   * <p>If header text is initially blank, the constructor will attempt to move to the element
-   * to trigger any dynamic content loading before re-extracting the text.</p>
+   * <p>If header text is initially blank, the constructor will attempt to move to the element to
+   * trigger any dynamic content loading before re-extracting the text.
    *
-   * <p><strong>Example:</strong></p>
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * // Using XPath to locate table headers
    * CWebTableHeaderInfo<CDriver> headerInfo = new CWebTableHeaderInfo<>(
@@ -78,29 +79,31 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
    * // Header(4, "Status", false) // if Status column is hidden
    * }</pre>
    *
-   * @param driver         the web driver instance to use for locating elements
+   * @param driver the web driver instance to use for locating elements
    * @param headersLocator the CSS selector or XPath expression to locate header elements
    * @throws IllegalArgumentException if driver or headersLocator is null
    */
-  public CWebTableHeaderInfo(DR driver, String headersLocator) {
-    new CWebElements<>("Headers", driver, headersLocator).forEach(h -> {
-      String headerText = CStringUtil.normalizeSpace(h.getText(1));
-      if (StringUtils.isBlank(headersLocator)) {
-        h.moveTo();
-        headerText = CStringUtil.normalizeSpace(h.getText(1));
-      }
-      headers.add(new Header(headers.size() + 1, headerText, h.Visible.isTrue()));
-    });
+  public CWebTableHeaderInfo(CElementEngine<?> driver, String headersLocator) {
+    new CWebElements("Headers", driver, headersLocator)
+        .forEach(
+            h -> {
+              String headerText = CStringUtil.normalizeSpace(h.getText(1));
+              if (StringUtils.isBlank(headersLocator)) {
+                h.moveTo();
+                headerText = CStringUtil.normalizeSpace(h.getText(1));
+              }
+              headers.add(new Header(headers.size() + 1, headerText, h.Visible.isTrue()));
+            });
   }
 
   /**
    * Retrieves the index of a header column by its name (case-insensitive).
    *
-   * <p>This method performs a case-insensitive search through all headers to find
-   * a matching header name and returns its 1-based index. If no matching header
-   * is found, returns -1.</p>
+   * <p>This method performs a case-insensitive search through all headers to find a matching header
+   * name and returns its 1-based index. If no matching header is found, returns -1.
    *
-   * <p><strong>Examples:</strong></p>
+   * <p><strong>Examples:</strong>
+   *
    * <pre>{@code
    * // Assuming table headers: ["ID", "Full Name", "Email Address", "Status"]
    * CWebTableHeaderInfo<CDriver> headerInfo = new CWebTableHeaderInfo<>(driver, "//th");
@@ -129,11 +132,12 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
   /**
    * Returns a map containing all headers with their corresponding indices.
    *
-   * <p>This method creates a mapping from header index (1-based) to header text
-   * for all headers, regardless of their visibility status. The returned map
-   * is a new instance and modifications to it will not affect the original headers.</p>
+   * <p>This method creates a mapping from header index (1-based) to header text for all headers,
+   * regardless of their visibility status. The returned map is a new instance and modifications to
+   * it will not affect the original headers.
    *
-   * <p><strong>Examples:</strong></p>
+   * <p><strong>Examples:</strong>
+   *
    * <pre>{@code
    * // Assuming table headers: ["ID", "Name", "Email", "Actions"]
    * CWebTableHeaderInfo<CDriver> headerInfo = new CWebTableHeaderInfo<>(driver, "//th");
@@ -168,12 +172,13 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
   /**
    * Returns a map containing only visible headers with their corresponding indices.
    *
-   * <p>This method creates a mapping from header index (1-based) to header text
-   * for only those headers that are currently visible on the web page. Hidden columns
-   * are excluded from the returned map. The returned map is a new instance and
-   * modifications to it will not affect the original headers.</p>
+   * <p>This method creates a mapping from header index (1-based) to header text for only those
+   * headers that are currently visible on the web page. Hidden columns are excluded from the
+   * returned map. The returned map is a new instance and modifications to it will not affect the
+   * original headers.
    *
-   * <p><strong>Examples:</strong></p>
+   * <p><strong>Examples:</strong>
+   *
    * <pre>{@code
    * // Assuming table headers: ["ID", "Name", "Email", "Actions"]
    * // where "Actions" column is hidden (visible=false)
@@ -205,8 +210,7 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
   public CMap<Integer, String> getVisibleHeadersMap() {
     CMap<Integer, String> output = new CHashMap<>();
     for (Header h : headers) {
-      if (h.visible())
-        output.put(h.index(), h.header());
+      if (h.visible()) output.put(h.index(), h.header());
     }
     return output;
   }
@@ -214,11 +218,11 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
   /**
    * Record representing a table header with its index, text content, and visibility status.
    *
-   * <p>This immutable data structure encapsulates all the essential information
-   * about a table header column. The index is 1-based to match common table
-   * numbering conventions.</p>
+   * <p>This immutable data structure encapsulates all the essential information about a table
+   * header column. The index is 1-based to match common table numbering conventions.
    *
-   * <p><strong>Examples:</strong></p>
+   * <p><strong>Examples:</strong>
+   *
    * <pre>{@code
    * // Creating header instances
    * Header idHeader = new Header(1, "ID", true);
@@ -240,10 +244,9 @@ public class CWebTableHeaderInfo<DR extends CDriver> {
    * // Result: [Header(1, "ID", true), Header(2, "Full Name", true)]
    * }</pre>
    *
-   * @param index   the 1-based position of the header in the table
-   * @param header  the text content of the header
+   * @param index the 1-based position of the header in the table
+   * @param header the text content of the header
    * @param visible whether the header column is currently visible on the page
    */
-  public record Header(int index, String header, boolean visible) {
-  }
+  public record Header(int index, String header, boolean visible) {}
 }

@@ -9,24 +9,26 @@ import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 
 /**
- * Configuration management for Playwright settings.
- * Uses HOCON for flexible, type-safe configuration.
+ * Configuration management for Playwright settings. Uses HOCON for flexible, type-safe
+ * configuration.
  *
  * <p>Configuration properties:
+ *
  * <ul>
- *   <li>catools.playwright.headless - Whether to run browser in headless mode (default: false)</li>
- *   <li>catools.playwright.browser - Browser type: CHROMIUM, FIREFOX, or WEBKIT (default: CHROMIUM)</li>
- *   <li>catools.playwright.viewport.width - Viewport width in pixels (default: 1280)</li>
- *   <li>catools.playwright.viewport.height - Viewport height in pixels (default: 720)</li>
- *   <li>catools.playwright.timeout - Default timeout in milliseconds (default: 30000)</li>
- *   <li>catools.playwright.slowmo - Slow down operations by specified milliseconds (default: 0)</li>
- *   <li>catools.playwright.screenshots.enabled - Enable automatic screenshots (default: false)</li>
- *   <li>catools.playwright.screenshots.path - Path to save screenshots (default: ./screenshots)</li>
- *   <li>catools.playwright.tracing.enabled - Enable tracing (default: false)</li>
- *   <li>catools.playwright.tracing.path - Path to save traces (default: ./traces)</li>
+ *   <li>catools.playwright.headless - Whether to run browser in headless mode (default: false)
+ *   <li>catools.playwright.browser - Browser type: CHROMIUM, FIREFOX, or WEBKIT (default: CHROMIUM)
+ *   <li>catools.playwright.viewport.width - Viewport width in pixels (default: 1280)
+ *   <li>catools.playwright.viewport.height - Viewport height in pixels (default: 720)
+ *   <li>catools.playwright.timeout - Default timeout in milliseconds (default: 30000)
+ *   <li>catools.playwright.slowmo - Slow down operations by specified milliseconds (default: 0)
+ *   <li>catools.playwright.screenshots.enabled - Enable automatic screenshots (default: false)
+ *   <li>catools.playwright.screenshots.path - Path to save screenshots (default: ./screenshots)
+ *   <li>catools.playwright.tracing.enabled - Enable tracing (default: false)
+ *   <li>catools.playwright.tracing.path - Path to save traces (default: ./traces)
  * </ul>
  *
  * <p>Example application.conf:
+ *
  * <pre>{@code
  * catools {
  *   playwright {
@@ -51,6 +53,7 @@ import org.catools.common.hocon.model.CHoconPath;
  * }</pre>
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * // Get configuration values
  * boolean headless = CPlaywrightConfigs.isHeadless();
@@ -78,20 +81,25 @@ public class CPlaywrightConfigs {
 
   /**
    * Retrieves custom Playwright browser launch options from configuration.
+   *
    * @return BrowserType.LaunchOptions if configured, otherwise null.
    */
   public static BrowserType.LaunchOptions getLaunchOptions() {
-    return CHocon.has(Configs.CATOOLS_PLAYWRIGHT_LAUNCH_OPTIONS) ?
-        CHocon.asModel(Configs.CATOOLS_PLAYWRIGHT_LAUNCH_OPTIONS, BrowserType.LaunchOptions.class) : null;
+    return CHocon.has(Configs.CATOOLS_PLAYWRIGHT_LAUNCH_OPTIONS)
+        ? CHocon.asModel(Configs.CATOOLS_PLAYWRIGHT_LAUNCH_OPTIONS, BrowserType.LaunchOptions.class)
+        : null;
   }
 
   /**
    * Retrieves custom Playwright browser context options from configuration.
+   *
    * @return Browser.NewContextOptions if configured, otherwise null.
    */
   public static Browser.NewContextOptions getNewContextOptions() {
-    return CHocon.has(Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS) ?
-        CHocon.asModel(Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS, Browser.NewContextOptions.class) : null;
+    return CHocon.has(Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS)
+        ? CHocon.asModel(
+            Configs.CATOOLS_PLAYWRIGHT_BROWSER_CONTEXT_OPTIONS, Browser.NewContextOptions.class)
+        : null;
   }
 
   @Getter
@@ -103,4 +111,3 @@ public class CPlaywrightConfigs {
     private final String path;
   }
 }
-

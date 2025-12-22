@@ -6,9 +6,7 @@ import org.catools.ws.model.CHttpResponse;
 import org.catools.ws.rest.tests.api.entities.MovieDetail;
 import org.catools.ws.rest.tests.api.entities.SearchParam;
 
-/**
- * Returns the result based on the input id e.g. tt999999.
- */
+/** Returns the result based on the input id e.g. tt999999. */
 public class OmdbGetByIdApiClient extends OmdbApiClient<MovieDetail> {
   private final String id;
 

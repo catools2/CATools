@@ -1,5 +1,6 @@
 package org.catools.common.tests.date;
 
+import java.util.Calendar;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
 import org.catools.common.date.CRandomDateGenerator;
@@ -7,8 +8,6 @@ import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Calendar;
 
 public class CRandomDateGeneratorTest extends CBaseUnitTest {
   private CDate fromDate = CDate.valueOf("2011-07-21", "yyyy-MM-dd");

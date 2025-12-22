@@ -11,10 +11,11 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * CStorage is a thread-safe storage system that manages a pool of objects.
- * It allows borrowing and releasing objects with optional predicates and timeouts.
+ * CStorage is a thread-safe storage system that manages a pool of objects. It allows borrowing and
+ * releasing objects with optional predicates and timeouts.
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * CStorage<String> storage = new CStorage<>("ExampleStorage", 5, 30);
  * storage.init(Arrays.asList("Object1", "Object2"));
@@ -22,7 +23,6 @@ import java.util.function.Supplier;
  * String borrowed = storage.borrow("User1");
  * storage.release(borrowed);
  * }</pre>
- * </p>
  *
  * @param <T> the type of objects managed by the storage
  */
@@ -39,10 +39,10 @@ public class CStorage<T> {
    * Constructs a new CStorage instance.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CStorage<String> storage = new CStorage<>("MyStorage", 5, 30);
    * }</pre>
-   * </p>
    *
    * @param name the name of the storage
    * @param requestIntervalInSeconds the interval between borrow attempts in seconds
@@ -58,10 +58,10 @@ public class CStorage<T> {
    * Initializes the storage with a list of objects.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * storage.init(Arrays.asList("Object1", "Object2"));
    * }</pre>
-   * </p>
    *
    * @param initialObjects the list of objects to initialize the storage with
    */
@@ -98,10 +98,10 @@ public class CStorage<T> {
    * Performs an action on a borrowed object and releases it afterward.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * String result = storage.performAction("User1", obj -> obj.toUpperCase());
    * }</pre>
-   * </p>
    *
    * @param borrower the name of the borrower
    * @param action the action to perform on the borrowed object
@@ -116,10 +116,10 @@ public class CStorage<T> {
    * Performs an action on a borrowed object that matches a predicate and releases it afterward.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * String result = storage.performAction("User1", obj -> obj.startsWith("A"), obj -> obj.toUpperCase());
    * }</pre>
-   * </p>
    *
    * @param borrower the name of the borrower
    * @param predicate the predicate to filter objects
@@ -143,10 +143,10 @@ public class CStorage<T> {
    * Borrows an object from the storage.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * String obj = storage.borrow("User1");
    * }</pre>
-   * </p>
    *
    * @param borrower the name of the borrower
    * @return the borrowed object
@@ -159,10 +159,10 @@ public class CStorage<T> {
    * Borrows an object from the storage that matches a predicate.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * String obj = storage.borrow("User1", obj -> obj.startsWith("A"));
    * }</pre>
-   * </p>
    *
    * @param borrower the name of the borrower
    * @param predicate the predicate to filter objects
@@ -186,10 +186,10 @@ public class CStorage<T> {
    * Releases a borrowed object back to the storage.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * storage.release(obj);
    * }</pre>
-   * </p>
    *
    * @param t the object to release
    * @return true if the object was successfully released, false otherwise
@@ -232,7 +232,11 @@ public class CStorage<T> {
                   return firstOrElse;
                 }
                 if (request.isTimeOuted()) {
-                  throw new CThreadTimeoutException("Request Timeout triggered on storage " + name + " for TestCase:" + request.borrower);
+                  throw new CThreadTimeoutException(
+                      "Request Timeout triggered on storage "
+                          + name
+                          + " for TestCase:"
+                          + request.borrower);
                 }
                 return null;
               });

@@ -6,31 +6,25 @@ import org.catools.web.drivers.CDriverEngine;
 import org.catools.web.entities.CWebPageInfo;
 
 /**
- * Web metrics collection class that aggregates action, transition and page load metrics
- * during automated web testing sessions.
+ * Web metrics collection class that aggregates action, transition and page load metrics during
+ * automated web testing sessions.
  *
- * @since 1.0
  * @see CWebActionMetric
  * @see CWebPageTransitionInfo
  * @see CWebPageLoadMetric
  * @see CWebPageInfo
+ * @since 1.0
  */
 @Data
 public class CWebMetric {
-  
-  /**
-   * Collection of individual web action performance metrics.
-   */
+
+  /** Collection of individual web action performance metrics. */
   private CWebActionMetrics actionPerformances = new CWebActionMetrics();
-  
-  /**
-   * Collection of page transition and navigation performance information.
-   */
+
+  /** Collection of page transition and navigation performance information. */
   private CWebPageTransitionsInfo pagePerformances = new CWebPageTransitionsInfo();
-  
-  /**
-   * Collection of page loading performance metrics.
-   */
+
+  /** Collection of page loading performance metrics. */
   private CWebPageLoadMetrics pageLoadMetrics = new CWebPageLoadMetrics();
 
   /**
@@ -42,13 +36,15 @@ public class CWebMetric {
    * @param startTime The timestamp when the action was initiated.
    * @since 1.0
    */
-  public void addActionMetric(String name, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CDate startTime) {
-    CWebActionMetric action = new CWebActionMetric()
-        .setName(name)
-        .setPageBeforeAction(pageBeforeAction)
-        .setPageAfterAction(pageAfterAction)
-        .setActionTime(startTime)
-        .setDuration(startTime.getDurationToNow().getNano());
+  public void addActionMetric(
+      String name, CWebPageInfo pageBeforeAction, CWebPageInfo pageAfterAction, CDate startTime) {
+    CWebActionMetric action =
+        new CWebActionMetric()
+            .setName(name)
+            .setPageBeforeAction(pageBeforeAction)
+            .setPageAfterAction(pageAfterAction)
+            .setActionTime(startTime)
+            .setDuration(startTime.getDurationToNow().getNano());
     actionPerformances.add(action);
   }
 
@@ -56,8 +52,8 @@ public class CWebMetric {
    * Adds a page transition performance record.
    *
    * @param pageTransitionInfo Information about the page transition.
-   * @since 1.0
    * @see CWebPageTransitionInfo
+   * @since 1.0
    */
   public void addPagePerformance(CWebPageTransitionInfo pageTransitionInfo) {
     pagePerformances.add(pageTransitionInfo);
@@ -68,16 +64,17 @@ public class CWebMetric {
    *
    * @param engine The engine instance to extract page information from.
    * @param startTime The timestamp when the page load operation was initiated.
-   * @since 1.0
    * @see CWebPageLoadMetric
+   * @since 1.0
    */
   public void addPageLoadMetric(CDriverEngine engine, CDate startTime) {
-    CWebPageLoadMetric pageLoad = new CWebPageLoadMetric()
-        .setName("Page Load")
-        .setTitle(engine.title())
-        .setUrl(engine.url())
-        .setActionTime(startTime)
-        .setDuration(startTime.getDurationToNow().getNano());
+    CWebPageLoadMetric pageLoad =
+        new CWebPageLoadMetric()
+            .setName("Page Load")
+            .setTitle(engine.title())
+            .setUrl(engine.url())
+            .setActionTime(startTime)
+            .setDuration(startTime.getDurationToNow().getNano());
     pageLoadMetrics.add(pageLoad);
   }
 }

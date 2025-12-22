@@ -13,5 +13,4 @@ public record CMcpServerStreamable(
     @JsonProperty("mcp-endpoint") String mcpEndpoint,
     @JsonProperty("disallow-delete") boolean disallowDelete,
     @JsonProperty("keep-alive-interval") long keepAliveInterval,
-    @JsonProperty("port") int port) {
-}
+    @JsonProperty("port") int port) {}

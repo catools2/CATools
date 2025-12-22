@@ -5,8 +5,8 @@ import org.catools.common.collections.CHashMap;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
- * Parser for Jira fields with JSON object values.
- * It extracts the relevant name-value pair based on a specified attribute from the JSON object.
+ * Parser for Jira fields with JSON object values. It extracts the relevant name-value pair based on
+ * a specified attribute from the JSON object.
  */
 public class CEtlJiraJsonFieldParser implements CEtlJiraFieldParser {
   private final IssueField field;
@@ -14,6 +14,7 @@ public class CEtlJiraJsonFieldParser implements CEtlJiraFieldParser {
 
   /**
    * Constructor to initialize the parser with the given issue field and value attribute.
+   *
    * @param field the Jira issue field to be parsed.
    * @param valueAttribute the attribute in the JSON object whose value will be extracted.
    */
@@ -24,6 +25,7 @@ public class CEtlJiraJsonFieldParser implements CEtlJiraFieldParser {
 
   /**
    * Rank of the parser. Lower values indicate higher priority.
+   *
    * @return 100, indicating lower priority.
    */
   @Override
@@ -32,8 +34,9 @@ public class CEtlJiraJsonFieldParser implements CEtlJiraFieldParser {
   }
 
   /**
-   * Determines if this parser is suitable for the given field.
-   * It checks if the field value is a JSON object containing the specified attribute.
+   * Determines if this parser is suitable for the given field. It checks if the field value is a
+   * JSON object containing the specified attribute.
+   *
    * @return true if this parser can handle the field, false otherwise.
    */
   @Override
@@ -45,7 +48,9 @@ public class CEtlJiraJsonFieldParser implements CEtlJiraFieldParser {
 
   /**
    * Extracts the name-value pair from the JSON object in the field.
-   * @return a map containing the field name and the value of the specified attribute from the JSON object.
+   *
+   * @return a map containing the field name and the value of the specified attribute from the JSON
+   *     object.
    */
   @Override
   public CHashMap<String, String> getNameValuePairs() {

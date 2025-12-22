@@ -1,9 +1,8 @@
 package org.catools.common.tests.wait;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.extensions.verify.hard.CBooleanVerification;
-
-import java.util.function.Consumer;
 
 public class CNumberWaiterTest extends CNumberBaseWaiterTest {
   @Override

@@ -24,11 +24,11 @@ import java.util.Collection;
  * }
  * </code> </strong>
  */
-public interface CDynamicCollectionExtension<E> extends
-    CStaticCollectionExtension<E, Collection<E>>,
-    CCollectionWaiter<E, Collection<E>>,
-    CCollectionWaitVerifier<E, Collection<E>>,
-    CCollectionWaitVerify<E, Collection<E>> {
+public interface CDynamicCollectionExtension<E>
+    extends CStaticCollectionExtension<E, Collection<E>>,
+        CCollectionWaiter<E, Collection<E>>,
+        CCollectionWaitVerifier<E, Collection<E>>,
+        CCollectionWaitVerify<E, Collection<E>> {
   @Override
   default boolean withWaiter() {
     return true;

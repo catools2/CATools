@@ -1,14 +1,13 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
 
 @NamedQuery(name = "getPriorityById", query = "FROM CEtlPriority where id=:id")
 @NamedQuery(name = "getPriorityByName", query = "FROM CEtlPriority where name=:name")
@@ -21,8 +20,8 @@ import java.io.Serializable;
 public class CEtlPriority implements Serializable {
 
   public static final CEtlPriority UNSET = new CEtlPriority("UNSET");
-  @Serial
-  private static final long serialVersionUID = 6067874018185613747L;
+  @Serial private static final long serialVersionUID = 6067874018185613747L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

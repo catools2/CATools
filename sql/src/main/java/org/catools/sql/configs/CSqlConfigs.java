@@ -18,7 +18,8 @@ public class CSqlConfigs {
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
     CATOOLS_SQL_RETRY_ON_CONNECTION_EXCEPTION("catools.sql.retry_on_connection_exception"),
-    CATOOLS_SQL_INTERNAL_BETWEEN_CONNECTION_EXCEPTION("catools.sql.internal_between_connection_exception");
+    CATOOLS_SQL_INTERNAL_BETWEEN_CONNECTION_EXCEPTION(
+        "catools.sql.internal_between_connection_exception");
 
     private final String path;
   }

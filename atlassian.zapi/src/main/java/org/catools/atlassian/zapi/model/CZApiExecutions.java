@@ -7,17 +7,14 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of ZAPI executions.
  *
- * <p>This class extends {@link CSet} to provide additional functionality for managing
- * a set of {@link CZApiExecution} objects, including constructors for various input types
- * and methods to retrieve executions by specific criteria.</p>
+ * <p>This class extends {@link CSet} to provide additional functionality for managing a set of
+ * {@link CZApiExecution} objects, including constructors for various input types and methods to
+ * retrieve executions by specific criteria.
  */
 public class CZApiExecutions extends CSet<CZApiExecution> {
 
-  /**
-   * Default constructor for creating an empty collection of executions.
-   */
-  public CZApiExecutions() {
-  }
+  /** Default constructor for creating an empty collection of executions. */
+  public CZApiExecutions() {}
 
   /**
    * Constructs a collection of executions from an array of {@link CZApiExecution} objects.
@@ -38,7 +35,8 @@ public class CZApiExecutions extends CSet<CZApiExecution> {
   }
 
   /**
-   * Constructs a collection of executions from an {@link Iterable} of {@link CZApiExecution} objects.
+   * Constructs a collection of executions from an {@link Iterable} of {@link CZApiExecution}
+   * objects.
    *
    * @param iterable an iterable of executions to initialize the collection
    */

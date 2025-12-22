@@ -1,8 +1,5 @@
 package org.catools.common.security;
 
-import org.catools.common.io.CFile;
-import org.catools.common.utils.CResourceUtil;
-
 import java.io.InputStream;
 import java.security.Key;
 import java.security.KeyStore;
@@ -10,21 +7,26 @@ import java.security.KeyStoreException;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import org.catools.common.io.CFile;
+import org.catools.common.utils.CResourceUtil;
 
 public class CKeyStore {
   private KeyStore keystore;
 
   public CKeyStore(String resourceName, Class classForLoader, String keystorePassword) {
-    CResourceUtil.performActionOnResource(resourceName, classForLoader, (s, inputStream) -> {
-      try {
-        keystore = KeyStore.getInstance("JKS");
-        keystore.load(inputStream, keystorePassword.toCharArray());
-        inputStream.close();
-      } catch (Throwable e) {
-        throw new CKeyStoreException("Failed to initialize keystore", e);
-      }
-      return null;
-    });
+    CResourceUtil.performActionOnResource(
+        resourceName,
+        classForLoader,
+        (s, inputStream) -> {
+          try {
+            keystore = KeyStore.getInstance("JKS");
+            keystore.load(inputStream, keystorePassword.toCharArray());
+            inputStream.close();
+          } catch (Throwable e) {
+            throw new CKeyStoreException("Failed to initialize keystore", e);
+          }
+          return null;
+        });
   }
 
   public CKeyStore(CFile keystoreFile, String keystorePassword) {

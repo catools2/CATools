@@ -13,8 +13,8 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is between lower and higher bound values (exclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    */
   public void betweenExclusive(final N actual, final N lowerBound, final N higherBound) {
@@ -24,11 +24,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is between lower and higher bound values (exclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the purpose of this verification
-   * @param params      parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void betweenExclusive(
       final N actual,
@@ -42,8 +42,8 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is between lower and higher bound values (Inclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    */
   public void betweenInclusive(final N actual, final N lowerBound, final N higherBound) {
@@ -53,11 +53,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is between lower and higher bound values (Inclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the purpose of this verification
-   * @param params      parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void betweenInclusive(
       final N actual,
@@ -73,7 +73,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void equals(final N actual, final N expected) {
@@ -85,12 +85,13 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equals(final N actual, final N expected, final String message, final Object... params) {
+  public void equals(
+      final N actual, final N expected, final String message, final Object... params) {
     toVerifier(actual).verifyEquals(expected, message, params);
   }
 
@@ -100,8 +101,8 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual    value to compare
-   * @param expected  value to compare
+   * @param actual value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
    */
   public void equalsP(final N actual, final N expected, final N precision) {
@@ -114,11 +115,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual    value to compare
-   * @param expected  value to compare
+   * @param actual value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void equalsP(
       final N actual,
@@ -132,7 +133,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value greater than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void greater(final N actual, final N expected) {
@@ -142,10 +143,10 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value greater than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void greater(
       final N actual, final N expected, final String message, final Object... params) {
@@ -155,7 +156,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value greater or equal to expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void greaterOrEqual(final N actual, final N expected) {
@@ -165,10 +166,10 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value greater or equal to expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void greaterOrEqual(
       final N actual, final N expected, final String message, final Object... params) {
@@ -178,7 +179,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value less than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void less(final N actual, final N expected) {
@@ -188,10 +189,10 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value less than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void less(final N actual, final N expected, final String message, final Object... params) {
     toVerifier(actual).verifyLess(expected, message, params);
@@ -200,7 +201,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value less or equal than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void lessOrEqual(final N actual, final N expected) {
@@ -210,10 +211,10 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual has value less or equal than expected.
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void lessOrEqual(
       final N actual, final N expected, final String message, final Object... params) {
@@ -223,8 +224,8 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is NOT between lower and higher bound values (Exclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    */
   public void notBetweenExclusive(final N actual, final N lowerBound, final N higherBound) {
@@ -234,11 +235,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is NOT between lower and higher bound values (Exclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the purpose of this verification
-   * @param params      parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notBetweenExclusive(
       final N actual,
@@ -246,15 +247,14 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
       final N higherBound,
       final String message,
       final Object... params) {
-    toVerifier(actual)
-        .verifyNotBetweenExclusive(lowerBound, higherBound, message, params);
+    toVerifier(actual).verifyNotBetweenExclusive(lowerBound, higherBound, message, params);
   }
 
   /**
    * Verify that actual value is NOT between lower and higher bound values (Inclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
    */
   public void notBetweenInclusive(final N actual, final N lowerBound, final N higherBound) {
@@ -264,11 +264,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
   /**
    * Verify that actual value is NOT between lower and higher bound values (Inclusive).
    *
-   * @param actual      value to compare
-   * @param lowerBound  lower bound inclusive
+   * @param actual value to compare
+   * @param lowerBound lower bound inclusive
    * @param higherBound higher bound inclusive
-   * @param message     information about the purpose of this verification
-   * @param params      parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notBetweenInclusive(
       final N actual,
@@ -276,8 +276,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
       final N higherBound,
       final String message,
       final Object... params) {
-    toVerifier(actual)
-        .verifyNotBetweenInclusive(lowerBound, higherBound, message, params);
+    toVerifier(actual).verifyNotBetweenInclusive(lowerBound, higherBound, message, params);
   }
 
   /**
@@ -285,7 +284,7 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void notEquals(final N actual, final N expected) {
@@ -297,10 +296,10 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
       final N actual, final N expected, final String message, final Object... params) {
@@ -312,8 +311,8 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if one value is null
    *
-   * @param actual    value to compare
-   * @param expected  value to compare
+   * @param actual value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
    */
   public void notEqualsP(final N actual, final N expected, final N precision) {
@@ -325,11 +324,11 @@ public class CNumberVerification<N extends Number & Comparable<N>> extends CBase
    *
    * <p>Please note that verification consider as passe if one value is null
    *
-   * @param actual    value to compare
-   * @param expected  value to compare
+   * @param actual value to compare
+   * @param expected value to compare
    * @param precision the acceptable precision
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEqualsP(
       final N actual,

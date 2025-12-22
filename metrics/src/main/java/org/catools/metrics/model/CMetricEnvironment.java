@@ -1,21 +1,19 @@
 package org.catools.metrics.model;
 
+import static org.catools.metrics.configs.CMetricsConfigs.PERFORMANCE_SCHEMA;
+
+import java.io.Serial;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serial;
-import java.io.Serializable;
-
-import static org.catools.metrics.configs.CMetricsConfigs.PERFORMANCE_SCHEMA;
-
 
 @Entity
 @Table(name = "environment", schema = PERFORMANCE_SCHEMA)
@@ -26,8 +24,7 @@ import static org.catools.metrics.configs.CMetricsConfigs.PERFORMANCE_SCHEMA;
 @Accessors(chain = true)
 public class CMetricEnvironment implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6267674018185613707L;
+  @Serial private static final long serialVersionUID = 6267674018185613707L;
 
   @Id
   @Column(name = "code", length = 10, unique = true, nullable = false)

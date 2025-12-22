@@ -1,10 +1,9 @@
 package org.catools.common.tests.verify.hard;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.extensions.verify.hard.CMapVerification;
 import org.catools.common.tests.verify.CMapVerificationBaseTest;
-
-import java.util.function.Consumer;
 
 public class CMapVerificationVerifyTest extends CMapVerificationBaseTest {
   @Override

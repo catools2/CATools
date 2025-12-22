@@ -15,8 +15,8 @@ import org.json.JSONObject;
 /**
  * Utility class for parsing execution data in the ZAPI system.
  *
- * <p>This class provides methods to parse {@link CZApiExecutions} objects from JSON responses.
- * It supports parsing executions from both {@link Response} and {@link JSONObject} inputs.</p>
+ * <p>This class provides methods to parse {@link CZApiExecutions} objects from JSON responses. It
+ * supports parsing executions from both {@link Response} and {@link JSONObject} inputs.
  */
 @Slf4j
 @UtilityClass

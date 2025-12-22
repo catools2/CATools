@@ -5,25 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * A thread factory that creates threads with a specified name prefix.
- */
+/** A thread factory that creates threads with a specified name prefix. */
 @Slf4j
 public final class CNamedThread implements ThreadFactory {
 
-  /**
-   * The pool number counter for threads created by this factory.
-   */
+  /** The pool number counter for threads created by this factory. */
   private static final AtomicInteger poolNumber = new AtomicInteger(1);
 
-  /**
-   * The thread number counter for threads created by this factory.
-   */
+  /** The thread number counter for threads created by this factory. */
   private final AtomicInteger threadNumber = new AtomicInteger(1);
 
-  /**
-   * The name prefix for threads created by this factory.
-   */
+  /** The name prefix for threads created by this factory. */
   private final String namePrefix;
 
   /**

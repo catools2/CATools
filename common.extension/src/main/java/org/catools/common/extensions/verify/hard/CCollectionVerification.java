@@ -5,9 +5,7 @@ import org.catools.common.extensions.verify.interfaces.base.CCollectionVerify;
 
 import java.util.Collection;
 
-/**
- * Collection verification class contains all verification method which is related to Collection
- */
+/** Collection verification class contains all verification method which is related to Collection */
 @Slf4j
 public class CCollectionVerification extends CIterableVerification {
 
@@ -24,10 +22,11 @@ public class CCollectionVerification extends CIterableVerification {
    * Verify the map size is equal to expected value.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public <E, C extends Collection<E>> void verifySizeEquals(C actual, int expected, final String message, final Object... params) {
+  public <E, C extends Collection<E>> void verifySizeEquals(
+      C actual, int expected, final String message, final Object... params) {
     toVerifier(actual).verifySizeEquals(expected, message, params);
   }
 
@@ -44,10 +43,11 @@ public class CCollectionVerification extends CIterableVerification {
    * Verify that actual has value greater than expected.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public <E, C extends Collection<E>> void verifySizeIsGreaterThan(C actual, int expected, final String message, final Object... params) {
+  public <E, C extends Collection<E>> void verifySizeIsGreaterThan(
+      C actual, int expected, final String message, final Object... params) {
     toVerifier(actual).verifySizeIsGreaterThan(expected, message, params);
   }
 
@@ -64,10 +64,11 @@ public class CCollectionVerification extends CIterableVerification {
    * Verify that actual has value less than expected.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public <E, C extends Collection<E>> void verifySizeIsLessThan(C actual, int expected, final String message, final Object... params) {
+  public <E, C extends Collection<E>> void verifySizeIsLessThan(
+      C actual, int expected, final String message, final Object... params) {
     toVerifier(actual).verifySizeIsLessThan(expected, message, params);
   }
 

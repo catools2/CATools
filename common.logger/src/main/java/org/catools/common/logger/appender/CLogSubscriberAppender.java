@@ -1,5 +1,8 @@
 package org.catools.common.logger.appender;
 
+import static org.catools.common.logger.CLogEventHelper.getMessage;
+
+import java.io.Serializable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.Layout;
@@ -11,10 +14,6 @@ import org.apache.logging.log4j.core.config.plugins.PluginElement;
 import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.catools.common.logger.CLoggerSubscriber;
 import org.catools.common.security.CSensitiveDataMaskingManager;
-
-import java.io.Serializable;
-
-import static org.catools.common.logger.CLogEventHelper.getMessage;
 
 @Plugin(
     name = "CLogSubscriberAppender",

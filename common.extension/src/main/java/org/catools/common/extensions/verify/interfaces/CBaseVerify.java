@@ -1,19 +1,16 @@
 package org.catools.common.extensions.verify.interfaces;
 
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import org.catools.common.extensions.states.interfaces.CBaseState;
 import org.catools.common.extensions.verify.CVerificationInfo;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.wait.interfaces.CBaseWaiter;
 import org.catools.common.utils.CStringUtil;
 
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
-/**
- * CBaseVerifier is an interface to hold shared method between all verifier classes.
- */
+/** CBaseVerifier is an interface to hold shared method between all verifier classes. */
 //
 public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> {
 
@@ -25,7 +22,8 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       BiFunction<A, B, Boolean> verifyMethod,
       final String message,
       final Object... params) {
-    _verify(getVerificationQueue(), actualProvider, expectedSupplier, verifyMethod, message, params);
+    _verify(
+        getVerificationQueue(), actualProvider, expectedSupplier, verifyMethod, message, params);
   }
 
   default <A, B, V extends CVerificationQueue> void _verify(
@@ -55,7 +53,6 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
               verifyMethod));
     }
   }
-
 
   default <B> void _verify(
       O actual,
@@ -102,7 +99,15 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    _verify(getVerificationQueue(), actual, expected, verifyMethod, waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify(
+        getVerificationQueue(),
+        actual,
+        expected,
+        verifyMethod,
+        waitInSeconds,
+        intervalInMilliSeconds,
+        message,
+        params);
   }
 
   default <B, V extends CVerificationQueue> void _verify(
@@ -166,7 +171,8 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       BiConsumer<O, B> onFail,
       final String message,
       final Object... params) {
-    _verify_with_failure_handler(getVerificationQueue(), expected, verifyMethod, onFail, message, params);
+    _verify_with_failure_handler(
+        getVerificationQueue(), expected, verifyMethod, onFail, message, params);
   }
 
   default <B, V extends CVerificationQueue> void _verify_with_failure_handler(
@@ -232,7 +238,8 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       final int waitInSeconds,
       final String message,
       final Object... params) {
-    _verify_with_failure_handler(getVerificationQueue(), expected, verifyMethod, onFail, waitInSeconds, message, params);
+    _verify_with_failure_handler(
+        getVerificationQueue(), expected, verifyMethod, onFail, waitInSeconds, message, params);
   }
 
   default <B, V extends CVerificationQueue> void _verify_with_failure_handler(
@@ -261,7 +268,14 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    _verify(getVerificationQueue(), expected, verifyMethod, waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify(
+        getVerificationQueue(),
+        expected,
+        verifyMethod,
+        waitInSeconds,
+        intervalInMilliSeconds,
+        message,
+        params);
   }
 
   default <B, V extends CVerificationQueue> void _verify(
@@ -291,7 +305,15 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
       final int intervalInMilliSeconds,
       final String message,
       final Object... params) {
-    _verify_with_failure_handler(getVerificationQueue(), expected, verifyMethod, onFail, waitInSeconds, intervalInMilliSeconds, message, params);
+    _verify_with_failure_handler(
+        getVerificationQueue(),
+        expected,
+        verifyMethod,
+        onFail,
+        waitInSeconds,
+        intervalInMilliSeconds,
+        message,
+        params);
   }
 
   default <B, V extends CVerificationQueue> void _verify_with_failure_handler(
@@ -324,7 +346,6 @@ public interface CBaseVerify<O, S extends CBaseState<O>> extends CBaseWaiter<O> 
   }
 
   default CVerificationQueue getVerificationQueue() {
-    return new CVerificationQueue() {
-    };
+    return new CVerificationQueue() {};
   }
 }

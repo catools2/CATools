@@ -1,5 +1,7 @@
 package org.catools.common.logger.converters;
 
+import static org.catools.common.logger.CLogEventHelper.getMessage;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
@@ -9,15 +11,11 @@ import org.apache.logging.log4j.core.pattern.PatternConverter;
 import org.catools.common.logger.CLoggerSubscriber;
 import org.catools.common.security.CSensitiveDataMaskingManager;
 
-import static org.catools.common.logger.CLogEventHelper.getMessage;
-
 @Plugin(name = "CEventTriggerConverter", category = PatternConverter.CATEGORY)
 @ConverterKeys({"CEvnT"})
 public class CEventTriggerConverter extends LogEventPatternConverter {
 
-  /**
-   * Constructs an instance of CEventTriggerConverter.
-   */
+  /** Constructs an instance of CEventTriggerConverter. */
   protected CEventTriggerConverter() {
     super("Event Trigger", "CEvnT");
   }

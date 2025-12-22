@@ -1,5 +1,6 @@
 package org.catools.common.configs;
 
+import java.io.File;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -9,11 +10,9 @@ import org.catools.common.hocon.model.CHoconPath;
 import org.catools.common.utils.CConfigUtil;
 import org.catools.common.utils.CFileUtil;
 
-import java.io.File;
-
 /**
- * Utility class for managing file paths used in the application.
- * Provides methods to retrieve various directories and files based on configuration values.
+ * Utility class for managing file paths used in the application. Provides methods to retrieve
+ * various directories and files based on configuration values.
  */
 @UtilityClass
 public class CPathConfigs {
@@ -46,8 +45,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to the local configuration folder.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the path to the local configuration folder. Ensures the folder exists by creating it
+   * if necessary.
    *
    * @return A `File` object pointing to the local configuration folder.
    */
@@ -58,8 +57,7 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to the output folder.
-   * The folder name is based on the current run name.
+   * Retrieves the path to the output folder. The folder name is based on the current run name.
    *
    * @return A `File` object pointing to the output folder.
    */
@@ -80,8 +78,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the root directory for output files.
-   * Ensures the directory exists by creating it if necessary.
+   * Retrieves the root directory for output files. Ensures the directory exists by creating it if
+   * necessary.
    *
    * @return A `File` object pointing to the output root directory.
    */
@@ -144,8 +142,7 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the storage folder path.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the storage folder path. Ensures the folder exists by creating it if necessary.
    *
    * @return A `File` object pointing to the storage folder.
    */
@@ -165,8 +162,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the user's home directory path.
-   * Ensures the directory exists by creating it if necessary.
+   * Retrieves the user's home directory path. Ensures the directory exists by creating it if
+   * necessary.
    *
    * @return A `File` object pointing to the user's home directory.
    */
@@ -186,8 +183,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to a child folder inside the output directory.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the path to a child folder inside the output directory. Ensures the folder exists by
+   * creating it if necessary.
    *
    * @param childFolder The name of the child folder.
    * @return A `File` object pointing to the specified child folder.
@@ -199,8 +196,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to a child folder inside the user's home directory.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the path to a child folder inside the user's home directory. Ensures the folder
+   * exists by creating it if necessary.
    *
    * @param childFolder The name of the child folder.
    * @return A `File` object pointing to the specified child folder.
@@ -212,8 +209,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to a child folder inside the temporary directory.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the path to a child folder inside the temporary directory. Ensures the folder exists
+   * by creating it if necessary.
    *
    * @param childFolder The name of the child folder.
    * @return A `File` object pointing to the specified child folder.
@@ -225,8 +222,8 @@ public class CPathConfigs {
   }
 
   /**
-   * Retrieves the path to a child folder inside the storage directory.
-   * Ensures the folder exists by creating it if necessary.
+   * Retrieves the path to a child folder inside the storage directory. Ensures the folder exists by
+   * creating it if necessary.
    *
    * @param childFolder The name of the child folder.
    * @return A `File` object pointing to the specified child folder.
@@ -235,6 +232,36 @@ public class CPathConfigs {
     File file = fromStorage(childFolder);
     file.mkdirs();
     return file;
+  }
+
+  /**
+   * Retrieves the path to a child file inside the output directory.
+   *
+   * @param childFolder
+   * @return
+   */
+  public static File getOutputChildFile(String childFolder) {
+    return fromOutput(childFolder);
+  }
+
+  /**
+   * Retrieves the path to a child file inside the temporary directory.
+   *
+   * @param childFolder
+   * @return
+   */
+  public static File getTempChildFile(String childFolder) {
+    return fromTmp(childFolder);
+  }
+
+  /**
+   * Retrieves the path to a child file inside the storage directory.
+   *
+   * @param childFolder
+   * @return
+   */
+  public static File getStorageChildFile(String childFolder) {
+    return fromStorage(childFolder);
   }
 
   /**
@@ -265,28 +292,19 @@ public class CPathConfigs {
   }
 
   /**
-   * Enum representing configuration keys used in the `CPathConfigs` class.
-   * Each enum constant corresponds to a specific configuration path.
+   * Enum representing configuration keys used in the `CPathConfigs` class. Each enum constant
+   * corresponds to a specific configuration path.
    */
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
-    /**
-     * Configuration key for the home directory path.
-     * Path: `catools.paths.home_directory`
-     */
+    /** Configuration key for the home directory path. Path: `catools.paths.home_directory` */
     CATOOLS_PATH_HOME_DIRECTORY("catools.paths.home_directory"),
 
-    /**
-     * Configuration key for the storage directory path.
-     * Path: `catools.paths.storage_directory`
-     */
+    /** Configuration key for the storage directory path. Path: `catools.paths.storage_directory` */
     CATOOLS_PATH_STORAGE_DIRECTORY("catools.paths.storage_directory"),
 
-    /**
-     * Configuration key for the output directory path.
-     * Path: `catools.paths.output_directory`
-     */
+    /** Configuration key for the output directory path. Path: `catools.paths.output_directory` */
     CATOOLS_PATH_OUTPUT_DIRECTORY("catools.paths.output_directory");
 
     private final String path; // The HOCON configuration path for the enum constant.

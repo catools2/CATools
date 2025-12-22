@@ -16,10 +16,9 @@ import org.catools.common.date.CDate;
 /**
  * Represents a test case in the Scale system.
  *
- * <p>This class models the details of a test case, including its metadata,
- * status, associated scripts, and custom fields. It supports JSON
- * serialization/deserialization and uses custom serializers/deserializers
- * for date handling.</p>
+ * <p>This class models the details of a test case, including its metadata, status, associated
+ * scripts, and custom fields. It supports JSON serialization/deserialization and uses custom
+ * serializers/deserializers for date handling.
  */
 @Data
 @NoArgsConstructor
@@ -28,95 +27,61 @@ import org.catools.common.date.CDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CZScaleTestCase {
 
-  /**
-   * The owner of the test case.
-   */
+  /** The owner of the test case. */
   private String owner;
 
-  /**
-   * The user who last updated the test case.
-   */
+  /** The user who last updated the test case. */
   private String updatedBy;
 
-  /**
-   * The precondition for the test case.
-   */
+  /** The precondition for the test case. */
   private String precondition;
 
-  /**
-   * The major version of the test case.
-   */
+  /** The major version of the test case. */
   private int majorVersion;
 
-  /**
-   * The estimated time to execute the test case, in seconds.
-   */
+  /** The estimated time to execute the test case, in seconds. */
   private int estimatedTime;
 
-  /**
-   * The priority of the test case.
-   */
+  /** The priority of the test case. */
   private String priority;
 
-  /**
-   * The objective of the test case.
-   */
+  /** The objective of the test case. */
   private String objective;
 
-  /**
-   * The key of the project associated with the test case.
-   */
+  /** The key of the project associated with the test case. */
   private String projectKey;
 
-  /**
-   * The user who created the test case.
-   */
+  /** The user who created the test case. */
   private String createdBy;
 
-  /**
-   * Indicates whether this is the latest version of the test case.
-   */
+  /** Indicates whether this is the latest version of the test case. */
   private boolean latestVersion;
 
-  /**
-   * The status of the last test result for the test case.
-   */
+  /** The status of the last test result for the test case. */
   private String lastTestResultStatus;
 
-  /**
-   * The name of the test case.
-   */
+  /** The name of the test case. */
   private String name;
 
-  /**
-   * The unique identifier of the test case.
-   */
+  /** The unique identifier of the test case. */
   private String id;
 
-  /**
-   * The key of the test case.
-   */
+  /** The key of the test case. */
   private String key;
 
-  /**
-   * The status of the test case.
-   */
+  /** The status of the test case. */
   private String status;
 
-  /**
-   * The component associated with the test case.
-   */
+  /** The component associated with the test case. */
   private String component;
 
-  /**
-   * The folder where the test case is organized.
-   */
+  /** The folder where the test case is organized. */
   private String folder;
 
   /**
    * The date and time when the test case was last updated.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -125,39 +90,27 @@ public class CZScaleTestCase {
   /**
    * The date and time when the test case was created.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
   private CDate createdOn;
 
-  /**
-   * A list of labels associated with the test case.
-   */
+  /** A list of labels associated with the test case. */
   private CList<String> labels;
 
-  /**
-   * A list of issue links associated with the test case.
-   */
+  /** A list of issue links associated with the test case. */
   private CList<String> issueLinks;
 
-  /**
-   * The test script associated with the test case.
-   */
+  /** The test script associated with the test case. */
   private CZScaleTestScript testScript;
 
-  /**
-   * A map of custom fields associated with the test case.
-   */
+  /** A map of custom fields associated with the test case. */
   private CHashMap<String, String> customFields;
 
-  /**
-   * The parameters associated with the test case.
-   */
+  /** The parameters associated with the test case. */
   private CZScaleTestCaseParameters parameters;
 
-  /**
-   * The change history of the test case.
-   */
+  /** The change history of the test case. */
   private CZScaleChangeHistories histories;
 }

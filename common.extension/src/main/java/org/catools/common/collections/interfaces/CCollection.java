@@ -31,13 +31,18 @@ import java.util.stream.Stream;
  * @see CList
  */
 @JsonIgnoreProperties(value = {"empty"})
-public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>, Collection<E>, CCollectionVerify<E, C>, CCollectionVerifier<E, C>, CCollectionState<E, C> {
+public interface CCollection<E, C extends Collection<E>>
+    extends CIterable<E, C>,
+        Collection<E>,
+        CCollectionVerify<E, C>,
+        CCollectionVerifier<E, C>,
+        CCollectionState<E, C> {
 
   /**
    * Add {@code e} to the list if the {@code predicate} condition returns true.
    *
    * @param predicate to issue condition
-   * @param e         element to add if condition passed
+   * @param e element to add if condition passed
    * @return true if the condition matched otherwise return false
    */
   default boolean addIf(Predicate<E> predicate, E e) {
@@ -51,10 +56,10 @@ public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>
    *
    * @param o element whose presence in this collection is to be tested
    * @return {@code true} if this collection contains the specified element
-   * @throws ClassCastException   if the type of the specified element is incompatible with this
-   *                              collection
+   * @throws ClassCastException if the type of the specified element is incompatible with this
+   *     collection
    * @throws NullPointerException if the specified element is null and this collection does not
-   *                              permit null elements
+   *     permit null elements
    */
   boolean contains(Object o);
 
@@ -114,9 +119,7 @@ public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>
    */
   default CList<CList<E>> partition(int size) {
     return new CList<>(
-        Lists.partition(new ArrayList<>(_get()), size).stream()
-            .map(CList::new)
-            .toList());
+        Lists.partition(new ArrayList<>(_get()), size).stream().map(CList::new).toList());
   }
 
   /**
@@ -125,10 +128,10 @@ public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>
    *
    * @param filter predicate which returns {@code true} for elements to be removed
    * @return {@code true} if any elements were removed
-   * @throws NullPointerException          if the specified filter is null
+   * @throws NullPointerException if the specified filter is null
    * @throws UnsupportedOperationException if elements cannot be removed from this collection.
-   *                                       Implementations may throw this exception if CCliItemCollection matching element cannot be
-   *                                       removed or if, in general, removal is not supported.
+   *     Implementations may throw this exception if CCliItemCollection matching element cannot be
+   *     removed or if, in general, removal is not supported.
    */
   boolean removeIf(Predicate<? super E> filter);
 
@@ -146,8 +149,8 @@ public interface CCollection<E, C extends Collection<E>> extends CIterable<E, C>
    * Returns sequential {@code Stream} with this collection as its source.
    *
    * <p>This method should be overridden when the {@see #spliterator()} method cannot return
-   * spliterator that is {@code IMMUTABLE}, {@code CONCURRENT}, or <em>late-binding</em>. (See
-   * {@see #spliterator()} for details.)
+   * spliterator that is {@code IMMUTABLE}, {@code CONCURRENT}, or <em>late-binding</em>. (See {@see
+   * #spliterator()} for details.)
    *
    * @return sequential {@code Stream} over the elements in this collection
    */

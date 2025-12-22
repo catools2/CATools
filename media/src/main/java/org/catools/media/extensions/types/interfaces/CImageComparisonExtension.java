@@ -1,13 +1,13 @@
 package org.catools.media.extensions.types.interfaces;
 
+import static org.catools.media.utils.CImageUtil.toBufferedImage;
+
 import org.catools.common.date.CDate;
 import org.catools.common.io.CFile;
 import org.catools.media.extensions.states.interfaces.CImageComparisonState;
 import org.catools.media.extensions.verify.interfaces.waitVerify.CImageComparisonWaitVerify;
 import org.catools.media.extensions.wait.interfaces.CImageComparisonWaiter;
 import org.catools.media.utils.CImageUtil;
-
-import static org.catools.media.utils.CImageUtil.toBufferedImage;
 
 /**
  * CImageComparisonExtension is an central interface where we extend all boolean related interfaces
@@ -27,7 +27,8 @@ import static org.catools.media.utils.CImageUtil.toBufferedImage;
  * }
  * </code> </strong>
  */
-public interface CImageComparisonExtension extends CImageComparisonWaiter, CImageComparisonWaitVerify, CImageComparisonState {
+public interface CImageComparisonExtension
+    extends CImageComparisonWaiter, CImageComparisonWaitVerify, CImageComparisonState {
 
   /**
    * Save screenshot using specific format to the specified file
@@ -79,5 +80,4 @@ public interface CImageComparisonExtension extends CImageComparisonWaiter, CImag
   default String getBase64() {
     return CImageUtil.getBase64(toBufferedImage(_get()), "png");
   }
-
 }

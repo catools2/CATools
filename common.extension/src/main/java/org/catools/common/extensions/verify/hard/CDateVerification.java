@@ -6,9 +6,7 @@ import org.catools.common.extensions.verify.interfaces.base.CDateVerify;
 
 import java.util.Date;
 
-/**
- * Date verification class contains all verification method which is related to Date
- */
+/** Date verification class contains all verification method which is related to Date */
 @Slf4j
 public class CDateVerification extends CBaseVerification {
 
@@ -18,7 +16,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void equals(final Date actual, final Date expected) {
@@ -31,10 +29,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void equals(
       final Date actual, final Date expected, final String message, final Object... params) {
@@ -48,9 +46,9 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    */
   public void equalsByFormat(final Date actual, final Date expected, final String format) {
     toVerifier(actual).verifyEqualsByFormat(expected, format);
@@ -63,11 +61,11 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param format   date format to be use
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param format date format to be use
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void equalsByFormat(
       final Date actual,
@@ -84,7 +82,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void equalsDatePortion(final Date actual, final Date expected) {
@@ -97,10 +95,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void equalsDatePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
@@ -113,7 +111,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void equalsTimePortion(final Date actual, final Date expected) {
@@ -126,10 +124,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if both value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void equalsTimePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
@@ -142,7 +140,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void notEquals(final Date actual, final Date expected) {
@@ -155,10 +153,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEquals(
       final Date actual, final Date expected, final String message, final Object... params) {
@@ -172,9 +170,9 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    */
   public void notEqualsByFormat(final Date actual, final Date expected, final String format) {
     toVerifier(actual).verifyNotEqualsByFormat(expected, format);
@@ -187,11 +185,11 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param format   date format to be use
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param format date format to be use
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEqualsByFormat(
       final Date actual,
@@ -209,7 +207,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void notEqualsDatePortion(final Date actual, final Date expected) {
@@ -223,10 +221,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEqualsDatePortion(
       final Date actual, final Date expected, final String message, final Object... params) {
@@ -240,7 +238,7 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
    */
   public void notEqualsTimePortion(final Date actual, final Date expected) {
@@ -254,10 +252,10 @@ public class CDateVerification extends CBaseVerification {
    *
    * <p>Please note that verification consider as passe if one of value is null
    *
-   * @param actual   value to compare
+   * @param actual value to compare
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   public void notEqualsTimePortion(
       final Date actual, final Date expected, final String message, final Object... params) {

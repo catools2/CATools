@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface CConfig {
   /**
-   * Define if the config value is sensitive.
-   * Sensitive data replace to "*" when using catools common.logger.
+   * Define if the config value is sensitive. Sensitive data replace to "*" when using catools
+   * common.logger.
    *
    * @return true if data sensitive otherwise false
    */
@@ -42,7 +42,8 @@ public interface CConfig {
   String asString();
 
   /**
-   * return the string value of configuration or the default value if the configuration is not defined
+   * return the string value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return string value of configuration or the default value if the configuration is not defined
@@ -59,7 +60,8 @@ public interface CConfig {
   Boolean asBoolean();
 
   /**
-   * return the Boolean value of configuration or the default value if the configuration is not defined
+   * return the Boolean value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Boolean value of configuration or the default value if the configuration is not defined
@@ -76,7 +78,8 @@ public interface CConfig {
   Number asNumber();
 
   /**
-   * return the Number value of configuration or the default value if the configuration is not defined
+   * return the Number value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Number value of configuration or the default value if the configuration is not defined
@@ -93,7 +96,8 @@ public interface CConfig {
   Integer asInteger();
 
   /**
-   * return the Integer value of configuration or the default value if the configuration is not defined
+   * return the Integer value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Integer value of configuration or the default value if the configuration is not defined
@@ -127,7 +131,8 @@ public interface CConfig {
   Double asDouble();
 
   /**
-   * return the Double value of configuration or the default value if the configuration is not defined
+   * return the Double value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Double value of configuration or the default value if the configuration is not defined
@@ -147,7 +152,7 @@ public interface CConfig {
   /**
    * return the Enum value of configuration or the default value if the configuration is not defined
    *
-   * @param clazz        model class type
+   * @param clazz model class type
    * @param defaultValue default value to set if configuration is not defined
    * @return Enum value of configuration or the default value if the configuration is not defined
    */
@@ -163,7 +168,8 @@ public interface CConfig {
   Object asObject();
 
   /**
-   * return the Object value of configuration or the default value if the configuration is not defined
+   * return the Object value of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Object value of configuration or the default value if the configuration is not defined
@@ -180,7 +186,8 @@ public interface CConfig {
   List<String> asStrings();
 
   /**
-   * return the string list of configuration or the default value if the configuration is not defined
+   * return the string list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return string list of configuration or the default value if the configuration is not defined
@@ -197,7 +204,8 @@ public interface CConfig {
   List<Boolean> asBooleans();
 
   /**
-   * return the Boolean list of configuration or the default value if the configuration is not defined
+   * return the Boolean list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Boolean list of configuration or the default value if the configuration is not defined
@@ -214,7 +222,8 @@ public interface CConfig {
   List<Number> asNumbers();
 
   /**
-   * return the Number list of configuration or the default value if the configuration is not defined
+   * return the Number list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Number list of configuration or the default value if the configuration is not defined
@@ -231,7 +240,8 @@ public interface CConfig {
   List<Integer> asIntegers();
 
   /**
-   * return the Integer list of configuration or the default value if the configuration is not defined
+   * return the Integer list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Integer list of configuration or the default value if the configuration is not defined
@@ -265,7 +275,8 @@ public interface CConfig {
   List<Double> asDoubles();
 
   /**
-   * return the Double list of configuration or the default value if the configuration is not defined
+   * return the Double list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Double list of configuration or the default value if the configuration is not defined
@@ -299,7 +310,8 @@ public interface CConfig {
   List<? extends Object> asObjects();
 
   /**
-   * return the Object list of configuration or the default value if the configuration is not defined
+   * return the Object list of configuration or the default value if the configuration is not
+   * defined
    *
    * @param defaultValue default value to set if configuration is not defined
    * @return Object list of configuration or the default value if the configuration is not defined
@@ -312,7 +324,7 @@ public interface CConfig {
    * Read model from configuration
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   <T> T asModel(Class<T> clazz);
@@ -320,8 +332,8 @@ public interface CConfig {
   /**
    * Read model from configuration
    *
-   * @param clazz        model class type
-   * @param <T>          class Type
+   * @param clazz model class type
+   * @param <T> class Type
    * @param defaultValue the default value to return if the property not found
    * @return the model
    */

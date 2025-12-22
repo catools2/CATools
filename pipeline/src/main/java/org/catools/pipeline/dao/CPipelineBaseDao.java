@@ -1,13 +1,12 @@
 package org.catools.pipeline.dao;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CRetry;
-
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CRetry;
 
 @Slf4j
 public class CPipelineBaseDao {
@@ -25,7 +24,7 @@ public class CPipelineBaseDao {
     return doTransaction(session -> session.merge(record));
   }
 
-  protected synchronized static <T> T getTransactionResult(Function<EntityManager, T> action) {
+  protected static synchronized <T> T getTransactionResult(Function<EntityManager, T> action) {
     EntityManager session = getEntityManager();
     EntityTransaction tx = null;
     try {
@@ -41,13 +40,12 @@ public class CPipelineBaseDao {
       log.error("Failed To Perform Transaction.", e);
       throw e;
     } finally {
-      if (session.isJoinedToTransaction())
-        session.flush();
+      if (session.isJoinedToTransaction()) session.flush();
       session.close();
     }
   }
 
-  protected synchronized static <T> T doTransaction(Function<EntityManager, T> action) {
+  protected static synchronized <T> T doTransaction(Function<EntityManager, T> action) {
     EntityManager session = getEntityManager();
     EntityTransaction tx = null;
     try {
@@ -63,18 +61,21 @@ public class CPipelineBaseDao {
       }
       throw e;
     } finally {
-      if (session.isJoinedToTransaction())
-        session.flush();
+      if (session.isJoinedToTransaction()) session.flush();
       session.close();
     }
   }
 
   protected static synchronized EntityManagerFactory getEntityManagerFactory() {
     if (entityManagerFactory == null) {
-      entityManagerFactory = CRetry.retry(idx -> {
-        log.debug("Attempt {} to connect to create pipeline entity manager", idx + 1);
-        return Persistence.createEntityManagerFactory("CPipelinePersistence");
-      }, 10, 10);
+      entityManagerFactory =
+          CRetry.retry(
+              idx -> {
+                log.debug("Attempt {} to connect to create pipeline entity manager", idx + 1);
+                return Persistence.createEntityManagerFactory("CPipelinePersistence");
+              },
+              10,
+              10);
     }
     return entityManagerFactory;
   }

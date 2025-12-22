@@ -51,14 +51,11 @@ public class CWebPageTest extends CPlaywrightTest<CDriver> {
 
   @SuppressWarnings("unused")
   public static class WebTest1 extends CWebPage<CDriver> {
-    @CFindBy(locator = "[name='name']",
-        name = "elemName",
-        waitInSeconds = 10)
-    private CWebElement<CDriver> element1;
-    @CFindBys(xpath = "//input",
-        name = "elemName",
-        waitForFirstElementInSecond = 10)
-    private CWebElements<CDriver> elements1;
+    @CFindBy(locator = "[name='name']", name = "elemName", waitInSeconds = 10)
+    private CWebElement element1;
+
+    @CFindBys(xpath = "//input", name = "elemName", waitForFirstElementInSecond = 10)
+    private CWebElements elements1;
 
     public WebTest1(CDriver driver, String titlePattern) {
       super(driver, titlePattern);
@@ -71,17 +68,16 @@ public class CWebPageTest extends CPlaywrightTest<CDriver> {
 
   @SuppressWarnings("unused")
   public static class WebTest2 extends CWebPage<CDriver> {
-    private CWebElement<CDriver> element1;
+    private CWebElement element1;
+
     @CFindBy(locator = "[name='name']")
-    private CWebElement<CDriver> element2;
-    @CFindBy(locator = "[name='name']",
-        name = "elemName",
-        waitInSeconds = 10)
-    private CWebElement<CDriver> element3;
-    @CFindBys(xpath = "//input",
-        name = "elemName",
-        waitForFirstElementInSecond = 10)
-    private CWebElements<CDriver> elements4;
+    private CWebElement element2;
+
+    @CFindBy(locator = "[name='name']", name = "elemName", waitInSeconds = 10)
+    private CWebElement element3;
+
+    @CFindBys(xpath = "//input", name = "elemName", waitForFirstElementInSecond = 10)
+    private CWebElements elements4;
 
     public WebTest2(CDriver driver, String titlePattern) {
       super(driver, titlePattern);
@@ -90,10 +86,8 @@ public class CWebPageTest extends CPlaywrightTest<CDriver> {
 
   @SuppressWarnings("unused")
   public static class WebTest3 extends CWebPage<CDriver> {
-    @CFindBy(locator = "[name='name']",
-        name = "elemName",
-        waitInSeconds = 10)
-    private CWebElements<CDriver> elements2;
+    @CFindBy(locator = "[name='name']", name = "elemName", waitInSeconds = 10)
+    private CWebElements elements2;
 
     public WebTest3(CDriver driver, String titlePattern) {
       super(driver, titlePattern);
@@ -115,5 +109,4 @@ public class CWebPageTest extends CPlaywrightTest<CDriver> {
       quit();
     }
   }
-
 }

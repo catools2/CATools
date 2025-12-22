@@ -1,5 +1,7 @@
 package org.catools.common.tests.wait;
 
+import java.util.Collection;
+import java.util.List;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.extensions.verify.CVerify;
@@ -7,9 +9,6 @@ import org.catools.common.extensions.wait.interfaces.CCollectionWaiter;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Collection;
-import java.util.List;
 
 public class CCollectionWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -20,8 +19,10 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testWaitSizeIsGreaterThan() {
-    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
-    CVerify.Bool.isTrue(toWaiter(new CSet<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(new CList<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(new CSet<>(1, 2, 3)).waitSizeIsGreaterThan(2), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -84,23 +85,17 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsNone() {
     CVerify.Bool.isTrue(
-        toWaiter(new CList<>(1, 2, 3)).waitContainsNone(List.of(4, 5, 6)),
-        "%s#%s",
-        getParams());
+        toWaiter(new CList<>(1, 2, 3)).waitContainsNone(List.of(4, 5, 6)), "%s#%s", getParams());
     CVerify.Bool.isTrue(
         toWaiter(new CList<>(1, 2, 3)).waitContainsNone(new CSet<>(4, 5, 6)), "%s#%s", getParams());
     CVerify.Bool.isTrue(
-        toWaiter(new CSet<>(1, 2, 3)).waitContainsNone(List.of(4, 5, 6)),
-        "%s#%s",
-        getParams());
+        toWaiter(new CSet<>(1, 2, 3)).waitContainsNone(List.of(4, 5, 6)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testContainsNone_N() {
     CVerify.Bool.isTrue(
-        toWaiter(new CList<>(1, 2, 3)).waitContainsNone(List.of(1, 5, 6)),
-        "%s#%s",
-        getParams());
+        toWaiter(new CList<>(1, 2, 3)).waitContainsNone(List.of(1, 5, 6)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -138,13 +133,15 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEmptyOrContains() {
-    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitEmptyOrContains(1), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(new CList<>(1, 2, 3)).waitEmptyOrContains(1), "%s#%s", getParams());
     CVerify.Bool.isTrue(toWaiter(new CSet<>()).waitEmptyOrContains(5), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEmptyOrContains_N() {
-    CVerify.Bool.isTrue(toWaiter(new CList<>(1, 2, 3)).waitEmptyOrContains(6), "%s#%s", getParams());
+    CVerify.Bool.isTrue(
+        toWaiter(new CList<>(1, 2, 3)).waitEmptyOrContains(6), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -196,8 +193,7 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N3() {
-    CVerify.Bool.isTrue(
-        toWaiter(List.of(1)).waitEquals(new CSet<>(1, 2, 3)), "%s#%s", getParams());
+    CVerify.Bool.isTrue(toWaiter(List.of(1)).waitEquals(new CSet<>(1, 2, 3)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -258,9 +254,7 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotContainsAll() {
     CVerify.Bool.isTrue(
-        toWaiter(new CList<>(1, 2, 3)).waitNotContainsAll(List.of(1, 4)),
-        "%s#%s",
-        getParams());
+        toWaiter(new CList<>(1, 2, 3)).waitNotContainsAll(List.of(1, 4)), "%s#%s", getParams());
     CVerify.Bool.isTrue(
         toWaiter(new CList<>(1, 2, 3)).waitNotContainsAll(new CSet<>(1, 2, 3, 4)),
         "%s#%s",
@@ -272,9 +266,7 @@ public class CCollectionWaiterTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testNotContainsAll_N() {
     CVerify.Bool.isTrue(
-        toWaiter(new CList<>(1, 2, 3)).waitNotContainsAll(List.of(1, 2, 3)),
-        "%s#%s",
-        getParams());
+        toWaiter(new CList<>(1, 2, 3)).waitNotContainsAll(List.of(1, 2, 3)), "%s#%s", getParams());
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)

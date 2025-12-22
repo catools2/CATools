@@ -1,19 +1,19 @@
 package org.catools.common.exception;
 
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
 
-import java.util.Objects;
-
 /**
- * A data class that captures and stores exception information including type, message, and stack trace.
- * This class provides a convenient way to represent exception details in a structured format
+ * A data class that captures and stores exception information including type, message, and stack
+ * trace. This class provides a convenient way to represent exception details in a structured format
  * that can be used for logging, serialization, or comparison purposes.
- * 
- * <p>The class supports fluent API pattern for setting properties and provides utility methods
- * for retrieving formatted exception information.</p>
- * 
- * <p><strong>Example usage:</strong></p>
+ *
+ * <p>The class supports fluent API pattern for setting properties and provides utility methods for
+ * retrieving formatted exception information.
+ *
+ * <p><strong>Example usage:</strong>
+ *
  * <pre>{@code
  * // Creating from an exception
  * try {
@@ -23,14 +23,14 @@ import java.util.Objects;
  *     CExceptionInfo info = new CExceptionInfo(e);
  *     System.out.println(info.getAllInfo());
  * }
- * 
+ *
  * // Creating manually
  * CExceptionInfo info = new CExceptionInfo()
  *     .setType("java.lang.RuntimeException")
  *     .setMessage("Custom error message")
  *     .setStackTrace("at com.example.MyClass.method(MyClass.java:42)");
  * }</pre>
- * 
+ *
  * @author CATools Team
  * @version 1.0
  * @since 1.0
@@ -41,10 +41,11 @@ public class CExceptionInfo {
   private String stackTrace = StringUtils.EMPTY;
 
   /**
-   * Default constructor that creates an empty CExceptionInfo instance.
-   * All fields are initialized to empty strings.
-   * 
-   * <p><strong>Example:</strong></p>
+   * Default constructor that creates an empty CExceptionInfo instance. All fields are initialized
+   * to empty strings.
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo();
    * // info.getType() returns ""
@@ -52,16 +53,16 @@ public class CExceptionInfo {
    * // info.getStackTrace() returns ""
    * }</pre>
    */
-  public CExceptionInfo() {
-  }
+  public CExceptionInfo() {}
 
   /**
-   * Constructor that creates a CExceptionInfo instance from a Throwable.
-   * Extracts the exception type, message, and stack trace from the provided throwable.
-   * 
-   * <p>If the throwable is null, all fields remain as empty strings.</p>
-   * 
-   * <p><strong>Example:</strong></p>
+   * Constructor that creates a CExceptionInfo instance from a Throwable. Extracts the exception
+   * type, message, and stack trace from the provided throwable.
+   *
+   * <p>If the throwable is null, all fields remain as empty strings.
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * try {
    *     Integer.parseInt("not-a-number");
@@ -70,12 +71,12 @@ public class CExceptionInfo {
    *     System.out.println("Type: " + info.getType()); // java.lang.NumberFormatException
    *     System.out.println("Message: " + info.getMessage()); // For input string: "not-a-number"
    * }
-   * 
+   *
    * // With null throwable
    * CExceptionInfo info = new CExceptionInfo(null);
    * // All fields remain empty strings
    * }</pre>
-   * 
+   *
    * @param t the throwable to extract information from, can be null
    */
   public CExceptionInfo(Throwable t) {
@@ -87,25 +88,26 @@ public class CExceptionInfo {
   }
 
   /**
-   * Compares this CExceptionInfo with another object for equality.
-   * Two CExceptionInfo objects are considered equal if they have the same type, message, and stack trace.
-   * 
-   * <p><strong>Example:</strong></p>
+   * Compares this CExceptionInfo with another object for equality. Two CExceptionInfo objects are
+   * considered equal if they have the same type, message, and stack trace.
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info1 = new CExceptionInfo()
    *     .setType("RuntimeException")
    *     .setMessage("Error occurred");
-   * 
+   *
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setType("RuntimeException")
    *     .setMessage("Error occurred");
-   * 
+   *
    * System.out.println(info1.equals(info2)); // true
-   * 
+   *
    * info2.setMessage("Different message");
    * System.out.println(info1.equals(info2)); // false
    * }</pre>
-   * 
+   *
    * @param o the object to compare with
    * @return true if the objects are equal, false otherwise
    */
@@ -126,31 +128,32 @@ public class CExceptionInfo {
   /**
    * Returns all non-blank exception information (type, message, stack trace) joined by newlines.
    * Only includes fields that are not blank, providing a clean formatted output.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo()
    *     .setType("java.lang.RuntimeException")
    *     .setMessage("Something went wrong")
    *     .setStackTrace("at com.example.MyClass.method(MyClass.java:42)");
-   * 
+   *
    * System.out.println(info.getAllInfo());
    * // Output:
    * // java.lang.RuntimeException
    * // Something went wrong
    * // at com.example.MyClass.method(MyClass.java:42)
-   * 
+   *
    * // With empty message
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setType("java.lang.RuntimeException")
    *     .setStackTrace("at com.example.MyClass.method(MyClass.java:42)");
-   * 
+   *
    * System.out.println(info2.getAllInfo());
    * // Output:
    * // java.lang.RuntimeException
    * // at com.example.MyClass.method(MyClass.java:42)
    * }</pre>
-   * 
+   *
    * @return a formatted string containing all non-blank exception information
    */
   public String getAllInfo() {
@@ -159,15 +162,16 @@ public class CExceptionInfo {
 
   /**
    * Gets the exception message.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo()
    *     .setMessage("File not found");
-   * 
+   *
    * String message = info.getMessage(); // "File not found"
    * }</pre>
-   * 
+   *
    * @return the exception message, never null (empty string if not set)
    */
   public String getMessage() {
@@ -176,19 +180,20 @@ public class CExceptionInfo {
 
   /**
    * Sets the exception message using fluent API pattern.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo()
    *     .setMessage("Connection timeout")
    *     .setType("java.net.SocketTimeoutException");
-   * 
+   *
    * // Method chaining
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setMessage("Invalid input")
    *     .setStackTrace("at com.example.validate(Main.java:15)");
    * }</pre>
-   * 
+   *
    * @param message the exception message to set
    * @return this CExceptionInfo instance for method chaining
    */
@@ -199,8 +204,9 @@ public class CExceptionInfo {
 
   /**
    * Gets the exception stack trace.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * try {
    *     throw new RuntimeException("Test exception");
@@ -213,7 +219,7 @@ public class CExceptionInfo {
    *     //     at com.example.MyClass.main(MyClass.java:5)
    * }
    * }</pre>
-   * 
+   *
    * @return the exception stack trace, never null (empty string if not set)
    */
   public String getStackTrace() {
@@ -222,24 +228,25 @@ public class CExceptionInfo {
 
   /**
    * Sets the exception stack trace using fluent API pattern.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * String customStackTrace = "java.lang.RuntimeException: Custom error\n" +
    *                          "    at com.example.MyClass.method(MyClass.java:42)\n" +
    *                          "    at com.example.MyClass.main(MyClass.java:10)";
-   * 
+   *
    * CExceptionInfo info = new CExceptionInfo()
    *     .setType("java.lang.RuntimeException")
    *     .setMessage("Custom error")
    *     .setStackTrace(customStackTrace);
-   * 
+   *
    * // Method chaining
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setStackTrace("Brief stack trace")
    *     .setMessage("Error message");
    * }</pre>
-   * 
+   *
    * @param stackTrace the exception stack trace to set
    * @return this CExceptionInfo instance for method chaining
    */
@@ -250,8 +257,9 @@ public class CExceptionInfo {
 
   /**
    * Gets the exception type (class name).
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * try {
    *     Integer.parseInt("not-a-number");
@@ -259,13 +267,13 @@ public class CExceptionInfo {
    *     CExceptionInfo info = new CExceptionInfo(e);
    *     String type = info.getType(); // "java.lang.NumberFormatException"
    * }
-   * 
+   *
    * // Manual setting
    * CExceptionInfo info = new CExceptionInfo()
    *     .setType("com.example.CustomException");
    * String type = info.getType(); // "com.example.CustomException"
    * }</pre>
-   * 
+   *
    * @return the exception type (class name), never null (empty string if not set)
    */
   public String getType() {
@@ -274,20 +282,21 @@ public class CExceptionInfo {
 
   /**
    * Sets the exception type (class name) using fluent API pattern.
-   * 
-   * <p><strong>Example:</strong></p>
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo()
    *     .setType("java.io.FileNotFoundException")
    *     .setMessage("Config file not found");
-   * 
+   *
    * // Method chaining with all properties
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setType("java.lang.IllegalArgumentException")
    *     .setMessage("Invalid parameter value")
    *     .setStackTrace("at com.example.validate(Utils.java:25)");
    * }</pre>
-   * 
+   *
    * @param type the exception type (class name) to set
    * @return this CExceptionInfo instance for method chaining
    */
@@ -297,23 +306,24 @@ public class CExceptionInfo {
   }
 
   /**
-   * Returns the hash code for this CExceptionInfo instance.
-   * The hash code is computed based on the type, message, and stack trace fields.
-   * 
-   * <p><strong>Example:</strong></p>
+   * Returns the hash code for this CExceptionInfo instance. The hash code is computed based on the
+   * type, message, and stack trace fields.
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info1 = new CExceptionInfo()
    *     .setType("RuntimeException")
    *     .setMessage("Error");
-   * 
+   *
    * CExceptionInfo info2 = new CExceptionInfo()
    *     .setType("RuntimeException")
    *     .setMessage("Error");
-   * 
+   *
    * // Equal objects have the same hash code
    * System.out.println(info1.hashCode() == info2.hashCode()); // true
    * }</pre>
-   * 
+   *
    * @return the hash code for this object
    */
   @Override
@@ -322,22 +332,23 @@ public class CExceptionInfo {
   }
 
   /**
-   * Returns a string representation of this CExceptionInfo instance.
-   * Includes all three fields (type, message, stackTrace) in a structured format.
-   * 
-   * <p><strong>Example:</strong></p>
+   * Returns a string representation of this CExceptionInfo instance. Includes all three fields
+   * (type, message, stackTrace) in a structured format.
+   *
+   * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CExceptionInfo info = new CExceptionInfo()
    *     .setType("java.lang.RuntimeException")
    *     .setMessage("Something went wrong")
    *     .setStackTrace("at com.example.MyClass.method(MyClass.java:42)");
-   * 
+   *
    * System.out.println(info.toString());
    * // Output:
-   * // CExceptionInfo{type='java.lang.RuntimeException', message='Something went wrong', 
+   * // CExceptionInfo{type='java.lang.RuntimeException', message='Something went wrong',
    * //                stackTrace='at com.example.MyClass.method(MyClass.java:42)'}
    * }</pre>
-   * 
+   *
    * @return a string representation of this object
    */
   @Override

@@ -8,13 +8,12 @@ import org.catools.common.utils.CJsonUtil;
 /**
  * Client class for retrieving execution statuses in the ZAPI system.
  *
- * <p>This class provides methods to interact with the ZAPI REST API to fetch test execution statuses.</p>
+ * <p>This class provides methods to interact with the ZAPI REST API to fetch test execution
+ * statuses.
  */
 public class CZApiExecutionStatusClient extends CZApiRestClient {
 
-  /**
-   * Default constructor for the CZApiExecutionStatusClient.
-   */
+  /** Default constructor for the CZApiExecutionStatusClient. */
   public CZApiExecutionStatusClient() {
     super();
   }

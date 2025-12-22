@@ -1,9 +1,8 @@
 package org.catools.common.logger;
 
-import org.apache.logging.log4j.Level;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.logging.log4j.Level;
 
 /**
  * We need this Event Manager to subscript listeners for other system with least changes. Messages

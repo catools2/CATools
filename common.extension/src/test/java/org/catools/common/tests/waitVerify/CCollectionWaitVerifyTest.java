@@ -1,14 +1,13 @@
 package org.catools.common.tests.waitVerify;
 
+import java.util.Collection;
+import java.util.List;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.extensions.verify.interfaces.waitVerify.CCollectionWaitVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Collection;
-import java.util.List;
 
 public class CCollectionWaitVerifyTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -151,7 +150,7 @@ public class CCollectionWaitVerifyTest extends CBaseUnitTest {
     toWaitVerify(new CList<>(1, 2, 3)).verifyEquals(new CSet<>(1, 2, 3));
     toWaitVerify(new CSet<>(1, 2, 3)).verifyEquals(List.of(1, 2, 3));
     toWaitVerify(new CSet<>()).verifyEquals(List.of());
-  }  // Negative
+  } // Negative
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEquals_N() {

@@ -20,7 +20,10 @@ public class CReportPortalAttributeUtil {
           output.add(new ItemAttributesRQ(groups[0]));
         } else if (groups.length == 2) {
           if (StringUtils.isBlank(groups[1])) {
-            log.warn("Skip Annotation, value cannot be empty/null! key:{}, value:{}", groups[0], groups[1]);
+            log.warn(
+                "Skip Annotation, value cannot be empty/null! key:{}, value:{}",
+                groups[0],
+                groups[1]);
           } else {
             output.add(new ItemAttributesRQ(groups[0], groups[1]));
           }

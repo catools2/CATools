@@ -1,31 +1,47 @@
 package org.catools.common.testng.listeners;
 
-import lombok.Getter;
-import org.catools.common.collections.CList;
-import org.catools.common.testng.utils.CTestSuiteUtil;
-import org.catools.common.tests.exception.CSkipAwaitingTestException;
-import org.testng.*;
-import org.testng.xml.XmlSuite;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import lombok.Getter;
+import org.catools.common.collections.CList;
+import org.catools.common.testng.utils.CTestSuiteUtil;
+import org.catools.common.tests.exception.CSkipAwaitingTestException;
+import org.testng.IClassListener;
+import org.testng.IConfigurationListener;
+import org.testng.IExecutionListener;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
+import org.testng.IMethodInstance;
+import org.testng.IMethodInterceptor;
+import org.testng.IReporter;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
+import org.testng.ITestClass;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestNGListener;
+import org.testng.ITestNGMethod;
+import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
 
 /**
  * A composite TestNG listener that aggregates multiple TestNG listeners and provides centralized
  * listener management. This class implements multiple TestNG listener interfaces and delegates
  * method calls to registered listeners based on their type.
- * 
+ *
  * <p>The CTestNGListener acts as a proxy that:
+ *
  * <ul>
- *   <li>Manages a collection of registered TestNG listeners</li>
- *   <li>Delegates method calls to appropriate listeners based on their implemented interfaces</li>
- *   <li>Provides priority-based execution for CITestNGListener implementations</li>
- *   <li>Supports test method interception and custom reporting</li>
+ *   <li>Manages a collection of registered TestNG listeners
+ *   <li>Delegates method calls to appropriate listeners based on their implemented interfaces
+ *   <li>Provides priority-based execution for CITestNGListener implementations
+ *   <li>Supports test method interception and custom reporting
  * </ul>
- * 
+ *
  * <p><strong>Usage Example:</strong>
+ *
  * <pre>{@code
  * // Register listeners
  * CTestNGListener.addListeners(
@@ -33,64 +49,64 @@ import java.util.function.Predicate;
  *     new MySuiteListener(),
  *     new MyReporter()
  * );
- * 
+ *
  * // Configure TestNG to use this listener
  * TestNG testng = new TestNG();
  * testng.addListener(new CTestNGListener());
  * }</pre>
- * 
+ *
  * @author CATools Team
  * @since 1.0.0
  */
 public final class CTestNGListener implements CITestNGListener, IMethodInterceptor, IReporter {
   /**
-   * Thread-safe collection of registered TestNG listeners.
-   * This collection maintains all listeners that have been added to this composite listener.
-   * 
+   * Thread-safe collection of registered TestNG listeners. This collection maintains all listeners
+   * that have been added to this composite listener.
+   *
    * @return immutable list of registered listeners
    */
-  @Getter
-  private static final CList<ITestNGListener> listeners = new CList<>();
+  @Getter private static final CList<ITestNGListener> listeners = new CList<>();
 
   /**
-   * Creates a new instance of CTestNGListener.
-   * The listener starts with an empty collection of registered listeners.
-   * 
+   * Creates a new instance of CTestNGListener. The listener starts with an empty collection of
+   * registered listeners.
+   *
    * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CTestNGListener listener = new CTestNGListener();
    * // Add this listener to TestNG configuration
    * testng.addListener(listener);
    * }</pre>
    */
-  public CTestNGListener() {
-  }
+  public CTestNGListener() {}
 
   /**
-   * Adds one or more TestNG listeners to the collection of registered listeners.
-   * Duplicate listeners are automatically filtered out to prevent double registration.
-   * 
-   * <p>This method is thread-safe and can be called from multiple threads concurrently.
-   * Only unique listeners (based on object identity) will be added to the collection.
-   * 
+   * Adds one or more TestNG listeners to the collection of registered listeners. Duplicate
+   * listeners are automatically filtered out to prevent double registration.
+   *
+   * <p>This method is thread-safe and can be called from multiple threads concurrently. Only unique
+   * listeners (based on object identity) will be added to the collection.
+   *
    * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * // Add a single listener
    * CTestNGListener.addListeners(new MyTestListener());
-   * 
+   *
    * // Add multiple listeners at once
    * CTestNGListener.addListeners(
    *     new MyTestListener(),
    *     new MySuiteListener(),
    *     new MyMethodInterceptor()
    * );
-   * 
+   *
    * // Adding the same listener twice won't create duplicates
    * MyTestListener listener = new MyTestListener();
    * CTestNGListener.addListeners(listener);
    * CTestNGListener.addListeners(listener); // This won't add a duplicate
    * }</pre>
-   * 
+   *
    * @param listeners varargs array of TestNG listeners to add
    * @throws NullPointerException if the listeners array or any listener is null
    */
@@ -99,15 +115,16 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Returns the priority of this listener for execution ordering.
-   * CITestNGListener implementations with lower priority values are executed first.
-   * 
+   * Returns the priority of this listener for execution ordering. CITestNGListener implementations
+   * with lower priority values are executed first.
+   *
    * <p><strong>Example:</strong>
+   *
    * <pre>{@code
    * CTestNGListener listener = new CTestNGListener();
    * int priority = listener.priority(); // Returns 0
    * }</pre>
-   * 
+   *
    * @return priority value (0 = default priority)
    */
   @Override
@@ -118,12 +135,13 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   /**
    * Called when TestNG execution starts. This is the first method called in the TestNG lifecycle.
    * Delegates to all registered listeners that implement IExecutionListener.
-   * 
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * // This method is automatically called by TestNG
    * // You can register a custom IExecutionListener to receive this event:
-   * 
+   *
    * public class MyExecutionListener implements IExecutionListener {
    *     @Override
    *     public void onExecutionStart() {
@@ -131,10 +149,10 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *         // Initialize global resources, setup logging, etc.
    *     }
    * }
-   * 
+   *
    * CTestNGListener.addListeners(new MyExecutionListener());
    * }</pre>
-   * 
+   *
    * @see IExecutionListener#onExecutionStart()
    */
   @Override // 1- IExecutionListener
@@ -143,9 +161,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test suite starts. Delegates to all registered listeners that implement ISuiteListener.
-   * 
+   * Called when a test suite starts. Delegates to all registered listeners that implement
+   * ISuiteListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MySuiteListener implements ISuiteListener {
    *     @Override
@@ -154,10 +174,10 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *         // Initialize suite-level resources
    *     }
    * }
-   * 
+   *
    * CTestNGListener.addListeners(new MySuiteListener());
    * }</pre>
-   * 
+   *
    * @param suite the test suite that is starting
    * @see ISuiteListener#onStart(ISuite)
    */
@@ -167,10 +187,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called before a configuration method is invoked. Delegates to all registered listeners 
-   * that implement IConfigurationListener.
-   * 
+   * Called before a configuration method is invoked. Delegates to all registered listeners that
+   * implement IConfigurationListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyConfigListener implements IConfigurationListener {
    *     @Override
@@ -179,23 +200,26 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *         // Setup before @BeforeMethod, @BeforeClass, etc.
    *     }
    * }
-   * 
+   *
    * CTestNGListener.addListeners(new MyConfigListener());
    * }</pre>
-   * 
+   *
    * @param result the test result for the configuration method
    * @see IConfigurationListener#beforeConfiguration(ITestResult)
    */
   @Override // 3- IConfigurationListener2
   public void beforeConfiguration(ITestResult result) {
-    doIf(l -> l instanceof IConfigurationListener, l -> ((IConfigurationListener) l).beforeConfiguration(result));
+    doIf(
+        l -> l instanceof IConfigurationListener,
+        l -> ((IConfigurationListener) l).beforeConfiguration(result));
   }
 
   /**
-   * Called when a configuration method succeeds. Delegates to all registered listeners 
-   * that implement IConfigurationListener.
-   * 
+   * Called when a configuration method succeeds. Delegates to all registered listeners that
+   * implement IConfigurationListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyConfigListener implements IConfigurationListener {
    *     @Override
@@ -205,20 +229,23 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the successful configuration method
    * @see IConfigurationListener#onConfigurationSuccess(ITestResult)
    */
   @Override // 4- IConfigurationListener
   public void onConfigurationSuccess(ITestResult result) {
-    doIf(l -> l instanceof IConfigurationListener, l -> ((IConfigurationListener) l).onConfigurationSuccess(result));
+    doIf(
+        l -> l instanceof IConfigurationListener,
+        l -> ((IConfigurationListener) l).onConfigurationSuccess(result));
   }
 
   /**
-   * Called when a configuration method fails. Delegates to all registered listeners 
-   * that implement IConfigurationListener.
-   * 
+   * Called when a configuration method fails. Delegates to all registered listeners that implement
+   * IConfigurationListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyConfigListener implements IConfigurationListener {
    *     @Override
@@ -229,20 +256,23 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the failed configuration method
    * @see IConfigurationListener#onConfigurationFailure(ITestResult)
    */
   @Override // 4- IConfigurationListener
   public void onConfigurationFailure(ITestResult result) {
-    doIf(l -> l instanceof IConfigurationListener, l -> ((IConfigurationListener) l).onConfigurationFailure(result));
+    doIf(
+        l -> l instanceof IConfigurationListener,
+        l -> ((IConfigurationListener) l).onConfigurationFailure(result));
   }
 
   /**
-   * Called when a configuration method is skipped. Delegates to all registered listeners 
-   * that implement IConfigurationListener.
-   * 
+   * Called when a configuration method is skipped. Delegates to all registered listeners that
+   * implement IConfigurationListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyConfigListener implements IConfigurationListener {
    *     @Override
@@ -252,20 +282,23 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the skipped configuration method
    * @see IConfigurationListener#onConfigurationSkip(ITestResult)
    */
   @Override // 4- IConfigurationListener
   public void onConfigurationSkip(ITestResult result) {
-    doIf(l -> l instanceof IConfigurationListener, l -> ((IConfigurationListener) l).onConfigurationSkip(result));
+    doIf(
+        l -> l instanceof IConfigurationListener,
+        l -> ((IConfigurationListener) l).onConfigurationSkip(result));
   }
 
   /**
-   * Called when a test context starts (before any test methods in the context are run).
-   * Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test context starts (before any test methods in the context are run). Delegates
+   * to all registered listeners that implement ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -276,7 +309,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param context the test context that is starting
    * @see ITestListener#onStart(ITestContext)
    */
@@ -286,10 +319,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called before the first test method in a test class is run.
-   * Delegates to all registered listeners that implement IClassListener.
-   * 
+   * Called before the first test method in a test class is run. Delegates to all registered
+   * listeners that implement IClassListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyClassListener implements IClassListener {
    *     @Override
@@ -299,7 +333,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param testClass the test class that is about to start
    * @see IClassListener#onBeforeClass(ITestClass)
    */
@@ -309,9 +343,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test method starts. Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test method starts. Delegates to all registered listeners that implement
+   * ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -321,7 +357,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the starting test method
    * @see ITestListener#onTestStart(ITestResult)
    */
@@ -331,10 +367,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called before any method (test, configuration, or other) is invoked.
-   * Delegates to all registered listeners that implement IInvokedMethodListener.
-   * 
+   * Called before any method (test, configuration, or other) is invoked. Delegates to all
+   * registered listeners that implement IInvokedMethodListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyMethodListener implements IInvokedMethodListener {
    *     @Override
@@ -344,7 +381,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param method the method about to be invoked
    * @param testResult the test result associated with the method
    * @see IInvokedMethodListener#beforeInvocation(IInvokedMethod, ITestResult)
@@ -352,21 +389,26 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   // 8- IInvokedMethodListener
   @Override
   public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-    doIf(l -> l instanceof IInvokedMethodListener, l -> ((IInvokedMethodListener) l).beforeInvocation(method, testResult));
+    doIf(
+        l -> l instanceof IInvokedMethodListener,
+        l -> ((IInvokedMethodListener) l).beforeInvocation(method, testResult));
   }
 
   /**
    * Called before any method (test, configuration, or other) is invoked with context information.
-   * This method also performs automatic test skipping based on annotation rules using CTestSuiteUtil.
-   * 
+   * This method also performs automatic test skipping based on annotation rules using
+   * CTestSuiteUtil.
+   *
    * <p>This method has special handling for test methods:
+   *
    * <ul>
-   *   <li>Checks if the test should be skipped using CTestSuiteUtil.shouldSkipForThisRun()</li>
-   *   <li>Throws CSkipAwaitingTestException if the test should be skipped</li>
-   *   <li>Delegates to registered IInvokedMethodListener implementations</li>
+   *   <li>Checks if the test should be skipped using CTestSuiteUtil.shouldSkipForThisRun()
+   *   <li>Throws CSkipAwaitingTestException if the test should be skipped
+   *   <li>Delegates to registered IInvokedMethodListener implementations
    * </ul>
-   * 
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyMethodListener implements IInvokedMethodListener {
    *     @Override
@@ -378,30 +420,35 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param method the method about to be invoked
    * @param testResult the test result associated with the method
    * @param context the test context
-   * @throws CSkipAwaitingTestException if the test method should be skipped based on annotation rules
+   * @throws CSkipAwaitingTestException if the test method should be skipped based on annotation
+   *     rules
    * @see IInvokedMethodListener#beforeInvocation(IInvokedMethod, ITestResult, ITestContext)
    * @see CTestSuiteUtil#shouldSkipForThisRun(ITestNGMethod)
    */
   // 8- IInvokedMethodListener
   @Override
-  public void beforeInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
+  public void beforeInvocation(
+      IInvokedMethod method, ITestResult testResult, ITestContext context) {
     if (method.isTestMethod()) {
       if (CTestSuiteUtil.shouldSkipForThisRun(method.getTestMethod())) {
         throw new CSkipAwaitingTestException("Skipping test by annotation rules!");
       }
     }
-    doIf(l -> l instanceof IInvokedMethodListener, l -> ((IInvokedMethodListener) l).beforeInvocation(method, testResult, context));
+    doIf(
+        l -> l instanceof IInvokedMethodListener,
+        l -> ((IInvokedMethodListener) l).beforeInvocation(method, testResult, context));
   }
 
   /**
-   * Called after any method (test, configuration, or other) has been invoked.
-   * Delegates to all registered listeners that implement IInvokedMethodListener.
-   * 
+   * Called after any method (test, configuration, or other) has been invoked. Delegates to all
+   * registered listeners that implement IInvokedMethodListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyMethodListener implements IInvokedMethodListener {
    *     @Override
@@ -412,7 +459,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param method the method that was invoked
    * @param testResult the test result associated with the method
    * @see IInvokedMethodListener#afterInvocation(IInvokedMethod, ITestResult)
@@ -420,14 +467,17 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   // 9- IInvokedMethodListener
   @Override
   public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-    doIf(l -> l instanceof IInvokedMethodListener, l -> ((IInvokedMethodListener) l).afterInvocation(method, testResult));
+    doIf(
+        l -> l instanceof IInvokedMethodListener,
+        l -> ((IInvokedMethodListener) l).afterInvocation(method, testResult));
   }
 
   /**
-   * Called after any method (test, configuration, or other) has been invoked with context information.
-   * Delegates to all registered listeners that implement IInvokedMethodListener.
-   * 
+   * Called after any method (test, configuration, or other) has been invoked with context
+   * information. Delegates to all registered listeners that implement IInvokedMethodListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyMethodListener implements IInvokedMethodListener {
    *     @Override
@@ -439,7 +489,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param method the method that was invoked
    * @param testResult the test result associated with the method
    * @param context the test context
@@ -448,13 +498,17 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   // 9- IInvokedMethodListener
   @Override
   public void afterInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
-    doIf(l -> l instanceof IInvokedMethodListener, l -> ((IInvokedMethodListener) l).afterInvocation(method, testResult, context));
+    doIf(
+        l -> l instanceof IInvokedMethodListener,
+        l -> ((IInvokedMethodListener) l).afterInvocation(method, testResult, context));
   }
 
   /**
-   * Called when a test method succeeds. Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test method succeeds. Delegates to all registered listeners that implement
+   * ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -465,7 +519,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the successful test method
    * @see ITestListener#onTestSuccess(ITestResult)
    */
@@ -475,9 +529,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test method fails. Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test method fails. Delegates to all registered listeners that implement
+   * ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -488,7 +544,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the failed test method
    * @see ITestListener#onTestFailure(ITestResult)
    */
@@ -498,9 +554,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test method is skipped. Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test method is skipped. Delegates to all registered listeners that implement
+   * ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -513,7 +571,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the skipped test method
    * @see ITestListener#onTestSkipped(ITestResult)
    */
@@ -523,40 +581,44 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test method fails but is within the success percentage threshold.
-   * Delegates to all registered listeners that implement ITestListener.
-   * 
+   * Called when a test method fails but is within the success percentage threshold. Delegates to
+   * all registered listeners that implement ITestListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * // Configure a test with success percentage
    * @Test(successPercentage = 80, invocationCount = 10)
    * public void flakyTest() {
    *     // Test that might fail occasionally but should pass 80% of the time
    * }
-   * 
+   *
    * public class MyTestListener implements ITestListener {
    *     @Override
    *     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-   *         System.out.println("Test failed but within success percentage: " + 
+   *         System.out.println("Test failed but within success percentage: " +
    *                          result.getMethod().getMethodName());
    *         // Handle acceptable failures
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param result the test result for the test method that failed but is within success percentage
    * @see ITestListener#onTestFailedButWithinSuccessPercentage(ITestResult)
    */
   @Override // 13- ITestListener
   public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-    doIf(l -> l instanceof ITestListener, l -> ((ITestListener) l).onTestFailedButWithinSuccessPercentage(result));
+    doIf(
+        l -> l instanceof ITestListener,
+        l -> ((ITestListener) l).onTestFailedButWithinSuccessPercentage(result));
   }
 
   /**
-   * Called after the last test method in a test class is run.
-   * Delegates to all registered listeners that implement IClassListener.
-   * 
+   * Called after the last test method in a test class is run. Delegates to all registered listeners
+   * that implement IClassListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyClassListener implements IClassListener {
    *     @Override
@@ -566,7 +628,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param testClass the test class that has finished
    * @see IClassListener#onAfterClass(ITestClass)
    */
@@ -578,8 +640,9 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   /**
    * Called when a test context finishes (after all test methods in the context have been run).
    * Delegates to all registered listeners that implement ITestListener.
-   * 
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyTestListener implements ITestListener {
    *     @Override
@@ -592,7 +655,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param context the test context that has finished
    * @see ITestListener#onFinish(ITestContext)
    */
@@ -602,9 +665,11 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Called when a test suite finishes. Delegates to all registered listeners that implement ISuiteListener.
-   * 
+   * Called when a test suite finishes. Delegates to all registered listeners that implement
+   * ISuiteListener.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MySuiteListener implements ISuiteListener {
    *     @Override
@@ -614,7 +679,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @param suite the test suite that has finished
    * @see ISuiteListener#onFinish(ISuite)
    */
@@ -626,8 +691,9 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   /**
    * Called when TestNG execution finishes. This is the last method called in the TestNG lifecycle.
    * Delegates to all registered listeners that implement IExecutionListener.
-   * 
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyExecutionListener implements IExecutionListener {
    *     @Override
@@ -637,7 +703,7 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *     }
    * }
    * }</pre>
-   * 
+   *
    * @see IExecutionListener#onExecutionFinish()
    */
   @Override // 17- IExecutionListener
@@ -646,11 +712,13 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   }
 
   /**
-   * Intercepts test methods before they are executed, allowing for modification of the test execution order
-   * or filtering of test methods. If registered listeners contain an IMethodInterceptor, delegates to the
-   * first one found; otherwise returns the original list unchanged.
-   * 
+   * Intercepts test methods before they are executed, allowing for modification of the test
+   * execution order or filtering of test methods. If registered listeners contain an
+   * IMethodInterceptor, delegates to the first one found; otherwise returns the original list
+   * unchanged.
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyMethodInterceptor implements IMethodInterceptor {
    *     @Override
@@ -658,15 +726,15 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *         // Sort methods by priority or filter based on conditions
    *         return methods.stream()
    *                      .sorted((m1, m2) -> Integer.compare(
-   *                          m1.getMethod().getPriority(), 
+   *                          m1.getMethod().getPriority(),
    *                          m2.getMethod().getPriority()))
    *                      .collect(Collectors.toList());
    *     }
    * }
-   * 
+   *
    * CTestNGListener.addListeners(new MyMethodInterceptor());
    * }</pre>
-   * 
+   *
    * @param list the list of method instances to be executed
    * @param iTestContext the test context
    * @return the potentially modified list of method instances
@@ -674,7 +742,8 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    */
   @Override
   public List<IMethodInstance> intercept(List<IMethodInstance> list, ITestContext iTestContext) {
-    CList<ITestNGListener> methodInterceptor = listeners.getAll(l -> l instanceof IMethodInterceptor);
+    CList<ITestNGListener> methodInterceptor =
+        listeners.getAll(l -> l instanceof IMethodInterceptor);
     if (!methodInterceptor.isEmpty()) {
       return ((IMethodInterceptor) methodInterceptor.getFirst()).intercept(list, iTestContext);
     }
@@ -684,8 +753,9 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
   /**
    * Generates test reports after all tests have completed. Delegates to all registered listeners
    * that implement IReporter.
-   * 
+   *
    * <p><strong>Example Usage:</strong>
+   *
    * <pre>{@code
    * public class MyCustomReporter implements IReporter {
    *     @Override
@@ -697,21 +767,25 @@ public final class CTestNGListener implements CITestNGListener, IMethodIntercept
    *         }
    *     }
    * }
-   * 
+   *
    * CTestNGListener.addListeners(new MyCustomReporter());
    * }</pre>
-   * 
+   *
    * @param xmlSuites the list of XML suites that were executed
    * @param suites the list of test suites that were executed
    * @param outputDirectory the directory where reports should be generated
    * @see IReporter#generateReport(List, List, String)
    */
   @Override
-  public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-    doIf(l -> l instanceof IReporter, l -> ((IReporter) l).generateReport(xmlSuites, suites, outputDirectory));
+  public void generateReport(
+      List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
+    doIf(
+        l -> l instanceof IReporter,
+        l -> ((IReporter) l).generateReport(xmlSuites, suites, outputDirectory));
   }
 
-  private <T extends ITestNGListener> void doIf(Predicate<ITestNGListener> predicate, Consumer<T> action) {
+  private <T extends ITestNGListener> void doIf(
+      Predicate<ITestNGListener> predicate, Consumer<T> action) {
     CList<ITestNGListener> list = new CList<>(listeners.getAll(predicate));
 
     if (list.isEmpty()) {

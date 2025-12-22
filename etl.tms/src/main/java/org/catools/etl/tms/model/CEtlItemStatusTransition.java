@@ -1,6 +1,10 @@
 package org.catools.etl.tms.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,16 +12,11 @@ import lombok.experimental.Accessors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
-
 @NamedQuery(
     name = "getItemStatusTransitionByStatusesAndDate",
-    query = "FROM CEtlItemStatusTransition st join fetch st.from f join fetch st.to t " +
-        "where f.name=:fromName and t.name=:toName and st.occurred=:occurred and st.item.id=:itemId")
+    query =
+        "FROM CEtlItemStatusTransition st join fetch st.from f join fetch st.to t "
+            + "where f.name=:fromName and t.name=:toName and st.occurred=:occurred and st.item.id=:itemId")
 @Entity
 @Table(name = "status_transition", schema = "tms")
 @Getter
@@ -26,8 +25,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class CEtlItemStatusTransition implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6087874018185613707L;
+  @Serial private static final long serialVersionUID = 6087874018185613707L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,11 +77,13 @@ public class CEtlItemStatusTransition implements Serializable {
 
     CEtlItemStatusTransition that = (CEtlItemStatusTransition) o;
 
-    return new EqualsBuilder().append(id, that.id)
+    return new EqualsBuilder()
+        .append(id, that.id)
         .append(occurred, that.occurred)
         .append(from, that.from)
         .append(to, that.to)
-        .append(getItemId(), that.getItemId()).isEquals();
+        .append(getItemId(), that.getItemId())
+        .isEquals();
   }
 
   @Override
@@ -93,17 +93,23 @@ public class CEtlItemStatusTransition implements Serializable {
         .append(occurred)
         .append(from)
         .append(to)
-        .append(getItemId()).toHashCode();
+        .append(getItemId())
+        .toHashCode();
   }
 
   @Override
   public String toString() {
-    return "CEtlItemStatusTransition{" +
-        "id=" + id +
-        ", occurred=" + occurred +
-        ", from=" + from +
-        ", to=" + to +
-        ", itemId=" + item.getId() +
-        '}';
+    return "CEtlItemStatusTransition{"
+        + "id="
+        + id
+        + ", occurred="
+        + occurred
+        + ", from="
+        + from
+        + ", to="
+        + to
+        + ", itemId="
+        + item.getId()
+        + '}';
   }
 }

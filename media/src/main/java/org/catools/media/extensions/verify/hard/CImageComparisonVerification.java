@@ -1,18 +1,15 @@
 package org.catools.media.extensions.verify.hard;
 
 import boofcv.factory.template.TemplateScoreType;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.hard.CBaseVerification;
 import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
 import org.catools.media.extensions.verify.interfaces.base.CImageComparisonVerify;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-/**
- * Image verification class contains all verification method which is related to Image
- */
+/** Image verification class contains all verification method which is related to Image */
 @Slf4j
 public class CImageComparisonVerification extends CBaseVerification {
 
@@ -55,24 +52,30 @@ public class CImageComparisonVerification extends CBaseVerification {
   /**
    * Verify that actual and expected are equal
    *
-   * @param expected     value to compare
+   * @param expected value to compare
    * @param diffFileName the file name for diff image which should be generated in case if images
-   *                     did not match
+   *     did not match
    */
-  public void equals(final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
+  public void equals(
+      final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
     toVerifier(actual).verifyEquals(expected, diffFileName);
   }
 
   /**
    * Verify that actual and expected are equal
    *
-   * @param expected     value to compare
+   * @param expected value to compare
    * @param diffFileName the file name for diff image which should be generated in case if images
-   *                     did not match
-   * @param message      information about the purpose of this verification
-   * @param params       parameters in case if message is a format {@link String#format}
+   *     did not match
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equals(final BufferedImage actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
+  public void equals(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      final String diffFileName,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyEquals(expected, diffFileName, message, params);
   }
 
@@ -89,10 +92,14 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual and expected are equal
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equals(final BufferedImage actual, final CFile expected, final String message, final Object... params) {
+  public void equals(
+      final BufferedImage actual,
+      final CFile expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyEquals(expected, message, params);
   }
 
@@ -109,34 +116,44 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual and expected are equal
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equals(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
+  public void equals(
+      final BufferedImage actual,
+      final CResource expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyEquals(expected, message, params);
   }
 
   /**
    * Verify that actual and expected are equal
    *
-   * @param expected     value to compare
+   * @param expected value to compare
    * @param diffFileName the file name for diff image which should be generated in case if images
-   *                     did not match
+   *     did not match
    */
-  public void notEquals(final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
+  public void notEquals(
+      final BufferedImage actual, final BufferedImage expected, final String diffFileName) {
     toVerifier(actual).verifyNotEquals(expected, diffFileName);
   }
 
   /**
    * Verify that actual and expected are equal
    *
-   * @param expected     value to compare
+   * @param expected value to compare
    * @param diffFileName the file name for diff image which should be generated in case if images
-   *                     did not match
-   * @param message      information about the purpose of this verification
-   * @param params       parameters in case if message is a format {@link String#format}
+   *     did not match
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final BufferedImage actual, final BufferedImage expected, final String diffFileName, final String message, final Object... params) {
+  public void notEquals(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      final String diffFileName,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, diffFileName, message, params);
   }
 
@@ -153,10 +170,14 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual and expected are not equal
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final BufferedImage actual, final CFile expected, final String message, final Object... params) {
+  public void notEquals(
+      final BufferedImage actual,
+      final CFile expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
@@ -173,10 +194,14 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual and expected are not equal
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void notEquals(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
+  public void notEquals(
+      final BufferedImage actual,
+      final CResource expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotEquals(expected, message, params);
   }
 
@@ -184,11 +209,12 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual equals to any expected value
    *
    * @param diffFileNamePrefix the file name for diff image which should be generated in case if
-   *                           images did not match. Please Note that we add index to the end to avoid duplicate file
-   *                           name.
-   * @param expected           value to compare
+   *     images did not match. Please Note that we add index to the end to avoid duplicate file
+   *     name.
+   * @param expected value to compare
    */
-  public void equalsAny(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
+  public void equalsAny(
+      final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
     toVerifier(actual).verifyEqualsAny(expected, diffFileNamePrefix);
   }
 
@@ -196,13 +222,18 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual equals to any expected value
    *
    * @param diffFileNamePrefix the file name for diff image which should be generated in case if
-   *                           images did not match. Please Note that we add index to the end to avoid duplicate file
-   *                           name.
-   * @param expected           value to compare
-   * @param message            information about the purpose of this verification
-   * @param params             parameters in case if message is a format {@link String#format}
+   *     images did not match. Please Note that we add index to the end to avoid duplicate file
+   *     name.
+   * @param expected value to compare
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equalsAny(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
+  public void equalsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      final String diffFileNamePrefix,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyEqualsAny(expected, diffFileNamePrefix, message, params);
   }
 
@@ -210,11 +241,12 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual equals to none of expected value
    *
    * @param diffFileNamePrefix the file name for diff image which should be generated in case if
-   *                           images did not match. Please Note that we add index to the end to avoid duplicate file
-   *                           name.
-   * @param expected           value to compare
+   *     images did not match. Please Note that we add index to the end to avoid duplicate file
+   *     name.
+   * @param expected value to compare
    */
-  public void equalsNone(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
+  public void equalsNone(
+      final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix) {
     toVerifier(actual).verifyEqualsNone(expected, diffFileNamePrefix);
   }
 
@@ -222,19 +254,24 @@ public class CImageComparisonVerification extends CBaseVerification {
    * Verify that actual equals to none of expected value
    *
    * @param diffFileNamePrefix the file name for diff image which should be generated in case if
-   *                           images did not match. Please Note that we add index to the end to avoid duplicate file
-   *                           name.
-   * @param expected           value to compare
-   * @param message            information about the purpose of this verification
-   * @param params             parameters in case if message is a format {@link String#format}
+   *     images did not match. Please Note that we add index to the end to avoid duplicate file
+   *     name.
+   * @param expected value to compare
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  public void equalsNone(final BufferedImage actual, final Iterable<?> expected, final String diffFileNamePrefix, final String message, final Object... params) {
+  public void equalsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      final String diffFileNamePrefix,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyEqualsNone(expected, diffFileNamePrefix, message, params);
   }
 
-
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -244,19 +281,25 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -266,19 +309,25 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -288,421 +337,583 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
+  public void contains(
+      final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
+  public void contains(
+      final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
+  public void contains(
+      final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void contains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
+  public void contains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -712,19 +923,25 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -734,19 +951,25 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
    * @return execution result
@@ -756,426 +979,595 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify actual contains expected image with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify actual contains expected image with at least 99.9% match precision using {@link
+   * TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
+  public void notContains(
+      final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
+  public void notContains(
+      final BufferedImage actual, final File expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
+  public void notContains(
+      final BufferedImage actual, final CResource expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyNotContains(expected, scoreType);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected  value to compare
+   * @param expected value to compare
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyNotContains(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final BufferedImage expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final BufferedImage expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final File expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final File expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final BufferedImage mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final File mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision) {
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify actual contains expected image with at least 99.9% match precision.
    *
-   * @param expected       value to compare
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected value to compare
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void notContains(final BufferedImage actual, final CResource expected, TemplateScoreType scoreType, final CResource mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
+  public void notContains(
+      final BufferedImage actual,
+      final CResource expected,
+      TemplateScoreType scoreType,
+      final CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyNotContains(expected, scoreType, mask, matchPrecision, message, params);
   }
 
-
   /**
-   * Verify that actual image contains any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify that actual image contains any of expected images with at least 99.9% match precision
+   * using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return false if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   public void containsAny(final BufferedImage actual, final Iterable<?> expected) {
@@ -1183,171 +1575,228 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify that actual image contains any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify that actual image contains any of expected images with at least 99.9% match precision
+   * using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return false if no value provided. all {@code null} value in
-   *                 expected list ignores.
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   *     expected list ignores.
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, final String message, final Object... params) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, message, params);
   }
 
   /**
-   * Verify that actual image contains any of expected images
-   * with at least 99.9% match precision.
+   * Verify that actual image contains any of expected images with at least 99.9% match precision.
    *
-   * @param expected  values to compare, return false if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
+  public void containsAny(
+      final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContainsAny(expected, scoreType);
   }
 
   /**
-   * Verify that actual image contains any of expected images
-   * with at least 99.9% match precision.
+   * Verify that actual image contains any of expected images with at least 99.9% match precision.
    *
-   * @param expected  values to compare, return false if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, message, params);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      File mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, File mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      File mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision) {
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      CResource mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify that actual image contains any of expected images.
    *
-   * @param expected       values to compare, return false if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return false if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsAny(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, CResource mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
+  public void containsAny(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      CResource mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyContainsAny(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   /**
-   * Verify that actual image does not contain any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify that actual image does not contain any of expected images with at least 99.9% match
+   * precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return true if no value provided. all {@code null} value in
-   *                 expected list ignores.
+   *     expected list ignores.
    * @return execution result
    */
   public void containsNone(final BufferedImage actual, final Iterable<?> expected) {
@@ -1355,103 +1804,136 @@ public class CImageComparisonVerification extends CBaseVerification {
   }
 
   /**
-   * Verify that actual image does not contain any of expected images
-   * with at least 99.9% match precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
+   * Verify that actual image does not contain any of expected images with at least 99.9% match
+   * precision using {@link TemplateScoreType#NCC} formula to score matches in a template.
    *
    * @param expected values to compare, return true if no value provided. all {@code null} value in
-   *                 expected list ignores.
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   *     expected list ignores.
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, final String message, final Object... params) {
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, message, params);
   }
 
   /**
-   * Verify that actual image does not contain any of expected images
-   * with at least 99.9% match precision.
+   * Verify that actual image does not contain any of expected images with at least 99.9% match
+   * precision.
    *
-   * @param expected  values to compare, return true if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
+  public void containsNone(
+      final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType) {
     toVerifier(actual).verifyContainsNone(expected, scoreType);
   }
 
   /**
-   * Verify that actual image does not contain any of expected images
-   * with at least 99.9% match precision.
+   * Verify that actual image does not contain any of expected images with at least 99.9% match
+   * precision.
    *
-   * @param expected  values to compare, return true if no value provided. all {@code null} value in
-   *                  expected list ignores.
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
    * @param scoreType formula to score matches in a template
-   * @param message   information about the purpose of this verification
-   * @param params    parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, final String message, final Object... params) {
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, message, params);
   }
 
   /**
    * Verify that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision) {
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, matchPrecision);
   }
 
   /**
    * Verify that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, float matchPrecision, final String message, final Object... params) {
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, matchPrecision, message, params);
   }
 
   /**
    * Verify that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision) {
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision) {
     toVerifier(actual).verifyContainsNone(expected, scoreType, mask, matchPrecision);
   }
 
   /**
    * Verify that actual image does not contain any of expected images.
    *
-   * @param expected       values to compare, return true if no value provided. all {@code null} value in
-   *                       expected list ignores.
-   * @param scoreType      formula to score matches in a template
-   * @param mask           Mask which determines the weight of each template pixel in the match score
+   * @param expected values to compare, return true if no value provided. all {@code null} value in
+   *     expected list ignores.
+   * @param scoreType formula to score matches in a template
+   * @param mask Mask which determines the weight of each template pixel in the match score
    * @param matchPrecision The match precision in percent (100 means 100% match)
-   * @param message        information about the purpose of this verification
-   * @param params         parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    * @return execution result
    */
-  public void containsNone(final BufferedImage actual, final Iterable<?> expected, TemplateScoreType scoreType, BufferedImage mask, float matchPrecision, final String message, final Object... params) {
-    toVerifier(actual).verifyContainsNone(expected, scoreType, mask, matchPrecision, message, params);
+  public void containsNone(
+      final BufferedImage actual,
+      final Iterable<?> expected,
+      TemplateScoreType scoreType,
+      BufferedImage mask,
+      float matchPrecision,
+      final String message,
+      final Object... params) {
+    toVerifier(actual)
+        .verifyContainsNone(expected, scoreType, mask, matchPrecision, message, params);
   }
 
   protected CImageComparisonVerify toVerifier(BufferedImage actual) {

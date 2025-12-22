@@ -1,31 +1,26 @@
 package org.catools.mcp.util;
 
-import lombok.experimental.UtilityClass;
-import org.catools.common.utils.CStringUtil;
-
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import javax.annotation.Nullable;
+import lombok.experimental.UtilityClass;
+import org.catools.common.utils.CStringUtil;
 
 /**
  * Utility class providing type conversion operations between Java types and JSON schema types.
  * Maintains cached converters for common primitive and wrapper types to optimize performance.
  *
- * <p>Supports automatic type coercion from string representations to target types,
- * with intelligent handling of numeric types and default value provision.
+ * <p>Supports automatic type coercion from string representations to target types, with intelligent
+ * handling of numeric types and default value provision.
  */
 @UtilityClass
 public class CTypeConverter {
 
-  /**
-   * Thread-safe map caching type conversion functions for each supported Java class.
-   */
+  /** Thread-safe map caching type conversion functions for each supported Java class. */
   private static final Map<Class<?>, Function<String, Object>> CLASS_CONVERTERS;
 
-  /**
-   * Thread-safe map storing default values for each supported Java type.
-   */
+  /** Thread-safe map storing default values for each supported Java type. */
   private static final Map<Class<?>, Object> DEFAULT_VALUES;
 
   static {
@@ -36,8 +31,8 @@ public class CTypeConverter {
   }
 
   /**
-   * Initializes the converter registry with standard Java type parsing functions.
-   * Registers converters for primitives, wrappers, and common types.
+   * Initializes the converter registry with standard Java type parsing functions. Registers
+   * converters for primitives, wrappers, and common types.
    */
   private static void initializeClassConverters() {
     CLASS_CONVERTERS.put(String.class, value -> value);
@@ -55,8 +50,8 @@ public class CTypeConverter {
   }
 
   /**
-   * Initializes the default value registry for all supported Java types.
-   * Provides sensible defaults matching Java language specifications.
+   * Initializes the default value registry for all supported Java types. Provides sensible defaults
+   * matching Java language specifications.
    */
   private static void initializeDefaultValues() {
     DEFAULT_VALUES.put(String.class, CStringUtil.EMPTY);
@@ -74,8 +69,8 @@ public class CTypeConverter {
   }
 
   /**
-   * Intelligently parses a string representation of a number to the most appropriate type.
-   * Uses double precision for decimal values and attempts integer before long for whole numbers.
+   * Intelligently parses a string representation of a number to the most appropriate type. Uses
+   * double precision for decimal values and attempts integer before long for whole numbers.
    *
    * @param number string representation of the numeric value
    * @return parsed number as Integer, Long, or Double depending on format
@@ -96,10 +91,10 @@ public class CTypeConverter {
   }
 
   /**
-   * Converts a value to the specified target type using registered converters.
-   * Returns default value for the target type when input is null.
+   * Converts a value to the specified target type using registered converters. Returns default
+   * value for the target type when input is null.
    *
-   * @param value      the value to convert (nullable)
+   * @param value the value to convert (nullable)
    * @param targetType the desired type for conversion
    * @return converted value or default value if input is null
    */

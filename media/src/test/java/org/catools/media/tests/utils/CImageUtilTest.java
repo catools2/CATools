@@ -1,5 +1,8 @@
 package org.catools.media.tests.utils;
 
+import static org.catools.media.enums.CImageComparisonType.GRAY_FLOAT_32;
+
+import java.awt.image.BufferedImage;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.io.CFile;
 import org.catools.common.io.CResource;
@@ -8,10 +11,6 @@ import org.catools.common.tests.CTest;
 import org.catools.media.utils.CImageComparisonUtil;
 import org.catools.media.utils.CImageUtil;
 import org.testng.annotations.Test;
-
-import java.awt.image.BufferedImage;
-
-import static org.catools.media.enums.CImageComparisonType.GRAY_FLOAT_32;
 
 public class CImageUtilTest extends CTest {
 
@@ -23,8 +22,7 @@ public class CImageUtilTest extends CTest {
         CImageUtil.readImageOrNull(new CResource("testData/frog2.jpg", CImageUtilTest.class));
 
     CVerify.Collection.isEmpty(
-        CImageComparisonUtil.getDiffs(frog1, frog1, GRAY_FLOAT_32),
-        "Compare found no differences");
+        CImageComparisonUtil.getDiffs(frog1, frog1, GRAY_FLOAT_32), "Compare found no differences");
     CVerify.Int.equals(
         CImageComparisonUtil.getDiffs(frog2, frog1, GRAY_FLOAT_32).size(),
         6,

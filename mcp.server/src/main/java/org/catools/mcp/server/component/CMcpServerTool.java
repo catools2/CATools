@@ -2,6 +2,15 @@ package org.catools.mcp.server.component;
 
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
@@ -17,25 +26,15 @@ import org.catools.mcp.server.converter.CMcpToolParameterConverter;
 import org.catools.mcp.util.CReflectionUtil;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.*;
-
-/**
- * This class represents an MCP server tool component.
- */
+/** This class represents an MCP server tool component. */
 @Slf4j
-public class CMcpServerTool implements CMcpServerComponent<McpServerFeatures.SyncToolSpecification> {
+public class CMcpServerTool
+    implements CMcpServerComponent<McpServerFeatures.SyncToolSpecification> {
 
-  /**
-   * The parameter converter for MCP tool parameters.
-   */
+  /** The parameter converter for MCP tool parameters. */
   private final CMcpToolParameterConverter parameterConverter;
 
-  /**
-   * Creates a new instance of {@code McpServerTool}.
-   */
+  /** Creates a new instance of {@code McpServerTool}. */
   public CMcpServerTool() {
     this.parameterConverter = getInjector().getInstance(CMcpToolParameterConverter.class);
   }
@@ -65,20 +64,21 @@ public class CMcpServerTool implements CMcpServerComponent<McpServerFeatures.Syn
 
     return McpServerFeatures.SyncToolSpecification.builder()
         .tool(tool)
-        .callHandler((exchange, request) -> {
-          // Get a fresh instance on each invocation to support Provider bindings
-          Object instance = getInjector().getInstance(methodCache.getDeclaringClass());
-          return invoke(instance, methodCache, request);
-        })
+        .callHandler(
+            (exchange, request) -> {
+              // Get a fresh instance on each invocation to support Provider bindings
+              Object instance = getInjector().getInstance(methodCache.getDeclaringClass());
+              return invoke(instance, methodCache, request);
+            })
         .build();
   }
 
   /**
    * Invokes the tool method with the specified arguments.
    *
-   * @param instance    the instance of the class that declares the tool method
+   * @param instance the instance of the class that declares the tool method
    * @param methodCache the cached method information
-   * @param request     the tool request containing the arguments
+   * @param request the tool request containing the arguments
    * @return the result of the tool invocation
    */
   private McpSchema.CallToolResult invoke(

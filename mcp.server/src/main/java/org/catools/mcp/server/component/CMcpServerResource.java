@@ -2,6 +2,8 @@ package org.catools.mcp.server.component;
 
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
+import java.lang.reflect.Method;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
@@ -10,14 +12,10 @@ import org.catools.mcp.reflect.CInvocationResult;
 import org.catools.mcp.reflect.CMethodCache;
 import org.catools.mcp.util.CReflectionUtil;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
-/**
- * This class represents an MCP server resource component.
- */
+/** This class represents an MCP server resource component. */
 @Slf4j
-public class CMcpServerResource implements CMcpServerComponent<McpServerFeatures.SyncResourceSpecification> {
+public class CMcpServerResource
+    implements CMcpServerComponent<McpServerFeatures.SyncResourceSpecification> {
 
   @Override
   public McpServerFeatures.SyncResourceSpecification create(Method method) {
@@ -49,9 +47,9 @@ public class CMcpServerResource implements CMcpServerComponent<McpServerFeatures
   /**
    * Invokes the resource method with the specified arguments.
    *
-   * @param instance    the instance of the class that declares the resource method
+   * @param instance the instance of the class that declares the resource method
    * @param methodCache the cached method information
-   * @param resource    the resource specification
+   * @param resource the resource specification
    * @return the result of the resource invocation
    */
   private McpSchema.ReadResourceResult invoke(

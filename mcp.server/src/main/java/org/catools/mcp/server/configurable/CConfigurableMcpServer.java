@@ -3,13 +3,12 @@ package org.catools.mcp.server.configurable;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;
+import java.time.Duration;
 import org.catools.mcp.configuration.CMcpServerCapabilities;
 import org.catools.mcp.configuration.CMcpServerChangeNotification;
 import org.catools.mcp.configuration.CMcpServerConfiguration;
 import org.catools.mcp.configuration.CYamlConfigurationLoader;
 import org.catools.mcp.server.component.CMcpServerComponentRegister;
-
-import java.time.Duration;
 
 /**
  * This interface represents a configurable MCP (Model Context Protocol) server.
@@ -25,10 +24,7 @@ public interface CConfigurableMcpServer {
    */
   McpServer.SyncSpecification<?> sync();
 
-
-  /**
-   * The configuration for the MCP server.
-   */
+  /** The configuration for the MCP server. */
   CMcpServerConfiguration getConfiguration();
 
   /**

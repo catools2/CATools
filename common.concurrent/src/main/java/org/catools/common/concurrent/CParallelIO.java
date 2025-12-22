@@ -17,9 +17,10 @@ import java.util.function.Supplier;
  * CParallelIO allows two threads to run in parallel while sharing the same resources.
  *
  * <p>This class manages parallel input and output operations using shared resources. It provides
- * mechanisms for thread synchronization, exception handling, and timeout management.</p>
+ * mechanisms for thread synchronization, exception handling, and timeout management.
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * CParallelIO<String> parallelIO = new CParallelIO<>("Example", 2, 2);
  *
@@ -39,7 +40,6 @@ import java.util.function.Supplier;
  *   t.printStackTrace();
  * }
  * }</pre>
- * </p>
  *
  * @param <T> the type of elements processed by the input and output threads
  */
@@ -64,10 +64,10 @@ public class CParallelIO<T> {
    * Constructs a new instance with the specified name and thread counts for input and output.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelIO<String> io = new CParallelIO<>("MyIO", 3, 2);
    * }</pre>
-   * </p>
    *
    * @param name the name of the parallel IO instance
    * @param parallelInputCount the number of input threads
@@ -81,10 +81,10 @@ public class CParallelIO<T> {
    * Constructs a new instance with the specified name, thread counts, timeout, and time unit.
    *
    * <p>Example with timeout:
+   *
    * <pre>{@code
    * CParallelIO<String> io = new CParallelIO<>("TimedIO", 2, 2, 30L, TimeUnit.SECONDS);
    * }</pre>
-   * </p>
    *
    * @param name the name of the parallel IO instance
    * @param parallelInputCount the number of input threads
@@ -106,16 +106,16 @@ public class CParallelIO<T> {
    *
    * <p>The provided function receives an {@link AtomicBoolean} that indicates EOF; when true, the
    * producer should stop supplying new items. The function should return an item of type {@code T}
-   * to be added to the shared queue.</p>
+   * to be added to the shared queue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.setInputExecutor(eof -> {
    *   if (eof.get()) return null;
    *   return fetchNextItem();
    * });
    * }</pre>
-   * </p>
    *
    * @param inputFunction a function that generates input data
    */
@@ -145,16 +145,16 @@ public class CParallelIO<T> {
    * Sets the output executor with the specified output function.
    *
    * <p>The consumer receives the EOF flag and a single item to process. The consumer should handle
-   * normal processing and may set the EOF flag if it determines the pipeline should stop.</p>
+   * normal processing and may set the EOF flag if it determines the pipeline should stop.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.setOutputExecutor((eof, item) -> {
    *   processItem(item);
    *   if (shouldStop()) eof.set(true);
    * });
    * }</pre>
-   * </p>
    *
    * @param outputFunction a consumer that processes elements from the shared queue
    */
@@ -190,9 +190,9 @@ public class CParallelIO<T> {
                   break;
                 }
               } while ((!eof.get()
-                  || activeInputThreads.get() > 0
-                  || !outputQueue.isEmpty()
-                  || !sharedQueue.isEmpty())
+                      || activeInputThreads.get() > 0
+                      || !outputQueue.isEmpty()
+                      || !sharedQueue.isEmpty())
                   && isLive());
               return true;
             });
@@ -202,9 +202,10 @@ public class CParallelIO<T> {
    * Runs the input and output executors, waiting for their completion.
    *
    * <p>Blocks until both input and output tasks complete or an exception occurs. Any exception
-   * thrown by user-provided input or output functions is propagated.</p>
+   * thrown by user-provided input or output functions is propagated.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * try {
    *   io.run();
@@ -212,7 +213,6 @@ public class CParallelIO<T> {
    *   // handle exception
    * }
    * }</pre>
-   * </p>
    *
    * @throws Throwable if an exception occurs during execution
    */
@@ -253,6 +253,7 @@ public class CParallelIO<T> {
    * Runs the input and output executors with a specified timeout.
    *
    * <p>Example with timeout:
+   *
    * <pre>{@code
    * try {
    *   io.run(60, TimeUnit.SECONDS);
@@ -260,7 +261,6 @@ public class CParallelIO<T> {
    *   // handle exception
    * }
    * }</pre>
-   * </p>
    *
    * @param timeout the maximum time to wait for tasks to complete
    * @param unit the time unit of the timeout argument
@@ -305,16 +305,16 @@ public class CParallelIO<T> {
   /**
    * Checks if the input or output executor has started.
    *
-   * <p>This method is useful for monitoring the state of the parallel IO instance
-   * to determine if any execution has begun.</p>
+   * <p>This method is useful for monitoring the state of the parallel IO instance to determine if
+   * any execution has begun.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * if (!io.isStarted()) {
    *   System.out.println("Execution has not started yet");
    * }
    * }</pre>
-   * </p>
    *
    * @return true if either executor has started, otherwise false
    */
@@ -325,18 +325,18 @@ public class CParallelIO<T> {
   /**
    * Checks if the parallel IO instance is live.
    *
-   * <p>An instance is considered live if it has not finished, shut down, or terminated,
-   * and no throwable exceptions have occurred. This is useful for determining if the
-   * parallel IO operations can continue processing.</p>
+   * <p>An instance is considered live if it has not finished, shut down, or terminated, and no
+   * throwable exceptions have occurred. This is useful for determining if the parallel IO
+   * operations can continue processing.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * while (io.isLive()) {
    *   // Continue processing
    *   Thread.sleep(100);
    * }
    * }</pre>
-   * </p>
    *
    * @return true if the instance is live, otherwise false
    */
@@ -347,17 +347,17 @@ public class CParallelIO<T> {
   /**
    * Checks if the input and output executors have finished execution.
    *
-   * <p>This method returns true when both input and output processing have completed.
-   * Useful for determining when all work is done.</p>
+   * <p>This method returns true when both input and output processing have completed. Useful for
+   * determining when all work is done.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.run();
    * if (io.isFinished()) {
    *   System.out.println("All processing completed successfully");
    * }
    * }</pre>
-   * </p>
    *
    * @return true if both executors have finished, otherwise false
    */
@@ -368,10 +368,11 @@ public class CParallelIO<T> {
   /**
    * Checks if the input and output executors have been shut down.
    *
-   * <p>A shutdown executor will not accept new tasks but may still be executing
-   * previously submitted tasks. Use this method to check if shutdown has been initiated.</p>
+   * <p>A shutdown executor will not accept new tasks but may still be executing previously
+   * submitted tasks. Use this method to check if shutdown has been initiated.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * try {
    *   io.run(30, TimeUnit.SECONDS);
@@ -381,7 +382,6 @@ public class CParallelIO<T> {
    *   }
    * }
    * }</pre>
-   * </p>
    *
    * @return true if both executors have been shut down, otherwise false
    */
@@ -392,10 +392,11 @@ public class CParallelIO<T> {
   /**
    * Checks if the input and output executors have been terminated.
    *
-   * <p>Terminated executors have completed shutdown and all tasks have finished.
-   * This is the final state after shutdown completion.</p>
+   * <p>Terminated executors have completed shutdown and all tasks have finished. This is the final
+   * state after shutdown completion.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * // After a timeout or forced shutdown
    * while (!io.isTerminated()) {
@@ -404,7 +405,6 @@ public class CParallelIO<T> {
    * }
    * System.out.println("All threads have been terminated");
    * }</pre>
-   * </p>
    *
    * @return true if both executors have been terminated, otherwise false
    */

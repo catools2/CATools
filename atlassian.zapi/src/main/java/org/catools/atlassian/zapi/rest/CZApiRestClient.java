@@ -12,7 +12,7 @@ import org.catools.common.utils.CSleeper;
  * Base class for interacting with the ZAPI REST API.
  *
  * <p>This class provides common methods for making HTTP requests (GET, POST, PUT) and handling
- * authentication, response verification, and request decoration.</p>
+ * authentication, response verification, and request decoration.
  */
 public class CZApiRestClient {
 

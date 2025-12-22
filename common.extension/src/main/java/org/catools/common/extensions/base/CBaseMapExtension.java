@@ -17,8 +17,8 @@ import java.util.Map;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  *
- * <p>Please Note that we should extend manually {@link
- * CMapVerification} for each new added verification here
+ * <p>Please Note that we should extend manually {@link CMapVerification} for each new added
+ * verification here
  *
  * @see Map
  * @see CCollection

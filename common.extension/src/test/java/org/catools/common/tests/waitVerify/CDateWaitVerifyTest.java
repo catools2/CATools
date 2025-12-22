@@ -1,12 +1,11 @@
 package org.catools.common.tests.waitVerify;
 
+import java.util.Date;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.interfaces.waitVerify.CDateWaitVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.Date;
 
 public class CDateWaitVerifyTest extends CBaseUnitTest {
 
@@ -129,7 +128,8 @@ public class CDateWaitVerifyTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEqualByFormat() {
     CDate actual = CDate.valueOf("2018-01-01", "yyyy-MM-dd");
-    toWaitVerify(actual).verifyNotEqualsByFormat(actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm:ss");
+    toWaitVerify(actual)
+        .verifyNotEqualsByFormat(actual.clone().addSeconds(10), "yyyy-MM-dd HH:mm:ss");
     toWaitVerify(actual).verifyNotEqualsByFormat(null, "yyyy-MM-dd HH:mm:ss");
     toWaitVerify(null).verifyNotEqualsByFormat(actual, "yyyy-MM-dd HH:mm:ss");
   }

@@ -22,7 +22,7 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if both value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    */
   default void verifyEqualsByFormat(final Date expected, final String format) {
     verifyEqualsByFormat(expected, format, getDefaultMessage("Equals By Format " + format));
@@ -36,20 +36,13 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if both value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param format date format to be use
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsByFormat(
-      final Date expected,
-      final String format,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).equalsByFormat(o2, format),
-        message,
-        params);
+      final Date expected, final String format, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).equalsByFormat(o2, format), message, params);
   }
 
   /**
@@ -71,18 +64,12 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if both value is null
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsDatePortion(
-      final Date expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).equalsDatePortion(o2),
-        message,
-        params);
+      final Date expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).equalsDatePortion(o2), message, params);
   }
 
   /**
@@ -104,18 +91,12 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if both value is null
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyEqualsTimePortion(
-      final Date expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).equalsTimePortion(o2),
-        message,
-        params);
+      final Date expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).equalsTimePortion(o2), message, params);
   }
 
   /**
@@ -126,7 +107,7 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if one of value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
+   * @param format date format to be use
    */
   default void verifyNotEqualsByFormat(final Date expected, final String format) {
     verifyNotEqualsByFormat(expected, format, getDefaultMessage("Not Equals By Format " + format));
@@ -140,20 +121,13 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if one of value is null
    *
    * @param expected value to compare
-   * @param format   date format to be use
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param format date format to be use
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsByFormat(
-      final Date expected,
-      final String format,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).notEqualsByFormat(o2, format),
-        message,
-        params);
+      final Date expected, final String format, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).notEqualsByFormat(o2, format), message, params);
   }
 
   /**
@@ -177,18 +151,12 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if one of value is null
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsDatePortion(
-      final Date expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).notEqualsDatePortion(o2),
-        message,
-        params);
+      final Date expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).notEqualsDatePortion(o2), message, params);
   }
 
   /**
@@ -212,17 +180,11 @@ public interface CDateVerify extends CBaseDateExtension, CObjectVerify<Date, CDa
    * <p>Please note that verification consider as passe if one of value is null
    *
    * @param expected value to compare
-   * @param message  information about the purpose of this verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of this verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
   default void verifyNotEqualsTimePortion(
-      final Date expected,
-      final String message,
-      final Object... params) {
-    _verify(
-        expected,
-        (o, o2) -> _toState(o).notEqualsTimePortion(o2),
-        message,
-        params);
+      final Date expected, final String message, final Object... params) {
+    _verify(expected, (o, o2) -> _toState(o).notEqualsTimePortion(o2), message, params);
   }
 }

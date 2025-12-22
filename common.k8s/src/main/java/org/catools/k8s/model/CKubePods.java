@@ -6,6 +6,4 @@ import org.catools.common.collections.CList;
 
 @Data
 @Accessors(chain = true)
-public class CKubePods extends CList<CKubePod> {
-
-}
+public class CKubePods extends CList<CKubePod> {}

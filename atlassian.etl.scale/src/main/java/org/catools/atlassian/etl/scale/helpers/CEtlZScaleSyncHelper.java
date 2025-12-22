@@ -22,8 +22,8 @@ import org.catools.etl.tms.model.CEtlVersions;
 import java.util.Objects;
 
 /**
- * Utility class for synchronizing ZScale test cases with the ETL system.
- * Provides methods to manage projects, versions, and test cases.
+ * Utility class for synchronizing ZScale test cases with the ETL system. Provides methods to manage
+ * projects, versions, and test cases.
  */
 @UtilityClass
 @Slf4j
@@ -39,8 +39,10 @@ public class CEtlZScaleSyncHelper {
    */
   public static CEtlItem addItem(CZScaleTestCase testcase) {
     CEtlProject etlProject = getProject(testcase);
-    CEtlVersions versions = new CEtlVersions(getProjectVersions(testcase.getProjectKey(), etlProject));
-    CEtlItemDao.mergeItem(CEtlZScaleTestCaseTranslator.translateTestCase(etlProject, versions, testcase));
+    CEtlVersions versions =
+        new CEtlVersions(getProjectVersions(testcase.getProjectKey(), etlProject));
+    CEtlItemDao.mergeItem(
+        CEtlZScaleTestCaseTranslator.translateTestCase(etlProject, versions, testcase));
     return CEtlCacheManager.readItem(testcase.getKey());
   }
 
@@ -52,9 +54,9 @@ public class CEtlZScaleSyncHelper {
    */
   private static CEtlProject getProject(CZScaleTestCase testcase) {
     BasicProject project = getProjectByKey(testcase.getProjectKey());
-    return project == null || StringUtils.isBlank(project.getName()) ?
-        CEtlProject.UNSET :
-        new CEtlProject(project.getName());
+    return project == null || StringUtils.isBlank(project.getName())
+        ? CEtlProject.UNSET
+        : new CEtlProject(project.getName());
   }
 
   /**
@@ -78,8 +80,8 @@ public class CEtlZScaleSyncHelper {
   }
 
   /**
-   * Retrieves the versions of a project by its key.
-   * If the versions are not cached, they are fetched from the Jira client.
+   * Retrieves the versions of a project by its key. If the versions are not cached, they are
+   * fetched from the Jira client.
    *
    * @param projectKey The key of the project.
    * @param project The ETL project.
@@ -87,15 +89,17 @@ public class CEtlZScaleSyncHelper {
    */
   public static CList<CEtlVersion> getProjectVersions(String projectKey, CEtlProject project) {
     if (!PROJECT_VERSION.keySet().contains(projectKey)) {
-      CList<CEtlVersion> cEtlVersions = CJiraClient.getProjectVersions(projectKey).mapToList(v -> CEtlJiraTranslator.translateVersion(project, v));
+      CList<CEtlVersion> cEtlVersions =
+          CJiraClient.getProjectVersions(projectKey)
+              .mapToList(v -> CEtlJiraTranslator.translateVersion(project, v));
       PROJECT_VERSION.put(projectKey, cEtlVersions);
     }
     return PROJECT_VERSION.get(projectKey);
   }
 
   /**
-   * Retrieves all projects from the Jira client.
-   * If the projects are not cached, they are fetched and cached.
+   * Retrieves all projects from the Jira client. If the projects are not cached, they are fetched
+   * and cached.
    *
    * @return A set of `BasicProject` objects.
    */

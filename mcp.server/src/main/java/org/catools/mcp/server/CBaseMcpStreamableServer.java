@@ -5,8 +5,8 @@ import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.transport.HttpServletStreamableServerTransportProvider;
 
 /**
- * This class is used to create a new instance of {@link CBaseMcpStreamableServer} based on the specified
- * {@link CMcpStreamableServerInfo} in Streamable HTTP mode.
+ * This class is used to create a new instance of {@link CBaseMcpStreamableServer} based on the
+ * specified {@link CMcpStreamableServerInfo} in Streamable HTTP mode.
  */
 public class CBaseMcpStreamableServer extends CBaseMcpServer<CMcpStreamableServerInfo> {
   /**

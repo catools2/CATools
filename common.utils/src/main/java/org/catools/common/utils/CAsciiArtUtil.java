@@ -1,14 +1,13 @@
 package org.catools.common.utils;
 
 import com.github.lalyos.jfiglet.FigletFont;
-import lombok.experimental.UtilityClass;
-import org.catools.common.exception.CConvertFigletFontException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.experimental.UtilityClass;
+import org.catools.common.exception.CConvertFigletFontException;
 
 @UtilityClass
 public class CAsciiArtUtil {
@@ -16,7 +15,9 @@ public class CAsciiArtUtil {
     List<String> lines;
     try {
       InputStream resourceAsStream = loader.getResourceAsStream(resourceName);
-      lines = new ArrayList<>(Arrays.asList(FigletFont.convertOneLine(resourceAsStream, input).split("\n")));
+      lines =
+          new ArrayList<>(
+              Arrays.asList(FigletFont.convertOneLine(resourceAsStream, input).split("\n")));
     } catch (IOException e) {
       throw new CConvertFigletFontException(e);
     }

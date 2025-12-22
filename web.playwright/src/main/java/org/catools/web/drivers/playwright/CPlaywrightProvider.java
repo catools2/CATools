@@ -14,6 +14,7 @@ import org.catools.web.drivers.CPlaywrightEngine;
  * headless, remote).
  *
  * <h3>Usage Examples:</h3>
+ *
  * <pre>{@code
  * // Basic usage with Chromium
  * CPlaywrightProvider provider = new CChromiumPlaywrightProvider();
@@ -57,8 +58,7 @@ public interface CPlaywrightProvider extends CDriverEngineProvider {
 
     if (contextOptions == null) {
       // Create context with minimal settings to avoid request/response tracking issues
-      contextOptions = new Browser.NewContextOptions()
-          .setIgnoreHTTPSErrors(true);
+      contextOptions = new Browser.NewContextOptions().setIgnoreHTTPSErrors(true);
     }
 
     context = getBrowserInstance().newContext(contextOptions);
@@ -78,6 +78,4 @@ public interface CPlaywrightProvider extends CDriverEngineProvider {
    * @return Browser instance
    */
   Browser getBrowserInstance();
-
 }
-

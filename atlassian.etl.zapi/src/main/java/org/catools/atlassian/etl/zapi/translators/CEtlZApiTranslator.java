@@ -10,8 +10,8 @@ import org.catools.etl.tms.model.*;
 import java.util.Objects;
 
 /**
- * Translator class for converting ZAPI cycles and executions into ETL-compatible objects.
- * Provides methods to map cycle and execution data to ETL cycles and executions.
+ * Translator class for converting ZAPI cycles and executions into ETL-compatible objects. Provides
+ * methods to map cycle and execution data to ETL cycles and executions.
  */
 @Slf4j
 public class CEtlZApiTranslator {
@@ -24,7 +24,8 @@ public class CEtlZApiTranslator {
    * @param cycle The ZAPI cycle to be translated.
    * @return The translated ETL cycle.
    */
-  public static CEtlCycle translateCycle(CZApiProject zProject, CZApiVersion zVersion, CZApiCycle cycle) {
+  public static CEtlCycle translateCycle(
+      CZApiProject zProject, CZApiVersion zVersion, CZApiCycle cycle) {
     Objects.requireNonNull(zProject);
     Objects.requireNonNull(zVersion);
     Objects.requireNonNull(cycle);
@@ -39,7 +40,8 @@ public class CEtlZApiTranslator {
     try {
       // Retrieve the associated ETL project and version
       CEtlProject project = CEtlCacheManager.readProject(new CEtlProject(zProject.getName()));
-      CEtlVersion version = CEtlCacheManager.readVersion(new CEtlVersion(zVersion.getName(), project));
+      CEtlVersion version =
+          CEtlCacheManager.readVersion(new CEtlVersion(zVersion.getName(), project));
 
       // Set properties for the ETL cycle
       etlCycle.setVersion(version);
@@ -63,17 +65,16 @@ public class CEtlZApiTranslator {
    * @param execution The ZAPI execution to be translated.
    * @return The translated ETL execution.
    */
-  public static CEtlExecution translateExecution(CZApiProject project,
-                                                 CZApiVersion version,
-                                                 CZApiCycles cycles,
-                                                 CZApiExecution execution) {
+  public static CEtlExecution translateExecution(
+      CZApiProject project, CZApiVersion version, CZApiCycles cycles, CZApiExecution execution) {
     Objects.requireNonNull(project);
     Objects.requireNonNull(version);
     Objects.requireNonNull(cycles);
     Objects.requireNonNull(execution);
 
     // Find or create the ETL execution
-    CEtlExecution etlExecution = CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
+    CEtlExecution etlExecution =
+        CEtlBaseDao.find(CEtlExecution.class, String.valueOf(execution.getId()));
     if (etlExecution == null) {
       etlExecution = new CEtlExecution();
       etlExecution.setId(String.valueOf(execution.getId()));
@@ -84,7 +85,8 @@ public class CEtlZApiTranslator {
       etlExecution.setItem(CEtlCacheManager.readItem(execution.getIssueKey()));
       etlExecution.setStatus(getStatus(execution.getExecutionStatus()));
       etlExecution.setExecutor(getExecutor(execution));
-      etlExecution.setCycle(translateCycle(project, version, cycles.getById(execution.getCycleId())));
+      etlExecution.setCycle(
+          translateCycle(project, version, cycles.getById(execution.getCycleId())));
       etlExecution.setCreated(execution.getCreatedOn());
       etlExecution.setExecuted(execution.getExecutedOn());
 
@@ -102,9 +104,9 @@ public class CEtlZApiTranslator {
    * @return The ETL user representing the executor.
    */
   private static CEtlUser getExecutor(CZApiExecution execution) {
-    return StringUtils.isBlank(execution.getExecutedByUserName()) ?
-        CEtlUser.UNSET :
-        CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedByUserName()));
+    return StringUtils.isBlank(execution.getExecutedByUserName())
+        ? CEtlUser.UNSET
+        : CEtlCacheManager.readUser(new CEtlUser(execution.getExecutedByUserName()));
   }
 
   /**
@@ -114,8 +116,8 @@ public class CEtlZApiTranslator {
    * @return The corresponding ETL execution status.
    */
   private static CEtlExecutionStatus getStatus(String statusName) {
-    return StringUtils.isBlank(statusName) ?
-        CEtlExecutionStatus.UNSET :
-        CEtlCacheManager.readExecutionStatus(new CEtlExecutionStatus(statusName.toUpperCase()));
+    return StringUtils.isBlank(statusName)
+        ? CEtlExecutionStatus.UNSET
+        : CEtlCacheManager.readExecutionStatus(new CEtlExecutionStatus(statusName.toUpperCase()));
   }
 }

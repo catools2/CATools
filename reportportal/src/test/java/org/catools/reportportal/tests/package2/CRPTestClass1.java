@@ -1,10 +1,9 @@
 package org.catools.reportportal.tests.package2;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.catools.common.testng.utils.CRetryAnalyzer;
 import org.catools.common.tests.CTest;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * We need this class to run them and verify manually report portal to ensure that graph display

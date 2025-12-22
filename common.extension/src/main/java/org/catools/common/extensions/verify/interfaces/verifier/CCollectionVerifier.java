@@ -25,7 +25,8 @@ import java.util.Map;
  * @see CSet
  * @see CList
  */
-public interface CCollectionVerifier<E, C extends Collection<E>> extends CBaseCollectionExtension<E, C>, CIterableVerifier<E, C> {
+public interface CCollectionVerifier<E, C extends Collection<E>>
+    extends CBaseCollectionExtension<E, C>, CIterableVerifier<E, C> {
 
   /**
    * Verify the map size is equal to expected value.
@@ -42,10 +43,11 @@ public interface CCollectionVerifier<E, C extends Collection<E>> extends CBaseCo
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeEquals(CVerificationQueue verifier, int expected, final String message, final Object... params) {
+  default void verifySizeEquals(
+      CVerificationQueue verifier, int expected, final String message, final Object... params) {
     _verify(verifier, expected, (o, o2) -> _toState(o).sizeEquals(o2), message, params);
   }
 
@@ -64,10 +66,11 @@ public interface CCollectionVerifier<E, C extends Collection<E>> extends CBaseCo
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeIsGreaterThan(CVerificationQueue verifier, int expected, final String message, final Object... params) {
+  default void verifySizeIsGreaterThan(
+      CVerificationQueue verifier, int expected, final String message, final Object... params) {
     _verify(verifier, expected, (o, o2) -> _toState(o).sizeIsGreaterThan(o2), message, params);
   }
 
@@ -86,10 +89,11 @@ public interface CCollectionVerifier<E, C extends Collection<E>> extends CBaseCo
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifySizeIsLessThan(CVerificationQueue verifier, int expected, final String message, final Object... params) {
+  default void verifySizeIsLessThan(
+      CVerificationQueue verifier, int expected, final String message, final Object... params) {
     _verify(verifier, expected, (o, o2) -> _toState(o).sizeIsLessThan(o2), message, params);
   }
 }

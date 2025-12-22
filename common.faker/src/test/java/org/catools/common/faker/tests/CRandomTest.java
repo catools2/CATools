@@ -1,5 +1,8 @@
 package org.catools.common.faker.tests;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.catools.common.exception.CInvalidRangeException;
 import org.catools.common.faker.CRandom;
@@ -8,10 +11,6 @@ import org.catools.common.faker.model.CRandomAddress;
 import org.catools.common.faker.model.CRandomCompany;
 import org.catools.common.faker.model.CRandomName;
 import org.testng.annotations.Test;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CRandomTest {
 
@@ -61,7 +60,8 @@ public class CRandomTest {
   public void CRandomStringThrowsExceptionForInvalidLengthRange() {
     Assertions.assertThatThrownBy(() -> CRandom.String.randomNumeric(10, 5))
         .isInstanceOf(CInvalidRangeException.class)
-        .hasMessageContaining("The maxLengthExclusive should be equal or greater than minLengthInclusive");
+        .hasMessageContaining(
+            "The maxLengthExclusive should be equal or greater than minLengthInclusive");
   }
 
   @Test
@@ -84,7 +84,6 @@ public class CRandomTest {
         .isInstanceOf(CFakerCountryNotFoundException.class)
         .hasMessageContaining("XYZ");
   }
-
 
   @Test
   public void testCRandomInt() {

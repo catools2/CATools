@@ -10,8 +10,8 @@ import org.catools.common.extensions.verify.hard.CStringVerification;
  * the minimum change in the code. In the meantime adding verification method in one place can be
  * extended across all other objects:
  *
- * <p>Please Note that we should extend manually {@link
- * CStringVerification} for each new added verification here
+ * <p>Please Note that we should extend manually {@link CStringVerification} for each new added
+ * verification here
  */
 public interface CBaseStringExtension extends CBaseObjectExtension<String, CStringState> {
 

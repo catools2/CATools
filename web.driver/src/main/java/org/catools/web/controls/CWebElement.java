@@ -1,26 +1,24 @@
 package org.catools.web.controls;
 
+import java.awt.image.BufferedImage;
 import lombok.Getter;
-import lombok.Setter;
 import org.catools.common.extensions.types.CDynamicBooleanExtension;
-import org.catools.common.extensions.types.CDynamicNumberExtension;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.media.model.CScreenShot;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.selectors.CBy;
 
-import java.awt.image.BufferedImage;
-
 /**
- * A web element wrapper that provides enhanced functionality for interacting with web elements
- * in automated testing scenarios. This class extends basic Selenium WebElement functionality
- * with additional features like dynamic property extensions, enhanced waiting mechanisms,
- * and comprehensive action methods.
+ * A web element wrapper that provides enhanced functionality for interacting with web elements in
+ * automated testing scenarios. This class extends basic Selenium WebElement functionality with
+ * additional features like dynamic property extensions, enhanced waiting mechanisms, and
+ * comprehensive action methods.
  *
- * <p>Example usage:</p>
+ * <p>Example usage:
+ *
  * <pre>{@code
  * // Create a web element
- * CWebElement<CDriver> loginButton = new CWebElement<>("Login Button", driver, By.id("login-btn"));
+ * CWebElement loginButton = new CWebElement("Login Button", driver, By.id("login-btn"));
  *
  * // Use property extensions for verification
  * loginButton.Visible.verifyTrue("Login button should be visible");
@@ -30,44 +28,25 @@ import java.awt.image.BufferedImage;
  * loginButton.click();
  * }</pre>
  *
- * @param <DR> the driver type that extends CDriver
  * @author CATools Team
  * @version 1.0
  * @since 1.0
  */
-public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
+public class CWebElement implements CWebElementActions {
 
-  /**
-   * The web driver instance used for interacting with the web element.
-   */
-  @Getter
-  @Setter
-  protected DR driver;
+  /** the web element engine instance used for interacting with the web element. */
+  @Getter protected CElementEngine<?> elementEngine;
 
-  /**
-   * The default wait timeout in seconds for this element's operations.
-   */
-  @Getter
-  @Setter
-  protected int waitSec;
+  /** The default wait timeout in seconds for this element's operations. */
+  @Getter protected int waitSec;
 
-  /**
-   * The descriptive name of this web element for logging and reporting purposes.
-   */
-  @Getter
-  @Setter
-  protected String name;
+  /** The descriptive name of this web element for logging and reporting purposes. */
+  @Getter protected String name;
 
-  /**
-   * The locator strategy used to find this element on the web page.
-   */
-  @Getter
-  @Setter
-  protected String locator;
+  /** The locator strategy used to find this element on the web page. */
+  @Getter protected String locator;
 
-  /**
-   * Default constructor for dependency injection frameworks.
-   */
+  /** Default constructor for dependency injection frameworks. */
   public CWebElement() {
     // for DI frameworks
   }
@@ -75,111 +54,151 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
   /**
    * Creates a new CWebElement with the default timeout.
    *
-   * @param name    the descriptive name for this element
-   * @param driver  the web driver instance
+   * @param name the descriptive name for this element
+   * @param driver the driver instance
    * @param locator the locator strategy to find the element
+   *     <p>Example:
+   *     <pre>{@code
+   * CWebElement submitBtn = new CWebElement("Submit Button", driver, By.id("submit"));
    *
-   *                <p>Example:</p>
-   *                <pre>{@code
-   *                                              CWebElement<CDriver> submitBtn = new CWebElement<>("Submit Button", driver, By.id("submit"));
-   *                                              }</pre>
+   * }</pre>
    */
-  public CWebElement(String name, DR driver, String locator) {
+  public CWebElement(String name, CDriver driver, String locator) {
     this(name, driver, locator, CDriver.DEFAULT_TIMEOUT);
   }
 
   /**
    * Creates a new CWebElement with the default timeout.
    *
-   * @param name    the descriptive name for this element
-   * @param driver  the web driver instance
+   * @param name the descriptive name for this element
+   * @param driver the driver instance
    * @param locator the locator strategy to find the element
+   *     <p>Example:
+   *     <pre>{@code
+   * CWebElement cancelLink = new CWebElement("Cancel Link", driver, By.linkText("Cancel"));
    *
-   *  <p>Example:</p>
-   *  <pre>{@code
-   *  CWebElement<CDriver> cancelLink = new CWebElement<>("Cancel Link", driver, By.linkText("Cancel"));
-   *  }</pre>
+   * }</pre>
    */
-  public CWebElement(String name, DR driver, CBy locator) {
+  public CWebElement(String name, CDriver driver, CBy locator) {
     this(name, driver, locator.getSelector(), CDriver.DEFAULT_TIMEOUT);
+  }
+
+  /**
+   * Creates a new CWebElement with the default timeout.
+   *
+   * @param name the descriptive name for this element
+   * @param elementEngine the web element engine instance
+   * @param locator the locator strategy to find the element
+   *     <p>Example:
+   *     <pre>{@code
+   * CWebElement searchBox = new CWebElement("Search Box", elementEngine, By.name("q"));
+   *
+   * }</pre>
+   */
+  public CWebElement(String name, CElementEngine<?> elementEngine, CBy locator) {
+    this(name, elementEngine, locator.getSelector(), CDriver.DEFAULT_TIMEOUT);
+  }
+
+  /**
+   * Creates a new CWebElement with the default timeout.
+   *
+   * @param name the descriptive name for this element
+   * @param elementEngine the web element engine instance
+   * @param locator the locator strategy to find the element
+   *     <p>Example:
+   *     <pre>{@code
+   * CWebElement menuItem = new CWebElement("Menu Item", elementEngine, By.cssSelector(".menu-item"));
+   *
+   * }</pre>
+   */
+  public CWebElement(String name, CElementEngine<?> elementEngine, String locator) {
+    this(name, elementEngine, locator, CDriver.DEFAULT_TIMEOUT);
   }
 
   /**
    * Creates a new CWebElement with a custom timeout.
    *
-   * @param name    the descriptive name for this element
-   * @param driver  the web driver instance
+   * @param name the descriptive name for this element
+   * @param driver the driver instance
    * @param locator the locator strategy to find the element
    * @param waitSec the custom timeout in seconds for this element's operations
-   *
-   * <p>Example:</p>
-   * <pre>{@code
+   *     <p>Example:
+   *     <pre>{@code
    * // Create element with 15-second timeout
-   * CWebElement<CDriver> dynamicElement = new CWexwbElement<>("Dynamic Element", driver, By.xpath("//div[@class='dynamic']"), 15);
+   * CWebElement dynamicElement = new CWexwbElement<>("Dynamic Element", driver, By.xpath("//div[@class='dynamic']"), 15);
+   *
    * }</pre>
    */
-  public CWebElement(String name, DR driver, CBy locator, int waitSec) {
+  public CWebElement(String name, CDriver driver, CBy locator, int waitSec) {
     this(name, driver, locator.getSelector(), waitSec);
   }
 
   /**
    * Creates a new CWebElement with a custom timeout.
    *
-   * @param name    the descriptive name for this element
-   * @param driver  the web driver instance
+   * @param name the descriptive name for this element
+   * @param driver the driver instance
    * @param locator the locator strategy to find the element
    * @param waitSec the custom timeout in seconds for this element's operations
-   *
-   * <p>Example:</p>
-   * <pre>{@code
+   *     <p>Example:
+   *     <pre>{@code
    * // Create element with 10-second timeout
-   * CWebElement<CDriver> slowElement = new CWebElement<>("Slow Element", driver, By.className("slow"), 10);
+   * CWebElement slowElement = new CWebElement("Slow Element", driver, By.className("slow"), 10);
+   *
    * }</pre>
    */
-  public CWebElement(String name, DR driver, String locator, int waitSec) {
+  public CWebElement(String name, CDriver driver, String locator, int waitSec) {
+    this(name, driver.getDriverSession().getEngine(), locator, waitSec);
+  }
+
+  /**
+   * Creates a new CWebElement with a custom timeout.
+   *
+   * @param name the descriptive name for this element
+   * @param elementEngine the web element engine instance
+   * @param locator the locator strategy to find the element
+   * @param waitSec the custom timeout in seconds for this element's operations
+   *     <p>Example:
+   *     <pre>{@code
+   * // Create element with specific driver and element engines
+   * CWebElement customElement = new CWebElement("Custom Element", customElementEngine, By.cssSelector(".custom"), 12);
+   *
+   * }</pre>
+   */
+  public CWebElement(String name, CElementEngine<?> elementEngine, CBy locator, int waitSec) {
+    this(name, elementEngine, locator.getSelector(), waitSec);
+  }
+
+  /**
+   * Creates a new CWebElement with a custom timeout.
+   *
+   * @param name the descriptive name for this element
+   * @param elementEngine the web element engine instance
+   * @param locator the locator strategy to find the element
+   * @param waitSec the custom timeout in seconds for this element's operations
+   *     <p>Example:
+   *     <pre>{@code
+   * // Create element with specific driver and element engines
+   * CWebElement customElement = new CWebElement("Custom Element", customDriverEngine, customElementEngine, By.cssSelector(".custom"), 12);
+   *
+   * }</pre>
+   */
+  public CWebElement(String name, CElementEngine<?> elementEngine, String locator, int waitSec) {
     super();
     this.name = name;
-    this.driver = driver;
+    this.elementEngine = elementEngine;
     this.locator = locator;
     this.waitSec = waitSec;
   }
 
   // Control Extension
-  /**
-   * Dynamic extension for retrieving the element's offset position.
-   * Provides verification and wait capabilities for the element's offsetTop value.
-   *
-   * <p>Example usage:</p>
-   * <pre>{@code
-   * // Verify offset is greater than 100
-   * element.Offset.verifyGreaterThan(100, "Element should be positioned below 100px");
-   *
-   * // Wait until offset changes
-   * element.Offset.waitUntilNotEquals(0, 5, "Wait for element to move from top");
-   * }</pre>
-   */
-  public final CDynamicNumberExtension<Integer> Offset = new CDynamicNumberExtension<>() {
-    @Override
-    public Integer _get() {
-      return getOffset(0);
-    }
-
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
-
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Offset";
-    }
-  };
 
   /**
-   * Dynamic extension for checking element staleness.
-   * Provides verification and wait capabilities for detecting stale element references.
+   * Dynamic extension for checking element staleness. Provides verification and wait capabilities
+   * for detecting stale element references.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify element is not stale
    * element.Staleness.verifyFalse("Element should not be stale");
@@ -188,28 +207,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.Staleness.waitUntilTrue(10, "Wait for element to become stale");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Staleness = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isStaleness(0);
-    }
+  public final CDynamicBooleanExtension Staleness =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isStaleness(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Staleness";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Staleness";
+        }
+      };
 
   /**
-   * Dynamic extension for checking element presence in the DOM.
-   * Provides verification and wait capabilities for element existence.
+   * Dynamic extension for checking element presence in the DOM. Provides verification and wait
+   * capabilities for element existence.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify element is present
    * element.Present.verifyTrue("Element should be present in DOM");
@@ -218,28 +239,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.Present.waitUntilTrue(15, "Wait for element to appear");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Present = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isPresent(0);
-    }
+  public final CDynamicBooleanExtension Present =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isPresent(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Presence";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Presence";
+        }
+      };
 
   /**
-   * Dynamic extension for checking element visibility.
-   * Provides verification and wait capabilities for element display state.
+   * Dynamic extension for checking element visibility. Provides verification and wait capabilities
+   * for element display state.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify element is visible
    * element.Visible.verifyTrue("Element should be visible to user");
@@ -251,28 +274,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.Visible.waitUntilFalse(5, "Wait for element to be hidden");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Visible = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isVisible(0);
-    }
+  public final CDynamicBooleanExtension Visible =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isVisible(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Visibility";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Visibility";
+        }
+      };
 
   /**
-   * Dynamic extension for checking element enabled state.
-   * Provides verification and wait capabilities for element interactability.
+   * Dynamic extension for checking element enabled state. Provides verification and wait
+   * capabilities for element interactability.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify element is enabled
    * element.Enabled.verifyTrue("Element should be enabled for interaction");
@@ -281,28 +306,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.Enabled.waitUntilTrue(8, "Wait for element to be enabled");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Enabled = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isEnabled(0);
-    }
+  public final CDynamicBooleanExtension Enabled =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isEnabled(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Enable State";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Enable State";
+        }
+      };
 
   /**
-   * Dynamic extension for retrieving element text content.
-   * Provides verification and wait capabilities for the element's visible text.
+   * Dynamic extension for retrieving element text content. Provides verification and wait
+   * capabilities for the element's visible text.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify text content
    * element.Text.verifyEquals("Expected Text", "Text should match expected value");
@@ -314,28 +341,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.Text.waitUntilNotEquals("Loading...", 10, "Wait for loading to complete");
    * }</pre>
    */
-  public final CDynamicStringExtension Text = new CDynamicStringExtension() {
-    @Override
-    public String _get() {
-      return getText(0);
-    }
+  public final CDynamicStringExtension Text =
+      new CDynamicStringExtension() {
+        @Override
+        public String _get() {
+          return getText(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Text";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Text";
+        }
+      };
 
   /**
-   * Dynamic extension for retrieving element value attribute.
-   * Provides verification and wait capabilities for form element values.
+   * Dynamic extension for retrieving element value attribute. Provides verification and wait
+   * capabilities for form element values.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify input value
    * inputField.Value.verifyEquals("expected@email.com", "Email field should have correct value");
@@ -344,28 +373,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * inputField.Value.waitUntilNotEquals("", 5, "Wait for value to be entered");
    * }</pre>
    */
-  public final CDynamicStringExtension Value = new CDynamicStringExtension() {
-    @Override
-    public String _get() {
-      return getValue(0);
-    }
+  public final CDynamicStringExtension Value =
+      new CDynamicStringExtension() {
+        @Override
+        public String _get() {
+          return getValue(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Value";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Value";
+        }
+      };
 
   /**
-   * Dynamic extension for retrieving element innerHTML content.
-   * Provides verification and wait capabilities for the element's inner HTML.
+   * Dynamic extension for retrieving element innerHTML content. Provides verification and wait
+   * capabilities for the element's inner HTML.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify HTML contains specific tags
    * element.InnerHTML.verifyContains("<span>", "HTML should contain span element");
@@ -374,32 +405,32 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * element.InnerHTML.waitUntilNotEquals("", 10, "Wait for content to load");
    * }</pre>
    */
-  public final CDynamicStringExtension InnerHTML = new CDynamicStringExtension() {
-    @Override
-    public String _get() {
-      return getInnerHTML(0);
-    }
+  public final CDynamicStringExtension InnerHTML =
+      new CDynamicStringExtension() {
+        @Override
+        public String _get() {
+          return getInnerHTML(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Inner HTML";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Inner HTML";
+        }
+      };
 
   /**
-   * Creates a dynamic extension for retrieving CSS property values.
-   * Provides verification and wait capabilities for specific CSS properties.
+   * Creates a dynamic extension for retrieving CSS property values. Provides verification and wait
+   * capabilities for specific CSS properties.
    *
    * @param cssKey the CSS property name to retrieve
    * @return a CDynamicStringExtension for the specified CSS property
-   *
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Verify font size
    * element.Css("font-size").verifyEquals("16px", "Font size should be 16px");
    *
@@ -430,14 +461,13 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
   }
 
   /**
-   * Creates a dynamic extension for retrieving HTML attribute values.
-   * Provides verification and wait capabilities for specific element attributes.
+   * Creates a dynamic extension for retrieving HTML attribute values. Provides verification and
+   * wait capabilities for specific element attributes.
    *
    * @param attribute the attribute name to retrieve
    * @return a CDynamicStringExtension for the specified attribute
-   *
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Verify class attribute contains specific class
    * element.Attribute("class").verifyContains("active", "Element should have active class");
    *
@@ -468,13 +498,12 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
   }
 
   /**
-   * Creates a dynamic extension for retrieving the element's ARIA role.
-   * Provides verification and wait capabilities for accessibility role attributes.
+   * Creates a dynamic extension for retrieving the element's ARIA role. Provides verification and
+   * wait capabilities for accessibility role attributes.
    *
    * @return a CDynamicStringExtension for the ARIA role
-   *
-   * <p>Example usage:</p>
-   * <pre>{@code
+   *     <p>Example usage:
+   *     <pre>{@code
    * // Verify button role
    * buttonElement.AriaRole().verifyEquals("button", "Element should have button role");
    *
@@ -502,10 +531,11 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
   }
 
   /**
-   * Screenshot capability for capturing images of this web element.
-   * Provides functionality to take screenshots and perform image-based verifications.
+   * Screenshot capability for capturing images of this web element. Provides functionality to take
+   * screenshots and perform image-based verifications.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify screenshot is not null
    * element.ScreenShot.verifyIsNotNull("Screenshot should be captured successfully");
@@ -514,38 +544,40 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * CImageUtil.saveImage(element.ScreenShot.get(), "element-screenshot.png");
    * }</pre>
    */
-  public final CScreenShot ScreenShot = new CScreenShot() {
-    @Override
-    public BufferedImage _get() {
-      return getScreenShot(0);
-    }
+  public final CScreenShot ScreenShot =
+      new CScreenShot() {
+        @Override
+        public BufferedImage _get() {
+          return getScreenShot(0);
+        }
 
-    @Override
-    public int getDefaultWaitIntervalInMilliSeconds() {
-      return 50;
-    }
+        @Override
+        public int getDefaultWaitIntervalInMilliSeconds() {
+          return 50;
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return CDriver.DEFAULT_TIMEOUT;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public boolean withWaiter() {
-      return true;
-    }
+        @Override
+        public boolean withWaiter() {
+          return true;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Screen Shot";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Screen Shot";
+        }
+      };
 
   /**
-   * Dynamic extension for checking element selection state.
-   * Provides verification and wait capabilities for form element selection (checkboxes, radio buttons).
+   * Dynamic extension for checking element selection state. Provides verification and wait
+   * capabilities for form element selection (checkboxes, radio buttons).
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify checkbox is selected
    * checkbox.Selected.verifyTrue("Checkbox should be selected");
@@ -557,28 +589,30 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * optionElement.Selected.verifyFalse("Option should not be selected initially");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Selected = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isSelected(0);
-    }
+  public final CDynamicBooleanExtension Selected =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isSelected(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Selected State";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Selected State";
+        }
+      };
 
   /**
-   * Dynamic extension for checking element clickability.
-   * Provides verification and wait capabilities for element interaction readiness.
+   * Dynamic extension for checking element clickability. Provides verification and wait
+   * capabilities for element interaction readiness.
    *
-   * <p>Example usage:</p>
+   * <p>Example usage:
+   *
    * <pre>{@code
    * // Verify element is clickable
    * element.Clickable.verifyTrue("Element should be clickable");
@@ -590,20 +624,21 @@ public class CWebElement<DR extends CDriver> implements CWebElementActions<DR> {
    * disabledButton.Clickable.verifyFalse("Disabled button should not be clickable");
    * }</pre>
    */
-  public final CDynamicBooleanExtension Clickable = new CDynamicBooleanExtension() {
-    @Override
-    public Boolean _get() {
-      return isClickable(0);
-    }
+  public final CDynamicBooleanExtension Clickable =
+      new CDynamicBooleanExtension() {
+        @Override
+        public Boolean _get() {
+          return isClickable(0);
+        }
 
-    @Override
-    public int getDefaultWaitInSeconds() {
-      return waitSec;
-    }
+        @Override
+        public int getDefaultWaitInSeconds() {
+          return waitSec;
+        }
 
-    @Override
-    public String getVerifyMessagePrefix() {
-      return name + " Clickable";
-    }
-  };
+        @Override
+        public String getVerifyMessagePrefix() {
+          return name + " Clickable";
+        }
+      };
 }

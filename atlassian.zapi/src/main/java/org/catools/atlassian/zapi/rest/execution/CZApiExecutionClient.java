@@ -16,7 +16,8 @@ import org.codehaus.jettison.json.JSONObject;
 /**
  * Client class for managing test executions in the ZAPI system.
  *
- * <p>This class provides methods to add tests to a cycle and update the status of executions in bulk.</p>
+ * <p>This class provides methods to add tests to a cycle and update the status of executions in
+ * bulk.
  */
 @Slf4j
 public class CZApiExecutionClient extends CZApiRestClient {

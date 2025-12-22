@@ -1,13 +1,12 @@
 package org.catools.common.io;
 
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.collections.CList;
-import org.catools.common.utils.CResourceUtil;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.collections.CList;
+import org.catools.common.utils.CResourceUtil;
 
 public class CResource {
   private final String resourceFullName;

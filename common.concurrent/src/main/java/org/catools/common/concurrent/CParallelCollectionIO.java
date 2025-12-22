@@ -19,9 +19,10 @@ import java.util.function.Supplier;
  *
  * <p>This class allows two sets of threads (input and output) to run in parallel, sharing a common
  * resource (a stack) for optimized data processing. It provides mechanisms for handling timeouts,
- * exceptions, and thread synchronization.</p>
+ * exceptions, and thread synchronization.
  *
  * <p>Example usage:
+ *
  * <pre>{@code
  * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("Example", 2, 2);
  *
@@ -39,7 +40,6 @@ import java.util.function.Supplier;
  *
  * io.run();
  * }</pre>
- * </p>
  *
  * @param <T> the type of elements processed by the input and output threads
  */
@@ -64,10 +64,10 @@ public class CParallelCollectionIO<T> {
    * Constructs a new instance with the specified name and thread counts for input and output.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("MyIO", 3, 2);
    * }</pre>
-   * </p>
    *
    * @param name the name of the parallel IO instance
    * @param parallelInputCount the number of input threads
@@ -81,11 +81,11 @@ public class CParallelCollectionIO<T> {
    * Constructs a new instance with the specified name, thread counts, timeout, and time unit.
    *
    * <p>Example with timeout:
+   *
    * <pre>{@code
    * // run with a 30 second timeout for the overall operation
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("TimedIO", 2, 2, 30L, TimeUnit.SECONDS);
    * }</pre>
-   * </p>
    *
    * @param name the name of the parallel IO instance
    * @param parallelInputCount the number of input threads
@@ -107,9 +107,10 @@ public class CParallelCollectionIO<T> {
    *
    * <p>The provided function receives an {@link AtomicBoolean} that indicates EOF; when true, the
    * producer should stop supplying new items. The function should return a {@link Collection} of
-   * items (can be empty) to be placed on the shared queue.</p>
+   * items (can be empty) to be placed on the shared queue.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.setInputExecutor(eof -> {
    *   if (noMoreSourceData()) {
@@ -119,7 +120,6 @@ public class CParallelCollectionIO<T> {
    *   return fetchNextBatch();
    * });
    * }</pre>
-   * </p>
    *
    * @param inputFunction a function that generates a collection of input data
    */
@@ -156,16 +156,16 @@ public class CParallelCollectionIO<T> {
    * Sets the output executor with the specified output function.
    *
    * <p>The consumer receives the EOF flag and a single item to process. The consumer should handle
-   * normal processing and may set the EOF flag if it determines the pipeline should stop.</p>
+   * normal processing and may set the EOF flag if it determines the pipeline should stop.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.setOutputExecutor((eof, item) -> {
    *   processItem(item);
    *   if (shouldStop()) eof.set(true);
    * });
    * }</pre>
-   * </p>
    *
    * @param outputFunction a consumer that processes elements from the shared queue
    */
@@ -192,9 +192,7 @@ public class CParallelCollectionIO<T> {
                 if (throwableReference.get() != null) {
                   break;
                 }
-              } while ((!eof.get()
-                  || activeInputThreads.get() > 0
-                  || !sharedQueue.isEmpty())
+              } while ((!eof.get() || activeInputThreads.get() > 0 || !sharedQueue.isEmpty())
                   && isLive());
               return true;
             });
@@ -204,13 +202,13 @@ public class CParallelCollectionIO<T> {
    * Runs the input and output executors, waiting for their completion.
    *
    * <p>Blocks until both input and output tasks complete or an exception occurs. Any exception
-   * thrown by user-provided input or output functions is propagated.</p>
+   * thrown by user-provided input or output functions is propagated.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * io.run();
    * }</pre>
-   * </p>
    *
    * @throws Throwable if an exception occurs during execution
    */
@@ -251,10 +249,10 @@ public class CParallelCollectionIO<T> {
    * Runs the input and output executors with a specified timeout.
    *
    * <p>Example with timeout:
+   *
    * <pre>{@code
    * io.run(60, TimeUnit.SECONDS);
    * }</pre>
-   * </p>
    *
    * @param timeout the maximum time to wait for tasks to complete
    * @param unit the time unit of the timeout argument
@@ -299,15 +297,16 @@ public class CParallelCollectionIO<T> {
   /**
    * Checks if the input or output executor has started.
    *
-   * <p>This method is useful for monitoring the lifecycle of the parallel IO operation.
-   * It returns true as soon as either the input or output threads begin execution.</p>
+   * <p>This method is useful for monitoring the lifecycle of the parallel IO operation. It returns
+   * true as soon as either the input or output threads begin execution.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("Monitor", 2, 2);
    * io.setInputExecutor(eof -> fetchData());
    * io.setOutputExecutor((eof, item) -> processItem(item));
-   * 
+   *
    * // Start execution in a separate thread
    * CompletableFuture.runAsync(() -> {
    *   try {
@@ -316,14 +315,13 @@ public class CParallelCollectionIO<T> {
    *     // handle exception
    *   }
    * });
-   * 
+   *
    * // Monitor startup
    * while (!io.isStarted()) {
    *   Thread.sleep(100);
    * }
    * System.out.println("Parallel IO has started!");
    * }</pre>
-   * </p>
    *
    * @return true if either executor has started, otherwise false
    */
@@ -335,15 +333,16 @@ public class CParallelCollectionIO<T> {
    * Checks if the parallel IO instance is live.
    *
    * <p>A parallel IO instance is considered live if it is not finished, shutdown, or terminated,
-   * and no exceptions have been encountered. This is useful for monitoring the health and
-   * active status of the operation.</p>
+   * and no exceptions have been encountered. This is useful for monitoring the health and active
+   * status of the operation.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("HealthCheck", 2, 2);
    * io.setInputExecutor(eof -> fetchData());
    * io.setOutputExecutor((eof, item) -> processItem(item));
-   * 
+   *
    * // Start execution in a separate thread
    * CompletableFuture.runAsync(() -> {
    *   try {
@@ -352,7 +351,7 @@ public class CParallelCollectionIO<T> {
    *     // handle exception
    *   }
    * });
-   * 
+   *
    * // Monitor health
    * while (io.isLive()) {
    *   System.out.println("System is healthy and processing...");
@@ -360,7 +359,6 @@ public class CParallelCollectionIO<T> {
    * }
    * System.out.println("Processing completed or encountered an error");
    * }</pre>
-   * </p>
    *
    * @return true if the instance is live, otherwise false
    */
@@ -372,9 +370,10 @@ public class CParallelCollectionIO<T> {
    * Checks if the input and output executors have finished execution.
    *
    * <p>This method returns true when both input and output processing have completed successfully.
-   * It's the preferred way to check for normal completion of the parallel IO operation.</p>
+   * It's the preferred way to check for normal completion of the parallel IO operation.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("BatchJob", 2, 2);
    * io.setInputExecutor(eof -> {
@@ -383,7 +382,7 @@ public class CParallelCollectionIO<T> {
    *   return batch;
    * });
    * io.setOutputExecutor((eof, item) -> writeToDatabase(item));
-   * 
+   *
    * // Start execution in a separate thread
    * CompletableFuture.runAsync(() -> {
    *   try {
@@ -392,7 +391,7 @@ public class CParallelCollectionIO<T> {
    *     // handle exception
    *   }
    * });
-   * 
+   *
    * // Wait for completion
    * while (!io.isFinished()) {
    *   System.out.println("Still processing...");
@@ -400,7 +399,6 @@ public class CParallelCollectionIO<T> {
    * }
    * System.out.println("All processing completed successfully!");
    * }</pre>
-   * </p>
    *
    * @return true if both executors have finished, otherwise false
    */
@@ -411,15 +409,16 @@ public class CParallelCollectionIO<T> {
   /**
    * Checks if the input and output executors have been shut down.
    *
-   * <p>Shutdown indicates that the executors will not accept new tasks, but may still be
-   * processing existing tasks. This is typically the result of a graceful shutdown operation.</p>
+   * <p>Shutdown indicates that the executors will not accept new tasks, but may still be processing
+   * existing tasks. This is typically the result of a graceful shutdown operation.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("GracefulShutdown", 2, 2);
    * io.setInputExecutor(eof -> fetchData());
    * io.setOutputExecutor((eof, item) -> processItem(item));
-   * 
+   *
    * // Start execution in a separate thread
    * CompletableFuture<Void> task = CompletableFuture.runAsync(() -> {
    *   try {
@@ -428,16 +427,15 @@ public class CParallelCollectionIO<T> {
    *     // handle exception
    *   }
    * });
-   * 
+   *
    * // Simulate external shutdown trigger
    * Thread.sleep(5000);
    * task.cancel(true); // This may trigger shutdown
-   * 
+   *
    * if (io.isShutdown()) {
    *   System.out.println("Executors have been shut down");
    * }
    * }</pre>
-   * </p>
    *
    * @return true if both executors have been shut down, otherwise false
    */
@@ -448,15 +446,16 @@ public class CParallelCollectionIO<T> {
   /**
    * Checks if the input and output executors have been terminated.
    *
-   * <p>Termination indicates that all tasks have completed execution and the executors have
-   * been fully shut down. This is the final state after shutdown completes.</p>
+   * <p>Termination indicates that all tasks have completed execution and the executors have been
+   * fully shut down. This is the final state after shutdown completes.
    *
    * <p>Example:
+   *
    * <pre>{@code
    * CParallelCollectionIO<String> io = new CParallelCollectionIO<>("TerminationCheck", 2, 2);
    * io.setInputExecutor(eof -> fetchData());
    * io.setOutputExecutor((eof, item) -> processItem(item));
-   * 
+   *
    * try {
    *   io.run(30, TimeUnit.SECONDS); // Run with timeout
    * } catch (CThreadTimeoutException e) {
@@ -464,7 +463,7 @@ public class CParallelCollectionIO<T> {
    * } catch (Throwable t) {
    *   System.out.println("Operation failed: " + t.getMessage());
    * }
-   * 
+   *
    * // Check final state
    * if (io.isTerminated()) {
    *   System.out.println("All threads have been terminated");
@@ -472,7 +471,6 @@ public class CParallelCollectionIO<T> {
    *   System.out.println("Shutdown initiated but not yet terminated");
    * }
    * }</pre>
-   * </p>
    *
    * @return true if both executors have been terminated, otherwise false
    */
@@ -487,7 +485,11 @@ public class CParallelCollectionIO<T> {
    */
   private void addInputResultToSharedStack(Collection<T> data) {
     performActionOnSharedQueue(() -> sharedQueue.addAll(data));
-    log.debug("{} new records added to the queue {}, new queue size is {}", data.size(), name, sharedQueue.size());
+    log.debug(
+        "{} new records added to the queue {}, new queue size is {}",
+        data.size(),
+        name,
+        sharedQueue.size());
   }
 
   /**
@@ -496,10 +498,10 @@ public class CParallelCollectionIO<T> {
    * @return the element read from the queue, or null if the queue is empty
    */
   private T readFromSharedQueue() {
-    if (sharedQueue.isEmpty())
-      log.debug("The {} queue is empty", name);
+    if (sharedQueue.isEmpty()) log.debug("The {} queue is empty", name);
     else
-      log.debug("1 record removing from the queue {}, new queue size is {}", name, sharedQueue.size());
+      log.debug(
+          "1 record removing from the queue {}, new queue size is {}", name, sharedQueue.size());
 
     return performActionOnSharedQueue(() -> sharedQueue.isEmpty() ? null : sharedQueue.remove(0));
   }

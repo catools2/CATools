@@ -6,18 +6,12 @@ package org.catools.mcp.enums;
  * <p>It can be either {@link #STDIO}, {@link #SSE}, or {@link #STREAMABLE}.
  */
 public enum CServerMode {
-  /**
-   * The MCP server runs in {@code STDIO} mode.
-   */
+  /** The MCP server runs in {@code STDIO} mode. */
   STDIO,
 
-  /**
-   * The MCP server runs in http {@code SSE} mode.
-   */
+  /** The MCP server runs in http {@code SSE} mode. */
   SSE,
 
-  /**
-   * The MCP server runs in {@code STREAMABLE} http mode.
-   */
+  /** The MCP server runs in {@code STREAMABLE} http mode. */
   STREAMABLE
 }

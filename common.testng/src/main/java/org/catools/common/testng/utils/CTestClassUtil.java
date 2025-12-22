@@ -1,6 +1,10 @@
 package org.catools.common.testng.utils;
 
 import com.google.common.reflect.ClassPath;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -14,21 +18,16 @@ import org.testng.ITestResult;
 import org.testng.annotations.Test;
 import org.testng.internal.annotations.DisabledRetryAnalyzer;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Utility class for TestNG test class analysis and manipulation.
- * 
- * <p>This utility class provides various methods to work with TestNG test classes,
- * including extracting issue keys, mapping test classes to issue IDs, analyzing test methods,
- * and handling retry logic for test execution.</p>
- * 
- * <p>The class supports filtering tests based on annotations and provides utilities
- * for test name generation and retry analysis.</p>
- * 
+ *
+ * <p>This utility class provides various methods to work with TestNG test classes, including
+ * extracting issue keys, mapping test classes to issue IDs, analyzing test methods, and handling
+ * retry logic for test execution.
+ *
+ * <p>The class supports filtering tests based on annotations and provides utilities for test name
+ * generation and retry analysis.
+ *
  * @see org.testng.IMethodInstance
  * @see org.testng.ITestResult
  * @see org.catools.common.annotations.CTestIds
@@ -40,26 +39,27 @@ public class CTestClassUtil {
 
   /**
    * Extracts issue keys from a list of TestNG method instances.
-   * 
-   * <p>This method analyzes the provided method instances and extracts issue keys
-   * from test classes that have been annotated with {@link CTestIds}. It can optionally
-   * filter out tests that would be skipped during execution.</p>
-   * 
-   * @param list                                the list of TestNG method instances to analyze
-   * @param filterTestsWhichWillSkipInRun      {@code true} to exclude tests that will be skipped,
-   *                                           {@code false} to include all tests
+   *
+   * <p>This method analyzes the provided method instances and extracts issue keys from test classes
+   * that have been annotated with {@link CTestIds}. It can optionally filter out tests that would
+   * be skipped during execution.
+   *
+   * @param list the list of TestNG method instances to analyze
+   * @param filterTestsWhichWillSkipInRun {@code true} to exclude tests that will be skipped, {@code
+   *     false} to include all tests
    * @return a {@link CList} of issue keys found in the test methods
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * List<IMethodInstance> methods = Arrays.asList(methodInstance1, methodInstance2);
    * CList<String> issueKeys = CTestClassUtil.getIssueKeys(methods, true);
-   * // Returns: ["JIRA-123", "JIRA-456"] 
+   * // Returns: ["JIRA-123", "JIRA-456"]
    * }</pre>
    */
-  public static CList<String> getIssueKeys(List<IMethodInstance> list, boolean filterTestsWhichWillSkipInRun) {
+  public static CList<String> getIssueKeys(
+      List<IMethodInstance> list, boolean filterTestsWhichWillSkipInRun) {
     CList<String> issueKeys = new CList<>();
-    CList<TestClassInfo> classNameMap = CTestClassUtil.getClassNameMap(filterTestsWhichWillSkipInRun);
+    CList<TestClassInfo> classNameMap =
+        CTestClassUtil.getClassNameMap(filterTestsWhichWillSkipInRun);
     list = CTestSuiteUtil.filterMethodInstanceToExecute(list);
 
     for (IMethodInstance method : list) {
@@ -74,23 +74,23 @@ public class CTestClassUtil {
 
   /**
    * Retrieves class names associated with the specified issue IDs.
-   * 
-   * <p>This method takes a set of issue IDs and returns the corresponding test class names
-   * that are annotated with those issue IDs using {@link CTestIds} annotation.</p>
-   * 
-   * @param issueIds                           the set of issue IDs to search for
-   * @param filterTestsWhichWillSkipInRun     {@code true} to exclude tests that will be skipped,
-   *                                          {@code false} to include all tests
+   *
+   * <p>This method takes a set of issue IDs and returns the corresponding test class names that are
+   * annotated with those issue IDs using {@link CTestIds} annotation.
+   *
+   * @param issueIds the set of issue IDs to search for
+   * @param filterTestsWhichWillSkipInRun {@code true} to exclude tests that will be skipped, {@code
+   *     false} to include all tests
    * @return a {@link CSet} of class names that match the provided issue IDs
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * CSet<String> issueIds = CSet.of("JIRA-123", "JIRA-456");
    * CSet<String> classNames = CTestClassUtil.getClassNameForIssueKeys(issueIds, true);
    * // Returns: {"com.example.TestClass1", "com.example.TestClass2"}
    * }</pre>
    */
-  public static CSet<String> getClassNameForIssueKeys(CSet<String> issueIds, boolean filterTestsWhichWillSkipInRun) {
+  public static CSet<String> getClassNameForIssueKeys(
+      CSet<String> issueIds, boolean filterTestsWhichWillSkipInRun) {
     return getClassNameMap(filterTestsWhichWillSkipInRun)
         .getAll(k -> issueIds.contains(StringUtils.strip(k.getTestId())))
         .mapToSet(TestClassInfo::getClassName);
@@ -98,31 +98,29 @@ public class CTestClassUtil {
 
   /**
    * Builds and returns a mapping of test classes to their associated information.
-   * 
+   *
    * <p>This method scans the classpath for test classes within the configured test packages,
-   * analyzes their TestNG annotations, and creates a mapping of test class information
-   * including issue IDs and skip flags. The result is cached for subsequent calls.</p>
-   * 
-   * <p>The method uses reflection to examine test methods and their annotations,
-   * particularly looking for {@link Test} and {@link CTestIds} annotations.</p>
-   * 
-   * @param filterTestsWhichWillSkipInRun {@code true} to exclude tests marked to be skipped,
-   *                                      {@code false} to include all discovered tests
+   * analyzes their TestNG annotations, and creates a mapping of test class information including
+   * issue IDs and skip flags. The result is cached for subsequent calls.
+   *
+   * <p>The method uses reflection to examine test methods and their annotations, particularly
+   * looking for {@link Test} and {@link CTestIds} annotations.
+   *
+   * @param filterTestsWhichWillSkipInRun {@code true} to exclude tests marked to be skipped, {@code
+   *     false} to include all discovered tests
    * @return a {@link CList} of {@link TestClassInfo} objects containing test class metadata
-   * 
    * @throws RuntimeException if there's an IOException during classpath scanning
-   * 
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Get all test classes including those that might be skipped
    * CList<TestClassInfo> allTests = CTestClassUtil.getClassNameMap(false);
-   * 
+   *
    * // Get only test classes that will actually run (not skipped)
    * CList<TestClassInfo> runnableTests = CTestClassUtil.getClassNameMap(true);
-   * 
+   *
    * for (TestClassInfo info : runnableTests) {
-   *     System.out.println("Class: " + info.getClassName() + 
-   *                       ", Test ID: " + info.getTestId() + 
+   *     System.out.println("Class: " + info.getClassName() +
+   *                       ", Test ID: " + info.getTestId() +
    *                       ", Will Skip: " + info.isShouldSkipByAnnotation());
    * }
    * }</pre>
@@ -134,21 +132,29 @@ public class CTestClassUtil {
         ClassPath classpath = ClassPath.from(loader);
         for (String testPackage : CTestNGConfigs.getTestPackages()) {
           for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClassesRecursive(testPackage)) {
-            new CList<>(classInfo.load().getMethods()).forEach(m -> {
-              CList<Annotation> annotations = CList.of(m.getAnnotations());
-              if (annotations.has(a -> a instanceof Test)) {
-                boolean shouldSkipByAnnotation = CTestSuiteUtil.shouldSkipByAnnotation(annotations);
-                Annotation testIds = annotations.getFirstOrNull(a -> a instanceof CTestIds);
-                if (testIds != null) {
-                  Arrays.asList(((CTestIds) testIds).ids()).forEach(s -> {
-                    s = s.trim();
-                    keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, s, classInfo.getName()));
-                  });
-                } else {
-                  keyClasses.add(new TestClassInfo(shouldSkipByAnnotation, null, classInfo.getName()));
-                }
-              }
-            });
+            new CList<>(classInfo.load().getMethods())
+                .forEach(
+                    m -> {
+                      CList<Annotation> annotations = CList.of(m.getAnnotations());
+                      if (annotations.has(a -> a instanceof Test)) {
+                        boolean shouldSkipByAnnotation =
+                            CTestSuiteUtil.shouldSkipByAnnotation(annotations);
+                        Annotation testIds = annotations.getFirstOrNull(a -> a instanceof CTestIds);
+                        if (testIds != null) {
+                          Arrays.asList(((CTestIds) testIds).ids())
+                              .forEach(
+                                  s -> {
+                                    s = s.trim();
+                                    keyClasses.add(
+                                        new TestClassInfo(
+                                            shouldSkipByAnnotation, s, classInfo.getName()));
+                                  });
+                        } else {
+                          keyClasses.add(
+                              new TestClassInfo(shouldSkipByAnnotation, null, classInfo.getName()));
+                        }
+                      }
+                    });
           }
         }
       } catch (IOException e) {
@@ -156,27 +162,28 @@ public class CTestClassUtil {
       }
       log.info(keyClasses.size() + " tests class found.");
     }
-    return filterTestsWhichWillSkipInRun ? keyClasses.getAll(t -> !t.isShouldSkipByAnnotation()) : keyClasses;
+    return filterTestsWhichWillSkipInRun
+        ? keyClasses.getAll(t -> !t.isShouldSkipByAnnotation())
+        : keyClasses;
   }
 
   /**
    * Generates a normalized test name from a test class.
-   * 
-   * <p>This method converts the fully qualified class name to a test name by replacing
-   * all non-word characters (anything that is not a letter, digit, or underscore)
-   * with underscores. This is useful for creating file names or identifiers that
-   * are safe to use in various contexts.</p>
-   * 
+   *
+   * <p>This method converts the fully qualified class name to a test name by replacing all non-word
+   * characters (anything that is not a letter, digit, or underscore) with underscores. This is
+   * useful for creating file names or identifiers that are safe to use in various contexts.
+   *
    * @param testClazz the test class to generate a name for
-   * @return a normalized string representation of the class name with non-word characters replaced by underscores
-   * 
+   * @return a normalized string representation of the class name with non-word characters replaced
+   *     by underscores
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Example with a typical test class
    * Class<?> testClass = com.example.test.UserServiceTest.class;
    * String testName = CTestClassUtil.getTestName(testClass);
    * // Returns: "com_example_test_UserServiceTest"
-   * 
+   *
    * // Example with special characters in package name
    * Class<?> complexClass = com.example.test$inner.TestClass.class;
    * String complexName = CTestClassUtil.getTestName(complexClass);
@@ -189,25 +196,26 @@ public class CTestClassUtil {
 
   /**
    * Determines if a test has no more retry attempts left.
-   * 
-   * <p>This method analyzes the test result to determine if the test can be retried again.
-   * It handles different types of retry analyzers and provides appropriate logic for
-   * determining retry status. The method specifically works with {@link CRetryAnalyzer}
-   * but also handles other retry analyzer types.</p>
-   * 
-   * <p>The method returns {@code true} in the following cases:</p>
+   *
+   * <p>This method analyzes the test result to determine if the test can be retried again. It
+   * handles different types of retry analyzers and provides appropriate logic for determining retry
+   * status. The method specifically works with {@link CRetryAnalyzer} but also handles other retry
+   * analyzer types.
+   *
+   * <p>The method returns {@code true} in the following cases:
+   *
    * <ul>
-   *   <li>The test method is null</li>
-   *   <li>No retry analyzer is configured</li>
-   *   <li>The retry analyzer is disabled ({@link DisabledRetryAnalyzer})</li>
-   *   <li>The retry analyzer indicates this is the last retry attempt</li>
+   *   <li>The test method is null
+   *   <li>No retry analyzer is configured
+   *   <li>The retry analyzer is disabled ({@link DisabledRetryAnalyzer})
+   *   <li>The retry analyzer indicates this is the last retry attempt
    * </ul>
-   * 
+   *
    * @param result the TestNG test result to analyze
-   * @return {@code true} if no more retry attempts are available, {@code false} if the test can be retried
-   * 
+   * @return {@code true} if no more retry attempts are available, {@code false} if the test can be
+   *     retried
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // In a TestNG listener
    * @Override
    * public void onTestFailure(ITestResult result) {
@@ -219,7 +227,7 @@ public class CTestClassUtil {
    *         // Prepare for retry (reset state, etc.)
    *     }
    * }
-   * 
+   *
    * // Example with manual checking
    * ITestResult testResult = getTestResult(); // obtained from TestNG
    * if (CTestClassUtil.noRetryLeft(testResult)) {
@@ -228,9 +236,9 @@ public class CTestClassUtil {
    * }</pre>
    */
   public static boolean noRetryLeft(ITestResult result) {
-    if (result.getMethod() == null ||
-        result.getMethod().getRetryAnalyzer(result) == null ||
-        result.getMethod().getRetryAnalyzer(result) instanceof DisabledRetryAnalyzer) {
+    if (result.getMethod() == null
+        || result.getMethod().getRetryAnalyzer(result) == null
+        || result.getMethod().getRetryAnalyzer(result) instanceof DisabledRetryAnalyzer) {
       return true;
     }
 
@@ -246,23 +254,23 @@ public class CTestClassUtil {
 
   /**
    * Data class containing information about a test class.
-   * 
+   *
    * <p>This class encapsulates metadata about test classes discovered during classpath scanning,
-   * including whether the test should be skipped based on annotations, the associated test ID
-   * from {@link CTestIds} annotation, and the fully qualified class name.</p>
-   * 
-   * <p>Instances of this class are immutable and are created during the test discovery process.</p>
-   * 
+   * including whether the test should be skipped based on annotations, the associated test ID from
+   * {@link CTestIds} annotation, and the fully qualified class name.
+   *
+   * <p>Instances of this class are immutable and are created during the test discovery process.
+   *
    * @example
-   * <pre>{@code
+   *     <pre>{@code
    * // Creating a TestClassInfo instance (typically done internally)
    * TestClassInfo info = new TestClassInfo(false, "JIRA-123", "com.example.TestClass");
-   * 
+   *
    * // Accessing the information
    * String className = info.getClassName();        // "com.example.TestClass"
    * String testId = info.getTestId();             // "JIRA-123"
    * boolean shouldSkip = info.isShouldSkipByAnnotation(); // false
-   * 
+   *
    * // Using in filtering operations
    * CList<TestClassInfo> allTests = CTestClassUtil.getClassNameMap(false);
    * CList<TestClassInfo> nonSkippedTests = allTests.getAll(info -> !info.isShouldSkipByAnnotation());

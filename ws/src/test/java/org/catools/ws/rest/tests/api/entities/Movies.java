@@ -1,16 +1,13 @@
 package org.catools.ws.rest.tests.api.entities;
 
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Predicate;
-
+import lombok.Data;
 
 @Data
 public class Movies extends ArrayList<Movie> {
-  public Movies() {
-  }
+  public Movies() {}
 
   public Movies(Collection<? extends Movie> c) {
     super(c);

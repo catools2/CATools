@@ -18,10 +18,9 @@ import java.util.Date;
 /**
  * Represents a request to update the test result in the Scale system.
  *
- * <p>This class models the details required to update a test result, including
- * execution status, environment, comments, execution time, and custom fields.
- * It supports JSON serialization/deserialization and uses custom serializers/deserializers
- * for date handling.</p>
+ * <p>This class models the details required to update a test result, including execution status,
+ * environment, comments, execution time, and custom fields. It supports JSON
+ * serialization/deserialization and uses custom serializers/deserializers for date handling.
  */
 @Data
 @NoArgsConstructor
@@ -30,40 +29,28 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CZScaleUpdateTestResultRequest {
 
-  /**
-   * The execution status of the test result.
-   */
+  /** The execution status of the test result. */
   private CZScaleExecutionStatus status;
 
-  /**
-   * The environment in which the test was executed.
-   */
+  /** The environment in which the test was executed. */
   private String environment;
 
-  /**
-   * A comment associated with the test result update.
-   */
+  /** A comment associated with the test result update. */
   private String comment;
 
-  /**
-   * The user to whom the test result is assigned.
-   */
+  /** The user to whom the test result is assigned. */
   private String assignedTo;
 
-  /**
-   * The user who executed the test.
-   */
+  /** The user who executed the test. */
   private String executedBy;
 
-  /**
-   * The total execution time for the test, in seconds.
-   */
+  /** The total execution time for the test, in seconds. */
   private Integer executionTime;
 
   /**
    * The date and time when the test was executed.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -72,7 +59,7 @@ public class CZScaleUpdateTestResultRequest {
   /**
    * The actual start date and time of the test execution.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -81,7 +68,7 @@ public class CZScaleUpdateTestResultRequest {
   /**
    * The actual end date and time of the test execution.
    *
-   * <p>Uses custom serializers/deserializers for JSON processing.</p>
+   * <p>Uses custom serializers/deserializers for JSON processing.
    */
   @JsonDeserialize(using = CustomDateDeserializer.class)
   @JsonSerialize(using = CustomDateSerializer.class)
@@ -90,17 +77,13 @@ public class CZScaleUpdateTestResultRequest {
   /**
    * A map of custom fields associated with the test result.
    *
-   * <p>Keys represent field names, and values represent field values.</p>
+   * <p>Keys represent field names, and values represent field values.
    */
   private CHashMap<String, String> customFields;
 
-  /**
-   * A set of issue links associated with the test result.
-   */
+  /** A set of issue links associated with the test result. */
   private CSet<String> issueLinks;
 
-  /**
-   * The script results associated with the test result.
-   */
+  /** The script results associated with the test result. */
   private CZScaleScriptResults scriptResults;
 }

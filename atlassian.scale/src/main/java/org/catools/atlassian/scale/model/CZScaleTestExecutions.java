@@ -7,21 +7,19 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of test executions in the Scale system.
  *
- * <p>This class extends {@link CSet} to provide a specialized set implementation
- * for managing {@link CZScaleTestExecution} objects. It includes constructors
- * for creating the collection from various input sources, such as arrays, streams,
- * or iterables. Additionally, it provides methods to retrieve a test execution
- * by its ID or filter executions based on issue IDs.</p>
+ * <p>This class extends {@link CSet} to provide a specialized set implementation for managing
+ * {@link CZScaleTestExecution} objects. It includes constructors for creating the collection from
+ * various input sources, such as arrays, streams, or iterables. Additionally, it provides methods
+ * to retrieve a test execution by its ID or filter executions based on issue IDs.
  */
 public class CZScaleTestExecutions extends CSet<CZScaleTestExecution> {
 
   /**
    * Default constructor.
    *
-   * <p>Creates an empty collection of test executions.</p>
+   * <p>Creates an empty collection of test executions.
    */
-  public CZScaleTestExecutions() {
-  }
+  public CZScaleTestExecutions() {}
 
   /**
    * Constructs a collection of test executions from an array of test executions.
@@ -35,7 +33,8 @@ public class CZScaleTestExecutions extends CSet<CZScaleTestExecution> {
   /**
    * Constructs a collection of test executions from a stream of test executions.
    *
-   * @param stream a {@link Stream} of {@link CZScaleTestExecution} objects to initialize the collection
+   * @param stream a {@link Stream} of {@link CZScaleTestExecution} objects to initialize the
+   *     collection
    */
   public CZScaleTestExecutions(Stream<CZScaleTestExecution> stream) {
     super(stream);
@@ -44,7 +43,8 @@ public class CZScaleTestExecutions extends CSet<CZScaleTestExecution> {
   /**
    * Constructs a collection of test executions from an iterable of test executions.
    *
-   * @param iterable an {@link Iterable} of {@link CZScaleTestExecution} objects to initialize the collection
+   * @param iterable an {@link Iterable} of {@link CZScaleTestExecution} objects to initialize the
+   *     collection
    */
   public CZScaleTestExecutions(Iterable<CZScaleTestExecution> iterable) {
     super(iterable);

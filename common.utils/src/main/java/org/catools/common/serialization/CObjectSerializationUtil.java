@@ -1,20 +1,21 @@
 package org.catools.common.serialization;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import lombok.experimental.UtilityClass;
 import org.catools.common.exception.CRuntimeException;
 
-import java.io.*;
-
-/**
- * CObjectSerializationUtil contains method to read/write object from/to file.
- */
+/** CObjectSerializationUtil contains method to read/write object from/to file. */
 @UtilityClass
 public class CObjectSerializationUtil {
   /**
    * Read Object From File
    *
    * @param file file name from which we should read file
-   * @param <T>  Object Type
+   * @param <T> Object Type
    * @return De-serialized Object
    */
   public static <T> T read(File file) {
@@ -30,8 +31,8 @@ public class CObjectSerializationUtil {
    * Write object to file
    *
    * @param file file to write object into
-   * @param t    Object to serialize
-   * @param <T>  Object type
+   * @param t Object to serialize
+   * @param <T> Object type
    */
   public static <T> void write(File file, T t) {
     try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {

@@ -3,20 +3,18 @@ package org.catools.mcp.server.configurable;
 import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.transport.HttpServletStreamableServerTransportProvider;
+import java.time.Duration;
 import lombok.Getter;
 import org.catools.mcp.configuration.CMcpServerConfiguration;
 import org.catools.mcp.configuration.CMcpServerStreamable;
 import org.catools.mcp.server.CEmbeddedJettyServer;
-
-import java.time.Duration;
 
 /**
  * This class is used to create a new instance of {@link CConfigurableMcpStreamableServer} based on
  * the specified {@link CMcpServerConfiguration} in Streamable HTTP mode.
  */
 public class CConfigurableMcpStreamableServer implements CConfigurableMcpServer {
-  @Getter
-  private final CMcpServerConfiguration configuration;
+  @Getter private final CMcpServerConfiguration configuration;
 
   /**
    * Creates a new instance of {@link CConfigurableMcpStreamableServer} with the specified

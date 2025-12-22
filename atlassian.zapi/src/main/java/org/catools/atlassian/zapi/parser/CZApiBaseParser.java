@@ -11,15 +11,13 @@ import org.json.JSONObject;
 /**
  * Utility class for parsing data in the ZAPI system.
  *
- * <p>This class provides methods to parse boolean and date values from JSON objects
- * or JSONPath expressions. It uses predefined date formats from the ZAPI configuration.</p>
+ * <p>This class provides methods to parse boolean and date values from JSON objects or JSONPath
+ * expressions. It uses predefined date formats from the ZAPI configuration.
  */
 @UtilityClass
 public class CZApiBaseParser {
 
-  /**
-   * A list of date formats used for parsing date values.
-   */
+  /** A list of date formats used for parsing date values. */
   private static final CList<String> dateFormats = CZApiConfigs.ZApi.getDateFormats();
 
   /**

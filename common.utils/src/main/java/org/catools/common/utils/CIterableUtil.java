@@ -1,10 +1,13 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class CIterableUtil {
@@ -13,7 +16,7 @@ public class CIterableUtil {
    * Check if iterable contain the element.
    *
    * @param iterable to check
-   * @param e        value to search for
+   * @param e value to search for
    * @return execution boolean result
    */
   public static <E> boolean contains(Iterable<E> iterable, E e) {

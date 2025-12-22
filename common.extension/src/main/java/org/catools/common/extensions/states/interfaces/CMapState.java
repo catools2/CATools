@@ -17,7 +17,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
   /**
    * Check if actual map contains the expected key and value.
    *
-   * @param expectedKey   key to compare
+   * @param expectedKey key to compare
    * @param expectedValue value to compare
    * @return execution boolean result
    */
@@ -55,7 +55,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
    * Check if actual map contains all entries from the expected map. Please note that actual map
    * might have more entries.
    *
-   * @param expected   value to compare
+   * @param expected value to compare
    * @param onNotMatch consumer to call if miss match found
    * @return execution boolean result
    */
@@ -92,7 +92,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
    * Check if actual map contains none of entries from the expected map.
    *
    * @param expected value to compare
-   * @param onMatch  consumer to call if match found
+   * @param onMatch consumer to call if match found
    * @return execution boolean result
    */
   default boolean containsNone(Map<K, V> expected, Consumer<Map.Entry<K, V>> onMatch) {
@@ -117,7 +117,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
   /**
    * Check if actual map either is empty or contains the expected entry.
    *
-   * @param expectedKey   key to compare
+   * @param expectedKey key to compare
    * @param expectedValue value to compare
    * @return execution boolean result
    */
@@ -143,13 +143,13 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
 
     return a.isEmpty()
         || (a.containsKey(expected.getKey())
-        && Objects.equals(a.get(expected.getKey()), expected.getValue()));
+            && Objects.equals(a.get(expected.getKey()), expected.getValue()));
   }
 
   /**
    * Check if actual map either is empty or does not contains the expected entry.
    *
-   * @param expectedKey   key to compare
+   * @param expectedKey key to compare
    * @param expectedValue value to compare
    * @return execution boolean result
    */
@@ -175,7 +175,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
 
     return a.isEmpty()
         || !(a.containsKey(expected.getKey())
-        && Objects.equals(a.get(expected.getKey()), expected.getValue()));
+            && Objects.equals(a.get(expected.getKey()), expected.getValue()));
   }
 
   default boolean isEqual(final Map<K, V> expected) {
@@ -187,8 +187,8 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
    * compare that actual map contains all expected map entries and then we verify that expected has
    * all entries from actual.
    *
-   * @param expected              value to compare
-   * @param onActualNotContains   consumer to call if match found
+   * @param expected value to compare
+   * @param onActualNotContains consumer to call if match found
    * @param onExpectedNotContains consumer to call if match found
    * @return execution boolean result
    */
@@ -240,7 +240,7 @@ public interface CMapState<K, V> extends CObjectState<Map<K, V>> {
   /**
    * Check if actual map does not contain the expected entry.
    *
-   * @param expectedKey   key to compare
+   * @param expectedKey key to compare
    * @param expectedValue value to compare
    * @return execution boolean result
    */

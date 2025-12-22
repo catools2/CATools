@@ -1,19 +1,17 @@
 package org.catools.etl.tms.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "item", schema = "tms")
@@ -23,8 +21,7 @@ import java.util.Set;
 @Accessors(chain = true)
 public class CEtlItem implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 6052874018185613707L;
+  @Serial private static final long serialVersionUID = 6052874018185613707L;
 
   @Id
   @Column(name = "id", length = 10, unique = true, nullable = false)
@@ -42,10 +39,7 @@ public class CEtlItem implements Serializable {
   @ManyToOne(
       cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
       fetch = FetchType.LAZY)
-  @JoinColumn(
-      name = "type_id",
-      nullable = false,
-      foreignKey = @ForeignKey(name = "FK_ITEM_TYPE"))
+  @JoinColumn(name = "type_id", nullable = false, foreignKey = @ForeignKey(name = "FK_ITEM_TYPE"))
   private CEtlItemType type;
 
   @ManyToOne(

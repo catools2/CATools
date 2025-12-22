@@ -23,7 +23,8 @@ public class CTypeExtensionConfigs {
   @Getter
   @AllArgsConstructor
   private enum Configs implements CHoconPath {
-    CATOOLS_EXTENSION_DEFAULT_WAIT_INTERVAL_IN_MILLIS("catools.extensions.default_wait_interval_in_millis"),
+    CATOOLS_EXTENSION_DEFAULT_WAIT_INTERVAL_IN_MILLIS(
+        "catools.extensions.default_wait_interval_in_millis"),
     CATOOLS_EXTENSION_DEFAULT_WAIT_IN_SECONDS("catools.extensions.default_wait_in_seconds"),
     CATOOLS_EXTENSION_PRINT_PASS_VERIFICATION("catools.extensions.print_pass_verification");
 

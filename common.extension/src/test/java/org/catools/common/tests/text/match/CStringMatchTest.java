@@ -9,7 +9,14 @@ import org.catools.common.text.match.CStringMatchInfo;
 import org.testng.annotations.Test;
 
 public class CStringMatchTest extends CBaseUnitTest {
-  private final CList<String> options = CList.of("123456789qwertyuiop!@#$%^&*()", "12345789qwertyuiop!@#$%^&*()", "123456789qwrtyuiop!@#$%^&*()", "123456789qwertyuiop!@#$^&*()", "1234589qwertuiop!#$%^&()", "123456789qwertyiop!@$%^&*()");
+  private final CList<String> options =
+      CList.of(
+          "123456789qwertyuiop!@#$%^&*()",
+          "12345789qwertyuiop!@#$%^&*()",
+          "123456789qwrtyuiop!@#$%^&*()",
+          "123456789qwertyuiop!@#$^&*()",
+          "1234589qwertuiop!#$%^&()",
+          "123456789qwertyiop!@$%^&*()");
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testGetBestMatch() {
@@ -23,13 +30,16 @@ public class CStringMatchTest extends CBaseUnitTest {
     CList<CStringMatchInfo<String>> matches = CStringMatch.getMatches("12345", options, s -> s, 20);
     matches.verifySizeEquals(1);
     CVerify.String.equals(matches.getFirst().getActual(), "12345", "correct record found.");
-    CVerify.String.equals(matches.getFirst().getMatch(), "1234589qwertuiop!#$%^&()", "correct record found.");
-    CVerify.Double.betweenInclusive(matches.getFirst().getPercent(), 20D, 21D, "correct % calculated.");
+    CVerify.String.equals(
+        matches.getFirst().getMatch(), "1234589qwertuiop!#$%^&()", "correct record found.");
+    CVerify.Double.betweenInclusive(
+        matches.getFirst().getPercent(), 20D, 21D, "correct % calculated.");
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testGetMatch() {
-    CStringMatchInfo<String> matches = CStringMatch.getMatch("12345", "1234589qwertuiop!#$%^&()", s -> s, 20);
+    CStringMatchInfo<String> matches =
+        CStringMatch.getMatch("12345", "1234589qwertuiop!#$%^&()", s -> s, 20);
     CVerify.String.equals(matches.getMatch(), "1234589qwertuiop!#$%^&()", "correct record found.");
     CVerify.Double.betweenInclusive(matches.getPercent(), 20D, 21D, "correct % calculated.");
   }

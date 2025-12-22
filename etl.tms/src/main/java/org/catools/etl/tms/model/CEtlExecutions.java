@@ -1,12 +1,10 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlExecutions extends CSet<CEtlExecution> {
-  public CEtlExecutions() {
-  }
+  public CEtlExecutions() {}
 
   public CEtlExecutions(CEtlExecution... c) {
     super(c);

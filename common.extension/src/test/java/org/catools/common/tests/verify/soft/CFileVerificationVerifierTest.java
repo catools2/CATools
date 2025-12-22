@@ -1,10 +1,9 @@
 package org.catools.common.tests.verify.soft;
 
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerifier;
 import org.catools.common.extensions.verify.hard.CFileVerification;
 import org.catools.common.tests.verify.CFileVerificationBaseTest;
-
-import java.util.function.Consumer;
 
 public class CFileVerificationVerifierTest extends CFileVerificationBaseTest {
   public CFileVerificationVerifierTest() {

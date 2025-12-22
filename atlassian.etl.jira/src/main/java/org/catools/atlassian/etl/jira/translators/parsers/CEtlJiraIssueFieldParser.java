@@ -6,14 +6,15 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
- * Parser for standard Jira issue fields.
- * It extracts the name-value pair from the field if the value is neither a JSON object nor a JSON array.
+ * Parser for standard Jira issue fields. It extracts the name-value pair from the field if the
+ * value is neither a JSON object nor a JSON array.
  */
 public class CEtlJiraIssueFieldParser implements CEtlJiraFieldParser {
   private final IssueField field;
 
   /**
    * Constructor to initialize the parser with the given issue field.
+   *
    * @param field the Jira issue field to be parsed.
    */
   public CEtlJiraIssueFieldParser(IssueField field) {
@@ -22,6 +23,7 @@ public class CEtlJiraIssueFieldParser implements CEtlJiraFieldParser {
 
   /**
    * Rank of the parser. Lower values indicate higher priority.
+   *
    * @return 10, indicating medium priority.
    */
   @Override
@@ -30,8 +32,9 @@ public class CEtlJiraIssueFieldParser implements CEtlJiraFieldParser {
   }
 
   /**
-   * Determines if this parser is suitable for the given field.
-   * It checks if the field value is neither a JSON object nor a JSON array.
+   * Determines if this parser is suitable for the given field. It checks if the field value is
+   * neither a JSON object nor a JSON array.
+   *
    * @return true if this parser can handle the field, false otherwise.
    */
   @Override
@@ -41,6 +44,7 @@ public class CEtlJiraIssueFieldParser implements CEtlJiraFieldParser {
 
   /**
    * Extracts the name-value pair from the field.
+   *
    * @return a map containing the field name and its string value.
    */
   @Override

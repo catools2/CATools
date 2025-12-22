@@ -1,11 +1,10 @@
 package org.catools.common.tests.verify.hard;
 
+import java.math.BigDecimal;
+import java.util.function.Consumer;
 import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.extensions.verify.hard.CNumberVerification;
 import org.catools.common.tests.verify.CNumberVerificationBaseTest;
-
-import java.math.BigDecimal;
-import java.util.function.Consumer;
 
 public class CNumberVerificationVerifyTest extends CNumberVerificationBaseTest {
   @Override

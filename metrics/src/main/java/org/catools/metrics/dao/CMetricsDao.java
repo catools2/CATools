@@ -1,13 +1,12 @@
 package org.catools.metrics.dao;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CRetry;
-
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CRetry;
 
 @Slf4j
 public class CMetricsDao {
@@ -43,10 +42,14 @@ public class CMetricsDao {
 
   protected static synchronized EntityManagerFactory getEntityManagerFactory() {
     if (entityManagerFactory == null) {
-      entityManagerFactory = CRetry.retry(idx -> {
-        log.debug("Attempt {} to connect to create Metrics entity manager", idx + 1);
-        return Persistence.createEntityManagerFactory("CMetricsPersistence");
-      }, 10, 10);
+      entityManagerFactory =
+          CRetry.retry(
+              idx -> {
+                log.debug("Attempt {} to connect to create Metrics entity manager", idx + 1);
+                return Persistence.createEntityManagerFactory("CMetricsPersistence");
+              },
+              10,
+              10);
     }
     return entityManagerFactory;
   }

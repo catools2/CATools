@@ -1,9 +1,8 @@
 package org.catools.media.model;
 
+import java.awt.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import java.awt.*;
 
 @Data
 @Accessors(chain = true)

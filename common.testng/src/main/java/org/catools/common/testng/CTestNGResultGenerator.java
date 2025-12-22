@@ -1,54 +1,67 @@
 package org.catools.common.testng;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TimeZone;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.Strings;
 import org.catools.common.collections.CList;
 import org.catools.common.io.CFile;
 import org.catools.common.security.CSensitiveDataMaskingManager;
 import org.catools.common.testng.utils.CTestReportUtil;
-import org.testng.*;
+import org.testng.ISuite;
+import org.testng.ISuiteResult;
+import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
+import org.testng.Reporter;
 import org.testng.internal.Utils;
 import org.testng.reporters.XMLReporter;
 import org.testng.reporters.XMLReporterConfig;
 import org.testng.reporters.XMLStringBuffer;
 import org.testng.reporters.XMLSuiteResultWriter;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 /**
- * Utility class for generating TestNG XML result reports.
- * This class provides functionality to generate customized TestNG result XML files
- * with enhanced features like sensitive data masking and configurable output formats.
- * 
- * <p>The generated XML reports follow the TestNG standard format but include additional
- * features such as:
+ * Utility class for generating TestNG XML result reports. This class provides functionality to
+ * generate customized TestNG result XML files with enhanced features like sensitive data masking
+ * and configurable output formats.
+ *
+ * <p>The generated XML reports follow the TestNG standard format but include additional features
+ * such as:
+ *
  * <ul>
- *   <li>Automatic sensitive data masking in test output</li>
- *   <li>Duplicate test result removal</li>
- *   <li>Configurable file fragmentation levels</li>
- *   <li>Enhanced suite-level statistics</li>
+ *   <li>Automatic sensitive data masking in test output
+ *   <li>Duplicate test result removal
+ *   <li>Configurable file fragmentation levels
+ *   <li>Enhanced suite-level statistics
  * </ul>
- * 
+ *
  * <p><strong>Example usage:</strong>
+ *
  * <pre>{@code
  * // Generate a TestNG XML report for a list of test suites
  * CList<ISuite> testSuites = new CList<>();
  * // ... populate testSuites with your test results
- * 
+ *
  * String outputDir = "/path/to/test-output";
  * CTestNGResultGenerator.generateReport(testSuites, outputDir);
- * 
+ *
  * // This will create a testng-results.xml file (or custom name from config)
  * // in the specified output directory
  * }</pre>
- * 
+ *
  * @author CATools Team
- * @since 1.0
  * @see CTestNGConfigs
  * @see CTestReportUtil
  * @see CSensitiveDataMaskingManager
+ * @since 1.0
  */
 @UtilityClass
 public class CTestNGResultGenerator {
@@ -59,68 +72,70 @@ public class CTestNGResultGenerator {
 
   /**
    * Generates a comprehensive TestNG XML result report from the provided test suites.
-   * 
-   * <p>This method processes a collection of TestNG test suites and generates a standardized
-   * XML report file. The report includes detailed statistics, test results, group information,
-   * and reporter output with sensitive data automatically masked.
-   * 
+   *
+   * <p>This method processes a collection of TestNG test suites and generates a standardized XML
+   * report file. The report includes detailed statistics, test results, group information, and
+   * reporter output with sensitive data automatically masked.
+   *
    * <p>Key features of the generated report:
+   *
    * <ul>
-   *   <li><strong>Statistics:</strong> Total passed, failed, and skipped test counts</li>
-   *   <li><strong>Data Safety:</strong> Automatic masking of sensitive information in output</li>
-   *   <li><strong>Deduplication:</strong> Removes duplicate test results before processing</li>
-   *   <li><strong>Flexible Output:</strong> Supports different file fragmentation levels</li>
+   *   <li><strong>Statistics:</strong> Total passed, failed, and skipped test counts
+   *   <li><strong>Data Safety:</strong> Automatic masking of sensitive information in output
+   *   <li><strong>Deduplication:</strong> Removes duplicate test results before processing
+   *   <li><strong>Flexible Output:</strong> Supports different file fragmentation levels
    * </ul>
-   * 
+   *
    * <p>The method is thread-safe and can be called concurrently from multiple threads.
-   * 
+   *
    * <h3>Examples:</h3>
-   * 
+   *
    * <p><strong>Basic usage with test suites:</strong>
+   *
    * <pre>{@code
    * // After running TestNG tests
    * CList<ISuite> suites = new CList<>();
    * suites.add(testSuite1);
    * suites.add(testSuite2);
-   * 
+   *
    * String outputDirectory = "./test-results";
    * CTestNGResultGenerator.generateReport(suites, outputDirectory);
-   * 
+   *
    * // This creates: ./test-results/testng-results.xml
    * }</pre>
-   * 
+   *
    * <p><strong>Integration with TestNG listener:</strong>
+   *
    * <pre>{@code
    * public class CustomTestListener implements IReporter {
    *     @Override
-   *     public void generateReport(List<XmlSuite> xmlSuites, 
-   *                               List<ISuite> suites, 
+   *     public void generateReport(List<XmlSuite> xmlSuites,
+   *                               List<ISuite> suites,
    *                               String outputDirectory) {
    *         CList<ISuite> cSuites = new CList<>(suites);
    *         CTestNGResultGenerator.generateReport(cSuites, outputDirectory);
    *     }
    * }
    * }</pre>
-   * 
+   *
    * <p><strong>Custom output directory structure:</strong>
+   *
    * <pre>{@code
    * // Generate reports in timestamped directories
    * String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
    * String outputDir = "/reports/test-run-" + timestamp;
-   * 
+   *
    * CTestNGResultGenerator.generateReport(testSuites, outputDir);
    * // Creates: /reports/test-run-2023-12-01_14-30-45/testng-results.xml
    * }</pre>
-   * 
-   * @param suites the collection of TestNG test suites to process. Must not be null.
-   *               Each suite should contain the test results to be included in the report.
-   * @param outputDirectory the directory path where the XML report file will be created.
-   *                       Must not be null or empty. The directory will be created if it 
-   *                       doesn't exist. Use absolute paths for best reliability.
-   * 
+   *
+   * @param suites the collection of TestNG test suites to process. Must not be null. Each suite
+   *     should contain the test results to be included in the report.
+   * @param outputDirectory the directory path where the XML report file will be created. Must not
+   *     be null or empty. The directory will be created if it doesn't exist. Use absolute paths for
+   *     best reliability.
    * @throws IllegalArgumentException if suites is null or outputDirectory is null/empty
    * @throws RuntimeException if there's an error writing the report file or creating directories
-   * 
    * @see ISuite
    * @see CTestNGConfigs#getTestNgResultName()
    * @see CTestReportUtil#removeDuplicateResults(CList)
@@ -158,8 +173,7 @@ public class CTestNGResultGenerator {
     new File(config.getOutputDirectory()).mkdirs();
     Utils.writeUtf8File(
         config.getOutputDirectory(),
-        Strings.CS.removeEnd(FILE_NAME, XML_EXTENSION)
-            + XML_EXTENSION,
+        Strings.CS.removeEnd(FILE_NAME, XML_EXTENSION) + XML_EXTENSION,
         rootBuffer,
         null);
   }
@@ -266,7 +280,8 @@ public class CTestNGResultGenerator {
     return props;
   }
 
-  private static void addDurationAttributes(Properties attributes, Date minStartDate, Date maxEndDate) {
+  private static void addDurationAttributes(
+      Properties attributes, Date minStartDate, Date maxEndDate) {
     Objects.requireNonNull(minStartDate);
     Objects.requireNonNull(maxEndDate);
 

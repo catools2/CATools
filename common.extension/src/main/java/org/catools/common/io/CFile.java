@@ -1,13 +1,5 @@
 package org.catools.common.io;
 
-import org.apache.commons.io.IOUtils;
-import org.catools.common.collections.CList;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.exception.CFileNotFoundException;
-import org.catools.common.exception.CFileOperationException;
-import org.catools.common.extensions.types.interfaces.CDynamicFileExtension;
-import org.catools.common.utils.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +9,17 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.apache.commons.io.IOUtils;
+import org.catools.common.collections.CList;
+import org.catools.common.configs.CPathConfigs;
+import org.catools.common.exception.CFileNotFoundException;
+import org.catools.common.exception.CFileOperationException;
+import org.catools.common.extensions.types.interfaces.CDynamicFileExtension;
+import org.catools.common.utils.CFileUtil;
+import org.catools.common.utils.CInputStreamUtil;
+import org.catools.common.utils.CJsonUtil;
+import org.catools.common.utils.CRegExUtil;
+import org.catools.common.utils.CRetry;
 
 public class CFile extends File implements CDynamicFileExtension {
   static {
@@ -101,7 +104,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * return a CFile which is pointing to the file in parent folder.
    *
    * @param parent file
-   * @param child  file name to be referred to
+   * @param child file name to be referred to
    * @return a CFile which is pointing to the child
    */
   public static CFile getChild(String parent, String child) {
@@ -112,7 +115,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * return a CFile which is pointing to the file in parent folder.
    *
    * @param parent file
-   * @param child  file name to be referred to
+   * @param child file name to be referred to
    * @return a CFile which is pointing to the child
    */
   public static CFile getChild(File parent, String child) {
@@ -347,7 +350,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * new&nbsp;File(this.{@see #getCanonicalPath})</code>.
    *
    * @return The canonical pathname string denoting the same file or directory as this abstract
-   * pathname
+   *     pathname
    */
   @Override
   public CFile getCanonicalFile() {
@@ -370,7 +373,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * canonical form of the same pathname after the file or directory is deleted.
    *
    * @return The canonical pathname string denoting the same file or directory as this abstract
-   * pathname
+   *     pathname
    */
   @Override
   public String getCanonicalPath() {
@@ -426,7 +429,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * then the pathname does not name a parent directory.
    *
    * @return The abstract pathname of the parent directory named by this abstract pathname, or
-   * <code>null</code> if this pathname does not name a parent
+   *     <code>null</code> if this pathname does not name a parent
    */
   @Override
   public CFile getParentFile() {
@@ -465,7 +468,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * in a single operation. It is not intended for reading in large files.
    *
    * @return the lines from the file as a {@code CList}; whether the {@code CList} is modifiable or
-   * not is implementation dependent and therefore not specified
+   *     not is implementation dependent and therefore not specified
    * @throws CFileOperationException if anything goes wrong
    * @see CList contains all lines from the file
    */
@@ -491,7 +494,7 @@ public class CFile extends File implements CDynamicFileExtension {
    *
    * @param charset the charset to use for decoding
    * @return the lines from the file as a {@code List}; whether the {@code List} is modifiable or
-   * not is implementation dependent and therefore not specified
+   *     not is implementation dependent and therefore not specified
    * @throws CFileOperationException if anything goes wrong
    * @see CList contains all lines from the file
    */
@@ -543,7 +546,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * destination file exist and the overwrite parameter is true then delete the destination file.
    * After that get {@see #renameTo(File)} and then delete the original file
    *
-   * @param destFile  where the file or directory should copy to
+   * @param destFile where the file or directory should copy to
    * @param overwrite whether we should overwrite the destination if it is exists
    * @return CFile pointing to the destination
    */
@@ -577,7 +580,7 @@ public class CFile extends File implements CDynamicFileExtension {
   /**
    * Wait for {@code timeoutInSeconds} for file to be available and writable
    *
-   * @param timeoutInSeconds      timeout in seconds to wait for file to be available
+   * @param timeoutInSeconds timeout in seconds to wait for file to be available
    * @param intervalInMillSeconds the interval of milliseconds between each retry
    * @return true if file is available and writable otherwise false
    */
@@ -600,7 +603,7 @@ public class CFile extends File implements CDynamicFileExtension {
   /**
    * Wait for {@code timeoutInSeconds} for file to be available
    *
-   * @param timeoutInSeconds      timeout in seconds to wait for file to be available
+   * @param timeoutInSeconds timeout in seconds to wait for file to be available
    * @param intervalInMillSeconds the interval of milliseconds between each retry
    * @return true if file is available otherwise false
    */
@@ -625,7 +628,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * Writes an object as json to a file creating the file if it does not exist. The parent
    * directories of the file will be created if they do not exist.
    *
-   * @param object      the object to be serialize and write to the file
+   * @param object the object to be serialize and write to the file
    * @param prettyPrint if output should be pretty print
    * @return current instance of CFile
    * @throws CFileOperationException if anything goes wrong
@@ -651,7 +654,7 @@ public class CFile extends File implements CDynamicFileExtension {
    * Writes an object as json to a file creating the file if it does not exist. The parent
    * directories of the file will be created if they do not exist.
    *
-   * @param clazz   the object class to be deserialize
+   * @param clazz the object class to be deserialize
    * @param charset the charset to use
    * @return current instance of CFile
    * @throws CFileOperationException if anything goes wrong
@@ -739,9 +742,9 @@ public class CFile extends File implements CDynamicFileExtension {
    * Check whether the file or directory denoted by this abstract pathname exists.
    *
    * @return <code>true</code> if and only if the file or directory denoted by this abstract
-   * pathname does not exist; <code>false</code> otherwise
-   * @throws SecurityException If a security manager exists and denies read access to the
-   *                           file or directory
+   *     pathname does not exist; <code>false</code> otherwise
+   * @throws SecurityException If a security manager exists and denies read access to the file or
+   *     directory
    */
   public boolean notExist() {
     return !exists();

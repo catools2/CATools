@@ -28,7 +28,10 @@ import java.util.function.Predicate;
  * @see CSet
  * @see CList
  */
-public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterableExtension<E, C>, CObjectVerifier<C, CIterableState<E, C>>, CIterableVerify<E, C> {
+public interface CIterableVerifier<E, C extends Iterable<E>>
+    extends CBaseIterableExtension<E, C>,
+        CObjectVerifier<C, CIterableState<E, C>>,
+        CIterableVerify<E, C> {
 
   /**
    * Verify that actual collection contains the expected element.
@@ -45,10 +48,11 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyContains(final CVerificationQueue verifier, E expected, final String message, final Object... params) {
+  default void verifyContains(
+      final CVerificationQueue verifier, E expected, final String message, final Object... params) {
     _verify(verifier, expected, (a, e) -> CIterableUtil.contains(_get(), e), message, params);
   }
 
@@ -69,21 +73,27 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyContainsAll(final CVerificationQueue verifier, C expected, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> {
-      if (expected == null) {
-        return false;
-      }
-      CList<E> diff = new CList<>();
-      _toState(a).containsAll(e, diff::add);
-      if (!diff.isEmpty()) {
-        logger.trace("Actual list does not contain following records:\n" + diff);
-      }
-      return diff.isEmpty();
-    }, message, params);
+  default void verifyContainsAll(
+      final CVerificationQueue verifier, C expected, final String message, final Object... params) {
+    _verify(
+        verifier,
+        expected,
+        (a, e) -> {
+          if (expected == null) {
+            return false;
+          }
+          CList<E> diff = new CList<>();
+          _toState(a).containsAll(e, diff::add);
+          if (!diff.isEmpty()) {
+            logger.trace("Actual list does not contain following records:\n" + diff);
+          }
+          return diff.isEmpty();
+        },
+        message,
+        params);
   }
 
   /**
@@ -101,18 +111,24 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyContainsNone(final CVerificationQueue verifier, C expected, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> {
-      CList<E> diff = new CList<>();
-      _toState(a).containsNone(expected, diff::add);
-      if (!diff.isEmpty()) {
-        logger.trace("Actual list contains following records:\n" + diff);
-      }
-      return !CIterableUtil.isEmpty(e) && diff.isEmpty();
-    }, message, params);
+  default void verifyContainsNone(
+      final CVerificationQueue verifier, C expected, final String message, final Object... params) {
+    _verify(
+        verifier,
+        expected,
+        (a, e) -> {
+          CList<E> diff = new CList<>();
+          _toState(a).containsNone(expected, diff::add);
+          if (!diff.isEmpty()) {
+            logger.trace("Actual list contains following records:\n" + diff);
+          }
+          return !CIterableUtil.isEmpty(e) && diff.isEmpty();
+        },
+        message,
+        params);
   }
 
   /**
@@ -130,10 +146,11 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyEmptyOrContains(final CVerificationQueue verifier, E expected, final String message, final Object... params) {
+  default void verifyEmptyOrContains(
+      final CVerificationQueue verifier, E expected, final String message, final Object... params) {
     _verify(verifier, expected, (a, e) -> _toState(a).emptyOrContains(e), message, params);
   }
 
@@ -144,7 +161,8 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    * @param expected value to compare
    */
   default void verifyEmptyOrNotContains(final CVerificationQueue verifier, E expected) {
-    verifyEmptyOrNotContains(verifier, expected, getDefaultMessage("Is Empty Or Not Contains The Record"));
+    verifyEmptyOrNotContains(
+        verifier, expected, getDefaultMessage("Is Empty Or Not Contains The Record"));
   }
 
   /**
@@ -152,10 +170,11 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyEmptyOrNotContains(final CVerificationQueue verifier, E expected, final String message, final Object... params) {
+  default void verifyEmptyOrNotContains(
+      final CVerificationQueue verifier, E expected, final String message, final Object... params) {
     _verify(verifier, expected, (a, e) -> _toState(a).emptyOrNotContains(e), message, params);
   }
 
@@ -178,23 +197,29 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyEquals(final CVerificationQueue verifier, C expected, final String message, final Object... params) {
-    _verify(verifier, expected, (a, e) -> {
-      CList<E> diffActual = new CList<>();
-      CList<E> diffExpected = new CList<>();
-      boolean result = _toState(a).isEqual(expected, diffActual::add, diffExpected::add);
-      if (!diffExpected.isEmpty()) {
-        logger.trace("Actual list does not contain following records:\n" + diffExpected);
-      }
+  default void verifyEquals(
+      final CVerificationQueue verifier, C expected, final String message, final Object... params) {
+    _verify(
+        verifier,
+        expected,
+        (a, e) -> {
+          CList<E> diffActual = new CList<>();
+          CList<E> diffExpected = new CList<>();
+          boolean result = _toState(a).isEqual(expected, diffActual::add, diffExpected::add);
+          if (!diffExpected.isEmpty()) {
+            logger.trace("Actual list does not contain following records:\n" + diffExpected);
+          }
 
-      if (!diffActual.isEmpty()) {
-        logger.trace("Expected list does not contain following records:\n" + diffActual);
-      }
-      return result;
-    }, message, params);
+          if (!diffActual.isEmpty()) {
+            logger.trace("Expected list does not contain following records:\n" + diffActual);
+          }
+          return result;
+        },
+        message,
+        params);
   }
 
   /**
@@ -212,10 +237,14 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected predicate
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyHas(final CVerificationQueue verifier, Predicate<E> expected, final String message, final Object... params) {
+  default void verifyHas(
+      final CVerificationQueue verifier,
+      Predicate<E> expected,
+      final String message,
+      final Object... params) {
     _verify(verifier, "true", (a, e) -> CIterableUtil.has(_get(), expected), message, params);
   }
 
@@ -226,7 +255,8 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    * @param expected predicate
    */
   default void verifyHasNot(final CVerificationQueue verifier, Predicate<E> expected) {
-    verifyHasNot(verifier, expected, getDefaultMessage("Has Not The Record With Defined Condition"));
+    verifyHasNot(
+        verifier, expected, getDefaultMessage("Has Not The Record With Defined Condition"));
   }
 
   /**
@@ -234,10 +264,14 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected predicate
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyHasNot(final CVerificationQueue verifier, Predicate<E> expected, final String message, final Object... params) {
+  default void verifyHasNot(
+      final CVerificationQueue verifier,
+      Predicate<E> expected,
+      final String message,
+      final Object... params) {
     _verify(verifier, "true", (a, e) -> !CIterableUtil.has(_get(), expected), message, params);
   }
 
@@ -254,10 +288,11 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    * Verify that actual collection is empty.
    *
    * @param verifier CVerificationQueue instance
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsEmpty(final CVerificationQueue verifier, final String message, final Object... params) {
+  default void verifyIsEmpty(
+      final CVerificationQueue verifier, final String message, final Object... params) {
     _verify(verifier, true, (a, e) -> CIterableUtil.isEmpty(_get()), message, params);
   }
 
@@ -274,10 +309,11 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    * Verify that actual collection is not empty. (might contains null values)
    *
    * @param verifier CVerificationQueue instance
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyIsNotEmpty(final CVerificationQueue verifier, final String message, final Object... params) {
+  default void verifyIsNotEmpty(
+      final CVerificationQueue verifier, final String message, final Object... params) {
     _verify(verifier, true, (a, e) -> !CIterableUtil.isEmpty(_get()), message, params);
   }
 
@@ -296,17 +332,18 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyNotContains(final CVerificationQueue verifier, E expected, final String message, final Object... params) {
+  default void verifyNotContains(
+      final CVerificationQueue verifier, E expected, final String message, final Object... params) {
     _verify(verifier, expected, (a, e) -> _toState(a).notContains(e), message, params);
   }
 
   /**
    * Verify that actual collection contains some but not all elements from the expected collection.
-   * Please note that actual collection might have some elements but the point is to ensure that
-   * not all expected elements are exist in it.
+   * Please note that actual collection might have some elements but the point is to ensure that not
+   * all expected elements are exist in it.
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
@@ -317,15 +354,16 @@ public interface CIterableVerifier<E, C extends Iterable<E>> extends CBaseIterab
 
   /**
    * Verify that actual collection contains some but not all elements from the expected collection.
-   * Please note that actual collection might have some elements but the point is to ensure that
-   * not all expected elements are exist in it.
+   * Please note that actual collection might have some elements but the point is to ensure that not
+   * all expected elements are exist in it.
    *
    * @param verifier CVerificationQueue instance
    * @param expected value to compare
-   * @param message  information about the purpose of verification
-   * @param params   parameters in case if message is a format {@link String#format}
+   * @param message information about the purpose of verification
+   * @param params parameters in case if message is a format {@link String#format}
    */
-  default void verifyNotContainsAll(final CVerificationQueue verifier, C expected, final String message, final Object... params) {
+  default void verifyNotContainsAll(
+      final CVerificationQueue verifier, C expected, final String message, final Object... params) {
     _verify(verifier, expected, (a, e) -> _toState(a).notContainsAll(expected), message, params);
   }
 }

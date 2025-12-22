@@ -11,15 +11,15 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * Configuration utility class for Jira integration.
- * Provides methods to retrieve Jira-related configuration values from the application's configuration files.
+ * Configuration utility class for Jira integration. Provides methods to retrieve Jira-related
+ * configuration values from the application's configuration files.
  */
 @UtilityClass
 public class CJiraConfigs {
 
   /**
-   * Nested utility class for Jira-specific configurations.
-   * Contains methods to retrieve various Jira configuration properties.
+   * Nested utility class for Jira-specific configurations. Contains methods to retrieve various
+   * Jira configuration properties.
    */
   @UtilityClass
   public static class Jira {
@@ -105,50 +105,33 @@ public class CJiraConfigs {
     }
 
     /**
-     * Enum representing the configuration keys for Jira.
-     * Each enum value corresponds to a specific configuration path.
+     * Enum representing the configuration keys for Jira. Each enum value corresponds to a specific
+     * configuration path.
      */
     @Getter
     @AllArgsConstructor
     private enum Configs implements CHoconPath {
-      /**
-       * Configuration for Jira home URI.
-       * Path: `catools.atlassian.jira.home`
-       */
+      /** Configuration for Jira home URI. Path: `catools.atlassian.jira.home` */
       CATOOLS_ATLASSIAN_JIRA_HOME("catools.atlassian.jira.home"),
-      /**
-       * Configuration for Jira username.
-       * Path: `catools.atlassian.jira.username`
-       */
+      /** Configuration for Jira username. Path: `catools.atlassian.jira.username` */
       CATOOLS_ATLASSIAN_JIRA_USERNAME("catools.atlassian.jira.username"),
-      /**
-       * Configuration for Jira password.
-       * Path: `catools.atlassian.jira.password`
-       */
+      /** Configuration for Jira password. Path: `catools.atlassian.jira.password` */
       CATOOLS_ATLASSIAN_JIRA_PASSWORD("catools.atlassian.jira.password"),
-      /**
-       * Configuration for Jira date formats.
-       * Path: `catools.atlassian.jira.date_format`
-       */
+      /** Configuration for Jira date formats. Path: `catools.atlassian.jira.date_format` */
       CATOOLS_ATLASSIAN_JIRA_DATE_FORMAT("catools.atlassian.jira.date_format"),
-      /**
-       * Configuration for Jira project key.
-       * Path: `catools.atlassian.jira.project_key`
-       */
+      /** Configuration for Jira project key. Path: `catools.atlassian.jira.project_key` */
       CATOOLS_ATLASSIAN_JIRA_PROJECT_KEY("catools.atlassian.jira.project_key"),
-      /**
-       * Configuration for Jira version name.
-       * Path: `catools.atlassian.jira.version_name`
-       */
+      /** Configuration for Jira version name. Path: `catools.atlassian.jira.version_name` */
       CATOOLS_ATLASSIAN_JIRA_VERSION_NAME("catools.atlassian.jira.version_name"),
       /**
-       * Configuration for delay between API calls to Jira in milliseconds.
-       * Path: `catools.atlassian.jira.delay_between_calls_in_millisecond`
+       * Configuration for delay between API calls to Jira in milliseconds. Path:
+       * `catools.atlassian.jira.delay_between_calls_in_millisecond`
        */
-      CATOOLS_ATLASSIAN_JIRA_DELAY_BETWEEN_CALLS_IN_MILLI("catools.atlassian.jira.delay_between_calls_in_millisecond"),
+      CATOOLS_ATLASSIAN_JIRA_DELAY_BETWEEN_CALLS_IN_MILLI(
+          "catools.atlassian.jira.delay_between_calls_in_millisecond"),
       /**
-       * Configuration for search buffer size for Jira queries.
-       * Path: `catools.atlassian.jira.search_buffer_size`
+       * Configuration for search buffer size for Jira queries. Path:
+       * `catools.atlassian.jira.search_buffer_size`
        */
       CATOOLS_ATLASSIAN_JIRA_SEARCH_BUFFER_SIZE("catools.atlassian.jira.search_buffer_size");
 

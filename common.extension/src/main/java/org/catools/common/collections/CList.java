@@ -56,8 +56,8 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
 
   /**
    * Returns the index of first element from list which matched the {@code predicate} or -1 if no
-   * match found. The preferred alternative to this method is {@see #getFirstOrElse(Object)},
-   * {@see #getFirstOrElse(Predicate, Object)}, {@see #getFirstOrThrow(RuntimeException)}, {@link
+   * match found. The preferred alternative to this method is {@see #getFirstOrElse(Object)}, {@see
+   * #getFirstOrElse(Predicate, Object)}, {@see #getFirstOrThrow(RuntimeException)}, {@link
    * #getFirstOrThrow(Predicate, Supplier)}.
    *
    * @param predicate to issue condition
@@ -76,7 +76,7 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
    * <p>See the examples here: {@see #join(String)}.
    *
    * @param fromIndex low endpoint (inclusive) of the subList
-   * @param toIndex   high endpoint (exclusive) of the subList
+   * @param toIndex high endpoint (exclusive) of the subList
    * @return the joined String with no separator
    */
   public String join(int fromIndex, int toIndex) {
@@ -92,7 +92,7 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
    * <p>See the examples here: {@see #join(String)}.
    *
    * @param fromIndex low endpoint (inclusive) of the subList
-   * @param toIndex   high endpoint (exclusive) of the subList
+   * @param toIndex high endpoint (exclusive) of the subList
    * @param separator the separator character to use, null treated as StringUtils.EMPTY
    * @return the joined String separated by separator
    */
@@ -122,5 +122,4 @@ public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<
   public String toString() {
     return join(", ");
   }
-
 }

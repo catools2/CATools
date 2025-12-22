@@ -1,12 +1,10 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlItemStatusTransitions extends CSet<CEtlItemStatusTransition> {
-  public CEtlItemStatusTransitions() {
-  }
+  public CEtlItemStatusTransitions() {}
 
   public CEtlItemStatusTransitions(CEtlItemStatusTransition... c) {
     super(c);

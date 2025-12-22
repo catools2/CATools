@@ -8,17 +8,14 @@ import java.util.stream.Stream;
 /**
  * Represents a collection of projects in the ZAPI system.
  *
- * <p>This class extends {@link CSet} to provide additional functionality for managing
- * a set of {@link CZApiProject} objects, including constructors for various input types
- * and methods to retrieve projects by specific criteria.</p>
+ * <p>This class extends {@link CSet} to provide additional functionality for managing a set of
+ * {@link CZApiProject} objects, including constructors for various input types and methods to
+ * retrieve projects by specific criteria.
  */
 public class CZApiProjects extends CSet<CZApiProject> {
 
-  /**
-   * Default constructor for creating an empty collection of projects.
-   */
-  public CZApiProjects() {
-  }
+  /** Default constructor for creating an empty collection of projects. */
+  public CZApiProjects() {}
 
   /**
    * Constructs a collection of projects from an array of {@link CZApiProject} objects.

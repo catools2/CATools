@@ -13,23 +13,20 @@ import org.catools.common.hocon.exception.CHoconPathNotFoundException;
 import org.catools.common.hocon.exception.CHoconPathOperationException;
 import org.catools.common.utils.CJsonUtil;
 
-/**
- * A class to work safe with Type Safe Configuration
- */
+/** A class to work safe with Type Safe Configuration */
 @Slf4j
 public class CHoconUtils {
   public static final String VALUE_PATH = ".value";
   public static final String SENSITIVE_PATH = ".sensitive";
 
-
   /**
-   * Read and resolve variables in special path in the resource configuration to model using Type Safe Configuration
-   * implementation
+   * Read and resolve variables in special path in the resource configuration to model using Type
+   * Safe Configuration implementation
    *
    * @param resourceBasename path to the resource.
-   * @param objectName       the object name to convert.
-   * @param clazz            model class type
-   * @param <T>              class Type
+   * @param objectName the object name to convert.
+   * @param clazz model class type
+   * @param <T> class Type
    * @return the model
    */
   public static <T> T resolveModel(String resourceBasename, String objectName, Class<T> clazz) {
@@ -38,18 +35,22 @@ public class CHoconUtils {
   }
 
   /**
-   * Read and resolve variables in special path in the resource configuration to model using Type Safe Configuration
-   * implementation
+   * Read and resolve variables in special path in the resource configuration to model using Type
+   * Safe Configuration implementation
    *
    * @param resourceBasename path to the resource.
-   * @param resolveWith      the config to be used to resolve variables
-   * @param objectName       the object name to convert.
-   * @param clazz            model class type
-   * @param <T>              class Type
+   * @param resolveWith the config to be used to resolve variables
+   * @param objectName the object name to convert.
+   * @param clazz model class type
+   * @param <T> class Type
    * @return the model
    */
-  public static <T> T resolveModel(String resourceBasename, Config resolveWith, String objectName, Class<T> clazz) {
-    Config config = ConfigFactory.parseResources(resourceBasename).resolveWith(resolveWith).getConfig(objectName);
+  public static <T> T resolveModel(
+      String resourceBasename, Config resolveWith, String objectName, Class<T> clazz) {
+    Config config =
+        ConfigFactory.parseResources(resourceBasename)
+            .resolveWith(resolveWith)
+            .getConfig(objectName);
     try {
       return ConfigBeanFactory.create(config, clazz);
     } catch (Exception ex) {
@@ -63,9 +64,9 @@ public class CHoconUtils {
    * implementation
    *
    * @param resourceBasename path to the resource.
-   * @param objectName       the object name to convert.
-   * @param clazz            model class type
-   * @param <T>              class Type
+   * @param objectName the object name to convert.
+   * @param clazz model class type
+   * @param <T> class Type
    * @return the model
    */
   public static <T> T readModel(String resourceBasename, String objectName, Class<T> clazz) {
@@ -83,10 +84,10 @@ public class CHoconUtils {
    * Read value from json using <a href="https://github.com/json-path/JsonPath">JsonPath
    * expression</a>.
    *
-   * @param input    valid json string value
+   * @param input valid json string value
    * @param jsonPath JsonPath expression to search for
-   * @param clazz    model type to be used
-   * @param <T>      generic type for class
+   * @param clazz model type to be used
+   * @param <T> generic type for class
    * @return a model
    */
   public static <T> T getModelByJsonPath(String input, String jsonPath, Class<T> clazz) {
@@ -99,12 +100,12 @@ public class CHoconUtils {
    * Read string value from json using <a href="https://github.com/json-path/JsonPath">JsonPath
    * expression</a>.
    *
-   * @param input    valid json string value
+   * @param input valid json string value
    * @param jsonPath JsonPath expression to search for
    * @return String value
-   * @throws CHoconPathNotFoundException  if the given path is not valid
+   * @throws CHoconPathNotFoundException if the given path is not valid
    * @throws CHoconPathOperationException if the given path is valid but points to the value which
-   *                                      cannot be cast to String (i.e. array).
+   *     cannot be cast to String (i.e. array).
    */
   public static String getStringByJsonPath(String input, String jsonPath) {
     try {
@@ -129,7 +130,7 @@ public class CHoconUtils {
   /**
    * Read system property or environment variable and return the value.
    *
-   * @param key          key to search for
+   * @param key key to search for
    * @param defaultValue default value in a case when key does not exist
    * @return value from System Property or Environmental Variables
    */
@@ -151,7 +152,7 @@ public class CHoconUtils {
   /**
    * Check if input has defined json path.
    *
-   * @param input    valid json string value
+   * @param input valid json string value
    * @param jsonPath JsonPath expression to search for
    * @return true if path found otherwise false
    */

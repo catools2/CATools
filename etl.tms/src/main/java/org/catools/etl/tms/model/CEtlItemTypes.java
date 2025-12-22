@@ -1,12 +1,10 @@
 package org.catools.etl.tms.model;
 
+import java.util.stream.Stream;
 import org.catools.common.collections.CSet;
 
-import java.util.stream.Stream;
-
 public class CEtlItemTypes extends CSet<CEtlItemType> {
-  public CEtlItemTypes() {
-  }
+  public CEtlItemTypes() {}
 
   public CEtlItemTypes(CEtlItemType... c) {
     super(c);

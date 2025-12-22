@@ -12,13 +12,15 @@ public class CEtlKubePodMetaDataDao extends CEtlKubeBaseDao {
    * @return
    */
   public static CEtlKubePodMetaData getKubePodMetaData(String type, String name, String value) {
-    return doTransaction(entityManager -> entityManager
-        .createNamedQuery("getEtlKubePodMetaData", CEtlKubePodMetaData.class)
-        .setParameter("type", type)
-        .setParameter("name", name)
-        .setParameter("value", value)
-        .getResultStream()
-        .findFirst()
-        .orElse(null));
+    return doTransaction(
+        entityManager ->
+            entityManager
+                .createNamedQuery("getEtlKubePodMetaData", CEtlKubePodMetaData.class)
+                .setParameter("type", type)
+                .setParameter("name", name)
+                .setParameter("value", value)
+                .getResultStream()
+                .findFirst()
+                .orElse(null));
   }
 }

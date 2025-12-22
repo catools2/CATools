@@ -1,5 +1,8 @@
 package org.catools.common.tests.verify;
 
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.regex.Pattern;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.verify.hard.CStringVerification;
 import org.catools.common.tests.CBaseUnitTest;
@@ -7,32 +10,64 @@ import org.catools.common.tests.CTestRetryAnalyzer;
 import org.catools.common.utils.CStringUtil;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.regex.Pattern;
-
 public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
-  private static final String CSTRING1 = "This is the first String with some 1209op31mk2w9@# values.";
+  private static final String CSTRING1 =
+      "This is the first String with some 1209op31mk2w9@# values.";
   private String NULL = null;
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCenterPadEquals() {
     verify(string -> string.centerPadEquals("  some string    ", 10, "@", "  some string    "));
-    verify(string -> string.centerPadEquals("  some string    ", 10, "@", "  some string    ", "testCenterPadEquals"));
-    verify(string -> string.centerPadEquals("  some string    ", 30, "@", "@@@@@@  some string    @@@@@@@"));
-    verify(string -> string.centerPadEquals("  some string    ", 30, "@", "@@@@@@  some string    @@@@@@@", "testCenterPadEquals"));
+    verify(
+        string ->
+            string.centerPadEquals(
+                "  some string    ", 10, "@", "  some string    ", "testCenterPadEquals"));
+    verify(
+        string ->
+            string.centerPadEquals("  some string    ", 30, "@", "@@@@@@  some string    @@@@@@@"));
+    verify(
+        string ->
+            string.centerPadEquals(
+                "  some string    ",
+                30,
+                "@",
+                "@@@@@@  some string    @@@@@@@",
+                "testCenterPadEquals"));
     verify(string -> string.centerPadEquals("  some string    ", 10, NULL, "  some string    "));
-    verify(string -> string.centerPadEquals("  some string    ", 10, NULL, "  some string    ", "testCenterPadEquals_PadNull"));
+    verify(
+        string ->
+            string.centerPadEquals(
+                "  some string    ", 10, NULL, "  some string    ", "testCenterPadEquals_PadNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCenterPadNotEquals() {
     verify(string -> string.centerPadNotEquals("  some string    ", 10, "@", " some string    "));
-    verify(string -> string.centerPadNotEquals("  some string    ", 10, "@", " some string    ", "testCenterPadNotEquals"));
-    verify(string -> string.centerPadNotEquals("  some string    ", 30, "@", "@@@@@  some string    @@@@@@@"));
-    verify(string -> string.centerPadNotEquals("  some string    ", 30, "@", "@@@@@  some string    @@@@@@@", "testCenterPadNotEquals"));
+    verify(
+        string ->
+            string.centerPadNotEquals(
+                "  some string    ", 10, "@", " some string    ", "testCenterPadNotEquals"));
+    verify(
+        string ->
+            string.centerPadNotEquals(
+                "  some string    ", 30, "@", "@@@@@  some string    @@@@@@@"));
+    verify(
+        string ->
+            string.centerPadNotEquals(
+                "  some string    ",
+                30,
+                "@",
+                "@@@@@  some string    @@@@@@@",
+                "testCenterPadNotEquals"));
     verify(string -> string.centerPadNotEquals("  some string    ", 10, NULL, " some string    "));
-    verify(string -> string.centerPadNotEquals("  some string    ", 10, NULL, " some string    ", "testCenterPadNotEquals_PadNull"));
+    verify(
+        string ->
+            string.centerPadNotEquals(
+                "  some string    ",
+                10,
+                NULL,
+                " some string    ",
+                "testCenterPadNotEquals_PadNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -44,7 +79,9 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
     verify(string -> string.compare(NULL, null, 0));
     verify(string -> string.compare(NULL, null, 0, "testStripedEndValue"));
     verify(string -> string.compare("  some string    ", "  some String    ", 32));
-    verify(string -> string.compare("  some string    ", "  some String    ", 32, "testCompare_NotCompare"));
+    verify(
+        string ->
+            string.compare("  some string    ", "  some String    ", 32, "testCompare_NotCompare"));
     verify(string -> string.compare("  some string    ", null, 1));
     verify(string -> string.compare("  some string    ", null, 1, "testCompare_ExpectedNull"));
     verify(string -> string.compare(NULL, "  some string    ", -1));
@@ -54,17 +91,32 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testCompareIgnoreCase() {
     verify(string -> string.compareIgnoreCase("  some string    ", "  SOME string    ", 0));
-    verify(string -> string.compareIgnoreCase("  some string    ", "  SOME string    ", 0, "testCompareIgnoreCase"));
+    verify(
+        string ->
+            string.compareIgnoreCase(
+                "  some string    ", "  SOME string    ", 0, "testCompareIgnoreCase"));
     verify(string -> string.compareIgnoreCase("  SOME string    ", "  some string    ", 0));
-    verify(string -> string.compareIgnoreCase("  SOME string    ", "  some string    ", 0, "testCompareIgnoreCase"));
+    verify(
+        string ->
+            string.compareIgnoreCase(
+                "  SOME string    ", "  some string    ", 0, "testCompareIgnoreCase"));
     verify(string -> string.compareIgnoreCase(NULL, null, 0));
     verify(string -> string.compareIgnoreCase(NULL, null, 0, "testStripedEndValue"));
     verify(string -> string.compareIgnoreCase("  some string    ", "  some xtring    ", -5));
-    verify(string -> string.compareIgnoreCase("  some string    ", "  some xtring    ", -5, "testCompareIgnoreCase_NotCompare"));
+    verify(
+        string ->
+            string.compareIgnoreCase(
+                "  some string    ", "  some xtring    ", -5, "testCompareIgnoreCase_NotCompare"));
     verify(string -> string.compareIgnoreCase("  some string    ", null, 1));
-    verify(string -> string.compareIgnoreCase("  some string    ", null, 1, "testCompareIgnoreCase_ExpectedNull"));
+    verify(
+        string ->
+            string.compareIgnoreCase(
+                "  some string    ", null, 1, "testCompareIgnoreCase_ExpectedNull"));
     verify(string -> string.compareIgnoreCase(NULL, "  some string    ", -1));
-    verify(string -> string.compareIgnoreCase(NULL, "  some string    ", -1, "testCompareIgnoreCase_ActualNull"));
+    verify(
+        string ->
+            string.compareIgnoreCase(
+                NULL, "  some string    ", -1, "testCompareIgnoreCase_ActualNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -76,9 +128,12 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testContainsIgnoreCase() {
     verify(string -> string.containsIgnoreCase("  Some string    ", " so"));
-    verify(string -> string.containsIgnoreCase("  Some string    ", " so", "testContainsIgnoreCase"));
+    verify(
+        string -> string.containsIgnoreCase("  Some string    ", " so", "testContainsIgnoreCase"));
     verify(string -> string.containsIgnoreCase("  some $tring    ", "$TRING"));
-    verify(string -> string.containsIgnoreCase("  some $tring    ", "$TRING", "testContainsIgnoreCase"));
+    verify(
+        string ->
+            string.containsIgnoreCase("  some $tring    ", "$TRING", "testContainsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -90,23 +145,35 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEndsWithAny() {
     verify(string -> string.endsWithAny("  some string   s ", new CList<>("A", null, " s ")));
-    verify(string -> string.endsWithAny("  some string   s ", new CList<>("A", null, " s "), "testEndsWithAny"));
+    verify(
+        string ->
+            string.endsWithAny(
+                "  some string   s ", new CList<>("A", null, " s "), "testEndsWithAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEndsWithIgnoreCase() {
     verify(string -> string.endsWithIgnoreCase("  some string   s ", "   s "));
-    verify(string -> string.endsWithIgnoreCase("  some string   s ", "   s ", "testEndsWithIgnoreCase"));
+    verify(
+        string ->
+            string.endsWithIgnoreCase("  some string   s ", "   s ", "testEndsWithIgnoreCase"));
     verify(string -> string.endsWithIgnoreCase("  some string   s ", "   S "));
-    verify(string -> string.endsWithIgnoreCase("  some string   s ", "   S ", "testEndsWithIgnoreCase"));
+    verify(
+        string ->
+            string.endsWithIgnoreCase("  some string   s ", "   S ", "testEndsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEndsWithNone() {
     verify(string -> string.endsWithNone("  some string   s ", new CList<>("A", " s  ")));
-    verify(string -> string.endsWithNone("  some string   s ", new CList<>("A", " s  "), "testEndsWithNone"));
+    verify(
+        string ->
+            string.endsWithNone(
+                "  some string   s ", new CList<>("A", " s  "), "testEndsWithNone"));
     verify(string -> string.endsWithNone("  some string   s ", new CList<>("A", " S ")));
-    verify(string -> string.endsWithNone("  some string   s ", new CList<>("A", " S "), "testEndsWithNone"));
+    verify(
+        string ->
+            string.endsWithNone("  some string   s ", new CList<>("A", " S "), "testEndsWithNone"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -127,20 +194,39 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAny() {
-    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  some string    ")));
-    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  some string    "), "testEqualsAny"));
+    verify(
+        string ->
+            string.equalsAny(
+                "  some string    ", new CList<>(CStringUtil.EMPTY, "  some string    ")));
+    verify(
+        string ->
+            string.equalsAny(
+                "  some string    ",
+                new CList<>(CStringUtil.EMPTY, "  some string    "),
+                "testEqualsAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsAnyIgnoreCase() {
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SOME string    ")));
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SOME string    "), "testEqualsAnyIgnoreCase"));
+    verify(
+        string ->
+            string.equalsAnyIgnoreCase(
+                "  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SOME string    ")));
+    verify(
+        string ->
+            string.equalsAnyIgnoreCase(
+                "  some STRING    ",
+                new CList<>(CStringUtil.EMPTY, "  SOME string    "),
+                "testEqualsAnyIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsIgnoreCase() {
     verify(string -> string.equalsIgnoreCase("  some string    ", "  SOME string    "));
-    verify(string -> string.equalsIgnoreCase("  some string    ", "  SOME string    ", "testEqualsIgnoreCase"));
+    verify(
+        string ->
+            string.equalsIgnoreCase(
+                "  some string    ", "  SOME string    ", "testEqualsIgnoreCase"));
     verify(string -> string.equalsIgnoreCase(NULL, null));
     verify(string -> string.equalsIgnoreCase(NULL, null, "testStripedEndValue"));
   }
@@ -148,25 +234,59 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsIgnoreWhiteSpaces() {
     verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", " s o me s t r ing    "));
-    verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", " s o me s t r ing    ", "testEqualsIgnoreWhiteSpaces"));
+    verify(
+        string ->
+            string.equalsIgnoreWhiteSpaces(
+                "  some string    ", " s o me s t r ing    ", "testEqualsIgnoreWhiteSpaces"));
     verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", "somestring"));
-    verify(string -> string.equalsIgnoreWhiteSpaces("  some string    ", "somestring", "testEqualsIgnoreWhiteSpaces"));
+    verify(
+        string ->
+            string.equalsIgnoreWhiteSpaces(
+                "  some string    ", "somestring", "testEqualsIgnoreWhiteSpaces"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNone() {
-    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, "  some String    ")));
-    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, "  some String    "), "testNone"));
+    verify(
+        string ->
+            string.equalsNone(
+                "  some string    ", new CList<>(CStringUtil.EMPTY, "  some String    ")));
+    verify(
+        string ->
+            string.equalsNone(
+                "  some string    ",
+                new CList<>(CStringUtil.EMPTY, "  some String    "),
+                "testNone"));
     verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, null)));
-    verify(string -> string.equalsNone("  some string    ", new CList<>(CStringUtil.EMPTY, null), "testNone_ExpectedNull"));
+    verify(
+        string ->
+            string.equalsNone(
+                "  some string    ",
+                new CList<>(CStringUtil.EMPTY, null),
+                "testNone_ExpectedNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testEqualsNoneIgnoreCase() {
-    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  $ome string    ")));
-    verify(string -> string.equalsNoneIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  $ome string    "), "testNoneIgnoreCase"));
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>(CStringUtil.EMPTY, null)));
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>(CStringUtil.EMPTY, null), "testNoneIgnoreCase_ExpectedNull"));
+    verify(
+        string ->
+            string.equalsNoneIgnoreCase(
+                "  some STRING    ", new CList<>(CStringUtil.EMPTY, "  $ome string    ")));
+    verify(
+        string ->
+            string.equalsNoneIgnoreCase(
+                "  some STRING    ",
+                new CList<>(CStringUtil.EMPTY, "  $ome string    "),
+                "testNoneIgnoreCase"));
+    verify(
+        string ->
+            string.equalsNoneIgnoreCase("  some string    ", new CList<>(CStringUtil.EMPTY, null)));
+    verify(
+        string ->
+            string.equalsNoneIgnoreCase(
+                "  some string    ",
+                new CList<>(CStringUtil.EMPTY, null),
+                "testNoneIgnoreCase_ExpectedNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -272,26 +392,30 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsAsciiPrintable() {
     char[] chars = "5rtfghuik".toCharArray();
-    verify(string -> {
-      chars[5] = 32;
-      string.isAsciiPrintable(String.valueOf(chars));
-      string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
-    });
-    verify(string -> {
-      chars[5] = 33;
-      string.isAsciiPrintable(String.valueOf(chars));
-      string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
-    });
-    verify(string -> {
-      chars[5] = 125;
-      string.isAsciiPrintable(String.valueOf(chars));
-      string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
-    });
-    verify(string -> {
-      chars[5] = 126;
-      string.isAsciiPrintable(String.valueOf(chars));
-      string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
-    });
+    verify(
+        string -> {
+          chars[5] = 32;
+          string.isAsciiPrintable(String.valueOf(chars));
+          string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
+        });
+    verify(
+        string -> {
+          chars[5] = 33;
+          string.isAsciiPrintable(String.valueOf(chars));
+          string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
+        });
+    verify(
+        string -> {
+          chars[5] = 125;
+          string.isAsciiPrintable(String.valueOf(chars));
+          string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
+        });
+    verify(
+        string -> {
+          chars[5] = 126;
+          string.isAsciiPrintable(String.valueOf(chars));
+          string.isAsciiPrintable(String.valueOf(chars), "isAsciiPrintable");
+        });
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -343,17 +467,22 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsEmptyOrNotAlphanumeric() {
     verify(string -> string.isEmptyOrNotAlphanumeric("aiulaj626 5opksn"));
-    verify(string -> string.isEmptyOrNotAlphanumeric("aiulaj626 5opksn", "testIsEmptyOrNotAlphanumeric"));
+    verify(
+        string ->
+            string.isEmptyOrNotAlphanumeric("aiulaj626 5opksn", "testIsEmptyOrNotAlphanumeric"));
     verify(string -> string.isEmptyOrNotAlphanumeric("@#.*"));
     verify(string -> string.isEmptyOrNotAlphanumeric("@#.*", "testIsEmptyOrNotAlphanumeric"));
     verify(string -> string.isEmptyOrNotAlphanumeric(CStringUtil.EMPTY));
-    verify(string -> string.isEmptyOrNotAlphanumeric(CStringUtil.EMPTY, "testIsEmptyOrNotAlphanumeric"));
+    verify(
+        string ->
+            string.isEmptyOrNotAlphanumeric(CStringUtil.EMPTY, "testIsEmptyOrNotAlphanumeric"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotAlphanumericSpace() {
     verify(string -> string.isNotAlphanumericSpace("aiulaj626 !5opksn"));
-    verify(string -> string.isNotAlphanumericSpace("aiulaj626 !5opksn", "testIsNotAlphanumericSpace"));
+    verify(
+        string -> string.isNotAlphanumericSpace("aiulaj626 !5opksn", "testIsNotAlphanumericSpace"));
     verify(string -> string.isNotAlphanumericSpace("@#.*"));
     verify(string -> string.isNotAlphanumericSpace("@#.*", "testIsNotAlphanumericSpace"));
   }
@@ -361,21 +490,24 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsNotAsciiPrintable() {
     char[] chars = "5rtfghuik".toCharArray();
-    verify(string -> {
-      chars[5] = 30;
-      string.isNotAsciiPrintable(String.valueOf(chars));
-      string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
-    });
-    verify(string -> {
-      chars[5] = 31;
-      string.isNotAsciiPrintable(String.valueOf(chars));
-      string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
-    });
-    verify(string -> {
-      chars[5] = 127;
-      string.isNotAsciiPrintable(String.valueOf(chars));
-      string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
-    });
+    verify(
+        string -> {
+          chars[5] = 30;
+          string.isNotAsciiPrintable(String.valueOf(chars));
+          string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
+        });
+    verify(
+        string -> {
+          chars[5] = 31;
+          string.isNotAsciiPrintable(String.valueOf(chars));
+          string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
+        });
+    verify(
+        string -> {
+          chars[5] = 127;
+          string.isNotAsciiPrintable(String.valueOf(chars));
+          string.isNotAsciiPrintable(String.valueOf(chars), "testIsNotAsciiPrintable");
+        });
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -435,25 +567,70 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testLeftPadEquals() {
     verify(string -> string.leftPadEquals("  some string    ", 10, "@", "  some string    "));
-    verify(string -> string.leftPadEquals("  some string    ", 10, "@", "  some string    ", "testLeftPad"));
-    verify(string -> string.leftPadEquals("  some string    ", 30, "@", "@@@@@@@@@@@@@  some string    "));
-    verify(string -> string.leftPadEquals("  some string    ", 30, "@", "@@@@@@@@@@@@@  some string    ", "testLeftPad"));
+    verify(
+        string ->
+            string.leftPadEquals("  some string    ", 10, "@", "  some string    ", "testLeftPad"));
+    verify(
+        string ->
+            string.leftPadEquals("  some string    ", 30, "@", "@@@@@@@@@@@@@  some string    "));
+    verify(
+        string ->
+            string.leftPadEquals(
+                "  some string    ", 30, "@", "@@@@@@@@@@@@@  some string    ", "testLeftPad"));
     verify(string -> string.leftPadEquals("  some string    ", 10, NULL, "  some string    "));
-    verify(string -> string.leftPadEquals("  some string    ", 10, NULL, "  some string    ", "testLeftPad_PadNull"));
-    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
-    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s ", "testLeftPad"));
+    verify(
+        string ->
+            string.leftPadEquals(
+                "  some string    ", 10, NULL, "  some string    ", "testLeftPad_PadNull"));
+    verify(
+        string ->
+            string.leftPadEquals(
+                "  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
+    verify(
+        string ->
+            string.leftPadEquals(
+                "  some string   s ",
+                30,
+                CStringUtil.EMPTY,
+                "              some string   s ",
+                "testLeftPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testLeftPadNotEquals() {
     verify(string -> string.leftPadNotEquals("  some string    ", 10, "@", " some string    "));
-    verify(string -> string.leftPadNotEquals("  some string    ", 10, "@", " some string    ", "testLeftPadNotEquals"));
-    verify(string -> string.leftPadNotEquals("  some string    ", 30, "@", "@@@@@@@@@@@@  some string    "));
-    verify(string -> string.leftPadNotEquals("  some string    ", 30, "@", "@@@@@@@@@@@@  some string    ", "testLeftPadNotEquals"));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string    ", 10, "@", " some string    ", "testLeftPadNotEquals"));
+    verify(
+        string ->
+            string.leftPadNotEquals("  some string    ", 30, "@", "@@@@@@@@@@@@  some string    "));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string    ",
+                30,
+                "@",
+                "@@@@@@@@@@@@  some string    ",
+                "testLeftPadNotEquals"));
     verify(string -> string.leftPadNotEquals("  some string    ", 10, NULL, " some string    "));
-    verify(string -> string.leftPadNotEquals("  some string    ", 10, NULL, " some string    ", "testLeftPadNotEquals"));
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "             some string   s "));
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "             some string   s ", "testLeftPadNotEquals"));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string    ", 10, NULL, " some string    ", "testLeftPadNotEquals"));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string   s ", 30, CStringUtil.EMPTY, "             some string   s "));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string   s ",
+                30,
+                CStringUtil.EMPTY,
+                "             some string   s ",
+                "testLeftPadNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -501,9 +678,14 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotContainsIgnoreCase() {
     verify(string -> string.notContainsIgnoreCase("  Some string    ", " sox"));
-    verify(string -> string.notContainsIgnoreCase("  Some string    ", " sox", "testNotContainsIgnoreCase"));
+    verify(
+        string ->
+            string.notContainsIgnoreCase("  Some string    ", " sox", "testNotContainsIgnoreCase"));
     verify(string -> string.notContainsIgnoreCase("  some $tring    ", "x$TRING"));
-    verify(string -> string.notContainsIgnoreCase("  some $tring    ", "x$TRING", "testNotContainsIgnoreCase"));
+    verify(
+        string ->
+            string.notContainsIgnoreCase(
+                "  some $tring    ", "x$TRING", "testNotContainsIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -517,13 +699,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEndsWithIgnoreCase() {
     verify(string -> string.notEndsWithIgnoreCase("  some string   s ", "   $ "));
-    verify(string -> string.notEndsWithIgnoreCase("  some string   s ", "   $ ", "testEndsWithIgnoreCase"));
+    verify(
+        string ->
+            string.notEndsWithIgnoreCase("  some string   s ", "   $ ", "testEndsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEqualsIgnoreCase() {
     verify(string -> string.notEqualsIgnoreCase("  some string    ", "  $OME string    "));
-    verify(string -> string.notEqualsIgnoreCase("  some string    ", "  $OME string    ", "testEqualsIgnoreCase"));
+    verify(
+        string ->
+            string.notEqualsIgnoreCase(
+                "  some string    ", "  $OME string    ", "testEqualsIgnoreCase"));
     verify(string -> string.notEqualsIgnoreCase(NULL, CStringUtil.EMPTY));
     verify(string -> string.notEqualsIgnoreCase(NULL, CStringUtil.EMPTY, "testStripedEndValue"));
   }
@@ -531,7 +718,10 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotEqualsIgnoreWhiteSpaces() {
     verify(string -> string.notEqualsIgnoreWhiteSpaces("  some string    ", "  $OME string    "));
-    verify(string -> string.notEqualsIgnoreWhiteSpaces("  some string    ", "  $OME string    ", "testEqualsIgnoreWhiteSpaces"));
+    verify(
+        string ->
+            string.notEqualsIgnoreWhiteSpaces(
+                "  some string    ", "  $OME string    ", "testEqualsIgnoreWhiteSpaces"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -543,229 +733,529 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNotStartsWithIgnoreCase() {
     verify(string -> string.notStartsWithIgnoreCase("  some string   s ", " Some"));
-    verify(string -> string.notStartsWithIgnoreCase("  some string   s ", " Some", "testStartsWith"));
+    verify(
+        string -> string.notStartsWithIgnoreCase("  some string   s ", " Some", "testStartsWith"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNumberOfMatchesEquals() {
     verify(string -> string.numberOfMatchesEquals("  some string   s ", "s", 3));
-    verify(string -> string.numberOfMatchesEquals("  some string   s ", "s", 3, "testNumberOfMatches"));
+    verify(
+        string ->
+            string.numberOfMatchesEquals("  some string   s ", "s", 3, "testNumberOfMatches"));
     verify(string -> string.numberOfMatchesEquals("  some String   s ", "s", 2));
-    verify(string -> string.numberOfMatchesEquals("  some String   s ", "s", 2, "testNumberOfMatches"));
+    verify(
+        string ->
+            string.numberOfMatchesEquals("  some String   s ", "s", 2, "testNumberOfMatches"));
     verify(string -> string.numberOfMatchesEquals("  some $tring   s ", "$", 1));
-    verify(string -> string.numberOfMatchesEquals("  some $tring   s ", "$", 1, "testNumberOfMatches"));
+    verify(
+        string ->
+            string.numberOfMatchesEquals("  some $tring   s ", "$", 1, "testNumberOfMatches"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testNumberOfMatchesNotEquals() {
     verify(string -> string.numberOfMatchesNotEquals("  some String   s ", "s", 1));
-    verify(string -> string.numberOfMatchesNotEquals("  some String   s ", "s", 1, "testNumberOfMatches_NotMatch"));
+    verify(
+        string ->
+            string.numberOfMatchesNotEquals(
+                "  some String   s ", "s", 1, "testNumberOfMatches_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveEndEquals() {
     verify(string -> string.removeEndEquals("  some string   s ", "  some ", "  some string   s "));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some ", "  some string   s ", "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some string   s ", "  some ", "  some string   s ", "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some string   s ", "some string   s ", "  "));
-    verify(string -> string.removeEndEquals("  some string   s ", "some string   s ", "  ", "testRemoveEnd"));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY));
-    verify(string -> string.removeEndEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY, "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some string   s ", "some string   s ", "  ", "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some string   s ", "  some string   s ", CStringUtil.EMPTY, "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some String   s ", null, "  some String   s "));
-    verify(string -> string.removeEndEquals("  some String   s ", null, "  some String   s ", "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some String   s ", null, "  some String   s ", "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some String   s ", "tring   s ", "  some S"));
-    verify(string -> string.removeEndEquals("  some String   s ", "tring   s ", "  some S", "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some String   s ", "tring   s ", "  some S", "testRemoveEnd"));
     verify(string -> string.removeEndEquals("  some $tring   s ", "tring   s ", "  some $"));
-    verify(string -> string.removeEndEquals("  some $tring   s ", "tring   s ", "  some $", "testRemoveEnd"));
+    verify(
+        string ->
+            string.removeEndEquals(
+                "  some $tring   s ", "tring   s ", "  some $", "testRemoveEnd"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveEndIgnoreCaseEquals() {
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  Some ", "  some string   s "));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  Some ", "  some string   s ", "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "some String   s ", "  "));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "some String   s ", "  ", "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", CStringUtil.EMPTY));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some string   s ", "  sOME string   s ", CStringUtil.EMPTY, "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", null, "  some String   s ", "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", "tring   S ", "  some S"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some String   s ", "tring   S ", "  some S", "testRemoveEndIgnoreCase"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   s ", "  some $"));
-    verify(string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   s ", "  some $", "testRemoveEndIgnoreCase"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some string   s ", "  Some ", "  some string   s "));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some string   s ", "  Some ", "  some string   s ", "testRemoveEndIgnoreCase"));
+    verify(
+        string -> string.removeEndIgnoreCaseEquals("  some string   s ", "some String   s ", "  "));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some string   s ", "some String   s ", "  ", "testRemoveEndIgnoreCase"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some string   s ", "  sOME string   s ", CStringUtil.EMPTY));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some string   s ",
+                "  sOME string   s ",
+                CStringUtil.EMPTY,
+                "testRemoveEndIgnoreCase"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some String   s ", null, "  some String   s ", "testRemoveEndIgnoreCase"));
+    verify(
+        string -> string.removeEndIgnoreCaseEquals("  some String   s ", "tring   S ", "  some S"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some String   s ", "tring   S ", "  some S", "testRemoveEndIgnoreCase"));
+    verify(
+        string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   s ", "  some $"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseEquals(
+                "  some $tring   s ", "TRING   s ", "  some $", "testRemoveEndIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveEndIgnoreCaseNotEquals() {
     verify(string -> string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  STRING    "));
-    verify(string -> string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  STRING    ", "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseNotEquals(
+                "  some STRING    ",
+                " ",
+                "  STRING    ",
+                "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveEndNotEquals() {
     verify(string -> string.removeEndNotEquals("  some STRING    ", "STRING    ", "  SOME "));
-    verify(string -> string.removeEndNotEquals("  some STRING    ", "STRING    ", "  SOME ", "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
+    verify(
+        string ->
+            string.removeEndNotEquals(
+                "  some STRING    ",
+                "STRING    ",
+                "  SOME ",
+                "testRemoveEndIgnoreCase_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveEquals() {
     verify(string -> string.removeEquals("  some string   s ", "s", "  ome tring    "));
-    verify(string -> string.removeEquals("  some string   s ", "s", "  ome tring    ", "testRemove"));
+    verify(
+        string -> string.removeEquals("  some string   s ", "s", "  ome tring    ", "testRemove"));
     verify(string -> string.removeEquals("  some String   so ", "so", "  me String    "));
-    verify(string -> string.removeEquals("  some String   so ", "so", "  me String    ", "testRemove"));
+    verify(
+        string ->
+            string.removeEquals("  some String   so ", "so", "  me String    ", "testRemove"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveIgnoreCaseEquals() {
     verify(string -> string.removeIgnoreCaseEquals("  some string   s ", "s", "  ome tring    "));
-    verify(string -> string.removeIgnoreCaseEquals("  some string   s ", "s", "  ome tring    ", "testRemoveIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.removeIgnoreCaseEquals(
+                "  some string   s ", "s", "  ome tring    ", "testRemoveIgnoreCaseEquals"));
     verify(string -> string.removeIgnoreCaseEquals("  some String   so ", "SO", "  me String    "));
-    verify(string -> string.removeIgnoreCaseEquals("  some String   so ", "SO", "  me String    ", "testRemoveIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.removeIgnoreCaseEquals(
+                "  some String   so ", "SO", "  me String    ", "testRemoveIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveIgnoreCaseNotEquals() {
     verify(string -> string.removeIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING "));
-    verify(string -> string.removeIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING ", "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
+    verify(
+        string ->
+            string.removeIgnoreCaseNotEquals(
+                "  some STRING    ",
+                " ",
+                "  some STRING ",
+                "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveNotEquals() {
     verify(string -> string.removeNotEquals("  some STRING    ", "STRING   ", "  some "));
-    verify(string -> string.removeNotEquals("  some STRING    ", "STRING   ", "  some ", "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
+    verify(
+        string ->
+            string.removeNotEquals(
+                "  some STRING    ",
+                "STRING   ",
+                "  some ",
+                "testRemoveIgnoreCaseEquals_RemoveIgnoreCaseNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveStartEquals() {
     verify(string -> string.removeStartEquals("  some string   s ", "  some ", "string   s "));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some ", "string   s ", "testRemoveStartEquals"));
-    verify(string -> string.removeStartEquals("  some string   s ", "some string   s ", "  some string   s "));
-    verify(string -> string.removeStartEquals("  some string   s ", "some string   s ", "  some string   s ", "testRemoveStartEquals"));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY));
-    verify(string -> string.removeStartEquals("  some string   s ", "  some string   s ", CStringUtil.EMPTY, "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some string   s ", "  some ", "string   s ", "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some string   s ", "some string   s ", "  some string   s "));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some string   s ",
+                "some string   s ",
+                "  some string   s ",
+                "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some string   s ", "  some string   s ", CStringUtil.EMPTY));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some string   s ",
+                "  some string   s ",
+                CStringUtil.EMPTY,
+                "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some String   s ", null, "  some String   s "));
-    verify(string -> string.removeStartEquals("  some String   s ", null, "  some String   s ", "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some String   s ", null, "  some String   s ", "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some String   s ", "  some S", "tring   s "));
-    verify(string -> string.removeStartEquals("  some String   s ", "  some S", "tring   s ", "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some String   s ", "  some S", "tring   s ", "testRemoveStartEquals"));
     verify(string -> string.removeStartEquals("  some $tring   s ", "  some $", "tring   s "));
-    verify(string -> string.removeStartEquals("  some $tring   s ", "  some $", "tring   s ", "testRemoveStartEquals"));
+    verify(
+        string ->
+            string.removeStartEquals(
+                "  some $tring   s ", "  some $", "tring   s ", "testRemoveStartEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveStartIgnoreCaseEquals() {
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "string   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "string   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some ", "string   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some ", "string   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "Some string   s ", "  some string   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "Some string   s ", "  some string   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", CStringUtil.EMPTY));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  Some string   s ", CStringUtil.EMPTY, "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", null, "  some String   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", "  some s", "tring   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some String   s ", "  some s", "tring   s ", "testRemoveStartIgnoreCase"));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some $tring   s ", "  some $", "tring   s "));
-    verify(string -> string.removeStartIgnoreCaseEquals("  some $tring   s ", "  some $", "tring   s ", "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "string   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ", "  some ", "string   s ", "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals("  some string   s ", "  Some ", "string   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ", "  Some ", "string   s ", "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ", "Some string   s ", "  some string   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ",
+                "Some string   s ",
+                "  some string   s ",
+                "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ", "  Some string   s ", CStringUtil.EMPTY));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ",
+                "  Some string   s ",
+                CStringUtil.EMPTY,
+                "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals("  some String   s ", null, "  some String   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some String   s ", null, "  some String   s ", "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals("  some String   s ", "  some s", "tring   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some String   s ", "  some s", "tring   s ", "testRemoveStartIgnoreCase"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals("  some $tring   s ", "  some $", "tring   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some $tring   s ", "  some $", "tring   s ", "testRemoveStartIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveStartIgnoreCaseNotEquals() {
-    verify(string -> string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", " $tring   s "));
-    verify(string -> string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", " $tring   s ", "testRemoveStartIgnoreCaseEquals_NotMatch"));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", " $tring   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseNotEquals(
+                "  some $tring   s ",
+                "  some ",
+                " $tring   s ",
+                "testRemoveStartIgnoreCaseEquals_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRemoveStartNotEquals() {
     verify(string -> string.removeStartNotEquals("  some string   s ", "  some ", "String   S "));
-    verify(string -> string.removeStartNotEquals("  some string   s ", "  some ", "String   S ", "testRemoveStartNotEquals"));
+    verify(
+        string ->
+            string.removeStartNotEquals(
+                "  some string   s ", "  some ", "String   S ", "testRemoveStartNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceEquals() {
-    verify(string -> string.replaceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome tring    "));
-    verify(string -> string.replaceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome tring    ", "testReplaceEquals"));
-    verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX "));
-    verify(string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX ", "testReplaceEquals"));
+    verify(
+        string ->
+            string.replaceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome tring    "));
+    verify(
+        string ->
+            string.replaceEquals(
+                "  some string   s ",
+                "s",
+                CStringUtil.EMPTY,
+                "  ome tring    ",
+                "testReplaceEquals"));
+    verify(
+        string -> string.replaceEquals("  some String   so ", "so", "XX", "  XXme String   XX "));
+    verify(
+        string ->
+            string.replaceEquals(
+                "  some String   so ", "so", "XX", "  XXme String   XX ", "testReplaceEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceIgnoreCaseEquals() {
-    verify(string -> string.replaceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome |tring   | "));
-    verify(string -> string.replaceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome |tring   | ", "testReplaceIgnoreCaseEquals"));
-    verify(string -> string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x "));
-    verify(string -> string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x ", "testReplaceIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.replaceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome |tring   | "));
+    verify(
+        string ->
+            string.replaceIgnoreCaseEquals(
+                "  some string   s ",
+                "s",
+                "|",
+                "  |ome |tring   | ",
+                "testReplaceIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x "));
+    verify(
+        string ->
+            string.replaceIgnoreCaseEquals(
+                "  some String   so ",
+                "SO",
+                "x",
+                "  xme String   x ",
+                "testReplaceIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceIgnoreCaseNotEquals() {
-    verify(string -> string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " ome string   "));
-    verify(string -> string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " ome string   ", "testReplace_NotMatch"));
+    verify(
+        string ->
+            string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " ome string   "));
+    verify(
+        string ->
+            string.replaceIgnoreCaseNotEquals(
+                "  some String   s ", " s", "x", " ome string   ", "testReplace_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceNotEquals() {
     verify(string -> string.replaceNotEquals("  some String   s ", " s", "x", " ome string   "));
-    verify(string -> string.replaceNotEquals("  some String   s ", " s", "x", " ome string   ", "testReplace_NotMatch"));
+    verify(
+        string ->
+            string.replaceNotEquals(
+                "  some String   s ", " s", "x", " ome string   ", "testReplace_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceEquals() {
-    verify(string -> string.replaceOnceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome string   s "));
-    verify(string -> string.replaceOnceEquals("  some string   s ", "s", CStringUtil.EMPTY, "  ome string   s ", "testReplaceOnceEquals"));
-    verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  XXme String   so "));
-    verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  XXme String   so ", "testReplaceOnceEquals"));
+    verify(
+        string ->
+            string.replaceOnceEquals(
+                "  some string   s ", "s", CStringUtil.EMPTY, "  ome string   s "));
+    verify(
+        string ->
+            string.replaceOnceEquals(
+                "  some string   s ",
+                "s",
+                CStringUtil.EMPTY,
+                "  ome string   s ",
+                "testReplaceOnceEquals"));
+    verify(
+        string ->
+            string.replaceOnceEquals("  some String   so ", "so", "XX", "  XXme String   so "));
+    verify(
+        string ->
+            string.replaceOnceEquals(
+                "  some String   so ", "so", "XX", "  XXme String   so ", "testReplaceOnceEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceIgnoreCaseEquals() {
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome string   s "));
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome string   s ", "testReplaceOnceIgnoreCaseEquals"));
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   so "));
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   so ", "testReplaceOnceIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseEquals(
+                "  some string   s ", "s", "|", "  |ome string   s "));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseEquals(
+                "  some string   s ",
+                "s",
+                "|",
+                "  |ome string   s ",
+                "testReplaceOnceIgnoreCaseEquals"));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseEquals(
+                "  some String   so ", "SO", "x", "  xme String   so "));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseEquals(
+                "  some String   so ",
+                "SO",
+                "x",
+                "  xme String   so ",
+                "testReplaceOnceIgnoreCaseEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceIgnoreCaseNotEquals() {
-    verify(string -> string.replaceOnceIgnoreCaseNotEquals("  some String   s ", " s", "x", " ome string   "));
-    verify(string -> string.replaceOnceIgnoreCaseNotEquals("  some String   s ", " s", "x", " ome string   ", "testReplaceOnceIgnoreCaseNotEquals"));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseNotEquals(
+                "  some String   s ", " s", "x", " ome string   "));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseNotEquals(
+                "  some String   s ",
+                " s",
+                "x",
+                " ome string   ",
+                "testReplaceOnceIgnoreCaseNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReplaceOnceNotEquals() {
-    verify(string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " ome string   "));
-    verify(string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " ome string   ", "testReplaceOnceIgnoreCaseNotEquals"));
+    verify(
+        string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " ome string   "));
+    verify(
+        string ->
+            string.replaceOnceNotEquals(
+                "  some String   s ",
+                " s",
+                "x",
+                " ome string   ",
+                "testReplaceOnceIgnoreCaseNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReverseEquals() {
     verify(string -> string.reverseEquals("  some string   s ", " s   gnirts emos  "));
-    verify(string -> string.reverseEquals("  some string   s ", " s   gnirts emos  ", "testReverse"));
+    verify(
+        string -> string.reverseEquals("  some string   s ", " s   gnirts emos  ", "testReverse"));
     verify(string -> string.reverseEquals("  some @#$%^&*.   so ", " os   .*&^%$#@ emos  "));
-    verify(string -> string.reverseEquals("  some @#$%^&*.   so ", " os   .*&^%$#@ emos  ", "testReverse"));
+    verify(
+        string ->
+            string.reverseEquals("  some @#$%^&*.   so ", " os   .*&^%$#@ emos  ", "testReverse"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testReverseNotEquals() {
     verify(string -> string.reverseNotEquals("  some string  s ", " s   gnirts emos  "));
-    verify(string -> string.reverseNotEquals("  some string  s ", " s   gnirts emos  ", "testReverse"));
+    verify(
+        string ->
+            string.reverseNotEquals("  some string  s ", " s   gnirts emos  ", "testReverse"));
     verify(string -> string.reverseNotEquals("  some @#$%^*.   so ", " os   .*&^%$#@ emos  "));
-    verify(string -> string.reverseNotEquals("  some @#$%^*.   so ", " os   .*&^%$#@ emos  ", "testReverse"));
+    verify(
+        string ->
+            string.reverseNotEquals(
+                "  some @#$%^*.   so ", " os   .*&^%$#@ emos  ", "testReverse"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRightPadEquals() {
     verify(string -> string.rightPadEquals("  some string    ", 10, "@", "  some string    "));
-    verify(string -> string.rightPadEquals("  some string    ", 10, "@", "  some string    ", "testRightPad"));
-    verify(string -> string.rightPadEquals("  some string    ", 30, "@", "  some string    @@@@@@@@@@@@@"));
-    verify(string -> string.rightPadEquals("  some string    ", 30, "@", "  some string    @@@@@@@@@@@@@", "testRightPad"));
+    verify(
+        string ->
+            string.rightPadEquals(
+                "  some string    ", 10, "@", "  some string    ", "testRightPad"));
+    verify(
+        string ->
+            string.rightPadEquals("  some string    ", 30, "@", "  some string    @@@@@@@@@@@@@"));
+    verify(
+        string ->
+            string.rightPadEquals(
+                "  some string    ", 30, "@", "  some string    @@@@@@@@@@@@@", "testRightPad"));
     verify(string -> string.rightPadEquals("  some string    ", 10, NULL, "  some string    "));
-    verify(string -> string.rightPadEquals("  some string    ", 10, NULL, "  some string    ", "testRightPad_PadNull"));
+    verify(
+        string ->
+            string.rightPadEquals(
+                "  some string    ", 10, NULL, "  some string    ", "testRightPad_PadNull"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRightPadNotEquals() {
-    verify(string -> string.rightPadNotEquals("  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx"));
-    verify(string -> string.rightPadNotEquals("  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx", "testRightPad"));
+    verify(
+        string ->
+            string.rightPadNotEquals(
+                "  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxx"));
+    verify(
+        string ->
+            string.rightPadNotEquals(
+                "  some string   s ",
+                40,
+                "x",
+                "  some string   s xxxxxxxxxxxxxxxxxxxxx",
+                "testRightPad"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -777,7 +1267,10 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testRightValueNotEquals() {
     verify(string -> string.rightValueNotEquals("  some string    ", 7, "iNg    "));
-    verify(string -> string.rightValueNotEquals("  some string    ", 7, "iNg    ", "testRight_CaseNotMatch"));
+    verify(
+        string ->
+            string.rightValueNotEquals(
+                "  some string    ", 7, "iNg    ", "testRight_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -789,167 +1282,293 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStartsWithAny() {
     verify(string -> string.startsWithAny("  some string   s ", new CList<>("A", null, "  some")));
-    verify(string -> string.startsWithAny("  some string   s ", new CList<>("A", null, "  some"), "testStartsWithAny"));
+    verify(
+        string ->
+            string.startsWithAny(
+                "  some string   s ", new CList<>("A", null, "  some"), "testStartsWithAny"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStartsWithIgnoreCase() {
     verify(string -> string.startsWithIgnoreCase("  some string   s ", "  some"));
-    verify(string -> string.startsWithIgnoreCase("  some string   s ", "  some", "testStartsWithIgnoreCase"));
+    verify(
+        string ->
+            string.startsWithIgnoreCase(
+                "  some string   s ", "  some", "testStartsWithIgnoreCase"));
     verify(string -> string.startsWithIgnoreCase("  some string   s ", "  Some"));
-    verify(string -> string.startsWithIgnoreCase("  some string   s ", "  Some", "testStartsWithIgnoreCase"));
+    verify(
+        string ->
+            string.startsWithIgnoreCase(
+                "  some string   s ", "  Some", "testStartsWithIgnoreCase"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStartsWithNone() {
-    verify(string -> string.startsWithNone("  some string   s ", new CList<>(" some", "     ", " s ")));
-    verify(string -> string.startsWithNone("  some string   s ", new CList<>(" some", "     ", " s "), "testStartsWithIgnoreCase_NotMatch"));
+    verify(
+        string ->
+            string.startsWithNone("  some string   s ", new CList<>(" some", "     ", " s ")));
+    verify(
+        string ->
+            string.startsWithNone(
+                "  some string   s ",
+                new CList<>(" some", "     ", " s "),
+                "testStartsWithIgnoreCase_NotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedEndValue() {
     verify(string -> string.stripedEndValue("  some string    ", " ", "  some string"));
-    verify(string -> string.stripedEndValue("  some string    ", " ", "  some string", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValue(
+                "  some string    ", " ", "  some string", "testStripedEndValue"));
     verify(string -> string.stripedEndValue("  some string    ", null, "  some string"));
-    verify(string -> string.stripedEndValue("  some string    ", null, "  some string", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValue(
+                "  some string    ", null, "  some string", "testStripedEndValue"));
     verify(string -> string.stripedEndValue("|some string||||", "|", "|some string"));
-    verify(string -> string.stripedEndValue("|some string||||", "|", "|some string", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValue("|some string||||", "|", "|some string", "testStripedEndValue"));
     verify(string -> string.stripedEndValue("|some string||||", null, "|some string||||"));
-    verify(string -> string.stripedEndValue("|some string||||", null, "|some string||||", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValue(
+                "|some string||||", null, "|some string||||", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedEndValueNot() {
     verify(string -> string.stripedEndValueNot("  some string    ", " ", " some string"));
-    verify(string -> string.stripedEndValueNot("  some string    ", " ", " some string", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValueNot(
+                "  some string    ", " ", " some string", "testStripedEndValue"));
     verify(string -> string.stripedEndValueNot("  some string    ", null, "  somestring"));
-    verify(string -> string.stripedEndValueNot("  some string    ", null, "  somestring", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValueNot(
+                "  some string    ", null, "  somestring", "testStripedEndValue"));
     verify(string -> string.stripedEndValueNot("|some string||||", "|", "|some string|"));
-    verify(string -> string.stripedEndValueNot("|some string||||", "|", "|some string|", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValueNot(
+                "|some string||||", "|", "|some string|", "testStripedEndValue"));
     verify(string -> string.stripedEndValueNot("|some string||||", null, "|some string|||"));
-    verify(string -> string.stripedEndValueNot("|some string||||", null, "|some string|||", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValueNot(
+                "|some string||||", null, "|some string|||", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedStartValue() {
     verify(string -> string.stripedStartValue("  some string    ", " ", "some string    "));
-    verify(string -> string.stripedStartValue("  some string    ", " ", "some string    ", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValue(
+                "  some string    ", " ", "some string    ", "testStripedStartValue"));
     verify(string -> string.stripedStartValue("  some string    ", null, "some string    "));
-    verify(string -> string.stripedStartValue("  some string    ", null, "some string    ", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValue(
+                "  some string    ", null, "some string    ", "testStripedStartValue"));
     verify(string -> string.stripedStartValue("|some string||||", "|", "some string||||"));
-    verify(string -> string.stripedStartValue("|some string||||", "|", "some string||||", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValue(
+                "|some string||||", "|", "some string||||", "testStripedStartValue"));
     verify(string -> string.stripedStartValue("|some string||||", null, "|some string||||"));
-    verify(string -> string.stripedStartValue("|some string||||", null, "|some string||||", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValue(
+                "|some string||||", null, "|some string||||", "testStripedStartValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedStartValueNot() {
     verify(string -> string.stripedStartValueNot("  some string    ", " ", "some string   "));
-    verify(string -> string.stripedStartValueNot("  some string    ", " ", "some string   ", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValueNot(
+                "  some string    ", " ", "some string   ", "testStripedStartValue"));
     verify(string -> string.stripedStartValueNot("  some string    ", null, "some string   "));
-    verify(string -> string.stripedStartValueNot("  some string    ", null, "some string   ", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValueNot(
+                "  some string    ", null, "some string   ", "testStripedStartValue"));
     verify(string -> string.stripedStartValueNot("|some string||||", "|", "some string|||"));
-    verify(string -> string.stripedStartValueNot("|some string||||", "|", "some string|||", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValueNot(
+                "|some string||||", "|", "some string|||", "testStripedStartValue"));
     verify(string -> string.stripedStartValueNot("|some string||||", null, "|some string|||"));
-    verify(string -> string.stripedStartValueNot("|some string||||", null, "|some string|||", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValueNot(
+                "|some string||||", null, "|some string|||", "testStripedStartValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedValue() {
     verify(string -> string.stripedValue("  some string    ", " ", "some string"));
-    verify(string -> string.stripedValue("  some string    ", " ", "some string", "testStripedValue"));
+    verify(
+        string -> string.stripedValue("  some string    ", " ", "some string", "testStripedValue"));
     verify(string -> string.stripedValue("  some string    ", null, "some string"));
-    verify(string -> string.stripedValue("  some string    ", null, "some string", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValue("  some string    ", null, "some string", "testStripedValue"));
     verify(string -> string.stripedValue("|some string||||", "|", "some string"));
-    verify(string -> string.stripedValue("|some string||||", "|", "some string", "testStripedValue"));
+    verify(
+        string -> string.stripedValue("|some string||||", "|", "some string", "testStripedValue"));
     verify(string -> string.stripedValue("|some string||||", null, "|some string||||"));
-    verify(string -> string.stripedValue("|some string||||", null, "|some string||||", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValue("|some string||||", null, "|some string||||", "testStripedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testStripedValueNot() {
     verify(string -> string.stripedValueNot("  some string    ", " ", " some string"));
-    verify(string -> string.stripedValueNot("  some string    ", " ", " some string", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValueNot("  some string    ", " ", " some string", "testStripedValue"));
     verify(string -> string.stripedValueNot("  some string    ", null, "somestring"));
-    verify(string -> string.stripedValueNot("  some string    ", null, "somestring", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValueNot("  some string    ", null, "somestring", "testStripedValue"));
     verify(string -> string.stripedValueNot("|some string||||", "|", "some string|"));
-    verify(string -> string.stripedValueNot("|some string||||", "|", "some string|", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValueNot("|some string||||", "|", "some string|", "testStripedValue"));
     verify(string -> string.stripedValueNot("|some string||||", null, "|some string|||"));
-    verify(string -> string.stripedValueNot("|some string||||", null, "|some string|||", "testStripedValue"));
+    verify(
+        string ->
+            string.stripedValueNot(
+                "|some string||||", null, "|some string|||", "testStripedValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterEquals() {
     verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string    "));
-    verify(string -> string.substringAfterEquals("  some string    ", " s", "ome string    ", "testSubstringAfter"));
+    verify(
+        string ->
+            string.substringAfterEquals(
+                "  some string    ", " s", "ome string    ", "testSubstringAfter"));
     verify(string -> string.substringAfterEquals("  some string    ", null, CStringUtil.EMPTY));
-    verify(string -> string.substringAfterEquals("  some string    ", null, CStringUtil.EMPTY, "testSubstringAfter"));
+    verify(
+        string ->
+            string.substringAfterEquals(
+                "  some string    ", null, CStringUtil.EMPTY, "testSubstringAfter"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterLastEquals() {
     verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring    "));
-    verify(string -> string.substringAfterLastEquals("  some string    ", " s", "tring    ", "testSubstringAfterLast"));
+    verify(
+        string ->
+            string.substringAfterLastEquals(
+                "  some string    ", " s", "tring    ", "testSubstringAfterLast"));
     verify(string -> string.substringAfterLastEquals("  some string    ", null, CStringUtil.EMPTY));
-    verify(string -> string.substringAfterLastEquals("  some string    ", null, CStringUtil.EMPTY, "testSubstringAfterLast"));
+    verify(
+        string ->
+            string.substringAfterLastEquals(
+                "  some string    ", null, CStringUtil.EMPTY, "testSubstringAfterLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterLastNotEquals() {
     verify(string -> string.substringAfterLastNotEquals("  some string    ", " s", "trinG    "));
-    verify(string -> string.substringAfterLastNotEquals("  some string    ", " s", "trinG    ", "testSubstringAfterLast_CaseNotMatch"));
+    verify(
+        string ->
+            string.substringAfterLastNotEquals(
+                "  some string    ", " s", "trinG    ", "testSubstringAfterLast_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringAfterNotEquals() {
     verify(string -> string.substringAfterNotEquals("  some string    ", " s", "omE string    "));
-    verify(string -> string.substringAfterNotEquals("  some string    ", " s", "omE string    ", "testSubstringAfter_CaseNotMatch"));
+    verify(
+        string ->
+            string.substringAfterNotEquals(
+                "  some string    ", " s", "omE string    ", "testSubstringAfter_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBeforeEquals() {
     verify(string -> string.substringBeforeEquals("  some string    ", " st", "  some"));
-    verify(string -> string.substringBeforeEquals("  some string    ", " st", "  some", "testSubstringBefore"));
+    verify(
+        string ->
+            string.substringBeforeEquals(
+                "  some string    ", " st", "  some", "testSubstringBefore"));
     verify(string -> string.substringBeforeEquals("  some string    ", null, "  some string    "));
-    verify(string -> string.substringBeforeEquals("  some string    ", null, "  some string    ", "testSubstringBefore"));
+    verify(
+        string ->
+            string.substringBeforeEquals(
+                "  some string    ", null, "  some string    ", "testSubstringBefore"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBeforeLastEquals() {
     verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some"));
-    verify(string -> string.substringBeforeLastEquals("  some string    ", " s", "  some", "testSubstringBeforeLast"));
-    verify(string -> string.substringBeforeLastEquals("  some string    ", null, "  some string    "));
-    verify(string -> string.substringBeforeLastEquals("  some string    ", null, "  some string    ", "testSubstringBeforeLast"));
+    verify(
+        string ->
+            string.substringBeforeLastEquals(
+                "  some string    ", " s", "  some", "testSubstringBeforeLast"));
+    verify(
+        string -> string.substringBeforeLastEquals("  some string    ", null, "  some string    "));
+    verify(
+        string ->
+            string.substringBeforeLastEquals(
+                "  some string    ", null, "  some string    ", "testSubstringBeforeLast"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBeforeLastNotEquals() {
     verify(string -> string.substringBeforeLastNotEquals("  some string    ", " s", "  somE"));
-    verify(string -> string.substringBeforeLastNotEquals("  some string    ", " s", "  somE", "testSubstringBeforeLast_CaseNotMatch"));
+    verify(
+        string ->
+            string.substringBeforeLastNotEquals(
+                "  some string    ", " s", "  somE", "testSubstringBeforeLast_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBeforeNotEquals() {
     verify(string -> string.substringBeforeNotEquals("  some string    ", " st", "  Some"));
-    verify(string -> string.substringBeforeNotEquals("  some string    ", " st", "  Some", "testSubstringBefore_CaseNotMatch"));
+    verify(
+        string ->
+            string.substringBeforeNotEquals(
+                "  some string    ", " st", "  Some", "testSubstringBefore_CaseNotMatch"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBetweenEquals() {
-    verify(string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some string"));
-    verify(string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some string", "testSubstringBetween"));
+    verify(
+        string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some string"));
+    verify(
+        string ->
+            string.substringBetweenEquals(
+                "  some string    ", "  ", "    ", "some string", "testSubstringBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringBetweenNotEquals() {
-    verify(string -> string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some String"));
-    verify(string -> string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some String", "testSubstringBetween"));
+    verify(
+        string ->
+            string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some String"));
+    verify(
+        string ->
+            string.substringBetweenNotEquals(
+                "  some string    ", "  ", "    ", "some String", "testSubstringBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringEquals() {
     verify(string -> string.substringEquals("  some string    ", 0, "  some string    "));
-    verify(string -> string.substringEquals("  some string    ", 0, "  some string    ", "testSubstring"));
+    verify(
+        string ->
+            string.substringEquals("  some string    ", 0, "  some string    ", "testSubstring"));
     verify(string -> string.substringEquals("  some string    ", 0, 3, "  s"));
     verify(string -> string.substringEquals("  some string    ", 0, 3, "  s", "testSubstring"));
     verify(string -> string.substringEquals("  some string    ", 2, 4, "so"));
@@ -959,7 +1578,9 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringNotEquals() {
     verify(string -> string.substringNotEquals("  some string    ", 0, " some string    "));
-    verify(string -> string.substringNotEquals("  some string    ", 0, " some string    ", "testSubstring"));
+    verify(
+        string ->
+            string.substringNotEquals("  some string    ", 0, " some string    ", "testSubstring"));
     verify(string -> string.substringNotEquals("  some string    ", 0, 3, " s"));
     verify(string -> string.substringNotEquals("  some string    ", 0, 3, " s", "testSubstring"));
     verify(string -> string.substringNotEquals("  some string    ", 2, 4, "so "));
@@ -969,25 +1590,51 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenContains() {
     verify(string -> string.substringsBetweenContains("  some string   s ", " ", "s", " "));
-    verify(string -> string.substringsBetweenContains("  some string   s ", " ", "s", " ", "testSubstringsBetweenContains"));
+    verify(
+        string ->
+            string.substringsBetweenContains(
+                "  some string   s ", " ", "s", " ", "testSubstringsBetweenContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenEquals() {
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")));
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "testSubstringsBetween"));
+    verify(
+        string ->
+            string.substringsBetweenEquals(
+                "  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  ")));
+    verify(
+        string ->
+            string.substringsBetweenEquals(
+                "  some string   s ",
+                " ",
+                "s",
+                new CList<>(" ", CStringUtil.EMPTY, "  "),
+                "testSubstringsBetween"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenNotContains() {
     verify(string -> string.substringsBetweenNotContains("  some string   s ", " ", "s", "x"));
-    verify(string -> string.substringsBetweenNotContains("  some string   s ", " ", "s", "x", "testSubstringsBetweenContains"));
+    verify(
+        string ->
+            string.substringsBetweenNotContains(
+                "  some string   s ", " ", "s", "x", "testSubstringsBetweenContains"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testSubstringsBetweenNotEquals() {
-    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", "S", "  ")));
-    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", "S", "  "), "testSubstringsBetweenNotEquals"));
+    verify(
+        string ->
+            string.substringsBetweenNotEquals(
+                "  some string   s ", " ", "s", new CList<>(" ", "S", "  ")));
+    verify(
+        string ->
+            string.substringsBetweenNotEquals(
+                "  some string   s ",
+                " ",
+                "s",
+                new CList<>(" ", "S", "  "),
+                "testSubstringsBetweenNotEquals"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
@@ -1005,17 +1652,27 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testTruncatedValue() {
     verify(string -> string.truncatedValue("some string    ", 10, "some strin"));
-    verify(string -> string.truncatedValue("some string    ", 10, "some strin", "testTruncatedValue"));
+    verify(
+        string -> string.truncatedValue("some string    ", 10, "some strin", "testTruncatedValue"));
     verify(string -> string.truncatedValue("some string    ", 4, 10, " string   "));
-    verify(string -> string.truncatedValue("some string    ", 4, 10, " string   ", "testTruncatedValueWithOffset"));
+    verify(
+        string ->
+            string.truncatedValue(
+                "some string    ", 4, 10, " string   ", "testTruncatedValueWithOffset"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testTruncatedValueNot() {
     verify(string -> string.truncatedValueNot("some string    ", 10, "some string"));
-    verify(string -> string.truncatedValueNot("some string    ", 10, "some string", "testTruncatedValueNot"));
+    verify(
+        string ->
+            string.truncatedValueNot(
+                "some string    ", 10, "some string", "testTruncatedValueNot"));
     verify(string -> string.truncatedValueNot("some string    ", 4, 10, " string  "));
-    verify(string -> string.truncatedValueNot("some string    ", 4, 10, " string  ", "testTruncatedValueNotWithOffset"));
+    verify(
+        string ->
+            string.truncatedValueNot(
+                "some string    ", 4, 10, " string  ", "testTruncatedValueNotWithOffset"));
   }
 
   // Negative Scenarios
@@ -1076,12 +1733,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAny_Negative() {
-    verify(string -> string.equalsAny("  some string    ", new CList<>(CStringUtil.EMPTY, "  sxme string    ")));
+    verify(
+        string ->
+            string.equalsAny(
+                "  some string    ", new CList<>(CStringUtil.EMPTY, "  sxme string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsAnyIgnoreCase_Negative() {
-    verify(string -> string.equalsAnyIgnoreCase("  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SXME string    ")));
+    verify(
+        string ->
+            string.equalsAnyIgnoreCase(
+                "  some STRING    ", new CList<>(CStringUtil.EMPTY, "  SXME string    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1096,12 +1759,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsNone_Negative() {
-    verify(string -> string.equalsNone("  some string    ", new CList<>("  some string    ", "  sxe String    ")));
+    verify(
+        string ->
+            string.equalsNone(
+                "  some string    ", new CList<>("  some string    ", "  sxe String    ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testEqualsNoneIgnoreCase_Negative() {
-    verify(string -> string.equalsNoneIgnoreCase("  some string    ", new CList<>("  some string    ", null)));
+    verify(
+        string ->
+            string.equalsNoneIgnoreCase(
+                "  some string    ", new CList<>("  some string    ", null)));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1225,12 +1894,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadEquals_Negative() {
-    verify(string -> string.leftPadEquals("  some string   s ", 30, CStringUtil.EMPTY, "            some string   s "));
+    verify(
+        string ->
+            string.leftPadEquals(
+                "  some string   s ", 30, CStringUtil.EMPTY, "            some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testLeftPadNotEquals_Negative() {
-    verify(string -> string.leftPadNotEquals("  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
+    verify(
+        string ->
+            string.leftPadNotEquals(
+                "  some string   s ", 30, CStringUtil.EMPTY, "              some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1320,12 +1995,15 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndIgnoreCaseEquals_Negative() {
-    verify(string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   x ", "  some $"));
+    verify(
+        string -> string.removeEndIgnoreCaseEquals("  some $tring   s ", "TRING   x ", "  some $"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveEndIgnoreCaseNotEquals_Negative() {
-    verify(string -> string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING   "));
+    verify(
+        string ->
+            string.removeEndIgnoreCaseNotEquals("  some STRING    ", " ", "  some STRING   "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1355,17 +2033,23 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartEquals_Negative() {
-    verify(string -> string.removeStartEquals("  some string   s ", "  some ", "  some string   s "));
+    verify(
+        string -> string.removeStartEquals("  some string   s ", "  some ", "  some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartIgnoreCaseEquals_Negative() {
-    verify(string -> string.removeStartIgnoreCaseEquals("  some string   s ", "  some ", "some string   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseEquals(
+                "  some string   s ", "  some ", "some string   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRemoveStartIgnoreCaseNotEquals_Negative() {
-    verify(string -> string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", "$tring   s "));
+    verify(
+        string ->
+            string.removeStartIgnoreCaseNotEquals("  some $tring   s ", "  some ", "$tring   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1380,12 +2064,16 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceIgnoreCaseEquals_Negative() {
-    verify(string -> string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x"));
+    verify(
+        string ->
+            string.replaceIgnoreCaseEquals("  some String   so ", "SO", "x", "  xme String   x"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceIgnoreCaseNotEquals_Negative() {
-    verify(string -> string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xomextring  x "));
+    verify(
+        string ->
+            string.replaceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xomextring  x "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1395,22 +2083,32 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceEquals_Negative() {
-    verify(string -> string.replaceOnceEquals("  some String   so ", "so", "XX", "  some String   so "));
+    verify(
+        string ->
+            string.replaceOnceEquals("  some String   so ", "so", "XX", "  some String   so "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceIgnoreCaseEquals_Negative() {
-    verify(string -> string.replaceOnceIgnoreCaseEquals("  some string   s ", "s", "|", "  |ome string   s"));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseEquals(
+                "  some string   s ", "s", "|", "  |ome string   s"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceIgnoreCaseNotEquals_Negative() {
-    verify(string -> string.replaceOnceIgnoreCaseNotEquals("  some String   s ", " s", "x", " xome String   s "));
+    verify(
+        string ->
+            string.replaceOnceIgnoreCaseNotEquals(
+                "  some String   s ", " s", "x", " xome String   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testReplaceOnceNotEquals_Negative() {
-    verify(string -> string.replaceOnceNotEquals("  some String   s ", " s", "x", " xome String   s "));
+    verify(
+        string ->
+            string.replaceOnceNotEquals("  some String   s ", " s", "x", " xome String   s "));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1430,7 +2128,10 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testRightPadNotEquals_Negative() {
-    verify(string -> string.rightPadNotEquals("  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx"));
+    verify(
+        string ->
+            string.rightPadNotEquals(
+                "  some string   s ", 40, "x", "  some string   s xxxxxxxxxxxxxxxxxxxxxx"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1460,7 +2161,9 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStartsWithNone_Negative() {
-    verify(string -> string.startsWithNone("  some string   s ", new CList<>("  some", "     ", "s ")));
+    verify(
+        string ->
+            string.startsWithNone("  some string   s ", new CList<>("  some", "     ", "s ")));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1470,12 +2173,18 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedEndValueNot_Negative() {
-    verify(string -> string.stripedEndValueNot("  some string    ", " ", "  some string", "testStripedEndValue"));
+    verify(
+        string ->
+            string.stripedEndValueNot(
+                "  some string    ", " ", "  some string", "testStripedEndValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testStripedStartValue_Negative() {
-    verify(string -> string.stripedStartValue("  some string    ", " ", "some string   ", "testStripedStartValue"));
+    verify(
+        string ->
+            string.stripedStartValue(
+                "  some string    ", " ", "some string   ", "testStripedStartValue"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1555,12 +2264,15 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBetweenEquals_Negative() {
-    verify(string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some sstring"));
+    verify(
+        string -> string.substringBetweenEquals("  some string    ", "  ", "    ", "some sstring"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringBetweenNotEquals_Negative() {
-    verify(string -> string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some string"));
+    verify(
+        string ->
+            string.substringBetweenNotEquals("  some string    ", "  ", "    ", "some string"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1600,7 +2312,10 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenEquals_Negative() {
-    verify(string -> string.substringsBetweenEquals("  some string   s ", " ", "s", new CList<>(" ", "S", "  "), "some string"));
+    verify(
+        string ->
+            string.substringsBetweenEquals(
+                "  some string   s ", " ", "s", new CList<>(" ", "S", "  "), "some string"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1610,7 +2325,14 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
   public void testSubstringsBetweenNotEquals_Negative() {
-    verify(string -> string.substringsBetweenNotEquals("  some string   s ", " ", "s", new CList<>(" ", CStringUtil.EMPTY, "  "), "some string"));
+    verify(
+        string ->
+            string.substringsBetweenNotEquals(
+                "  some string   s ",
+                " ",
+                "s",
+                new CList<>(" ", CStringUtil.EMPTY, "  "),
+                "some string"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class, expectedExceptions = AssertionError.class)
@@ -1675,12 +2397,20 @@ public abstract class CStringVerificationBaseTest extends CBaseUnitTest {
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatchesAny() {
-    verify(string -> string.matchesAny("some string    ", List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d")), "testPositive"));
+    verify(
+        string ->
+            string.matchesAny(
+                "some string    ",
+                List.of(Pattern.compile("[a-z ]+"), Pattern.compile("\\d")),
+                "testPositive"));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)
   public void testIsMatchesNone() {
-    verify(string -> string.matchesNone("some string    ", List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d"))));
+    verify(
+        string ->
+            string.matchesNone(
+                "some string    ", List.of(Pattern.compile("[^a-z ]+"), Pattern.compile("\\d"))));
   }
 
   @Test(retryAnalyzer = CTestRetryAnalyzer.class)

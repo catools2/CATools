@@ -13,20 +13,18 @@ import java.util.Date;
 /**
  * Custom deserializer for `Date` objects.
  *
- * <p>This class extends the Jackson `StdDeserializer` to provide custom deserialization
- * logic for `Date` objects. It uses a list of date formats defined in the `CZScaleConfigs`
- * to parse the date strings.</p>
+ * <p>This class extends the Jackson `StdDeserializer` to provide custom deserialization logic for
+ * `Date` objects. It uses a list of date formats defined in the `CZScaleConfigs` to parse the date
+ * strings.
  */
 public class CustomDateDeserializer extends StdDeserializer<Date> {
-  /**
-   * List of date formats used for parsing date strings.
-   */
+  /** List of date formats used for parsing date strings. */
   private static final CList<String> dateFormats = CZScaleConfigs.Scale.getDateFormats();
 
   /**
    * Default constructor.
    *
-   * <p>Initializes the deserializer with no specific class type.</p>
+   * <p>Initializes the deserializer with no specific class type.
    */
   public CustomDateDeserializer() {
     this(null);
@@ -44,8 +42,8 @@ public class CustomDateDeserializer extends StdDeserializer<Date> {
   /**
    * Deserializes a JSON string into a `Date` object.
    *
-   * <p>This method parses the date string from the JSON input using the predefined
-   * list of date formats.</p>
+   * <p>This method parses the date string from the JSON input using the predefined list of date
+   * formats.
    *
    * @param jsonparser the JSON parser
    * @param context the deserialization context
@@ -53,7 +51,8 @@ public class CustomDateDeserializer extends StdDeserializer<Date> {
    * @throws IOException if an error occurs during deserialization
    */
   @Override
-  public Date deserialize(JsonParser jsonparser, DeserializationContext context) throws IOException {
+  public Date deserialize(JsonParser jsonparser, DeserializationContext context)
+      throws IOException {
     String date = jsonparser.getText();
     return CDate.valueOf(date, dateFormats.toArray(new String[dateFormats.size()]));
   }

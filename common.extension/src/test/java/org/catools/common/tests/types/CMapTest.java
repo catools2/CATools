@@ -1,5 +1,8 @@
 package org.catools.common.tests.types;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
@@ -9,10 +12,6 @@ import org.catools.common.extensions.verify.CVerify;
 import org.catools.common.tests.CBaseUnitTest;
 import org.catools.common.tests.CTestRetryAnalyzer;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class CMapTest extends CBaseUnitTest {
 
@@ -209,10 +208,10 @@ public class CMapTest extends CBaseUnitTest {
   public void testGetSortedMap() {
     String first =
         ((Map.Entry)
-            getStringLinkedMap1()
-                .getSortedMap((o1, o2) -> o2.getKey().compareTo(o1.getKey()))
-                .entrySet()
-                .toArray()[0])
+                getStringLinkedMap1()
+                    .getSortedMap((o1, o2) -> o2.getKey().compareTo(o1.getKey()))
+                    .entrySet()
+                    .toArray()[0])
             .getKey()
             .toString();
     CVerify.String.equals(first, "C", "CMapTest ::> testKeySet ::> getSortedMap");

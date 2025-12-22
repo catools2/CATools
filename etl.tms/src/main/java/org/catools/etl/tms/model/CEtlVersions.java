@@ -1,14 +1,12 @@
 package org.catools.etl.tms.model;
 
+import java.util.Objects;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
 
-import java.util.Objects;
-import java.util.stream.Stream;
-
 public class CEtlVersions extends CSet<CEtlVersion> {
-  public CEtlVersions() {
-  }
+  public CEtlVersions() {}
 
   public CEtlVersions(CEtlVersion... c) {
     super(c);

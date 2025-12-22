@@ -9,7 +9,12 @@ import org.catools.mcp.configuration.CYamlConfigurationLoader;
 import org.catools.mcp.di.CDependencyInjector;
 import org.catools.mcp.di.CDependencyInjectorProvider;
 import org.catools.mcp.di.CGuiceInjectorModule;
-import org.catools.mcp.server.*;
+import org.catools.mcp.server.CBaseMcpSseServer;
+import org.catools.mcp.server.CBaseMcpStdioServer;
+import org.catools.mcp.server.CBaseMcpStreamableServer;
+import org.catools.mcp.server.CMcpServerInfo;
+import org.catools.mcp.server.CMcpSseServerInfo;
+import org.catools.mcp.server.CMcpStreamableServerInfo;
 import org.catools.mcp.server.configurable.CConfigurableMcpServerFactory;
 
 /**
@@ -35,21 +40,16 @@ import org.catools.mcp.server.configurable.CConfigurableMcpServerFactory;
 @Slf4j
 public final class CMcpServers {
 
-  /**
-   * The singleton instance of McpServers.
-   */
+  /** The singleton instance of McpServers. */
   private static final CMcpServers INSTANCE = new CMcpServers();
 
-  /**
-   * The dependency injector used to inject server components.
-   */
+  /** The dependency injector used to inject server components. */
   private static CDependencyInjector injector;
 
   /**
    * The constructor of McpServers. Using singleton design pattern should have private constructor.
    */
-  private CMcpServers() {
-  }
+  private CMcpServers() {}
 
   /**
    * Initializes the McpServers instance with the specified application main class and arguments.
@@ -113,9 +113,7 @@ public final class CMcpServers {
     doStartServer(configLoader.loadConfig());
   }
 
-  /**
-   * Starts a server with the default configuration file name.
-   */
+  /** Starts a server with the default configuration file name. */
   public void startServer() {
     CYamlConfigurationLoader configLoader = new CYamlConfigurationLoader();
     doStartServer(configLoader.loadConfig());

@@ -1,8 +1,7 @@
 package org.catools.etl.tms.dao;
 
-import org.catools.etl.tms.model.CEtlLastSync;
-
 import java.util.Date;
+import org.catools.etl.tms.model.CEtlLastSync;
 
 public class CEtlLastSyncDao extends CEtlBaseDao {
   public static void updateProjectLastSync(String component, String projectName, Date syncDate) {
@@ -16,8 +15,7 @@ public class CEtlLastSyncDao extends CEtlBaseDao {
   public static void updateExecutionLastSync(
       String component, String projectName, String versionName, Date syncDate) {
     updateLastSync(
-        String.format("A:%s|P:%s|V:%s|Execution", component, projectName, versionName),
-        syncDate);
+        String.format("A:%s|P:%s|V:%s|Execution", component, projectName, versionName), syncDate);
   }
 
   public static Date getExecutionLastSync(

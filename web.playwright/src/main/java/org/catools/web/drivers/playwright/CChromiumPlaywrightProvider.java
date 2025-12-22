@@ -8,15 +8,14 @@ import org.catools.web.enums.CBrowser;
 
 /**
  * Chromium Playwright provider supporting headed and headless modes.
- * <p>
- * This provider is thread-safe, using ThreadLocal to ensure each thread has its own
- * Playwright and Browser instances as required by Playwright's architecture.
- * </p>
- * <p>
- * Configurable options: headless mode, viewport settings, custom launch arguments.
- * </p>
  *
- * <p>Example usage:</p>
+ * <p>This provider is thread-safe, using ThreadLocal to ensure each thread has its own Playwright
+ * and Browser instances as required by Playwright's architecture.
+ *
+ * <p>Configurable options: headless mode, viewport settings, custom launch arguments.
+ *
+ * <p>Example usage:
+ *
  * <pre>{@code
  * CChromiumPlaywrightProvider provider = new CChromiumPlaywrightProvider();
  * CDriverEngine engine = provider.build();
@@ -28,96 +27,101 @@ import org.catools.web.enums.CBrowser;
 @Slf4j
 public class CChromiumPlaywrightProvider implements CPlaywrightProvider {
 
-    private final ThreadLocal<Playwright> playwrightThreadLocal = ThreadLocal.withInitial(() -> {
-        log.debug("Creating new Playwright instance for thread: {}", Thread.currentThread().getName());
-        return Playwright.create();
-    });
+  private final ThreadLocal<Playwright> playwrightThreadLocal =
+      ThreadLocal.withInitial(
+          () -> {
+            log.debug(
+                "Creating new Playwright instance for thread: {}",
+                Thread.currentThread().getName());
+            return Playwright.create();
+          });
 
-    private final ThreadLocal<Browser> browserThreadLocal = new ThreadLocal<>();
+  private final ThreadLocal<Browser> browserThreadLocal = new ThreadLocal<>();
 
-    protected CChromiumPlaywrightProvider() {
-        // Register shutdown hook to clean up ThreadLocal resources
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            cleanupBrowser();
-            playwrightThreadLocal.remove();
-            browserThreadLocal.remove();
-        }));
+  protected CChromiumPlaywrightProvider() {
+    // Register shutdown hook to clean up ThreadLocal resources
+    Runtime.getRuntime()
+        .addShutdownHook(
+            new Thread(
+                () -> {
+                  cleanupBrowser();
+                  playwrightThreadLocal.remove();
+                  browserThreadLocal.remove();
+                }));
+  }
+
+  /** Cleans up the browser instance for the current thread. */
+  private void cleanupBrowser() {
+    try {
+      Browser browser = browserThreadLocal.get();
+      if (browser != null && browser.isConnected()) {
+        browser.close();
+      }
+    } catch (Exception e) {
+      log.debug("Error closing browser during cleanup", e);
+    }
+  }
+
+  /** Creates a new browser instance for the current thread. */
+  private Browser createBrowser() {
+    BrowserType.LaunchOptions launchOptions = getLaunchOptions();
+    if (launchOptions == null) {
+      launchOptions = new BrowserType.LaunchOptions();
     }
 
-    /**
-     * Cleans up the browser instance for the current thread.
-     */
-    private void cleanupBrowser() {
-        try {
-            Browser browser = browserThreadLocal.get();
-            if (browser != null && browser.isConnected()) {
-                browser.close();
-            }
-        } catch (Exception e) {
-            log.debug("Error closing browser during cleanup", e);
-        }
-    }
+    Playwright playwright = playwrightThreadLocal.get();
+    Browser browser = playwright.chromium().launch(launchOptions);
 
-    /**
-     * Creates a new browser instance for the current thread.
-     */
-    private Browser createBrowser() {
-        BrowserType.LaunchOptions launchOptions = getLaunchOptions();
-        if (launchOptions == null) {
-            launchOptions = new BrowserType.LaunchOptions();
-        }
+    log.info(
+        "Chromium browser initialized for thread: {}. Launch Options: {}",
+        Thread.currentThread().getName(),
+        launchOptions);
 
-        Playwright playwright = playwrightThreadLocal.get();
-        Browser browser = playwright.chromium().launch(launchOptions);
+    return browser;
+  }
 
-        log.info("Chromium browser initialized for thread: {}. Launch Options: {}",
-                Thread.currentThread().getName(), launchOptions);
+  @Override
+  public Playwright getPlaywright() {
+    return playwrightThreadLocal.get();
+  }
 
-        return browser;
-    }
+  @Override
+  public Browser getBrowserInstance() {
+    Browser browser = browserThreadLocal.get();
 
-    @Override
-    public Playwright getPlaywright() {
-        return playwrightThreadLocal.get();
-    }
-
-    @Override
-    public Browser getBrowserInstance() {
-        Browser browser = browserThreadLocal.get();
-
-        // Create browser if not yet initialized for this thread
+    // Create browser if not yet initialized for this thread
+    if (browser == null) {
+      synchronized (browserThreadLocal) {
+        browser = browserThreadLocal.get();
         if (browser == null) {
-            synchronized (browserThreadLocal) {
-                browser = browserThreadLocal.get();
-                if (browser == null) {
-                    browser = createBrowser();
-                    browserThreadLocal.set(browser);
-                }
-            }
+          browser = createBrowser();
+          browserThreadLocal.set(browser);
         }
-
-        // Check if browser is still connected, if not recreate it
-        try {
-            if (!browser.isConnected()) {
-                log.debug("Browser disconnected for thread: {}, creating new instance", Thread.currentThread().getName());
-                browserThreadLocal.remove();
-                browser = createBrowser();
-                browserThreadLocal.set(browser);
-            }
-        } catch (Exception e) {
-            log.debug("Error checking browser connection, recreating: {}", e.getMessage());
-            browserThreadLocal.remove();
-            browser = createBrowser();
-            browserThreadLocal.set(browser);
-        }
-
-        return browser;
+      }
     }
 
-    @Override
-    public CBrowser getBrowser() {
-        return CBrowser.CHROMIUM;
+    // Check if browser is still connected, if not recreate it
+    try {
+      if (!browser.isConnected()) {
+        log.debug(
+            "Browser disconnected for thread: {}, creating new instance",
+            Thread.currentThread().getName());
+        browserThreadLocal.remove();
+        browser = createBrowser();
+        browserThreadLocal.set(browser);
+      }
+    } catch (Exception e) {
+      log.debug("Error checking browser connection, recreating: {}", e.getMessage());
+      browserThreadLocal.remove();
+      browser = createBrowser();
+      browserThreadLocal.set(browser);
     }
 
+    return browser;
+  }
+
+  @Override
+  public CBrowser getBrowser() {
+    return CBrowser.CHROMIUM;
+  }
 }
-

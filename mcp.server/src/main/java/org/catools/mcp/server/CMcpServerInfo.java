@@ -1,51 +1,34 @@
 package org.catools.mcp.server;
 
+import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.configuration.CMcpServerCapabilities;
 import org.catools.mcp.configuration.CMcpServerChangeNotification;
 
-import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
-
-/**
- * This class is used to define the common configuration for the MCP server.
- */
+/** This class is used to define the common configuration for the MCP server. */
 public class CMcpServerInfo {
 
-  /**
-   * The name of the MCP server.
-   */
+  /** The name of the MCP server. */
   private final String name;
 
-  /**
-   * The groups list that the MCP server belong to.
-   */
+  /** The groups list that the MCP server belong to. */
   private final Set<String> groups;
 
-  /**
-   * The version of the MCP server.
-   */
+  /** The version of the MCP server. */
   private final String version;
 
-  /**
-   * The instructions of the MCP server.
-   */
+  /** The instructions of the MCP server. */
   private final String instructions;
 
-  /**
-   * The request timeout of the MCP server.
-   */
+  /** The request timeout of the MCP server. */
   private final Duration requestTimeout;
 
-  /**
-   * The capabilities of the MCP server.
-   */
+  /** The capabilities of the MCP server. */
   private final CMcpServerCapabilities capabilities;
 
-  /**
-   * The change notification of the MCP server.
-   */
+  /** The change notification of the MCP server. */
   private final CMcpServerChangeNotification changeNotification;
 
   /**
@@ -143,34 +126,22 @@ public class CMcpServerInfo {
   @SuppressWarnings("unchecked")
   public static class Builder<T extends Builder<T>> {
 
-    /**
-     * The name of the MCP server. Default value is {@code "mcp-server"}.
-     */
+    /** The name of the MCP server. Default value is {@code "mcp-server"}. */
     protected String name = "mcp-server";
 
-    /**
-     * The groups list that the MCP server belong to.
-     */
+    /** The groups list that the MCP server belong to. */
     private Set<String> groups = new HashSet<>();
 
-    /**
-     * The version of the MCP server. Default value is {@code "1.0.0"}.
-     */
+    /** The version of the MCP server. Default value is {@code "1.0.0"}. */
     protected String version = "1.0.0";
 
-    /**
-     * The instructions of the MCP server. Default value is {@code ""}.
-     */
+    /** The instructions of the MCP server. Default value is {@code ""}. */
     protected String instructions = CStringUtil.EMPTY;
 
-    /**
-     * The request timeout of the MCP server. Default value is {@code 20} seconds.
-     */
+    /** The request timeout of the MCP server. Default value is {@code 20} seconds. */
     protected Duration requestTimeout = Duration.ofSeconds(20);
 
-    /**
-     * The capabilities of the MCP server. Default value is {@code new McpServerCapabilities()}.
-     */
+    /** The capabilities of the MCP server. Default value is {@code new McpServerCapabilities()}. */
     protected CMcpServerCapabilities capabilities = new CMcpServerCapabilities();
 
     /**
