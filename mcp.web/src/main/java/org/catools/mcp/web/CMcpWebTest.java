@@ -1,13 +1,12 @@
 package org.catools.mcp.web;
 
-import lombok.Getter;
+import static org.catools.web.drivers.CDriver.ACTIVE_WEB_ELEMENT;
+
 import lombok.extern.slf4j.Slf4j;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.common.datastate.CDataState;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.drivers.CDriverSession;
-import org.catools.web.selectors.CBy;
 import org.catools.web.tests.CPlaywrightTest;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -15,110 +14,13 @@ import org.testng.annotations.AfterMethod;
 @Slf4j
 public class CMcpWebTest extends CPlaywrightTest<CDriver> {
 
-  @Getter private CWebElement webElement;
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_id",
-      title = "Find Element by ID",
-      description = "Finds a web element by its ID attribute with custom name and timeout")
-  public void byId(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "id", description = "The ID attribute value") String id,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.id(id), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_name",
-      title = "Find Element by Name",
-      description = "Finds a web element by its name attribute with custom name and timeout")
-  public void byName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "elementName", description = "The name attribute value")
-          String elementName,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.name(elementName), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_class_name",
-      title = "Find Element by Class Name",
-      description = "Finds a web element by its CSS class name with custom name and timeout")
-  public void byClassName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "className", description = "The CSS class name") String className,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.className(className), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_tag_name",
-      title = "Find Element by Tag Name",
-      description = "Finds a web element by its HTML tag name with custom name and timeout")
-  public void byTagName(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "tagName", description = "The HTML tag name") String tagName,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.tagName(tagName), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_link_text",
-      title = "Find Element by Link Text",
-      description = "Finds a web element by its exact link text with custom name and timeout")
-  public void byLinkText(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "linkText", description = "The exact link text") String linkText,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.linkText(linkText), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_partial_link_text",
-      title = "Find Element by Partial Link Text",
-      description = "Finds a web element by partial link text with custom name and timeout")
-  public void byPartialLinkText(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "partialLinkText", description = "The partial link text")
-          String partialLinkText,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.partialLinkText(partialLinkText), waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_xpath",
-      title = "Find Element by XPath",
-      description = "Finds a web element by XPath expression with custom name and timeout")
-  public void byXPath(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "xpath", description = "The XPath expression") String xpath,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, xpath, waitSec);
-  }
-
-  @CMcpTool(
-      groups = "web",
-      name = "driver_find_element_by_css_selector",
-      title = "Find Element by CSS Selector",
-      description = "Finds a web element by CSS selector with custom name and timeout")
-  public void byCssSelector(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "cssSelector", description = "The CSS selector expression")
-          String cssSelector,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
-    webElement = getDriver().$(name, CBy.cssSelector(cssSelector), waitSec);
-  }
-
   @Override
   protected CDriver buildDriver(CDriverSession driverSession) {
     return new CDriver(driverSession);
+  }
+
+  public CWebElement getWebElement() {
+    return CDataState.read(ACTIVE_WEB_ELEMENT);
   }
 
   @AfterMethod(alwaysRun = true)

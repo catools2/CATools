@@ -1,9 +1,8 @@
 package org.catools.web.metrics;
 
+import java.util.Date;
 import lombok.Data;
 import org.catools.common.collections.CList;
-
-import java.util.Date;
 
 /**
  * A specialized collection for managing web page load metrics that extends {@link CList}

@@ -5,6 +5,10 @@ import io.opentelemetry.api.trace.SpanKind;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
+import java.net.URI;
+import java.time.Instant;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.otel.COTelConfig;
 import org.catools.web.config.CDriverConfigs;
@@ -12,11 +16,6 @@ import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v143.network.Network;
 import org.openqa.selenium.devtools.v143.network.model.Request;
 import org.openqa.selenium.devtools.v143.network.model.Response;
-
-import java.net.URI;
-import java.time.Instant;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * OpenTelemetry-enabled network listener for Selenium WebDriver that tracks HTTP requests and
@@ -187,6 +186,7 @@ public class CDriverOTelNetworkListener {
    *     "HomePage_LoadTime_Analysis"
    * );
    *
+   *
    * }</pre>
    */
   public CDriverOTelNetworkListener(String tracerName, String actionName) {
@@ -234,6 +234,7 @@ public class CDriverOTelNetworkListener {
    *
    * // Remember to detach when done
    * listener.detach();
+   *
    *
    * }</pre>
    *     <h4>Conditional Attachment:</h4>

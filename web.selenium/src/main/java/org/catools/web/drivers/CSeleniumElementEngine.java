@@ -1,19 +1,19 @@
 package org.catools.web.drivers;
 
-import lombok.extern.slf4j.Slf4j;
-import org.catools.web.controls.CElementEngine;
-import org.catools.web.enums.CKeys;
-import org.openqa.selenium.*;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
-
 import java.awt.Point;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.web.controls.CElementEngine;
+import org.catools.web.enums.CKeys;
+import org.catools.web.helpers.CMcpParamHelper;
+import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Selenium implementation of CDriverEngine providing browser automation capabilities.
@@ -938,20 +938,13 @@ public class CSeleniumElementEngine implements CElementEngine<WebElement> {
   }
 
   public WebElement getContext(String locator) {
-    return driver.findElement(toBy(locator));
-  }
-
-  // Helper: resolve By from a locator string (basic heuristic)
-  private By toBy(String locator) {
-    if (locator == null) return By.cssSelector("");
-
-    return locator.contains("//") ? By.xpath(locator) : By.cssSelector(locator);
+    return driver.findElement(CMcpParamHelper.toBy(locator));
   }
 
   private List<WebElement> findElements(String locator) {
     if (isClosed()) return List.of();
     try {
-      return driver.findElements(toBy(locator));
+      return driver.findElements(CMcpParamHelper.toBy(locator));
     } catch (Exception e) {
       return List.of();
     }

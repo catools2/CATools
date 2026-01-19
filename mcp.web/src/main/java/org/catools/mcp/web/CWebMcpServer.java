@@ -3,6 +3,7 @@ package org.catools.mcp.web;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 import lombok.extern.slf4j.Slf4j;
+import org.catools.common.datastate.CDataState;
 import org.catools.mcp.CMcpServers;
 import org.catools.mcp.annotation.CMcpServerApplication;
 import org.catools.mcp.di.CGuiceInjectorModule;
@@ -17,6 +18,8 @@ public class CWebMcpServer {
 
   public static void main(String[] args) {
     log.info("Starting MCP Web Server (PoC) using mcp-server.yml on classpath...");
+
+    CDataState.setSharedBetweenThreads(false);
 
     try {
       // Create base module that scans for @CMcpTool annotations

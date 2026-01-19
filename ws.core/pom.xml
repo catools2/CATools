@@ -36,7 +36,7 @@
         <!-- ###################### Athena ######################### -->
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>athena-core</artifactId>
+            <artifactId>athena-model</artifactId>
         </dependency>
 
         <!-- ######################  Rest Assured ######################### -->

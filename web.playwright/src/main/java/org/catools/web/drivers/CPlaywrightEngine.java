@@ -3,6 +3,9 @@ package org.catools.web.drivers;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.Cookie;
 import com.microsoft.playwright.options.SameSiteAttribute;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.date.CDate;
@@ -11,10 +14,6 @@ import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebFrame;
 import org.catools.web.enums.CKeys;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * Playwright implementation of CDriverEngine providing browser automation capabilities.

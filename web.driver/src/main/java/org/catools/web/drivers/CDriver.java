@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 import java.util.function.Predicate;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.catools.common.datastate.CDataState;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.annotation.CMcpTool;
+import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.media.model.CScreenShot;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.controls.CElementEngine;
@@ -39,6 +41,8 @@ import org.catools.web.selectors.CBy;
  */
 @Slf4j
 public class CDriver implements CDriverActions, CDriverNavigation {
+
+  public static final String ACTIVE_WEB_ELEMENT = "ActiveWebElement";
 
   /** Driver session managing the underlying engine instance and lifecycle. */
   @Getter private final CDriverSession driverSession;
@@ -927,8 +931,18 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @param waitSec custom timeout in seconds for element operations
    * @return CWebElement wrapper with the specified timeout setting
    */
-  public CWebElement $(String name, String locator, int waitSec) {
-    return new CWebElement(name, this, locator, waitSec);
+  @CMcpTool(
+      groups = "web",
+      name = "driver_find_element",
+      title = "Find Ele``ment by xpath or css locator",
+      description = "Finds a web element by xpath or css locator with custom name and timeout")
+  public CWebElement $(
+      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @CMcpToolParam(name = "locator", description = "The xpath or css locator") String locator,
+      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
+    CWebElement webElement = new CWebElement(name, this, locator, waitSec);
+    CDataState.write(ACTIVE_WEB_ELEMENT, webElement);
+    return webElement;
   }
 
   /**

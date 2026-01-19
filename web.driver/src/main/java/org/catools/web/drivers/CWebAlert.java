@@ -1,12 +1,12 @@
 package org.catools.web.drivers;
 
+import static org.catools.web.drivers.CDriver.DEFAULT_TIMEOUT;
+
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.catools.common.extensions.types.CDynamicBooleanExtension;
 import org.catools.common.extensions.types.CDynamicStringExtension;
-
-import static org.catools.web.drivers.CDriver.DEFAULT_TIMEOUT;
 
 /**
  * A comprehensive wrapper for handling web browser alerts in Selenium WebDriver. This class
@@ -117,9 +117,10 @@ public class CWebAlert<DR extends CDriver> {
    * @param driver the WebDriver instance to use for alert operations
    *     <p>Usage example:
    *     <pre>
-   *                                                                                     CDriver driver = new CDriver();
-   *                                                                                     CWebAlert alert = new CWebAlert(driver);
-   *                                                                                     </pre>
+   *                                                                                                   CDriver driver = new CDriver();
+   *                                                                                                   CWebAlert alert = new CWebAlert(driver);
+   *
+   *     </pre>
    */
   public CWebAlert(DR driver) {
     this.driver = driver;
@@ -319,12 +320,12 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert is present
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                                                                       // Close alert (accept) - will fail if no alert
-   *                                                                                                                                                       alert.verifyIsPresent()
-   *                                                                                                                                                            .close()
-   *                                                                                                                                                            .verifyIsNotPresent();
+   *                                                                                                                                                                                // Close alert (accept) - will fail if no alert
+   *                                                                                                                                                                                alert.verifyIsPresent()
+   *                                                                                                                                                                                     .close()
+   *                                                                                                                                                                                     .verifyIsNotPresent();
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean close() {
     return close(true, DEFAULT_TIMEOUT);
@@ -339,13 +340,13 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert is present
    *     <p>Usage examples:
    *     <pre>
-   *                                                                                                                                                       // Accept the alert
-   *                                                                                                                                                       alert.close(true);
+   *                                                                                                                                                                                // Accept the alert
+   *                                                                                                                                                                                alert.close(true);
    *
-   *                                                                                                                                                       // Cancel/dismiss the alert
-   *                                                                                                                                                       alert.close(false);
+   *                                                                                                                                                                                // Cancel/dismiss the alert
+   *                                                                                                                                                                                alert.close(false);
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean close(boolean accept) {
     return close(accept, DEFAULT_TIMEOUT);
@@ -360,11 +361,11 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert appears within timeout
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                                                                       // Wait up to 8 seconds for alert then accept
-   *                                                                                                                                                       alert.close(8)
-   *                                                                                                                                                            .verifyIsNotPresent();
+   *                                                                                                                                                                                // Wait up to 8 seconds for alert then accept
+   *                                                                                                                                                                                alert.close(8)
+   *                                                                                                                                                                                     .verifyIsNotPresent();
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean close(int waitSec) {
     return close(true, waitSec);
@@ -380,13 +381,13 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert appears within timeout
    *     <p>Usage examples:
    *     <pre>
-   *                                                                                                                                                       // Wait 12 seconds then accept
-   *                                                                                                                                                       alert.close(true, 12);
+   *                                                                                                                                                                                // Wait 12 seconds then accept
+   *                                                                                                                                                                                alert.close(true, 12);
    *
-   *                                                                                                                                                       // Wait 5 seconds then cancel
-   *                                                                                                                                                       alert.close(false, 5);
+   *                                                                                                                                                                                // Wait 5 seconds then cancel
+   *                                                                                                                                                                                alert.close(false, 5);
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean close(boolean accept, int waitSec) {
     verifyIsPresent(waitSec);
@@ -401,12 +402,12 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert is present
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                                                                       // Handle confirmation alert
-   *                                                                                                                                                       alert.verifyMessage("Are you sure you want to delete?")
-   *                                                                                                                                                            .accept()
-   *                                                                                                                                                            .verifyIsNotPresent();
+   *                                                                                                                                                                                // Handle confirmation alert
+   *                                                                                                                                                                                alert.verifyMessage("Are you sure you want to delete?")
+   *                                                                                                                                                                                     .accept()
+   *                                                                                                                                                                                     .verifyIsNotPresent();
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean accept() {
     return accept(DEFAULT_TIMEOUT);
@@ -421,10 +422,10 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert appears within timeout
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                      // Wait up to 15 seconds for alert then accept
-   *                                                                                                      alert.accept(15);
+   *                                                                                                                               // Wait up to 15 seconds for alert then accept
+   *                                                                                                                               alert.accept(15);
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean accept(int waitSec) {
     return getDriver().waitUntil("Accept Alert", waitSec, CDriverEngine::acceptAlert);
@@ -438,10 +439,10 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert is present
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                      // Wait up to 15 seconds for alert then accept
-   *                                                                                                      alert.cancel(15);
+   *                                                                                                                               // Wait up to 15 seconds for alert then accept
+   *                                                                                                                               alert.cancel(15);
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean cancel() {
     return cancel(DEFAULT_TIMEOUT);
@@ -456,10 +457,10 @@ public class CWebAlert<DR extends CDriver> {
    * @throws RuntimeException if no alert appears within timeout
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                                                                       // Wait up to 10 seconds for alert then cancel
-   *                                                                                                                                                       alert.cancel(10);
+   *                                                                                                                                                                                // Wait up to 10 seconds for alert then cancel
+   *                                                                                                                                                                                alert.cancel(10);
    *
-   *     </pre>
+   *                              </pre>
    */
   public boolean cancel(int waitSec) {
     return getDriver().waitUntil("Dismiss Alert", waitSec, CDriverEngine::dismissAlert);
@@ -473,13 +474,13 @@ public class CWebAlert<DR extends CDriver> {
    * @throws AssertionError if no alert is present within timeout
    *     <p>Usage example:
    *     <pre>
-   *                                                                                                                                           // Verify alert appears after clicking delete button
-   *                                                                                                                                           clickDeleteButton();
-   *                                                                                                                                           alert.verifyIsPresent()
-   *                                                                                                                                                .verifyMessage("Confirm deletion")
-   *                                                                                                                                                .accept();
+   *                                                                                                                                                                  // Verify alert appears after clicking delete button
+   *                                                                                                                                                                  clickDeleteButton();
+   *                                                                                                                                                                  alert.verifyIsPresent()
+   *                                                                                                                                                                       .verifyMessage("Confirm deletion")
+   *                                                                                                                                                                       .accept();
    *
-   *     </pre>
+   *                            </pre>
    */
   public void verifyIsPresent() {
     verifyIsPresent(DEFAULT_TIMEOUT);
@@ -494,14 +495,14 @@ public class CWebAlert<DR extends CDriver> {
    * @throws AssertionError if no alert is present within timeout
    *     <p>Usage examples:
    *     <pre>
-   *                                                                                                                                           // Verify alert appears within 20 seconds
-   *                                                                                                                                           alert.verifyIsPresent(20);
+   *                                                                                                                                                                  // Verify alert appears within 20 seconds
+   *                                                                                                                                                                  alert.verifyIsPresent(20);
    *
-   *                                                                                                                                           // Chain verification with message check
-   *                                                                                                                                           alert.verifyIsPresent(5)
-   *                                                                                                                                                .verifyMessage("Operation completed");
+   *                                                                                                                                                                  // Chain verification with message check
+   *                                                                                                                                                                  alert.verifyIsPresent(5)
+   *                                                                                                                                                                       .verifyMessage("Operation completed");
    *
-   *     </pre>
+   *                            </pre>
    */
   public void verifyIsPresent(int waitSec) {
     Present.verifyIsTrue(waitSec, "Verify that alert is present");
@@ -516,14 +517,14 @@ public class CWebAlert<DR extends CDriver> {
    * @throws AssertionError if alert is not present or message doesn't match
    *     <p>Usage examples:
    *     <pre>
-   *                                                                                                                                           // Verify specific alert message
-   *                                                                                                                                           alert.verifyMessage("File saved successfully");
+   *                                                                                                                                                                  // Verify specific alert message
+   *                                                                                                                                                                  alert.verifyMessage("File saved successfully");
    *
-   *                                                                                                                                           // Chain with alert acceptance
-   *                                                                                                                                           alert.verifyMessage("Are you sure?")
-   *                                                                                                                                                .accept();
+   *                                                                                                                                                                  // Chain with alert acceptance
+   *                                                                                                                                                                  alert.verifyMessage("Are you sure?")
+   *                                                                                                                                                                       .accept();
    *
-   *     </pre>
+   *                            </pre>
    */
   public void verifyMessage(String message) {
     verifyMessage(message, DEFAULT_TIMEOUT);
@@ -539,14 +540,14 @@ public class CWebAlert<DR extends CDriver> {
    * @throws AssertionError if alert is not present within timeout or message doesn't match
    *     <p>Usage examples:
    *     <pre>
-   *                                                                                                                                           // Wait up to 25 seconds for specific message
-   *                                                                                                                                           alert.verifyMessage("Processing complete", 25);
+   *                                                                                                                                                                  // Wait up to 25 seconds for specific message
+   *                                                                                                                                                                  alert.verifyMessage("Processing complete", 25);
    *
-   *                                                                                                                                           // Verify error message with custom timeout
-   *                                                                                                                                           alert.verifyMessage("Invalid input", 3)
-   *                                                                                                                                                .accept();
+   *                                                                                                                                                                  // Verify error message with custom timeout
+   *                                                                                                                                                                  alert.verifyMessage("Invalid input", 3)
+   *                                                                                                                                                                       .accept();
    *
-   *     </pre>
+   *                            </pre>
    */
   public void verifyMessage(String message, int waitSec) {
     verifyIsPresent(waitSec);

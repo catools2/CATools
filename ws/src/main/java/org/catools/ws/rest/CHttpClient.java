@@ -1,8 +1,15 @@
 package org.catools.ws.rest;
 
+import static io.restassured.config.JsonConfig.jsonConfig;
+import static io.restassured.filter.log.LogDetail.ALL;
+
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.internal.print.RequestPrinter;
 import io.restassured.path.json.config.JsonPathConfig;
+import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,14 +22,6 @@ import org.catools.ws.enums.CHttpStatusCode;
 import org.catools.ws.model.CHttpRequest;
 import org.catools.ws.model.CHttpResponse;
 import org.catools.ws.utils.CRestAssuredUtil;
-
-import java.io.PrintStream;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.function.BiConsumer;
-
-import static io.restassured.config.JsonConfig.jsonConfig;
-import static io.restassured.filter.log.LogDetail.ALL;
 
 @Getter
 @Setter

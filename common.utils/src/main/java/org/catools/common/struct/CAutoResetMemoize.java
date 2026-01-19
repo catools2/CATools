@@ -1,4 +1,4 @@
-package org.catools.common.functions;
+package org.catools.common.struct;
 
 import java.util.Timer;
 import java.util.TimerTask;

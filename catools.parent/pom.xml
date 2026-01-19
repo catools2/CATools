@@ -107,8 +107,7 @@
         <jboss-logging.version>3.5.0.Final</jboss-logging.version>
 
         <!-- Athena -->
-        <athena-core.version>0.0.6</athena-core.version>
-        <athena-feign.version>0.0.3</athena-feign.version>
+        <athena.version>2.0.1</athena.version>
         <feign.version>13.6</feign.version>
 
         <!-- Javax -->
@@ -221,15 +220,8 @@
             </snapshots>
         </repository>
         <repository>
-            <id>athena-core</id>
-            <url>https://maven.pkg.github.com/catools2/athena-core</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>athena-feign</id>
-            <url>https://maven.pkg.github.com/catools2/athena-feign</url>
+            <id>athena</id>
+            <url>https://maven.pkg.github.com/catools2/athena</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -317,13 +309,13 @@
             <!-- ###################### ATHENA ######################### -->
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>athena-core</artifactId>
-                <version>${athena-core.version}</version>
+                <artifactId>athena-model</artifactId>
+                <version>${athena.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>athena-pipeline-feign-client</artifactId>
-                <version>${athena-feign.version}</version>
+                <artifactId>athena-client-pipeline</artifactId>
+                <version>${athena.version}</version>
             </dependency>
             <!-- ###################### /ATHENA ######################### -->
             <!-- ###################### ATLASSIAN ######################### -->

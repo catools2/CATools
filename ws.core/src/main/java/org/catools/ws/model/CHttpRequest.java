@@ -8,6 +8,8 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
+import java.net.URI;
+import javax.ws.rs.core.UriBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -19,9 +21,6 @@ import org.catools.common.utils.CStringUtil;
 import org.catools.ws.config.CProxyConfigs;
 import org.catools.ws.enums.CHttpRequestType;
 import org.catools.ws.rest.CFilterListener;
-
-import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
 
 @Data
 @Slf4j

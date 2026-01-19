@@ -1,12 +1,11 @@
 package org.catools.web.drivers;
 
-import org.catools.web.config.CDriverConfigs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
+import org.catools.web.config.CDriverConfigs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Interface providing advanced waiting capabilities for CDriverEngine operations. This interface

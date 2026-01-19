@@ -1,8 +1,7 @@
 package org.catools.web.selectors;
 
-import lombok.Getter;
-
 import java.util.Objects;
+import lombok.Getter;
 
 @Getter
 public class CById extends CByXPath {
