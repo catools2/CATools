@@ -2,7 +2,7 @@ package org.catools.common.tests.functions;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.assertj.core.api.Assertions;
-import org.catools.common.functions.CMemoize;
+import org.catools.common.struct.CMemoize;
 import org.testng.annotations.Test;
 
 public class CMemoizeTest {

@@ -1,15 +1,14 @@
 package org.catools.web.factory;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CList;
 import org.catools.web.collections.CWebElements;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriverWaiter;
 import org.catools.web.pages.CWebComponent;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.Objects;
 
 /**
  * A factory class for initializing and decorating web element fields in CWebComponent instances.

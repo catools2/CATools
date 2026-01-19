@@ -1,11 +1,10 @@
 package org.catools.web.drivers;
 
-import org.catools.common.extensions.verify.CVerify;
-import org.catools.common.utils.CRetry;
-
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import org.catools.common.extensions.verify.CVerify;
+import org.catools.common.utils.CRetry;
 
 /**
  * Interface providing navigation capabilities for web drivers, extending CDriverWaiter. This

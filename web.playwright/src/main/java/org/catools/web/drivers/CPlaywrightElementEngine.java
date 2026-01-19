@@ -1,19 +1,18 @@
 package org.catools.web.drivers;
 
+import static org.catools.web.drivers.CDriverWaiter.DEFAULT_TIMEOUT;
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CSleeper;
-import org.catools.web.controls.CElementEngine;
-import org.catools.web.enums.CKeys;
-
 import java.awt.*;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static org.catools.web.drivers.CDriverWaiter.DEFAULT_TIMEOUT;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CSleeper;
+import org.catools.web.controls.CElementEngine;
+import org.catools.web.enums.CKeys;
 
 /**
  * Playwright implementation of CDriverEngine providing browser automation capabilities.

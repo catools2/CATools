@@ -20,11 +20,11 @@
         <!-- ###################### ATHENA ######################### -->
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>athena-core</artifactId>
+            <artifactId>athena-model</artifactId>
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>athena-pipeline-feign-client</artifactId>
+            <artifactId>athena-client-pipeline</artifactId>
         </dependency>
         <!-- ###################### /ATHENA ######################### -->
         <!-- ######################  CATS ######################### -->

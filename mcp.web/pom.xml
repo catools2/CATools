@@ -24,18 +24,6 @@
         <reflections.version>0.10.2</reflections.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.modelcontextprotocol.sdk</groupId>
-                <artifactId>mcp-bom</artifactId>
-                <version>${mcp-sdk.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -48,11 +36,6 @@
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.utils</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.concurrent</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

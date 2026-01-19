@@ -2,7 +2,7 @@ package org.catools.reportportal.listeners;
 
 import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.BaseTestNGListener;
-import org.catools.common.functions.CMemoize;
+import org.catools.common.struct.CMemoize;
 import org.catools.reportportal.service.CReportPortalService;
 
 public class CReportPortalListener extends BaseTestNGListener {

@@ -12,13 +12,15 @@ import javax.sql.DataSource;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
+import org.catools.common.datastate.CDataState;
 import org.catools.common.date.CDate;
 import org.catools.common.utils.CRegExUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
+import org.catools.mcp.annotation.CMcpTool;
+import org.catools.mcp.annotation.CMcpToolParam;
 import org.catools.metrics.configs.CMetricsConfigs;
 import org.catools.metrics.model.CMetric;
 import org.catools.metrics.utils.CMetricsUtils;
@@ -42,8 +44,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryString {
-    public static String query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_string",
+        title = "Query String",
+        description = "Query For String Value from Database")
+    public static String query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      String query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static String query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -111,8 +123,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryDate {
-    public static Date query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_date",
+        title = "Query Date",
+        description = "Query For Date Value from Database")
+    public static Date query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      Date query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static Date query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -176,8 +198,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryInt {
-    public static Integer query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_int",
+        title = "Query Integer",
+        description = "Query For Integer Value from Database")
+    public static Integer query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      Integer query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static Integer query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -245,8 +277,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryLong {
-    public static Long query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_long",
+        title = "Query Long",
+        description = "Query For Long Value from Database")
+    public static Long query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      Long query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static Long query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -310,8 +352,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryDouble {
-    public static Double query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_double",
+        title = "Query Double",
+        description = "Query For Double Value from Database")
+    public static Double query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      Double query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static Double query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -379,8 +431,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryBigDecimal {
-    public static BigDecimal query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_big_decimal",
+        title = "Query Big Decimal",
+        description = "Query For Big Decimal Value from Database")
+    public static BigDecimal query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      BigDecimal query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static BigDecimal query(String sql, MapSqlParameterSource paramSource, String dbSource) {
@@ -495,8 +557,18 @@ public class CSqlDataSource {
           });
     }
 
-    public static CList<Map<String, Object>> query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_map_list",
+        title = "Query Map List",
+        description = "Query For List Of Key-Value pairs")
+    public static CList<Map<String, Object>> query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      CList<Map<String, Object>> query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static CList<Map<String, Object>> query(
@@ -685,8 +757,18 @@ public class CSqlDataSource {
   }
 
   public static class QueryMap {
-    public static CHashMap<String, Object> query(String sql, String dbSource) {
-      return query(sql, new MapSqlParameterSource(), dbSource);
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_map",
+        title = "Query Map",
+        description = "Query For Key-Value pair")
+    public static CHashMap<String, Object> query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
+      CHashMap<String, Object> query = query(sql, new MapSqlParameterSource(), dbSource);
+      CDataState.write("query_result", query);
+      return query;
     }
 
     public static CHashMap<String, Object> query(
@@ -755,7 +837,15 @@ public class CSqlDataSource {
   }
 
   public static class QueryObject {
-    public static Object query(String sql, String dbSource) {
+    @CMcpTool(
+        groups = {"sql"},
+        name = "query_for_object",
+        title = "Query Object",
+        description = "Query For Object pair")
+    public static Object query(
+        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+            String dbSource) {
       return query(sql, new MapSqlParameterSource(), dbSource);
     }
 
@@ -858,10 +948,10 @@ public class CSqlDataSource {
   public static class QueryBlob {
     public static String queryAsString(String sql, String dbSource) {
       return doAction(
-          CStringUtil.EMPTY,
+          "",
           dbSource,
           sql,
-          CStringUtil.EMPTY,
+          "",
           jdbcTemplate -> {
             try {
               Object result = QueryObject.query(sql, dbSource);
@@ -945,8 +1035,8 @@ public class CSqlDataSource {
       return doAction(
           "batchUpdate",
           dbSource,
-          StringUtils.join(batches, "\n"),
-          CStringUtil.EMPTY,
+          CStringUtil.join(batches, "\n"),
+          "",
           jdbcTemplate -> {
             CList<Integer> output = new CList<>();
             for (CList<String> partition : new CList<>(batches).partition(partitionSize)) {
@@ -974,7 +1064,7 @@ public class CSqlDataSource {
           "batchUpdate",
           dbSource,
           sql,
-          StringUtils.join(batchValues, "\n"),
+          CStringUtil.join(batchValues, "\n"),
           jdbcTemplate -> {
             CList<Integer> output = new CList<>();
             for (CList<MapSqlParameterSource> partition :
@@ -1059,7 +1149,7 @@ public class CSqlDataSource {
         actionName,
         dbSource,
         sql,
-        parameters == null ? CStringUtil.EMPTY : parameters.getValues().toString(),
+        parameters == null ? "" : parameters.getValues().toString(),
         action);
   }
 
@@ -1074,7 +1164,7 @@ public class CSqlDataSource {
           "No connection available.\nUse CSqlDataSource.addDataSource to add new datasource.");
     }
 
-    if (StringUtils.isNotBlank(parameters)) {
+    if (CStringUtil.isNotBlank(parameters)) {
       log.trace(actionName + " on " + dbSource + " => " + sql + " with parameters " + parameters);
     } else {
       log.trace(actionName + " on " + dbSource + " => " + sql);
@@ -1094,7 +1184,7 @@ public class CSqlDataSource {
           interval,
           null,
           true);
-    } catch (Throwable t) {
+    } catch (Exception t) {
       log.error("Failed to Perform " + actionName + " against " + dbSource, t);
       throw t;
     } finally {
@@ -1112,11 +1202,19 @@ public class CSqlDataSource {
           startTime.getDurationToNow().toNanos(),
           CList.of(
               new CMetric("DB_SOURCE", dbSource, null),
-              new CMetric("QUERY", CRegExUtil.replaceAll(sql, "[\r\n]+", " "), null),
+              new CMetric("QUERY", removeParametersFromSql(sql), null),
               new CMetric("PARAMS", parameters, null)));
     } catch (Exception e) {
       log.warn("Failed to record performance metric.", e);
     }
+  }
+
+  private static synchronized String removeParametersFromSql(String sql) {
+    sql = CRegExUtil.replaceAll(sql, "\\s+", " ");
+    sql = CRegExUtil.replaceAll(sql, "'.+?'", "...");
+    sql = CRegExUtil.replaceAll(sql, "\\b\\d+\\b", "...");
+    sql = CRegExUtil.replaceAll(sql, "(\\s*'?\\s*\\.\\.\\.\\s*'?\\S*)+", "...");
+    return sql.strip();
   }
 
   private static <R> R doWithRetry(

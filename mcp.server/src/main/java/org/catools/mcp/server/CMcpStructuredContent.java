@@ -25,8 +25,8 @@ import org.catools.mcp.server.component.CMcpServerTool;
  * <pre>{@code
  * public class WeatherTool {
  *
- *   @McpTool(description = "Get weather information")
- *   public WeatherData getWeather(@McpToolParam(name = "city") String city) {
+ *   @CMcpTool(description = "Get weather information")
+ *   public WeatherData getWeather(@CMcpToolParam(name = "city") String city) {
  *     final int temperature = 25;
  *     final String condition = "Sunny";
  *     return new WeatherData(city, temperature, condition);

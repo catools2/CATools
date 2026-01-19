@@ -14,7 +14,7 @@ import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.concurrent.CParallelIO;
 import org.catools.common.date.CDate;
-import org.catools.common.functions.CMemoize;
+import org.catools.common.struct.CMemoize;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
 

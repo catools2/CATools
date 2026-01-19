@@ -1,11 +1,10 @@
 package org.catools.web.drivers;
 
+import java.util.function.Function;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.function.Function;
 
 /**
  * Manages browser driver session lifecycle and state.

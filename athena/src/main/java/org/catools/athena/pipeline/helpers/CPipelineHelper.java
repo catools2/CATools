@@ -1,10 +1,10 @@
 package org.catools.athena.pipeline.helpers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.catools.athena.core.model.MetadataDto;
+import org.catools.athena.model.core.MetadataDto;
+import org.catools.athena.model.pipeline.PipelineDto;
+import org.catools.athena.model.pipeline.PipelineExecutionDto;
 import org.catools.athena.pipeline.configs.CAthenaPipelineConfigs;
-import org.catools.athena.pipeline.model.PipelineDto;
-import org.catools.athena.pipeline.model.PipelineExecutionDto;
 import org.catools.athena.rest.feign.common.utils.JsonUtils;
 import org.catools.athena.rest.feign.pipeline.configs.PipelineConfigs;
 import org.catools.athena.rest.feign.pipeline.helpers.PipelineHelper;

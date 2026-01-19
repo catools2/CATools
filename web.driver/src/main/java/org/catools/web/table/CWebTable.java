@@ -1,6 +1,9 @@
 package org.catools.web.table;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.functions.CMemoize;
+import org.catools.common.struct.CMemoize;
 import org.catools.web.collections.CWebIterable;
 import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebElement;
@@ -18,10 +21,6 @@ import org.catools.web.factory.CWebElementFactory;
 import org.catools.web.pages.CWebComponent;
 import org.catools.web.selectors.CBy;
 import org.catools.web.selectors.CWebSelectorHelper;
-
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
  * CWebTable is an abstract base class for web table components that provides comprehensive

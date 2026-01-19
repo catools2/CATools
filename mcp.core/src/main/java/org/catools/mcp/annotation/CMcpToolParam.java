@@ -17,8 +17,8 @@ import org.catools.common.utils.CStringUtil;
  * <p>Example usage:
  *
  * <pre>{@code
- * @McpTool
- * public String getWeather(@McpToolParam(name = "city") String city) {
+ * @CMcpTool
+ * public String getWeather(@CMcpToolParam(name = "city") String city) {
  *     // Method implementation...
  * }
  * }</pre>

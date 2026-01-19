@@ -1,5 +1,11 @@
 package org.catools.web.table;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
+import javax.ws.rs.NotSupportedException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +16,6 @@ import org.catools.web.controls.CElementEngine;
 import org.catools.web.controls.CWebElement;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.selectors.CBy;
-
-import javax.ws.rs.NotSupportedException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.function.Supplier;
 
 /**
  * Abstract class for handling multi-page web tables with pagination controls. This class extends

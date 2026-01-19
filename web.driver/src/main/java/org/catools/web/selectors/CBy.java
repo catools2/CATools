@@ -17,9 +17,8 @@
 
 package org.catools.web.selectors;
 
-import org.jspecify.annotations.NullMarked;
-
 import java.util.Arrays;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Mechanism used to locate elements within a document. Factory methods return lightweight `CBy`

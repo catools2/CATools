@@ -1,8 +1,10 @@
 package org.catools.mcp.di;
 
+import com.google.inject.Binding;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
+import java.util.Optional;
 
 /** This class implements the {@link CDependencyInjector} interface using Google Guice. */
 public final class CDependencyInjector {
@@ -36,5 +38,23 @@ public final class CDependencyInjector {
 
   public boolean isInitialized() {
     return injector != null;
+  }
+
+  public <T> Optional<T> tryGetInstance(Class<T> type) {
+    if (!isInitialized()) {
+      return Optional.empty();
+    }
+    Binding<T> binding = injector.getExistingBinding(Key.get(type));
+    return binding == null ? Optional.empty() : Optional.of(injector.getInstance(type));
+  }
+
+  public <T> Optional<T> tryGetVariable(Class<T> type, String name) {
+    if (!isInitialized()) {
+      return Optional.empty();
+    }
+    Binding<T> binding = injector.getExistingBinding(Key.get(type, Names.named(name)));
+    return binding == null
+        ? Optional.empty()
+        : Optional.of(injector.getInstance(Key.get(type, Names.named(name))));
   }
 }

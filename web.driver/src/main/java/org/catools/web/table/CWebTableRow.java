@@ -1,5 +1,6 @@
 package org.catools.web.table;
 
+import java.util.function.Function;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -13,8 +14,6 @@ import org.catools.web.controls.CWebElement;
 import org.catools.web.factory.CWebElementFactory;
 import org.catools.web.pages.CWebComponent;
 import org.catools.web.selectors.CBy;
-
-import java.util.function.Function;
 
 /**
  * Abstract base class representing a row in a web table with fluent interface support. This class

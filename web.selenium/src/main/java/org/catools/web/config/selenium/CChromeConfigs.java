@@ -1,13 +1,12 @@
 package org.catools.web.config.selenium;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
 import org.openqa.selenium.PageLoadStrategy;
-
-import java.util.List;
 
 /**
  * Utility class for managing Chrome browser configuration settings.

@@ -1,5 +1,7 @@
 package org.catools.web.pages;
 
+import static org.catools.web.drivers.CDriverWaiter.DEFAULT_TIMEOUT;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,8 +10,6 @@ import org.catools.web.controls.CElementEngine;
 import org.catools.web.drivers.CDriver;
 import org.catools.web.exceptions.CPageNotOpenedException;
 import org.catools.web.factory.CWebElementFactory;
-
-import static org.catools.web.drivers.CDriverWaiter.DEFAULT_TIMEOUT;
 
 /**
  * Abstract base class for web page representations in the CATools framework. This class provides
@@ -72,6 +72,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    *     }
    * }
    *
+   *
    * }</pre>
    */
   public CWebPage(DR driver, String titlePattern) {
@@ -89,6 +90,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    *     <pre>{@code
    * // Wait up to 30 seconds for a slow-loading page
    * HomePage homePage = new HomePage(driver, "Home.*", 30);
+   *
    *
    * }</pre>
    */
@@ -109,6 +111,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    *     <pre>{@code
    * // Try refreshing if the page doesn't load initially
    * ProductPage productPage = new ProductPage(driver, "Product.*Details", 15, true);
+   *
    *
    * }</pre>
    */
@@ -132,6 +135,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    *     <pre>{@code
    * // Wait 10 seconds initially, then refresh and wait 20 seconds
    * CheckoutPage checkout = new CheckoutPage(driver, "Checkout.*", 10, true, 20);
+   *
    *
    * }</pre>
    */
@@ -215,6 +219,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    *         .enterPassword("password")
    *         .clickLogin();
    *
+   *
    * }</pre>
    */
   public <T extends CWebPage<DR>> T verifyDisplayed() {
@@ -238,6 +243,7 @@ public abstract class CWebPage<DR extends CDriver> implements CWebComponent {
    * reportPage.verifyDisplayed(60)
    *          .selectDateRange("Last Month")
    *          .generateReport();
+   *
    *
    * }</pre>
    */
