@@ -294,7 +294,7 @@ public class COrangeHRMLoginExploratoryTest extends CPlaywrightTest<CDriver> {
 
     // Step 4: Verify OrangeHRM branding text
     loginSlot.Text.verifyContains("OrangeHRM", "Page should contain OrangeHRM branding");
-    loginSlot.Text.verifyContains("2005 - 2025", "Page should contain copyright year range");
+    loginSlot.Text.verifyContains("2005 - 2026", "Page should contain copyright year range");
   }
 
   @Override

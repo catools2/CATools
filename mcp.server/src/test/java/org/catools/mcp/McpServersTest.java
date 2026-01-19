@@ -1,10 +1,5 @@
 package org.catools.mcp;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
-
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
@@ -13,11 +8,6 @@ import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.spec.McpSchema;
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import org.catools.common.exception.CInvalidYamlFileFormatException;
 import org.catools.common.utils.CStringUtil;
 import org.catools.mcp.configuration.CMcpServerConfiguration;
@@ -30,6 +20,14 @@ import org.catools.mcp.server.CMcpStructuredContent;
 import org.catools.mcp.test.TestMcpToolsStructuredContent;
 import org.catools.mcp.test.TestSimpleMcpStdioServer;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+import static org.testng.Assert.*;
 
 @Test(singleThreaded = true)
 public class McpServersTest {
