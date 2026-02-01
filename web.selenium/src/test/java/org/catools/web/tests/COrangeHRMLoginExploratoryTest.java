@@ -55,7 +55,6 @@ public class COrangeHRMLoginExploratoryTest extends CSeleniumTest<CDriver> {
    */
   @Test(description = "Verify invalid credentials display error message")
   public void testInvalidCredentialsShowError() {
-    // Step 1: Navigate to login page
     open(ORANGEHRM_URL);
 
     // Step 2: Enter invalid username
