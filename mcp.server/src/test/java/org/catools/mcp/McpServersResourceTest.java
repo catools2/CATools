@@ -20,11 +20,11 @@ public class McpServersResourceTest extends BaseMcpServersTest {
             .args("-cp", classpath, TestSimpleMcpStdioServer.class.getName())
             .build();
 
+    StdioClientTransport stdioClientTransport =
+        new StdioClientTransport(serverParameters, McpJsonMapper.getDefault());
+
     CRetry.retry(
         idx -> {
-          StdioClientTransport stdioClientTransport =
-              new StdioClientTransport(serverParameters, McpJsonMapper.getDefault());
-
           try (McpSyncClient client = McpClient.sync(stdioClientTransport).build()) {
             verify(client);
           }
