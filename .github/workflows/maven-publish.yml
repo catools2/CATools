@@ -33,12 +33,19 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Debug GPG Key Format
+        run: |
+          echo "GPG_PRIVATE_KEY length: ${#GPG_PRIVATE_KEY}"
+          echo "$GPG_PRIVATE_KEY" | head -5
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --allow-secret-key-import --import
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --yes --import
           echo "$GPG_PUBLIC_KEY" | gpg --import
           export MAVEN_OPTS="-DCATOOLS_WEB_GRID_USE_TEST_CONTAINER=true -DCATOOLS_LOGGER_CONSOLE_LOG_LEVEL=WARN"
           ./mvnw -B verify -P release org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=catools2_CATools $MAVEN_OPTS
