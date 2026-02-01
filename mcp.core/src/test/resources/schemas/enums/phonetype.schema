@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "enums/PhoneType.schema",
+  "title": "PhoneType",
+  "type": "string",
+  "description": "Phone type enum (UNKNOWN, MOBILE, HOME, WORK, etc.).",
+  "enum": ["OFFICE", "MOBILE", "UNKNOWN"]
+}

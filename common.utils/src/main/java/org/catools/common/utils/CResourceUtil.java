@@ -1,30 +1,25 @@
 package org.catools.common.utils;
 
-import static org.catools.common.utils.CSystemUtil.getPlatform;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.stream.Streams;
+import org.apache.commons.lang3.tuple.Pair;
+import org.catools.common.configs.CPathConfigs;
+import org.catools.common.exception.CResourceNotFoundException;
 
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.file.*;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import lombok.experimental.UtilityClass;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.exception.CResourceNotFoundException;
+import java.util.stream.Collectors;
+
+import static org.catools.common.utils.CSystemUtil.getPlatform;
 
 @UtilityClass
 public class CResourceUtil {
@@ -174,8 +169,33 @@ public class CResourceUtil {
         .getResourceAsStream(resource);
   }
 
+  public static Set<String> listFiles(String resourcePath, Class<?> clazz) {
+    return listFiles(resourcePath, clazz.getClassLoader());
+  }
+
+  public static Set<String> listFiles(String resourcePath, ClassLoader classLoader) {
+    URL url = classLoader.getResource(resourcePath);
+
+    if (url == null) {
+      throw new RuntimeException("Resource %s not found".formatted(resourcePath));
+    }
+
+    try {
+      File dir = new File(url.toURI());
+      return Streams.of(dir.listFiles())
+          .filter(File::isFile)
+          .map(file -> file.getName())
+          .collect(Collectors.toSet());
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to list files in resource path " + resourcePath, e);
+    }
+  }
+
   public static Pair<Class<?>, ClassLoader> getClassLoader(String resource, Class<?> clazz) {
     final Map<Class<?>, ClassLoader> classLoaders = new HashMap<>();
+
+    classLoaders.put(Thread.class, Thread.currentThread().getContextClassLoader());
+
     if (clazz != null) {
       classLoaders.put(clazz, clazz.getClassLoader());
       classLoaders.put(clazz.getClass(), clazz.getClass().getClassLoader());

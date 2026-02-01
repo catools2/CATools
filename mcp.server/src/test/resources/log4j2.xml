@@ -10,7 +10,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="${sys:CATOOLS_LOGGER_CONSOLE_LOG_LEVEL:-trace}">
+        <Root level="${sys:LOGGER_CONSOLE_LOG_LEVEL:-info}">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

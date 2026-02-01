@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$class": "org.catools.mcp.entities.Comment",
+  "$id": "entities/comment.schema",
+  "title": "Comment",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "commentId": {"type": "number"},
+    "comment": {"type": "string"},
+    "subject": {"type": "string"},
+    "authorName": {"type": "string"},
+    "userId": {"type": "number"},
+    "publicNote": {"type": ["boolean", "null"]},
+    "creationDate": {"type": "string"},
+    "commentType": {"type": "string"},
+    "attachmentCount": {"type": "number"},
+    "uploadFile": {"type": "string"},
+    "fileName": {"type": "string"}
+  },
+  "description": "Schema for Comment entity"
+}

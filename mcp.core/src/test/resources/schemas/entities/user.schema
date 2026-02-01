@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$class": "org.catools.mcp.entities.User",
+  "$id": "entities/user.schema",
+  "title": "User",
+  "type": "object",
+  "additionalProperties": true,
+  "description": "Schema for User entity.",
+  "properties": {
+    "userId": {"type": "number"},
+    "lastLoginDate": {"type": "string", "format": "date-time"},
+    "userName": {"type": "string"},
+    "password": {"type": "string"},
+    "firstName": {"type": "string"},
+    "lastName": {"type": "string"},
+    "mainPhone": {"$ref": "entities/phonenumber.schema"},
+    "status": {"$ref": "enums/statuscode.schema"},
+    "comments": {"$ref": "entities/comments.schema"},
+    "address": {"$ref": "entities/address.schema"}
+  }
+}

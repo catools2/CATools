@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$class": "org.catools.mcp.entities.Address",
+  "$id": "entities/address.schema",
+  "title": "Address",
+  "type": "object",
+  "additionalProperties": true,
+  "description": "Schema for Address entity.",
+  "properties": {
+    "addrId": {"type": "number"},
+    "addrLine1": {"type": "string"},
+    "addrLine2": {"type": "string"},
+    "addrLine3": {"type": "string"},
+    "city": {"type": "string"},
+    "stateProviceCode": {"type": "string"},
+    "postalCode": {"type": "string"},
+    "countryCode": {"$ref": "enums/country.schema"},
+    "modifiedUserId": {"type": "number"},
+    "modifiedDate": {"type": "string", "format": "date-time"},
+    "name": {"type": "string"}
+  }
+}

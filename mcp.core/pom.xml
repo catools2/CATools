@@ -23,11 +23,6 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.concurrent</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>io.modelcontextprotocol.sdk</groupId>
             <artifactId>mcp</artifactId>
         </dependency>

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$class": "org.catools.mcp.entities.PhoneNumber",
+  "$id": "entities/phonenumber.schema",
+  "title": "PhoneNumber",
+  "type": "object",
+  "additionalProperties": true,
+  "description": "Schema for PhoneNumber entity.",
+  "properties": {
+    "country": {"$ref": "enums/country.schema"},
+    "countryCode": {"type": "string"},
+    "number": {"type": "string"},
+    "extension": {"type": "string"},
+    "type": {"$ref": "enums/phonetype.schema"}
+  }
+}

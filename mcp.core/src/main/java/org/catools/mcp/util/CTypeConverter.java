@@ -1,11 +1,11 @@
 package org.catools.mcp.util;
 
+import lombok.experimental.UtilityClass;
+import org.catools.common.utils.CStringUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import javax.annotation.Nullable;
-import lombok.experimental.UtilityClass;
-import org.catools.common.utils.CStringUtil;
 
 /**
  * Utility class providing type conversion operations between Java types and JSON schema types.
@@ -16,6 +16,7 @@ import org.catools.common.utils.CStringUtil;
  */
 @UtilityClass
 public class CTypeConverter {
+  private static final String DOT = ".";
 
   /** Thread-safe map caching type conversion functions for each supported Java class. */
   private static final Map<Class<?>, Function<String, Object>> CLASS_CONVERTERS;
@@ -77,7 +78,7 @@ public class CTypeConverter {
    */
   private static Number parseNumber(String number) {
     // Use double precision for decimal numbers
-    if (number.contains(CStringUtil.DOT)) {
+    if (number.contains(DOT)) {
       return Double.parseDouble(number);
     }
 
@@ -98,7 +99,7 @@ public class CTypeConverter {
    * @param targetType the desired type for conversion
    * @return converted value or default value if input is null
    */
-  public static Object convert(@Nullable Object value, Class<?> targetType) {
+  public static Object convert(Object value, Class<?> targetType) {
     if (value == null) {
       return DEFAULT_VALUES.get(targetType);
     }

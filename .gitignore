@@ -2,7 +2,7 @@
 **/.sonar
 **/.idea
 **/*output*
-**/*storage*
+**/storage
 **/*.iml
 **/*.orig
 **/target

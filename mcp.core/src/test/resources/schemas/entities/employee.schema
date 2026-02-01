@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$class": "org.catools.mcp.entities.Employee",
+  "$id": "entities/employee.schema",
+  "title": "Employee",
+  "type": "object",
+  "allOf": [
+    {"$ref": "user.schema"}
+  ],
+  "additionalProperties": true,
+  "description": "Schema for Employee entity.",
+  "properties": {
+    "employeeId": {"type": "number"}
+  }
+}
