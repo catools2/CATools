@@ -1,11 +1,10 @@
 package org.catools.common.extensions.states.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.catools.common.utils.CIterableUtil;
-
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import org.catools.common.utils.CIterableUtil;
 
 /**
  * CIterableState is an interface for Iterable state related methods.

@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.hard;
 
+import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.date.CDate;
 import org.catools.common.extensions.verify.interfaces.base.CDateVerify;
-
-import java.util.Date;
 
 /** Date verification class contains all verification method which is related to Date */
 @Slf4j

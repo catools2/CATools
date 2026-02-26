@@ -1,13 +1,12 @@
 package org.catools.atlassian.etl.jira.translators.parsers;
 
 import com.atlassian.jira.rest.client.api.domain.IssueField;
+import java.util.Comparator;
+import java.util.function.Function;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
-
-import java.util.Comparator;
-import java.util.function.Function;
 
 /**
  * Utility class for parsing Jira issue fields using various field parsers. It maintains a list of

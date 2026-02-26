@@ -1,6 +1,13 @@
 package org.catools.atlassian.etl.scale;
 
+import static org.catools.atlassian.etl.scale.helpers.CEtlZScaleSyncHelper.getProjectByName;
+import static org.catools.atlassian.etl.scale.helpers.CEtlZScaleSyncHelper.getProjectVersions;
+import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateExecution;
+import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateTestRun;
+
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
+import java.util.Date;
+import java.util.Stack;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.atlassian.etl.scale.configs.CEtlZScaleConfigs;
@@ -19,14 +26,6 @@ import org.catools.etl.tms.dao.CEtlExecutionDao;
 import org.catools.etl.tms.dao.CEtlItemDao;
 import org.catools.etl.tms.dao.CEtlLastSyncDao;
 import org.catools.etl.tms.model.*;
-
-import java.util.Date;
-import java.util.Stack;
-
-import static org.catools.atlassian.etl.scale.helpers.CEtlZScaleSyncHelper.getProjectByName;
-import static org.catools.atlassian.etl.scale.helpers.CEtlZScaleSyncHelper.getProjectVersions;
-import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateExecution;
-import static org.catools.atlassian.etl.scale.translators.CEtlZScaleTestRunTranslator.translateTestRun;
 
 /**
  * Client class for synchronizing ZScale data with the ETL system. Provides methods to synchronize

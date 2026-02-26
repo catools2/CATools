@@ -1,5 +1,7 @@
 package org.catools.common.extensions.verify.interfaces.base;
 
+import java.util.Map;
+import java.util.function.Predicate;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
@@ -8,9 +10,6 @@ import org.catools.common.collections.interfaces.CIterable;
 import org.catools.common.extensions.base.CBaseIterableExtension;
 import org.catools.common.extensions.states.interfaces.CIterableState;
 import org.catools.common.utils.CIterableUtil;
-
-import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * CIterableVerifier is an interface for Iterable verification related methods.

@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.hard;
 
+import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.base.CFileVerify;
 import org.catools.common.io.CFile;
-
-import java.io.File;
 
 /**
  * File Content verification class contains all verification method which is related to File and its

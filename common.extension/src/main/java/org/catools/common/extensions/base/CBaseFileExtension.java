@@ -1,8 +1,7 @@
 package org.catools.common.extensions.base;
 
-import org.catools.common.extensions.states.interfaces.CFileState;
-
 import java.io.File;
+import org.catools.common.extensions.states.interfaces.CFileState;
 
 /**
  * CBaseFileExtension is a base interface for file related extensions.

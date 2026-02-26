@@ -1,11 +1,10 @@
 package org.catools.common.tests.concurrent;
 
+import java.util.List;
 import org.catools.common.concurrent.CStorage;
 import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class CStorageTest {
 

@@ -1,8 +1,5 @@
 package org.catools.common.concurrent;
 
-import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
-import org.catools.common.utils.CSleeper;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
+import org.catools.common.utils.CSleeper;
 
 /**
  * CParallelIO allows two threads to run in parallel while sharing the same resources.

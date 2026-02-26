@@ -1,9 +1,8 @@
 package org.catools.common.extensions.states.interfaces;
 
-import org.catools.common.date.CDate;
-
 import java.util.Date;
 import java.util.Objects;
+import org.catools.common.date.CDate;
 
 /**
  * CDateState is an interface for Date state related methods.

@@ -1,5 +1,7 @@
 package org.catools.common.extensions.verify.interfaces.verifier;
 
+import java.util.Collection;
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
@@ -7,9 +9,6 @@ import org.catools.common.collections.CSet;
 import org.catools.common.collections.interfaces.CCollection;
 import org.catools.common.extensions.base.CBaseCollectionExtension;
 import org.catools.common.extensions.verify.CVerificationQueue;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * CCollectionVerifier is an interface for Collection verification related methods.

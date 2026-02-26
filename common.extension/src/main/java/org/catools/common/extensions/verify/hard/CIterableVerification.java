@@ -1,9 +1,8 @@
 package org.catools.common.extensions.verify.hard;
 
+import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.base.CIterableVerify;
-
-import java.util.function.Predicate;
 
 /** Iterable verification class contains all verification method which is related to Iterable */
 @Slf4j

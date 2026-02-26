@@ -1,14 +1,13 @@
 package org.catools.atlassian.jira.configs;
 
+import java.net.URI;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-
-import java.net.URI;
-import java.util.List;
 
 /**
  * Configuration utility class for Jira integration. Provides methods to retrieve Jira-related

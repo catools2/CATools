@@ -1,9 +1,8 @@
 package org.catools.common.extensions.verify.hard;
 
+import java.util.Collection;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.base.CCollectionVerify;
-
-import java.util.Collection;
 
 /** Collection verification class contains all verification method which is related to Collection */
 @Slf4j

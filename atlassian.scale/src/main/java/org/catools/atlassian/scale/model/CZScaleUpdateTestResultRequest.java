@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -12,8 +13,6 @@ import org.catools.atlassian.scale.utils.CustomDateDeserializer;
 import org.catools.atlassian.scale.utils.CustomDateSerializer;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CSet;
-
-import java.util.Date;
 
 /**
  * Represents a request to update the test result in the Scale system.

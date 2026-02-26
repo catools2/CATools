@@ -1,14 +1,13 @@
 package org.catools.common.extensions.base;
 
+import java.util.Collection;
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
 import org.catools.common.collections.CSet;
 import org.catools.common.collections.interfaces.CCollection;
 import org.catools.common.extensions.states.interfaces.CCollectionState;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * CBaseCollectionExtension is a base interface for collection related extensions.

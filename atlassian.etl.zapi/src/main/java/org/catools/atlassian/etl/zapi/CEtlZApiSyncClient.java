@@ -1,5 +1,6 @@
 package org.catools.atlassian.etl.zapi;
 
+import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.etl.zapi.translators.CEtlZApiTranslator;
@@ -10,8 +11,6 @@ import org.catools.common.date.CDate;
 import org.catools.etl.tms.dao.CEtlExecutionDao;
 import org.catools.etl.tms.dao.CEtlLastSyncDao;
 import org.catools.etl.tms.model.CEtlExecution;
-
-import java.util.Date;
 
 /**
  * Client class for synchronizing ZAPI data with the ETL system. Provides methods to synchronize

@@ -1,15 +1,14 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.catools.common.collections.interfaces.CCollection;
-import org.testng.collections.Lists;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import org.catools.common.collections.interfaces.CCollection;
+import org.testng.collections.Lists;
 
 public class CSet<E> extends HashSet<E> implements CCollection<E, Collection<E>>, Set<E> {
 

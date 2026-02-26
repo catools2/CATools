@@ -1,6 +1,9 @@
 package org.catools.atlassian.etl.jira;
 
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import org.catools.atlassian.etl.jira.translators.CEtlJiraTranslator;
 import org.catools.atlassian.jira.client.CJiraClient;
@@ -8,10 +11,6 @@ import org.catools.common.collections.CSet;
 import org.catools.common.date.CDate;
 import org.catools.etl.tms.dao.CEtlItemDao;
 import org.catools.etl.tms.dao.CEtlLastSyncDao;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Utility class for synchronizing JIRA data into the ETL system. Provides methods to sync projects

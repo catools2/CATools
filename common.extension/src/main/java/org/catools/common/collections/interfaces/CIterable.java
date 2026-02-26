@@ -2,17 +2,6 @@ package org.catools.common.collections.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.collections.CHashMap;
-import org.catools.common.collections.CLinkedMap;
-import org.catools.common.collections.CList;
-import org.catools.common.collections.CSet;
-import org.catools.common.extensions.states.interfaces.CIterableState;
-import org.catools.common.extensions.verify.interfaces.base.CIterableVerify;
-import org.catools.common.extensions.verify.interfaces.verifier.CIterableVerifier;
-import org.catools.common.utils.CStringUtil;
-
 import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +13,16 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.collections.CHashMap;
+import org.catools.common.collections.CLinkedMap;
+import org.catools.common.collections.CList;
+import org.catools.common.collections.CSet;
+import org.catools.common.extensions.states.interfaces.CIterableState;
+import org.catools.common.extensions.verify.interfaces.base.CIterableVerify;
+import org.catools.common.extensions.verify.interfaces.verifier.CIterableVerifier;
+import org.catools.common.utils.CStringUtil;
 
 /**
  * This interface {@link CIterable} uses to extend {@link Collection} interface to facilitate

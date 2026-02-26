@@ -1,10 +1,9 @@
 package org.catools.common.extensions.types.interfaces;
 
+import java.util.Collection;
 import org.catools.common.extensions.verify.interfaces.waitVerifier.CCollectionWaitVerifier;
 import org.catools.common.extensions.verify.interfaces.waitVerify.CCollectionWaitVerify;
 import org.catools.common.extensions.wait.interfaces.CCollectionWaiter;
-
-import java.util.Collection;
 
 /**
  * CDynamicCollectionExtension is an central interface where we extend all Collection related

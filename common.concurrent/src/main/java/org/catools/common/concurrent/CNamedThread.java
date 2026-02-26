@@ -1,9 +1,8 @@
 package org.catools.common.concurrent;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+import lombok.extern.slf4j.Slf4j;
 
 /** A thread factory that creates threads with a specified name prefix. */
 @Slf4j

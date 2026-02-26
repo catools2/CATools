@@ -1,9 +1,8 @@
 package org.catools.common.extensions.verify.interfaces.base;
 
+import java.util.Date;
 import org.catools.common.extensions.base.CBaseDateExtension;
 import org.catools.common.extensions.states.interfaces.CDateState;
-
-import java.util.Date;
 
 /**
  * CDateVerifier is an interface for Date verification related methods.

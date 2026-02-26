@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.interfaces.waitVerifier;
 
+import java.util.Objects;
 import org.catools.common.extensions.states.interfaces.CBooleanState;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.interfaces.verifier.CBooleanVerifier;
-
-import java.util.Objects;
 
 /**
  * CBooleanVerifier is an interface for Boolean verification related methods.

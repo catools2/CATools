@@ -1,10 +1,9 @@
 package org.catools.common.extensions.types.interfaces;
 
+import java.util.Collection;
 import org.catools.common.extensions.states.interfaces.CCollectionState;
 import org.catools.common.extensions.verify.interfaces.base.CCollectionVerify;
 import org.catools.common.extensions.verify.interfaces.verifier.CCollectionVerifier;
-
-import java.util.Collection;
 
 /**
  * CStaticCollectionExtension is an central interface where we extend all Collection related

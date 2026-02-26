@@ -1,10 +1,9 @@
 package org.catools.common.extensions.verify.interfaces.base;
 
+import java.io.File;
 import org.catools.common.extensions.base.CBaseFileExtension;
 import org.catools.common.extensions.states.interfaces.CFileState;
 import org.catools.common.io.CFile;
-
-import java.io.File;
 
 /**
  * CFileVerifier is an interface for File verification related methods.

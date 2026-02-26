@@ -1,15 +1,14 @@
 package org.catools.common.tests.concurrent;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.assertj.core.api.Assertions;
 import org.catools.common.concurrent.CThreadRunner;
 import org.catools.common.utils.CDateUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
 import org.testng.annotations.Test;
-
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CThreadRunnerTest {
 

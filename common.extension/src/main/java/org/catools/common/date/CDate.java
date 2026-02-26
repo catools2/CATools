@@ -1,11 +1,8 @@
 package org.catools.common.date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.catools.common.extensions.types.interfaces.CDynamicDateExtension;
-import org.catools.common.utils.CDateUtil;
+import static org.catools.common.configs.CDateConfigs.getDefaultTimeZone;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -17,8 +14,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import static org.catools.common.configs.CDateConfigs.getDefaultTimeZone;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.catools.common.extensions.types.interfaces.CDynamicDateExtension;
+import org.catools.common.utils.CDateUtil;
 
 /**
  * A Wrapper to make our life easier with date related operations which is usually does through

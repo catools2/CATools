@@ -1,9 +1,8 @@
 package org.catools.common.extensions.verify.hard;
 
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.common.extensions.verify.interfaces.base.CMapVerify;
-
-import java.util.Map;
 
 /** Map verification class contains all verification method which is related to Map */
 @Slf4j

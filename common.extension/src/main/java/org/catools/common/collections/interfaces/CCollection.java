@@ -3,14 +3,6 @@ package org.catools.common.collections.interfaces;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
-import org.catools.common.collections.CHashMap;
-import org.catools.common.collections.CLinkedMap;
-import org.catools.common.collections.CList;
-import org.catools.common.collections.CSet;
-import org.catools.common.extensions.states.interfaces.CCollectionState;
-import org.catools.common.extensions.verify.interfaces.base.CCollectionVerify;
-import org.catools.common.extensions.verify.interfaces.verifier.CCollectionVerifier;
-
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.BinaryOperator;
@@ -19,6 +11,13 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.catools.common.collections.CHashMap;
+import org.catools.common.collections.CLinkedMap;
+import org.catools.common.collections.CList;
+import org.catools.common.collections.CSet;
+import org.catools.common.extensions.states.interfaces.CCollectionState;
+import org.catools.common.extensions.verify.interfaces.base.CCollectionVerify;
+import org.catools.common.extensions.verify.interfaces.verifier.CCollectionVerifier;
 
 /**
  * This interface {@link CCollection} uses to extend {@link Collection} interface to facilitate

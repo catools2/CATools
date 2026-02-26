@@ -1,8 +1,7 @@
 package org.catools.atlassian.zapi.model;
 
-import org.catools.common.collections.CSet;
-
 import java.util.stream.Stream;
+import org.catools.common.collections.CSet;
 
 /**
  * Represents a collection of execution statuses in the ZAPI system.

@@ -3,6 +3,8 @@ package org.catools.atlassian.scale.rest.cycle;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import java.util.Set;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.scale.configs.CZScaleConfigs;
@@ -11,9 +13,6 @@ import org.catools.atlassian.scale.rest.CZScaleRestClient;
 import org.catools.common.collections.CList;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Client for managing test runs in the Scale system.

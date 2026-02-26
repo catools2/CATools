@@ -1,12 +1,11 @@
 package org.catools.common.concurrent;
 
 import com.google.common.util.concurrent.SimpleTimeLimiter;
-import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
+import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
 
 /**
  * CTimeBoxRunner is a utility class that executes a task within a specified time frame. If the task

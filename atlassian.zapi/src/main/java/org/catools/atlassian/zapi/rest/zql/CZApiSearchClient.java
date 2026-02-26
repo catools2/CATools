@@ -2,6 +2,9 @@ package org.catools.atlassian.zapi.rest.zql;
 
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.atlassian.zapi.configs.CZApiConfigs;
 import org.catools.atlassian.zapi.exception.CZApiClientException;
@@ -11,10 +14,6 @@ import org.catools.atlassian.zapi.rest.CZApiRestClient;
 import org.catools.common.concurrent.CParallelIO;
 import org.catools.common.date.CDate;
 import org.catools.common.utils.CRetry;
-
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
 
 /**
  * Client class for searching test executions in the ZAPI system using ZQL queries.

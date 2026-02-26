@@ -1,14 +1,13 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.collections.interfaces.CCollection;
-import org.testng.collections.Lists;
-
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.collections.interfaces.CCollection;
+import org.testng.collections.Lists;
 
 public class CList<E> extends ArrayList<E> implements CCollection<E, Collection<E>>, List<E> {
 

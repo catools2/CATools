@@ -1,5 +1,7 @@
 package org.catools.atlassian.jira.client;
 
+import static com.atlassian.jira.rest.client.api.IssueRestClient.Expandos.*;
+
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.api.IssueRestClient;
 import com.atlassian.jira.rest.client.api.RestClientException;
@@ -11,15 +13,12 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import io.atlassian.util.concurrent.Promise;
 import jakarta.ws.rs.core.UriBuilder;
-import org.apache.commons.lang3.StringUtils;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-
 import java.net.URI;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import static com.atlassian.jira.rest.client.api.IssueRestClient.Expandos.*;
+import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Custom implementation of the AsynchronousSearchRestClient. This class extends the default

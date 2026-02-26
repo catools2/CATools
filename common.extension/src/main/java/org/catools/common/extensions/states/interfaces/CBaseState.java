@@ -1,11 +1,10 @@
 package org.catools.common.extensions.states.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
 import org.catools.common.extensions.verify.interfaces.CBaseVerify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 /** CBaseExtension is an interface to hold shared method between all extensions. */
 public interface CBaseState<O> extends Serializable {

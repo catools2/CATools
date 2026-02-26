@@ -3,12 +3,11 @@ package org.catools.atlassian.scale.utils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.io.IOException;
+import java.util.Date;
 import org.catools.atlassian.scale.configs.CZScaleConfigs;
 import org.catools.common.collections.CList;
 import org.catools.common.date.CDate;
-
-import java.io.IOException;
-import java.util.Date;
 
 /**
  * Custom deserializer for `Date` objects.

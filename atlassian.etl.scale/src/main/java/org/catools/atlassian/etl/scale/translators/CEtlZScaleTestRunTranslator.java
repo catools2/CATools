@@ -1,5 +1,7 @@
 package org.catools.atlassian.etl.scale.translators;
 
+import java.security.InvalidParameterException;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,9 +15,6 @@ import org.catools.common.utils.CStringUtil;
 import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
-
-import java.security.InvalidParameterException;
-import java.util.Objects;
 
 /**
  * Translator class for converting ZScale test runs and executions into ETL-compatible objects.

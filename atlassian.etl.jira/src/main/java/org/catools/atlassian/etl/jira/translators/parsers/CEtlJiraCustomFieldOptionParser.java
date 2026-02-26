@@ -1,13 +1,12 @@
 package org.catools.atlassian.etl.jira.translators.parsers;
 
 import com.atlassian.jira.rest.client.api.domain.IssueField;
+import java.util.LinkedHashMap;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CJsonUtil;
 import org.codehaus.jettison.json.JSONArray;
-
-import java.util.LinkedHashMap;
 
 /**
  * Parser for custom field options in Jira issues that contain array-based option values.

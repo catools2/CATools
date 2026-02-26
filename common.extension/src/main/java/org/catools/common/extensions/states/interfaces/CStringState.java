@@ -1,16 +1,15 @@
 package org.catools.common.extensions.states.interfaces;
 
+import static org.apache.commons.lang3.RegExUtils.removePattern;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.catools.common.collections.CList;
 import org.catools.common.utils.CRegExUtil;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import static org.apache.commons.lang3.RegExUtils.removePattern;
 
 /**
  * CStringState is an interface for String state related methods.

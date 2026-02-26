@@ -1,9 +1,8 @@
 package org.catools.atlassian.zapi.model;
 
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.common.collections.CSet;
-
-import java.util.stream.Stream;
 
 /**
  * Represents a collection of projects in the ZAPI system.

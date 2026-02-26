@@ -3,19 +3,18 @@ package org.catools.atlassian.scale.rest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.catools.atlassian.scale.configs.CZScaleConfigs;
-import org.catools.atlassian.scale.exception.CZScaleClientException;
-import org.catools.common.concurrent.CParallelCollectionIO;
-import org.catools.common.extensions.verify.CVerify;
-import org.catools.common.utils.CRetry;
-import org.catools.common.utils.CSleeper;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import org.catools.atlassian.scale.configs.CZScaleConfigs;
+import org.catools.atlassian.scale.exception.CZScaleClientException;
+import org.catools.common.concurrent.CParallelCollectionIO;
+import org.catools.common.extensions.verify.CVerify;
+import org.catools.common.utils.CRetry;
+import org.catools.common.utils.CSleeper;
 
 /**
  * Base REST client for interacting with the Scale system.

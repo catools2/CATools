@@ -1,12 +1,11 @@
 package org.catools.common.extensions.verify.interfaces.verifier;
 
+import java.util.List;
 import org.catools.common.collections.CList;
 import org.catools.common.extensions.states.interfaces.CObjectState;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.interfaces.CBaseVerify;
 import org.catools.common.extensions.wait.interfaces.CBaseWaiter;
-
-import java.util.List;
 
 /**
  * CObjectVerifier is an interface for Object verification related methods.

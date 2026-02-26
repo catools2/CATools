@@ -1,9 +1,8 @@
 package org.catools.atlassian.zapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Represents the versions of a project in the ZAPI system.

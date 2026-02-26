@@ -3,6 +3,9 @@ package org.catools.common.collections.interfaces;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.*;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
@@ -10,10 +13,6 @@ import org.catools.common.collections.CSet;
 import org.catools.common.extensions.states.interfaces.CMapState;
 import org.catools.common.extensions.verify.interfaces.base.CMapVerify;
 import org.catools.common.extensions.verify.interfaces.verifier.CMapVerifier;
-
-import java.util.*;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 /**
  * This interface {@code CMap} uses to facilitate Map related functionality for testing. We hope to

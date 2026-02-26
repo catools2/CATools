@@ -1,12 +1,11 @@
 package org.catools.atlassian.etl.jira.configs;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.catools.common.hocon.CHocon;
 import org.catools.common.hocon.model.CHoconPath;
-
-import java.util.List;
 
 /**
  * Utility class for managing JIRA ETL configurations. Provides methods to retrieve various

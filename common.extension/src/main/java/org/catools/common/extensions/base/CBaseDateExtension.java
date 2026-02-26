@@ -1,8 +1,7 @@
 package org.catools.common.extensions.base;
 
-import org.catools.common.extensions.states.interfaces.CDateState;
-
 import java.util.Date;
+import org.catools.common.extensions.states.interfaces.CDateState;
 
 /**
  * CBaseDateExtension is a base interface for date related extensions.

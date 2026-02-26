@@ -1,5 +1,6 @@
 package org.catools.common.extensions.base;
 
+import java.util.Map;
 import org.catools.common.collections.CHashMap;
 import org.catools.common.collections.CLinkedMap;
 import org.catools.common.collections.CList;
@@ -7,8 +8,6 @@ import org.catools.common.collections.CSet;
 import org.catools.common.collections.interfaces.CCollection;
 import org.catools.common.extensions.states.interfaces.CMapState;
 import org.catools.common.extensions.verify.hard.CMapVerification;
-
-import java.util.Map;
 
 /**
  * CBaseIterableExtension is a base interface for Map related extensions.

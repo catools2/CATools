@@ -6,6 +6,11 @@ import com.atlassian.jira.rest.client.api.domain.*;
 import com.atlassian.jira.rest.client.api.domain.input.IssueInput;
 import com.atlassian.jira.rest.client.api.domain.input.LinkIssuesInput;
 import com.atlassian.jira.rest.client.api.domain.input.TransitionInput;
+import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.atlassian.jira.configs.CJiraConfigs;
@@ -17,12 +22,6 @@ import org.catools.common.date.CDate;
 import org.catools.common.struct.CMemoize;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
-
-import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Utility class for interacting with the Jira REST API. Provides methods for retrieving projects,

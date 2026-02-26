@@ -1,6 +1,7 @@
 package org.catools.atlassian.etl.scale.helpers;
 
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,8 +19,6 @@ import org.catools.etl.tms.model.CEtlItem;
 import org.catools.etl.tms.model.CEtlProject;
 import org.catools.etl.tms.model.CEtlVersion;
 import org.catools.etl.tms.model.CEtlVersions;
-
-import java.util.Objects;
 
 /**
  * Utility class for synchronizing ZScale test cases with the ETL system. Provides methods to manage

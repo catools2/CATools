@@ -1,5 +1,8 @@
 package org.catools.atlassian.etl.scale.translators;
 
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.scale.model.CZScaleChangeHistory;
@@ -9,10 +12,6 @@ import org.catools.common.collections.CList;
 import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
-
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Objects;
 
 /**
  * Translator class for converting ZScale test cases into ETL items. Provides methods to map test

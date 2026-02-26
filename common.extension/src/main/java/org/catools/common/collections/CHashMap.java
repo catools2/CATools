@@ -1,10 +1,9 @@
 package org.catools.common.collections;
 
-import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.utils.CJsonUtil;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.catools.common.collections.interfaces.CMap;
+import org.catools.common.utils.CJsonUtil;
 
 public class CHashMap<K, V> extends HashMap<K, V> implements CMap<K, V> {
   public CHashMap() {}

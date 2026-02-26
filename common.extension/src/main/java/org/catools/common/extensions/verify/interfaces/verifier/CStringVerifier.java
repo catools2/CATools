@@ -1,13 +1,12 @@
 package org.catools.common.extensions.verify.interfaces.verifier;
 
+import java.util.List;
+import java.util.regex.Pattern;
 import org.catools.common.extensions.base.CBaseStringExtension;
 import org.catools.common.extensions.states.interfaces.CStringState;
 import org.catools.common.extensions.verify.CVerificationQueue;
 import org.catools.common.extensions.verify.hard.CStringVerification;
 import org.catools.common.utils.CStringUtil;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * CStringVerifier is an interface for String verification related methods.

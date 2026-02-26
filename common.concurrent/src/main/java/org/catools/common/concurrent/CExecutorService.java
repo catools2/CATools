@@ -1,9 +1,6 @@
 // language: java
 package org.catools.common.concurrent;
 
-import org.catools.common.concurrent.exceptions.CInterruptedException;
-import org.catools.common.utils.CSleeper;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
+import org.catools.common.concurrent.exceptions.CInterruptedException;
+import org.catools.common.utils.CSleeper;
 
 /**
  * A simple implementation of {@link ExecutorService} to simplify the interface for most automation

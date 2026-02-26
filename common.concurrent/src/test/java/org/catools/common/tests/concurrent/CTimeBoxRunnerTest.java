@@ -1,15 +1,14 @@
 package org.catools.common.tests.concurrent;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.assertj.core.api.Assertions;
 import org.catools.common.concurrent.CTimeBoxRunner;
 import org.catools.common.concurrent.exceptions.CThreadTimeoutException;
 import org.catools.common.utils.CDateUtil;
 import org.catools.common.utils.CSleeper;
 import org.testng.annotations.Test;
-
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CTimeBoxRunnerTest {
 

@@ -1,6 +1,9 @@
 package org.catools.atlassian.etl.jira.translators;
 
 import com.atlassian.jira.rest.client.api.domain.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,10 +16,6 @@ import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
 import org.codehaus.jettison.json.JSONObject;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Translator class for converting Jira issues into {@link CEtlItem} objects.

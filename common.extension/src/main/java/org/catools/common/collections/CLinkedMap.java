@@ -1,11 +1,10 @@
 package org.catools.common.collections;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.catools.common.collections.interfaces.CMap;
-import org.catools.common.utils.CJsonUtil;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.catools.common.collections.interfaces.CMap;
+import org.catools.common.utils.CJsonUtil;
 
 @JsonDeserialize(as = CLinkedMap.class)
 public class CLinkedMap<K, V> extends LinkedHashMap<K, V> implements CMap<K, V> {

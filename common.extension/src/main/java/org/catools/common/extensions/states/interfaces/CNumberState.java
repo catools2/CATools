@@ -1,8 +1,7 @@
 package org.catools.common.extensions.states.interfaces;
 
-import org.catools.common.exception.CInvalidRangeException;
-
 import java.util.Objects;
+import org.catools.common.exception.CInvalidRangeException;
 
 /**
  * CNumberState is an interface for Boolean state related methods.

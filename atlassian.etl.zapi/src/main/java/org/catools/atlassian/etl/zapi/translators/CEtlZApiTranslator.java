@@ -1,13 +1,12 @@
 package org.catools.atlassian.etl.zapi.translators;
 
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.catools.atlassian.zapi.model.*;
 import org.catools.etl.tms.cache.CEtlCacheManager;
 import org.catools.etl.tms.dao.CEtlBaseDao;
 import org.catools.etl.tms.model.*;
-
-import java.util.Objects;
 
 /**
  * Translator class for converting ZAPI cycles and executions into ETL-compatible objects. Provides

@@ -1,10 +1,9 @@
 package org.catools.common.extensions.states.interfaces;
 
-import org.apache.commons.lang3.StringUtils;
-import org.catools.common.io.CFile;
-
 import java.io.File;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
+import org.catools.common.io.CFile;
 
 /**
  * CFileState is an interface for File state related methods.
