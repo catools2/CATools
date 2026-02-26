@@ -1,8 +1,7 @@
 package org.catools.mcp.entities;
 
-import lombok.*;
-
 import java.time.Instant;
+import lombok.*;
 
 @Getter
 @Setter

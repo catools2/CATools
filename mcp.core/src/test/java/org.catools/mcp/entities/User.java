@@ -1,9 +1,8 @@
 package org.catools.mcp.entities;
 
+import java.util.Date;
 import lombok.*;
 import org.catools.mcp.enums.StatusCode;
-
-import java.util.Date;
 
 @Getter
 @Setter

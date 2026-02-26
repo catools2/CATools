@@ -1,7 +1,6 @@
 package org.catools.mcp.context;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;

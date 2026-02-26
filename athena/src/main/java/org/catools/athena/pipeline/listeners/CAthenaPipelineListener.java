@@ -1,5 +1,6 @@
 package org.catools.athena.pipeline.listeners;
 
+import java.time.Instant;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.athena.model.pipeline.PipelineDto;
 import org.catools.athena.pipeline.configs.CAthenaPipelineConfigs;
@@ -7,8 +8,6 @@ import org.catools.athena.pipeline.helpers.CPipelineHelper;
 import org.catools.athena.rest.feign.pipeline.utils.PipelineUtils;
 import org.testng.*;
 import org.testng.internal.IResultListener;
-
-import java.time.Instant;
 
 @Slf4j
 public class CAthenaPipelineListener

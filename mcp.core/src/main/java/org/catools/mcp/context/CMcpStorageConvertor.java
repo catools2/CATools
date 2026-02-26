@@ -1,20 +1,19 @@
 package org.catools.mcp.context;
 
+import static org.catools.mcp.constant.CMcpConstant.SCHEMAS;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-import org.catools.common.utils.CResourceUtil;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.catools.mcp.constant.CMcpConstant.SCHEMAS;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+import org.catools.common.utils.CResourceUtil;
 
 /**
  * Utility for converting JSON Schema files into example JSON nodes.

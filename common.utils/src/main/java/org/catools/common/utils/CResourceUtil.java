@@ -1,12 +1,6 @@
 package org.catools.common.utils;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.stream.Streams;
-import org.apache.commons.lang3.tuple.Pair;
-import org.catools.common.configs.CPathConfigs;
-import org.catools.common.exception.CResourceNotFoundException;
+import static org.catools.common.utils.CSystemUtil.getPlatform;
 
 import java.io.File;
 import java.io.InputStream;
@@ -18,8 +12,13 @@ import java.util.function.BiFunction;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
-
-import static org.catools.common.utils.CSystemUtil.getPlatform;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.stream.Streams;
+import org.apache.commons.lang3.tuple.Pair;
+import org.catools.common.configs.CPathConfigs;
+import org.catools.common.exception.CResourceNotFoundException;
 
 @UtilityClass
 public class CResourceUtil {

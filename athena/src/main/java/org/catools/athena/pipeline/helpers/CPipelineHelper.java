@@ -1,5 +1,12 @@
 package org.catools.athena.pipeline.helpers;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.catools.athena.model.core.MetadataDto;
 import org.catools.athena.model.pipeline.PipelineDto;
@@ -14,14 +21,6 @@ import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 @Slf4j
 public class CPipelineHelper {

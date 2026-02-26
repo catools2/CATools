@@ -1,11 +1,10 @@
 package org.catools.mcp.util;
 
-import lombok.experimental.UtilityClass;
-import org.catools.common.utils.CStringUtil;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import lombok.experimental.UtilityClass;
+import org.catools.common.utils.CStringUtil;
 
 /**
  * Utility class providing type conversion operations between Java types and JSON schema types.

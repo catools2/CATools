@@ -1,10 +1,9 @@
 package org.catools.common.datastate;
 
-import org.catools.common.utils.CJsonUtil;
-
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+import org.catools.common.utils.CJsonUtil;
 
 /**
  * CDataState provides a simple key-value storage mechanism that can operate in either thread-safe

@@ -1,13 +1,13 @@
 package org.catools.mcp.context;
 
+import static org.testng.Assert.assertEquals;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.mcp.entities.*;
 import org.catools.mcp.enums.Country;
 import org.catools.mcp.enums.PhoneType;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertEquals;
 
 public class CMcpStorageConvertorTest {
 
