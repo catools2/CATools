@@ -35,7 +35,8 @@ public class CHoconConfigTest {
       String expected = "hello-from-system";
       System.setProperty(envKey, expected);
 
-      Config config = ConfigFactory.empty().withValue(path, ConfigValueFactory.fromAnyRef(expected));
+      Config config =
+          ConfigFactory.empty().withValue(path, ConfigValueFactory.fromAnyRef(expected));
       CHoconConfig cfg = new CHoconConfig(config, path);
       String value = cfg.asString();
       Assert.assertEquals(value, expected);
@@ -63,30 +64,30 @@ public class CHoconConfigTest {
     Map<String, CVaultClient> clients = (Map<String, CVaultClient>) clientsField.get(null);
     clients.clear();
 
-    CVaultClient fakeClient = new CVaultClient(null, "fake") {
-      @Override
-      public String getValue(String key, String defaultTo) {
-        if (key == null)
-          return defaultTo;
-        if (key.equals(path))
-          return "vault-secret-value";
-        // also support env-style key
-        if (key.equals(path.toUpperCase().replaceAll("\\.", "_")))
-          return "vault-secret-value";
-        return defaultTo;
-      }
+    CVaultClient fakeClient =
+        new CVaultClient(null, "fake") {
+          @Override
+          public String getValue(String key, String defaultTo) {
+            if (key == null) return defaultTo;
+            if (key.equals(path)) return "vault-secret-value";
+            // also support env-style key
+            if (key.equals(path.toUpperCase().replaceAll("\\.", "_"))) return "vault-secret-value";
+            return defaultTo;
+          }
 
-      @Override
-      public String getValue(String key) {
-        return getValue(key, null);
-      }
-    };
+          @Override
+          public String getValue(String key) {
+            return getValue(key, null);
+          }
+        };
 
     clients.put("fake", fakeClient);
 
-    CHoconConfig cfg = new CHoconConfig(
-        ConfigFactory.defaultApplication().withValue("catools.vault.enabled", ConfigValueFactory.fromAnyRef(true)),
-        path);
+    CHoconConfig cfg =
+        new CHoconConfig(
+            ConfigFactory.defaultApplication()
+                .withValue("catools.vault.enabled", ConfigValueFactory.fromAnyRef(true)),
+            path);
     String value = cfg.asString();
     Assert.assertEquals(value, "vault-secret-value");
   }
@@ -106,19 +107,20 @@ public class CHoconConfigTest {
     Map<String, CVaultClient> clients = (Map<String, CVaultClient>) clientsField.get(null);
     clients.clear();
 
-    CVaultClient fakeClient = new CVaultClient(null, "fake") {
-      @Override
-      public String getValue(String key, String defaultTo) {
-        // Always return default (simulate key not present)
-        return defaultTo;
-      }
+    CVaultClient fakeClient =
+        new CVaultClient(null, "fake") {
+          @Override
+          public String getValue(String key, String defaultTo) {
+            // Always return default (simulate key not present)
+            return defaultTo;
+          }
 
-      @Override
-      public String getValue(String key) {
-        // Simulate key not present -> return null
-        return null;
-      }
-    };
+          @Override
+          public String getValue(String key) {
+            // Simulate key not present -> return null
+            return null;
+          }
+        };
 
     clients.put("fake", fakeClient);
 
@@ -143,25 +145,22 @@ public class CHoconConfigTest {
     Map<String, CVaultClient> clients = (Map<String, CVaultClient>) clientsField.get(null);
     clients.clear();
 
-    CVaultClient fakeClient = new CVaultClient(null, "fake") {
-      @Override
-      public String getValue(String key, String defaultTo) {
-        if (key == null)
-          return defaultTo;
-        if (key.equals(path))
-          return CStringUtil.EMPTY; // path exists but value is empty
-        return defaultTo;
-      }
+    CVaultClient fakeClient =
+        new CVaultClient(null, "fake") {
+          @Override
+          public String getValue(String key, String defaultTo) {
+            if (key == null) return defaultTo;
+            if (key.equals(path)) return CStringUtil.EMPTY; // path exists but value is empty
+            return defaultTo;
+          }
 
-      @Override
-      public String getValue(String key) {
-        if (key == null)
-          return null;
-        if (key.equals(path))
-          return CStringUtil.EMPTY; // path exists but value is empty
-        return null;
-      }
-    };
+          @Override
+          public String getValue(String key) {
+            if (key == null) return null;
+            if (key.equals(path)) return CStringUtil.EMPTY; // path exists but value is empty
+            return null;
+          }
+        };
 
     clients.put("fake", fakeClient);
 

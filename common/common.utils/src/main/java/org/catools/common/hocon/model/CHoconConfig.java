@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.catools.common.configs.CVaultConfigs;
 import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
@@ -30,8 +29,7 @@ public class CHoconConfig implements CConfig {
   private static final String VALUE = "value";
   private Config config;
 
-  @Getter
-  private String name;
+  @Getter private String name;
   private String valuePath;
   private String path;
 
@@ -234,7 +232,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   public <T> List<T> asList(Class<T> clazz) {
@@ -250,7 +248,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T>   class Type
+   * @param <T> class Type
    * @return the model
    */
   @Override
