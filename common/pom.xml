@@ -25,6 +25,7 @@
         <module>common.logger</module>
         <module>common.poi</module>
         <module>common.sql</module>
+        <module>common.metrics</module>
         <module>common.security</module>
         <module>common.testng</module>
         <module>common.utils</module>
@@ -34,7 +35,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>catools.parent</artifactId>
+                <artifactId>parent</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -77,6 +78,11 @@
             <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>common.poi</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.metrics</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

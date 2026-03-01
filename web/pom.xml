@@ -28,7 +28,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>catools.parent</artifactId>
+                <artifactId>parent</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>

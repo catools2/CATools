@@ -1,46 +1,36 @@
 #!/bin/bash
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+build_domain() {
+  local domain="$1"
+  local step="$2"
+  local total="$3"
+  local version="2.0.0-SNAPSHOT"
+  echo ""
+  echo "[${step}/${total}] Building ${domain} domain..."
+  cd "${SCRIPT_DIR}/${domain}"
+  "${SCRIPT_DIR}/mvnw" org.codehaus.mojo:versions-maven-plugin:2.7:set-property -Dproperty=revision -DnewVersion=${version} -DgenerateBackupPoms=false
+  "${SCRIPT_DIR}/mvnw" org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=${version} -DgenerateBackupPoms=false
+  "${SCRIPT_DIR}/mvnw" clean install
+}
+
 echo "========================================"
 echo "Building CATools2 - All Domain Projects"
 echo "========================================"
 
-# Build infrastructure first (catools.parent → catools.hibernate.parent → catools.bom)
-echo ""
-echo "[1/8] Building infra domain..."
-./mvnw clean install -f infra/pom.xml
-
-# Build common domain (dependency for others)
-echo ""
-echo "[2/8] Building common domain..."
-./mvnw clean install -f common/pom.xml
-
-# Build other domains
-echo ""
-echo "[3/8] Building web domain..."
-./mvnw clean install -f web/pom.xml
-
-echo ""
-echo "[4/8] Building mcp domain..."
-./mvnw clean install -f mcp/pom.xml
-
-echo ""
-echo "[5/8] Building ws domain..."
-./mvnw clean install -f ws/pom.xml
-
-echo ""
-echo "[6/8] Building reporting domain..."
-./mvnw clean install -f reporting/pom.xml
-
-echo ""
-echo "[7/8] Building pipeline domain..."
-./mvnw clean install -f pipeline/pom.xml
-
-echo ""
-echo "[8/8] Building media domain..."
-./mvnw clean install -f media/pom.xml
+build_domain mcp       1 9
+build_domain infra     2 9
+build_domain common    3 9
+build_domain web       4 9
+build_domain ws        5 9
+build_domain reporting 6 9
+build_domain pipeline  7 9
+build_domain media     8 9
+build_domain distrib   9 9
 
 echo ""
 echo "========================================"
-echo "✅ All domains built successfully!"
+echo "All domains built successfully!"
 echo "========================================"

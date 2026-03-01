@@ -9,25 +9,11 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <scm>
-        <tag>HEAD</tag>
-        <url>scm:git:://gitlab.com/one-bottomline/bat/development/shared/bat.mcp.git</url>
-    </scm>
-
     <name>MCP Toolset - Parent</name>
     <description>The parent pom for core automation tools</description>
-    <url>https://gitlab.com/one-bottomline/bat/development/shared/bat.mcp</url>
-
-    <developers>
-        <developer>
-            <name>Alireza Keshmiri</name>
-            <email>akeshmiri@bottomline.com</email>
-            <url>https://www.linkedin.com/in/akeshmiri</url>
-        </developer>
-    </developers>
 
     <properties>
-        <revision>0.0.1</revision>
+        <revision>2.0.0-SNAPSHOT</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>

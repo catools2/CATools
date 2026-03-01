@@ -8,8 +8,8 @@ import org.catools.common.datastate.CDataState;
 import org.catools.common.extensions.types.CDynamicStringExtension;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 import org.catools.media.model.CScreenShot;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.controls.CElementEngine;
@@ -622,7 +622,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    *
    * @see #Title
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_get_title",
       title = "Get Page Title",
@@ -671,7 +671,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    *
    * @see #Url
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_get_url",
       title = "Get Current URL",
@@ -931,15 +931,15 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @param waitSec custom timeout in seconds for element operations
    * @return CWebElement wrapper with the specified timeout setting
    */
-  @CMcpTool(
+  @McpTool(
       groups = "web",
       name = "driver_find_element",
       title = "Find Ele``ment by xpath or css locator",
       description = "Finds a web element by xpath or css locator with custom name and timeout")
   public CWebElement $(
-      @CMcpToolParam(name = "name", description = "Descriptive name for the element") String name,
-      @CMcpToolParam(name = "locator", description = "The xpath or css locator") String locator,
-      @CMcpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
+      @McpToolParam(name = "name", description = "Descriptive name for the element") String name,
+      @McpToolParam(name = "locator", description = "The xpath or css locator") String locator,
+      @McpToolParam(name = "waitSec", description = "Timeout in seconds") int waitSec) {
     CWebElement webElement = new CWebElement(name, this, locator, waitSec);
     CDataState.write(ACTIVE_WEB_ELEMENT, webElement);
     return webElement;
@@ -1058,7 +1058,7 @@ public class CDriver implements CDriverActions, CDriverNavigation {
    * @see #getTitle()
    * @see #getUrl()
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_get_session_id",
       title = "Get Session Id",

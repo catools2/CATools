@@ -8,8 +8,8 @@ import org.catools.common.io.CFile;
 import org.catools.common.tests.CTest;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 import org.catools.media.utils.CImageUtil;
 import org.catools.reportportal.utils.CReportPortalUtil;
 import org.catools.web.config.CBrowserConfigs;
@@ -109,7 +109,7 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     }
   }
 
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_close",
       title = "Close Page",
@@ -143,13 +143,12 @@ public abstract class CWebTest<DR extends CDriver> extends CTest {
     }
   }
 
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_open_url",
       title = "Open URL",
       description = "Open URL using CATools Page")
-  public void open(
-      @CMcpToolParam(name = "url", description = "The URL to navigate to") String url) {
+  public void open(@McpToolParam(name = "url", description = "The URL to navigate to") String url) {
     open(url, !isCurrentSessionActive());
   }
 

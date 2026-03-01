@@ -3,8 +3,8 @@ package org.catools.web.drivers;
 import java.awt.*;
 import java.util.List;
 import org.catools.common.utils.CSleeper;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 import org.catools.web.enums.CKeys;
 
 /**
@@ -664,7 +664,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param args optional arguments to pass to the script
    * @return the result of the script execution
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_execute_script",
       title = "Execute JavaScript",
@@ -693,19 +693,19 @@ public interface CDriverActions extends CDriverWaiter {
    * @param script the JavaScript code to execute (element will be passed as arguments[0])
    * @return the result of the script execution
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_execute_script_on_element",
       title = "Execute JavaScript on Element",
       description = "Executes JavaScript code on a specific element after waiting for it")
   default <R> R executeScript(
-      @CMcpToolParam(name = "locator", description = "The locator to find the element")
+      @McpToolParam(name = "locator", description = "The locator to find the element")
           String locator,
-      @CMcpToolParam(
+      @McpToolParam(
               name = "waitSec",
               description = "Maximum time in seconds to wait for the element")
           int waitSec,
-      @CMcpToolParam(
+      @McpToolParam(
               name = "script",
               description =
                   "The JavaScript code to execute (element will be passed as arguments[0])")

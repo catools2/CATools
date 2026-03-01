@@ -16,8 +16,8 @@ import org.catools.common.io.CResource;
 import org.catools.common.utils.CFileUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 import org.catools.media.utils.CImageUtil;
 import org.catools.web.config.CBrowserConfigs;
 import org.catools.web.config.CGridConfigs;
@@ -348,13 +348,13 @@ public interface CWebElementActions extends CWebElementStates {
    * inputField.sendKeys("test@example.com", "Tab");
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_send_keys",
       title = "Send Keys to Element",
       description = "Sends keys to the web element (types text or special keys)")
   default boolean sendKeys(
-      @CMcpToolParam(name = "keys", description = "The keys to send to the element") String keys) {
+      @McpToolParam(name = "keys", description = "The keys to send to the element") String keys) {
     return sendKeys(keys, getWaitSec());
   }
 
@@ -378,14 +378,13 @@ public interface CWebElementActions extends CWebElementStates {
    * inputField.press(CKeys.CONTROL, CKeys.A, CKeys.DELETE);
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_press_special_keys",
       title = "Press Special Keys to Element",
       description = "Press keys on the web element (Enter, Tab, etc.)")
   default boolean press(
-      @CMcpToolParam(name = "keys", description = "The keys to send to the element")
-          CKeys... keys) {
+      @McpToolParam(name = "keys", description = "The keys to send to the element") CKeys... keys) {
     return press(getWaitSec(), keys);
   }
 
@@ -448,7 +447,7 @@ public interface CWebElementActions extends CWebElementStates {
    * submitButton.mouseClick();
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_mouse_click",
       title = "Mouse Click Element",
@@ -510,7 +509,7 @@ public interface CWebElementActions extends CWebElementStates {
   }
 
   /** Scrolls the element into view within the browser window. */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_scroll_into_view",
       title = "Scroll Element Into View",
@@ -782,7 +781,7 @@ public interface CWebElementActions extends CWebElementStates {
    * menuLink.click();
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_click",
       title = "Click Element",
@@ -1422,13 +1421,12 @@ public interface CWebElementActions extends CWebElementStates {
    * phoneField.type("555-123-4567");
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_type",
       title = "Type Text in Element",
       description = "Types text character by character in the web element input field")
-  default boolean type(
-      @CMcpToolParam(name = "text", description = "The text to type") String text) {
+  default boolean type(@McpToolParam(name = "text", description = "The text to type") String text) {
     return type(text, getWaitSec());
   }
 
@@ -1695,7 +1693,7 @@ public interface CWebElementActions extends CWebElementStates {
    * System.out.println("Page title: " + titleText);
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_get_text",
       title = "Get Element Text",

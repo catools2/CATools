@@ -20,8 +20,7 @@
 
     <!-- Build order: catools.parent must come first -->
     <modules>
-        <module>catools.parent</module>
-        <module>catools.hibernate.parent</module>
-        <module>catools.bom</module>
+        <module>parent</module>
+        <module>hibernate.parent</module>
     </modules>
 </project>

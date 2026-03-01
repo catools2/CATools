@@ -29,24 +29,12 @@
         <dependencies>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>catools.parent</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
                 <artifactId>mcp.core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>mcp.server</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>mcp.web</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

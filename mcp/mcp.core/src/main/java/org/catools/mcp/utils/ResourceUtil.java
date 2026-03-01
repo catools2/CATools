@@ -38,7 +38,7 @@ public class ResourceUtil {
             }
 
             // Create a temporary file
-            Path tempFile = Files.createTempFile("pmx-mcp-", "-" + configFileName);
+            Path tempFile = Files.createTempFile("mcp-", "-" + configFileName);
             tempFile.toFile().deleteOnExit(); // Clean up on exit
 
             // Copy resource to temporary file

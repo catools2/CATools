@@ -11,9 +11,9 @@
 
     <parent>
         <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../infra/catools.parent/pom.xml</relativePath>
+        <relativePath>../../infra/parent/pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -35,7 +35,7 @@
         </dependency>
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>common.media</artifactId>
+            <artifactId>media</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

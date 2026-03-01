@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.catools</groupId>
-    <artifactId>catools.parent</artifactId>
+    <artifactId>parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 

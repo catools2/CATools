@@ -18,7 +18,7 @@ public class McpStorageAdmin {
 
     @McpTool(
             groups = "mcp-storage",
-            name = "bat_variable_define",
+            name = "variable_define",
             title = "Get or define variable from Storage",
             description = "Retrieves or define variable by name from the Storage to be used in other tools")
     public static JsonNode defineVariable(
@@ -44,7 +44,7 @@ public class McpStorageAdmin {
 
     @McpTool(
             groups = "mcp-storage",
-            name = "bat_variable_list",
+            name = "variable_list",
             title = "Get list of all defined variables",
             description = "Retrieves list of the defined variables that is using in the MCP tools")
     public static Set<String> getDefinedVariables() {
@@ -53,7 +53,7 @@ public class McpStorageAdmin {
 
     @McpTool(
             groups = "mcp-storage",
-            name = "bat_variable_update",
+            name = "variable_update",
             title = "Update Entity Field",
             description = "Updates a specific field in an variable stored in the Storage using JsonPath")
     public static JsonNode updateDefinedVariable(
@@ -86,7 +86,7 @@ public class McpStorageAdmin {
 
     @McpTool(
             groups = "mcp-storage",
-            name = "bat_variable_delete",
+            name = "variable_delete",
             title = "Delete/Remove variable from Storage",
             description = "Delete a variable by name from the Storage. return true if record wsa existed otherwise false")
     public static boolean deleteDefinedVariable(
@@ -98,7 +98,7 @@ public class McpStorageAdmin {
 
     @McpTool(
             groups = "mcp-storage",
-            name = "bat_variable_types",
+            name = "variable_types",
             title = "Get list of supporting types",
             description = "Return list of supporting types.")
     public static Set<String> getListOfSupportingTypes() {

@@ -8,9 +8,9 @@
 
     <parent>
         <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../infra/catools.parent/pom.xml</relativePath>
+        <relativePath>../../infra/parent/pom.xml</relativePath>
     </parent>
 
     <name>Core Automation Toolset - Report Portal Integration</name>

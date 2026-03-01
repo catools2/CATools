@@ -4,8 +4,8 @@ import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.options.Cookie;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CSleeper;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -859,7 +859,7 @@ public interface CDriverActions extends CDriverWaiter {
    * @param args   optional arguments to pass to the script
    * @return the result of the script execution
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_execute_script",
       title = "Execute JavaScript",
@@ -889,18 +889,18 @@ public interface CDriverActions extends CDriverWaiter {
    * @param script  the JavaScript code to execute (element will be passed as arguments[0])
    * @return the result of the script execution
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "driver"},
       name = "driver_execute_script_on_element",
       title = "Execute JavaScript on Element",
       description = "Executes JavaScript code on a specific element after waiting for it"
   )
   default <R> R executeScript(
-      @CMcpToolParam(name = "locator", description = "The locator to find the element")
+      @McpToolParam(name = "locator", description = "The locator to find the element")
       String locator,
-      @CMcpToolParam(name = "waitSec", description = "Maximum time in seconds to wait for the element")
+      @McpToolParam(name = "waitSec", description = "Maximum time in seconds to wait for the element")
       int waitSec,
-      @CMcpToolParam(name = "script", description = "The JavaScript code to execute (element will be passed as arguments[0])")
+      @McpToolParam(name = "script", description = "The JavaScript code to execute (element will be passed as arguments[0])")
       String script) {
     return waitUntil("Execute Script", waitSec, engine -> engine.executeScript(locator, script));
   }

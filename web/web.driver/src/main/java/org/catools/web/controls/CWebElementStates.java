@@ -1,7 +1,7 @@
 package org.catools.web.controls;
 
 import org.apache.commons.lang3.StringUtils;
-import org.catools.mcp.annotation.CMcpTool;
+import org.catools.mcp.annotation.McpTool;
 
 /**
  * Interface providing state checking and property retrieval methods for web elements. This
@@ -106,7 +106,7 @@ public interface CWebElementStates extends CWebElementWaiter {
    * }
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_is_present",
       title = "Check if Element is Present",
@@ -188,7 +188,7 @@ public interface CWebElementStates extends CWebElementWaiter {
    * }
    * </pre>
    */
-  @CMcpTool(
+  @McpTool(
       groups = {"web", "web_element"},
       name = "element_is_visible",
       title = "Check if Element is Visible",

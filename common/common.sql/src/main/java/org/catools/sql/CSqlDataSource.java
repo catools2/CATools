@@ -19,8 +19,8 @@ import org.catools.common.date.CDate;
 import org.catools.common.utils.CRegExUtil;
 import org.catools.common.utils.CRetry;
 import org.catools.common.utils.CStringUtil;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
 import org.catools.metrics.configs.CMetricsConfigs;
 import org.catools.metrics.model.CMetric;
 import org.catools.metrics.utils.CMetricsUtils;
@@ -44,14 +44,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryString {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_string",
         title = "Query String",
         description = "Query For String Value from Database")
     public static String query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       String query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -123,14 +123,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryDate {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_date",
         title = "Query Date",
         description = "Query For Date Value from Database")
     public static Date query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       Date query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -198,14 +198,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryInt {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_int",
         title = "Query Integer",
         description = "Query For Integer Value from Database")
     public static Integer query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       Integer query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -277,14 +277,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryLong {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_long",
         title = "Query Long",
         description = "Query For Long Value from Database")
     public static Long query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       Long query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -352,14 +352,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryDouble {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_double",
         title = "Query Double",
         description = "Query For Double Value from Database")
     public static Double query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       Double query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -431,14 +431,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryBigDecimal {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_big_decimal",
         title = "Query Big Decimal",
         description = "Query For Big Decimal Value from Database")
     public static BigDecimal query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       BigDecimal query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -557,14 +557,14 @@ public class CSqlDataSource {
           });
     }
 
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_map_list",
         title = "Query Map List",
         description = "Query For List Of Key-Value pairs")
     public static CList<Map<String, Object>> query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       CList<Map<String, Object>> query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -757,14 +757,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryMap {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_map",
         title = "Query Map",
         description = "Query For Key-Value pair")
     public static CHashMap<String, Object> query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       CHashMap<String, Object> query = query(sql, new MapSqlParameterSource(), dbSource);
       CDataState.write("query_result", query);
@@ -837,14 +837,14 @@ public class CSqlDataSource {
   }
 
   public static class QueryObject {
-    @CMcpTool(
+    @McpTool(
         groups = {"sql"},
         name = "query_for_object",
         title = "Query Object",
         description = "Query For Object pair")
     public static Object query(
-        @CMcpToolParam(name = "sql", description = "The sql query to execute") String sql,
-        @CMcpToolParam(name = "dbSource", description = "The data source to connect to")
+        @McpToolParam(name = "sql", description = "The sql query to execute") String sql,
+        @McpToolParam(name = "dbSource", description = "The data source to connect to")
             String dbSource) {
       return query(sql, new MapSqlParameterSource(), dbSource);
     }

@@ -11,9 +11,9 @@
 
     <parent>
         <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../infra/catools.parent/pom.xml</relativePath>
+        <relativePath>../../infra/parent/pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -26,6 +26,11 @@
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.extension</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.metrics</artifactId>
             <version>${revision}</version>
         </dependency>
         <!-- ###################### Athena ######################### -->
