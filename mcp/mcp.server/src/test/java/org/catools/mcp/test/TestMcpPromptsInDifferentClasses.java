@@ -1,19 +1,19 @@
 package org.catools.mcp.test;
 
+import org.catools.mcp.annotation.McpPrompt;
 import lombok.extern.slf4j.Slf4j;
-import org.catools.mcp.annotation.CMcpPrompt;
 
 @Slf4j
 public class TestMcpPromptsInDifferentClasses {
 
-  @CMcpPrompt(groups = "test")
-  public void promptWithVoidReturn() {
-    log.debug("calling promptWithVoidReturn");
-  }
+    @McpPrompt(groups = {"test", "test2"})
+    public void promptWithVoidReturn() {
+        log.debug("calling promptWithVoidReturn");
+    }
 
-  @CMcpPrompt(groups = "test")
-  public String promptWithReturnNull() {
-    log.debug("calling promptWithReturnNull");
-    return null;
-  }
+    @McpPrompt(groups = {"test", "test1"})
+    public String promptWithReturnNull() {
+        log.debug("calling promptWithReturnNull");
+        return null;
+    }
 }

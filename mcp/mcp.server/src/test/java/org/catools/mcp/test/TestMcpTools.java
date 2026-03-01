@@ -1,74 +1,74 @@
 package org.catools.mcp.test;
 
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.annotation.McpToolParam;
+import org.catools.mcp.exception.McpServerException;
 import lombok.extern.slf4j.Slf4j;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.annotation.CMcpToolParam;
-import org.catools.mcp.exception.CMcpServerException;
 
 @Slf4j
 public class TestMcpTools {
 
-  @CMcpTool(groups = "test", title = "title", description = "description")
-  public String toolWithDefaultName() {
-    log.debug("calling toolWithDefaultName");
-    return "toolWithDefaultName is called";
-  }
+    @McpTool(groups = {"test", "test2"}, title = "title", description = "description")
+    public String toolWithDefaultName() {
+        log.debug("calling toolWithDefaultName");
+        return "toolWithDefaultName is called";
+    }
 
-  @CMcpTool(groups = "test", name = "toolWithDefaultTitle", description = "description")
-  public String toolWithDefaultTitle() {
-    log.debug("calling toolWithDefaultTitle");
-    return "toolWithDefaultTitle is called";
-  }
+    @McpTool(groups = {"test", "test3"}, name = "toolWithDefaultTitle", description = "description")
+    public String toolWithDefaultTitle() {
+        log.debug("calling toolWithDefaultTitle");
+        return "toolWithDefaultTitle is called";
+    }
 
-  @CMcpTool(groups = "test", name = "toolWithDefaultDescription", title = "title")
-  public String toolWithDefaultDescription() {
-    log.debug("calling toolWithDefaultDescription");
-    return "toolWithDefaultDescription is called";
-  }
+    @McpTool(groups = "test", name = "toolWithDefaultDescription", title = "title")
+    public String toolWithDefaultDescription() {
+        log.debug("calling toolWithDefaultDescription");
+        return "toolWithDefaultDescription is called";
+    }
 
-  @CMcpTool(groups = "test")
-  public String toolWithAllDefault() {
-    log.debug("calling toolWithAllDefault");
-    return "toolWithAllDefault is called";
-  }
+    @McpTool(groups = "test")
+    public String toolWithAllDefault() {
+        log.debug("calling toolWithAllDefault");
+        return "toolWithAllDefault is called";
+    }
 
-  @CMcpTool(groups = "test")
-  public String toolWithOptionalParam(
-      @CMcpToolParam(name = "param", description = "param") String param) {
+    @McpTool(groups = "test")
+    public String toolWithOptionalParam(
+            @McpToolParam(name = "param", description = "param") String param) {
 
-    log.debug("calling toolWithOptionalParam with param: {}", param);
-    return "toolWithOptionalParam is called with optional param: " + param;
-  }
+        log.debug("calling toolWithOptionalParam with param: {}", param);
+        return "toolWithOptionalParam is called with optional param: " + param;
+    }
 
-  @CMcpTool(groups = "test")
-  public String toolWithRequiredParam(
-      @CMcpToolParam(name = "param", description = "param") String param) {
+    @McpTool(groups = "test")
+    public String toolWithRequiredParam(
+            @McpToolParam(name = "param", description = "param") String param) {
 
-    log.debug("calling toolWithRequiredParam with param: {}", param);
-    return "toolWithRequiredParam is called with required param: " + param;
-  }
+        log.debug("calling toolWithRequiredParam with param: {}", param);
+        return "toolWithRequiredParam is called with required param: " + param;
+    }
 
-  @CMcpTool(groups = "test")
-  public String toolWithMultiParams(
-      @CMcpToolParam(name = "param1", description = "param1") String param1,
-      @CMcpToolParam(name = "param2", description = "param2") String param2) {
+    @McpTool(groups = "test")
+    public String toolWithMultiParams(
+            @McpToolParam(name = "param1", description = "param1") String param1,
+            @McpToolParam(name = "param2", description = "param2") String param2) {
 
-    log.debug("calling toolWithMultiParams with params: {}, {}", param1, param2);
-    return String.format("toolWithMultiParams is called with params: %s, %s", param1, param2);
-  }
+        log.debug("calling toolWithMultiParams with params: {}, {}", param1, param2);
+        return String.format("toolWithMultiParams is called with params: %s, %s", param1, param2);
+    }
 
-  @CMcpTool(groups = "test")
-  public String toolWithMixedParams(
-      @CMcpToolParam(name = "mcpParam", description = "mcpParam") String mcpParam,
-      String nonMcpParam) {
+    @McpTool(groups = "test")
+    public String toolWithMixedParams(
+            @McpToolParam(name = "mcpParam", description = "mcpParam") String mcpParam,
+            String nonMcpParam) {
 
-    log.debug("calling toolWithMixedParams with params: {}, {}", mcpParam, nonMcpParam);
-    return String.format(
-        "toolWithMixedParams is called with params: %s, %s", mcpParam, nonMcpParam);
-  }
+        log.debug("calling toolWithMixedParams with params: {}, {}", mcpParam, nonMcpParam);
+        return String.format(
+                "toolWithMixedParams is called with params: %s, %s", mcpParam, nonMcpParam);
+    }
 
-  @CMcpTool
-  public void toolWithoutGroupShouldSkip() {
-    throw new CMcpServerException("This tool should be skipped because it has no group");
-  }
+    @McpTool
+    public void toolWithoutGroupShouldSkip() {
+        throw new McpServerException("This tool should be skipped because it has no group");
+    }
 }

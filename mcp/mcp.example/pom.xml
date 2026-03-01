@@ -1,0 +1,44 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mcp.example</artifactId>
+    <packaging>jar</packaging>
+
+    <name>MCP Toolset - Web MCP Server</name>
+    <description>The Web MCP Server to be used for interaction with web-driver</description>
+
+    <parent>
+        <groupId>org.catools</groupId>
+        <artifactId>mcp.parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../mcp.parent/pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+        <!-- MCP dependencies -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>mcp.core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>mcp.server</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+</project>

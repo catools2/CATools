@@ -1,39 +1,39 @@
 package org.catools.mcp.test;
 
-import org.catools.mcp.annotation.CMcpJsonSchemaProperty;
-import org.catools.mcp.annotation.CMcpTool;
-import org.catools.mcp.server.CMcpStructuredContent;
+import org.catools.mcp.annotation.McpJsonSchemaProperty;
+import org.catools.mcp.annotation.McpTool;
+import org.catools.mcp.server.McpStructuredContent;
 
 public class TestMcpToolsStructuredContent {
 
-  public record TestStructuredContentC(
-      @CMcpJsonSchemaProperty(description = "test int", required = true) int testInt,
-      @CMcpJsonSchemaProperty(description = "test integer") Integer testInteger,
-      @CMcpJsonSchemaProperty(description = "test long", required = true) long testLong,
-      @CMcpJsonSchemaProperty(description = "test long class") Long testLongClass,
-      @CMcpJsonSchemaProperty(description = "test float", required = true) float testFloat,
-      @CMcpJsonSchemaProperty(description = "test float class") Float testFloatClass,
-      @CMcpJsonSchemaProperty(description = "test double") double testDouble,
-      @CMcpJsonSchemaProperty(description = "test double class") Double testDoubleClass)
-      implements CMcpStructuredContent {
+    public record TestStructuredContent(
+            @McpJsonSchemaProperty(description = "test int", required = true) int testInt,
+            @McpJsonSchemaProperty(description = "test integer") Integer testInteger,
+            @McpJsonSchemaProperty(description = "test long", required = true) long testLong,
+            @McpJsonSchemaProperty(description = "test long class") Long testLongClass,
+            @McpJsonSchemaProperty(description = "test float", required = true) float testFloat,
+            @McpJsonSchemaProperty(description = "test float class") Float testFloatClass,
+            @McpJsonSchemaProperty(description = "test double") double testDouble,
+            @McpJsonSchemaProperty(description = "test double class") Double testDoubleClass)
+            implements McpStructuredContent {
 
-    @Override
-    public String asTextContent() {
-      return String.format(
-          "testInt: %d, testInteger: %d, testLong: %d, testLongClass: %d, testFloat: %f, testFloatClass: %f, testDouble: %f, testDoubleClass: %f",
-          testInt,
-          testInteger,
-          testLong,
-          testLongClass,
-          testFloat,
-          testFloatClass,
-          testDouble,
-          testDoubleClass);
+        @Override
+        public String asTextContent() {
+            return String.format(
+                    "testInt: %d, testInteger: %d, testLong: %d, testLongClass: %d, testFloat: %f, testFloatClass: %f, testDouble: %f, testDoubleClass: %f",
+                    testInt,
+                    testInteger,
+                    testLong,
+                    testLongClass,
+                    testFloat,
+                    testFloatClass,
+                    testDouble,
+                    testDoubleClass);
+        }
     }
-  }
 
-  @CMcpTool(groups = "test")
-  public TestStructuredContentC toolWithReturnStructuredContent() {
-    return new TestStructuredContentC(1, 2, 3L, 4L, 5.0F, 6.0F, 7.0, 8.0);
-  }
+    @McpTool(groups = "test")
+    public TestStructuredContent toolWithReturnStructuredContent() {
+        return new TestStructuredContent(1, 2, 3L, 4L, 5.0F, 6.0F, 7.0, 8.0);
+    }
 }

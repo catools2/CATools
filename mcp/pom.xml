@@ -19,9 +19,10 @@
     </properties>
 
     <modules>
+        <module>mcp.parent</module>
         <module>mcp.core</module>
         <module>mcp.server</module>
-        <module>mcp.web</module>
+        <module>mcp.example</module>
     </modules>
 
     <dependencyManagement>

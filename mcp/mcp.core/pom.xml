@@ -11,17 +11,12 @@
 
     <parent>
         <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
+        <artifactId>mcp.parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../infra/catools.parent/pom.xml</relativePath>
+        <relativePath>../mcp.parent/pom.xml</relativePath>
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.utils</artifactId>
-            <version>${revision}</version>
-        </dependency>
         <dependency>
             <groupId>io.modelcontextprotocol.sdk</groupId>
             <artifactId>mcp</artifactId>
