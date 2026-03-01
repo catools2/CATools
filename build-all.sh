@@ -23,11 +23,11 @@ echo "========================================"
 build_domain mcp       1 9
 build_domain infra     2 9
 build_domain common    3 9
-build_domain web       4 9
-build_domain ws        5 9
-build_domain reporting 6 9
-build_domain pipeline  7 9
-build_domain media     8 9
+build_domain reporting 4 9
+build_domain media     5 9
+build_domain web       6 9
+build_domain ws        7 9
+# build_domain pipeline  8 9
 build_domain distrib   9 9
 
 echo ""
