@@ -1,23 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.catools</groupId>
     <artifactId>web</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Core Automation Toolset - Web</name>
+    <name>Core Automation Toolset - Web Root</name>
     <description>The Web tools to be used in CATs projects</description>
 
-    <parent>
-        <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
-        <version>${revision}</version>
-        <relativePath>../catools.parent/pom.xml</relativePath>
-    </parent>
+    <properties>
+        <revision>2.0.0-SNAPSHOT</revision>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <spotless.skip>true</spotless.skip>
+    </properties>
+
+    <modules>
+        <module>web.driver</module>
+        <module>web.playwright</module>
+        <module>web.selenium</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>catools.parent</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>web.driver</artifactId>
@@ -35,11 +50,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>web.driver</artifactId>
-        </dependency>
-    </dependencies>
 </project>

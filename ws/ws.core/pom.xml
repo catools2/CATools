@@ -1,0 +1,61 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ws.core</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Core Automation Toolset - Web Services Core</name>
+    <description>The HTTP/SOAP core to be used in all other CATools projects</description>
+
+    <parent>
+        <groupId>org.catools</groupId>
+        <artifactId>catools.parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../infra/catools.parent/pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <!-- TestNG -->
+        <TESTNG_TEST_RETRY_COUNT>2</TESTNG_TEST_RETRY_COUNT>
+    </properties>
+
+    <dependencies>
+        <!-- ######################  CATools ######################### -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>common.extension</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <!-- ###################### Athena ######################### -->
+        <dependency>
+            <groupId>org.catools</groupId>
+            <artifactId>athena-model</artifactId>
+        </dependency>
+
+        <!-- ######################  Rest Assured ######################### -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+
+        <!-- ####################### JsonPath ######################### -->
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+        </dependency>
+    </dependencies>
+</project>

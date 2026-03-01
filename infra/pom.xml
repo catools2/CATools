@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.catools</groupId>
+    <artifactId>infra</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <name>Core Automation Toolset - Infrastructure Root</name>
+    <description>Parent POMs and BOM for all CATools projects</description>
+
+    <properties>
+        <revision>2.0.0-SNAPSHOT</revision>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <spotless.skip>true</spotless.skip>
+    </properties>
+
+    <!-- Build order: catools.parent must come first -->
+    <modules>
+        <module>catools.parent</module>
+        <module>catools.hibernate.parent</module>
+        <module>catools.bom</module>
+    </modules>
+</project>

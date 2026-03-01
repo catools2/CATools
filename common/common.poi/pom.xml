@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>media</artifactId>
+    <artifactId>common.poi</artifactId>
     <packaging>jar</packaging>
 
-    <name>Core Automation Toolset - Media</name>
-    <description>The media related objects which use in other CATools projects.</description>
+    <name>Core Automation Toolset - POI Utils</name>
+    <description>The toolset to work with POI in all other CATools projects</description>
 
     <parent>
         <groupId>org.catools</groupId>
@@ -18,30 +18,31 @@
 
     <properties>
         <!-- TestNG -->
-        <TESTNG_TEST_RETRY_COUNT>1</TESTNG_TEST_RETRY_COUNT>
+        <TESTNG_SUITE_RETRY_COUNT>1</TESTNG_SUITE_RETRY_COUNT>
+        <TESTNG_TEST_RETRY_COUNT>2</TESTNG_TEST_RETRY_COUNT>
     </properties>
+
     <dependencies>
-        <!-- ######################  CATS ######################### -->
+        <!-- ######################  CATools ######################### -->
         <dependency>
             <groupId>org.catools</groupId>
             <artifactId>common.extension</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!-- ######################  /CATools  ######################### -->
+        <!-- ######################  EXCEL  ######################### -->
         <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>reportportal</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <!-- ######################  /CATS ######################### -->
-        <!-- ######################  BOOFCV ######################### -->
-        <dependency>
-            <groupId>org.boofcv</groupId>
-            <artifactId>boofcv-core</artifactId>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.boofcv</groupId>
-            <artifactId>boofcv-feature</artifactId>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
         </dependency>
-        <!-- ######################  /BOOFCV ######################### -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <!-- ######################  /EXCEL  ######################### -->
     </dependencies>
 </project>

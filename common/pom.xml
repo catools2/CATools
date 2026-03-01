@@ -1,23 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.catools</groupId>
     <artifactId>common</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Core Automation Common</name>
+    <name>Core Automation Common - Root</name>
     <description>The common objects which use in all other CATools projects</description>
 
-    <parent>
-        <groupId>org.catools</groupId>
-        <artifactId>catools.parent</artifactId>
-        <version>${revision}</version>
-        <relativePath>../catools.parent/pom.xml</relativePath>
-    </parent>
+    <properties>
+        <revision>2.0.0-SNAPSHOT</revision>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <spotless.skip>true</spotless.skip>
+    </properties>
+
+    <modules>
+        <module>common.concurrent</module>
+        <module>common.extension</module>
+        <module>common.faker</module>
+        <module>common.logger</module>
+        <module>common.poi</module>
+        <module>common.sql</module>
+        <module>common.security</module>
+        <module>common.testng</module>
+        <module>common.utils</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>catools.parent</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>common.extension</artifactId>
@@ -58,37 +79,11 @@
                 <artifactId>common.poi</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>common.sql</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.extension</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.logger</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.concurrent</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.testng</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>common.faker</artifactId>
-        </dependency>
-    </dependencies>
 </project>

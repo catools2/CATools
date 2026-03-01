@@ -27,51 +27,51 @@
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>web</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
                 <artifactId>infra</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+             </dependency>
              <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>mcp</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>         
+                 <artifactId>mcp</artifactId>
+                 <version>${revision}</version>
+                 <type>pom</type>
+                 <scope>import</scope>
+             </dependency>
              <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>ws</artifactId>
+                <artifactId>media</artifactId>
                 <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>                   
-            </dependency>
-            <dependency>
+             </dependency>
+             <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>pipeline</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+                <scope>import</scope>                   
+             </dependency>
              <dependency>
                 <groupId>org.catools</groupId>
                 <artifactId>reporting</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>media</artifactId>
+                <artifactId>web</artifactId>
                 <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
+             <dependency>
+                <groupId>org.catools</groupId>
+                <artifactId>ws</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>                   
+             </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

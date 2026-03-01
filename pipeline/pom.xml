@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.catools</groupId>
-    <artifactId>ws</artifactId>
+    <artifactId>pipeline</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Core Automation Toolset - Web Services Root</name>
-    <description>The Web Services tools to be used in CATs projects</description>
+    <name>Core Automation Toolset - Pipeline Root</name>
+    <description>The Pipeline tools to be used in CATs projects</description>
 
     <properties>
         <revision>2.0.0-SNAPSHOT</revision>
@@ -19,8 +19,7 @@
     </properties>
 
     <modules>
-        <module>ws.client</module>
-        <module>ws.core</module>
+        <module>athena</module>
     </modules>
 
     <dependencyManagement>
@@ -34,12 +33,7 @@
             </dependency>
             <dependency>
                 <groupId>org.catools</groupId>
-                <artifactId>ws.client</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.catools</groupId>
-                <artifactId>ws.core</artifactId>
+                <artifactId>athena</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>media</artifactId>
+    <artifactId>common.extension</artifactId>
     <packaging>jar</packaging>
 
-    <name>Core Automation Toolset - Media</name>
-    <description>The media related objects which use in other CATools projects.</description>
+    <name>Core Automation Common - Extensions</name>
+    <description>The common extensions to improve code quality cross CATools projects and test</description>
 
     <parent>
         <groupId>org.catools</groupId>
@@ -16,32 +16,29 @@
         <relativePath>../../infra/catools.parent/pom.xml</relativePath>
     </parent>
 
-    <properties>
-        <!-- TestNG -->
-        <TESTNG_TEST_RETRY_COUNT>1</TESTNG_TEST_RETRY_COUNT>
-    </properties>
     <dependencies>
         <!-- ######################  CATS ######################### -->
         <dependency>
             <groupId>org.catools</groupId>
-            <artifactId>common.extension</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.catools</groupId>
-            <artifactId>reportportal</artifactId>
+            <artifactId>common.utils</artifactId>
             <version>${revision}</version>
         </dependency>
         <!-- ######################  /CATS ######################### -->
-        <!-- ######################  BOOFCV ######################### -->
         <dependency>
-            <groupId>org.boofcv</groupId>
-            <artifactId>boofcv-core</artifactId>
+            <groupId>org.bitbucket.cowwoc</groupId>
+            <artifactId>diff-match-patch</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.boofcv</groupId>
-            <artifactId>boofcv-feature</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
-        <!-- ######################  /BOOFCV ######################### -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
     </dependencies>
 </project>
