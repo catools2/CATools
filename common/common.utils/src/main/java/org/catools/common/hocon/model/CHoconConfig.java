@@ -9,7 +9,6 @@ import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigList;
 import com.typesafe.config.ConfigRenderOptions;
-import com.typesafe.config.ConfigValueFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.catools.common.configs.CVaultConfigs;
 import org.catools.common.hocon.utils.CHoconUtils;
 import org.catools.common.utils.CJsonUtil;
 import org.catools.common.utils.CStringUtil;
@@ -27,11 +27,11 @@ import org.catools.common.vault.CVault;
 @Slf4j
 @NoArgsConstructor
 public class CHoconConfig implements CConfig {
-  private static final String PRINT_PATH_VALUE = "PRINT_PATH_VALUE";
   private static final String VALUE = "value";
   private Config config;
 
-  @Getter private String name;
+  @Getter
+  private String name;
   private String valuePath;
   private String path;
 
@@ -234,7 +234,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T> class Type
+   * @param <T>   class Type
    * @return the model
    */
   public <T> List<T> asList(Class<T> clazz) {
@@ -250,7 +250,7 @@ public class CHoconConfig implements CConfig {
    * Read model using Type Safe Configuration implementation or Jackson
    *
    * @param clazz model class type
-   * @param <T> class Type
+   * @param <T>   class Type
    * @return the model
    */
   @Override
@@ -271,83 +271,75 @@ public class CHoconConfig implements CConfig {
     // If configuration defined then we might have 2 scenarios.
     // 1- Case when value setup directly in configuration.
     // 2- Case when value setup value using environmental variables.
-    // In the second scenario we need to read and parse the string value and process it.
+    // In the second scenario we need to read and parse the string value and process
+    // it.
     // 3- If the value is not defined in configuration then try to read value
-    // from Environmental Variables or System Properties, considering that value should parse as
-    // yaml
-    // property so we try to read value as is and if conversion failed, then try quoted value
-    if (isDefined()) {
+    // from Environmental Variables or System Properties, considering that value
+    // should parse as yaml
+    // property so we try to read value as is and if conversion failed, then try
+    // quoted value
+    String vaultValue = getFromVault(path);
+    if (StringUtils.isNotBlank(vaultValue)) {
+      return parseAndApply(vaultValue, defaultValue, fuc);
+    }
+
+    if (isDefined() || isDefinedAsProperty()) {
       return getDefinedValue(fuc);
     }
 
-    if (isDefinedAsProperty()) {
-      return getDefinedPropertyValue(fuc);
-    }
-
-    // Try to read from environment variable or system property
     String value = readPropertyOrEnv(valuePath);
     if (StringUtils.isNotBlank(value)) {
-      try {
-        // Try to parse value as is in a case of complex structure like list or object
-        return printPathValue(
-            path,
-            Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue));
-      } catch (ConfigException ignored) {
-        // build valid json format for string value to read it properly
-        return printPathValue(
-            path,
-            Optional.of(parseString(String.format("\"%s\"", value)))
-                .map(c -> fuc.apply(c, VALUE))
-                .orElse(defaultValue));
-      }
+      return parseAndApply(value, defaultValue, fuc);
     }
 
-    // If value from property is blank try to read from vault using path as is
-    // If not found try to read using converted to env variable format
-    // This is to support both key formats in vault
-    String vaultValueByPath = CVault.getValue(valuePath);
-    if (StringUtils.isNotBlank(vaultValueByPath)) {
-      value = vaultValueByPath;
-    } else {
-      String vaultValueByProperty = CVault.getValue(convertToEnvVariable(valuePath));
-      if (StringUtils.isNotBlank(vaultValueByProperty)) {
-        value = vaultValueByProperty;
-      }
+    return defaultValue;
+  }
 
-      // If value is still blank return default value
-      if (StringUtils.isBlank(value)) {
-        return defaultValue;
-      }
+  private <T> T parseAndApply(String value, T defaultValue, BiFunction<Config, String, T> fuc) {
+    try {
+      return Optional.of(parseString(value)).map(c -> fuc.apply(c, VALUE)).orElse(defaultValue);
+    } catch (ConfigException ignored) {
+      return Optional.of(parseString(String.format("\"%s\"", value)))
+          .map(c -> fuc.apply(c, VALUE))
+          .orElse(defaultValue);
+    }
+  }
+
+  public String getFromVault(String path) {
+    if (ignoreVaultLookup(path)) {
+      return null;
     }
 
-    // set the value in config to avoid re-reading from env or vault next time
-    config = config.withValue(valuePath, ConfigValueFactory.fromAnyRef(value));
-    return getDefinedValue(fuc);
+    return CVault.getValue(valuePath);
+  }
+
+  private boolean ignoreVaultLookup(String key) {
+    Config cfg = getConfig();
+
+    // If vault configuration is not part of the loaded configuration then no need
+    // to check for ignored keys patterns
+    if (!cfg.hasPath("catools.vault.enabled") || !cfg.getBoolean("catools.vault.enabled")) {
+      return true;
+    }
+
+    if (cfg.hasPath("ignored.conf.keys")) {
+      List<String> ignoredKeys = cfg.getStringList("ignored.conf.keys");
+      return ignoredKeys.stream().anyMatch(pattern -> key.matches(patternToRegex(pattern)));
+    }
+
+    return false;
+  }
+
+  private static String patternToRegex(String pattern) {
+    return pattern.replace(".", "\\.").replace("*", ".*");
   }
 
   private <T> T getDefinedValue(BiFunction<Config, String, T> fuc) {
     try {
-      return printPathValue(path, fuc.apply(config, valuePath));
+      return fuc.apply(config, valuePath);
     } catch (ConfigException ex) {
-      return printPathValue(path, fuc.apply(parseString(), VALUE));
+      return fuc.apply(parseString(), VALUE);
     }
-  }
-
-  private <T> T getDefinedPropertyValue(BiFunction<Config, String, T> fuc) {
-    String property = convertToEnvVariable(path);
-    try {
-      return printPathValue(property, fuc.apply(config, valuePath));
-    } catch (ConfigException ex) {
-      return printPathValue(property, fuc.apply(parseString(), VALUE));
-    }
-  }
-
-  private <T> T printPathValue(String path, T value) {
-    String printPathValue = CHoconUtils.getProperty(PRINT_PATH_VALUE);
-    if (StringUtils.isNoneBlank(printPathValue)) {
-      log.debug("{} value is set to {}", path, value);
-    }
-    return value;
   }
 
   private static <T> T getModelFromConfig(Class<T> clazz, Config val) {
